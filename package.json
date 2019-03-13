@@ -1,0 +1,31 @@
+{
+  "name": "jarviscrawlercore",
+  "version": "0.1.0",
+  "description": "jarvis crawler core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhs007/jarviscrawlercore.git"
+  },
+  "keywords": [
+    "crawler",
+    "jarvis"
+  ],
+  "author": "zerrozhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhs007/jarviscrawlercore/issues"
+  },
+  "homepage": "https://github.com/zhs007/jarviscrawlercore#readme",
+  "dependencies": {
+    "puppeteer": "^1.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.15.1",
+    "eslint-config-google": "^0.12.0",
+    "jest": "^24.5.0"
+  }
+}

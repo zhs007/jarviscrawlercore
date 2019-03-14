@@ -7,9 +7,11 @@ const puppeteer = require('puppeteer');
     waitUntil: 'networkidle2',
   });
 
-  const dom = await page.$eval('.col-sm-8.col-md-8.aw-main-content.aw-article-content', (element) => {
-    return element.innerHTML;
-  });
+  const dom = await page.$eval(
+      '.col-sm-8.col-md-8.aw-main-content.aw-article-content',
+      (element) => {
+        return element.innerHTML;
+      });
 
   // const dom = page.$('.aw-content-wrap.clearfix');
   // console.log(dom);

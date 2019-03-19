@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/zhs007/jarviscrawlercore#readme",
   "dependencies": {
+    "commander": "^2.19.0",
     "puppeteer": "^1.13.0"
   },
   "devDependencies": {

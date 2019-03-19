@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto('http://www.baijingapp.com/article/21901', {
+  await page.goto('http://www.baijingapp.com/article/22008', {
     waitUntil: 'networkidle2',
   });
 

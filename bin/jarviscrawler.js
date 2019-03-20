@@ -1,7 +1,9 @@
 const program = require('commander');
 const {exportArticle} = require('../src/exportarticle/exportarticle');
+const fs = require('fs');
 
-const VERSION = '0.1.0';
+const package = JSON.parse(fs.readFileSync('package.json'));
+const VERSION = package.version;
 
 program
     .version(VERSION);

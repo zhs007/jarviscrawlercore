@@ -1,0 +1,2 @@
+docker rm jarviscrawlercore
+docker run --name jarviscrawlercore -v $PWD/output:/usr/src/app/output jarviscrawlercore node ./bin/jarviscrawler.js exparticle http://www.baijingapp.com/article/22008 -p ./output/abc.pdf -f A4

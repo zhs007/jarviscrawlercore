@@ -15,8 +15,8 @@ program
     .option('-f, --pdfformat [format]', 'like A4')
     .option('-j, --jpg [filename]', 'export jpg file')
     .action(function(url, options) {
-      console.log(url);
-      console.log(options);
+    //   console.log(url);
+    //   console.log(options);
 
       (async () => {
         await exportArticle(url, options.pdf, options.pdfformat, options.jpg);

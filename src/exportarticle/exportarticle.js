@@ -9,7 +9,14 @@ const {mgrPlugins} = require('../../plugins/exportarticle/index');
  * @param {string} jpgfile - jpg filename
  */
 async function exportArticle(url, pdffile, pdfformat, jpgfile) {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+    ],
+  });
+
   const page = await browser.newPage();
   await page.goto(url, {
     waitUntil: 'networkidle2',

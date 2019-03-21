@@ -20,7 +20,7 @@ function ismine(url) {
  */
 async function proc(url, page) {
   const dom = await page.$eval(
-      '.col-sm-8.col-md-8.aw-main-content.aw-article-content',
+      '.aw-mod.aw-question-detail',
       (element) => {
         return element.innerHTML;
       });

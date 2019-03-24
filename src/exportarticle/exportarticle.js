@@ -20,6 +20,7 @@ async function exportArticle(url, pdffile, pdfformat, jpgfile) {
   const page = await browser.newPage();
   await page.goto(url, {
     waitUntil: 'networkidle2',
+    timeout: 0,
   });
 
   if (jpgfile && jpgfile != '') {

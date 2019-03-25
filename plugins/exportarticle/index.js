@@ -7,5 +7,8 @@ require('./huxiu');
 require('./smzdm');
 require('./lieyunwang');
 require('./tmtpost');
+require('./techcrunch');
+require('./zhihu.answer');
+require('./zhihu.article');
 
 exports.mgrPlugins = mgrPlugins;

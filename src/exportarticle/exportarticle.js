@@ -14,10 +14,15 @@ async function exportArticle(url, pdffile, pdfformat, jpgfile) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
+      '--ignore-certificate-errors',
     ],
   });
 
   const page = await browser.newPage();
+  page._onCertificateError = (error)=> {
+    console.log('invalid cert', error);
+  };
+
   await page.goto(url, {
     waitUntil: 'networkidle2',
     timeout: 0,

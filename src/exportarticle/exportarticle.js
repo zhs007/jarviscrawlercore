@@ -14,7 +14,6 @@ async function exportArticle(url, pdffile, pdfformat, jpgfile) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
-      '--ignore-certificate-errors',
     ],
   });
 

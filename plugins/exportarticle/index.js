@@ -7,5 +7,6 @@ require('./huxiu');
 require('./smzdm');
 require('./lieyunwang');
 require('./tmtpost');
+require('./techcrunch');
 
 exports.mgrPlugins = mgrPlugins;

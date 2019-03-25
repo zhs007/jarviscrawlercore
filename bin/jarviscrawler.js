@@ -23,6 +23,8 @@ program
         await exportArticle(url, options.pdf, options.pdfformat, options.jpg);
       })().catch((err) => {
         console.log('catch a err ', err);
+
+        process.exit(-1);
       });
     });
 

@@ -20,7 +20,9 @@ program
 
       (async () => {
         await exportArticle(url, options.pdf, options.pdfformat, options.jpg);
-      })();
+      })().catch((err) => {
+        console.log(err);
+      });
     });
 
 program.parse(process.argv);

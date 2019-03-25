@@ -5,5 +5,7 @@ require('./geekpark');
 require('./36kr');
 require('./huxiu');
 require('./smzdm');
+require('./lieyunwang');
+require('./tmtpost');
 
 exports.mgrPlugins = mgrPlugins;

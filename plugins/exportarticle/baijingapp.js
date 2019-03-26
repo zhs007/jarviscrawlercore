@@ -26,6 +26,20 @@ async function proc(url, page) {
       });
 
   await page.setContent(dom);
+
+  await formatArticle(page);
+}
+
+/**
+ * formatArticle
+ * @param {object} page - page
+ */
+async function formatArticle(page) {
+  await page.$$eval(
+      '.aw-mod.aw-question-detail',
+      (elements) => {
+
+      });
 }
 
 mgrPlugins.regPlugin('baijingapp.article', ismine, proc);

@@ -7,10 +7,11 @@ const {mgrPlugins} = require('../../plugins/exportarticle/index');
  * @param {string} pdffile - pdf filename
  * @param {string} pdfformat - pdf format, like A4
  * @param {string} jpgfile - jpg filename
+ * @param {bool} headless - headless mode
  */
-async function exportArticle(url, pdffile, pdfformat, jpgfile) {
+async function exportArticle(url, pdffile, pdfformat, jpgfile, headless) {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: headless,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',

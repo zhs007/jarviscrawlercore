@@ -26,6 +26,33 @@ async function proc(url, page) {
       });
 
   await page.setContent(dom);
+  // console.log('zhihu');
+
+  // const ele = await page.$(
+  //     '.VagueImage.origin_image.zh-lightbox-thumb');
+
+  // // console.log(ele.asElement());
+
+  // const properties = await ele.getProperties();
+  // for (const key of properties.keys()) {
+  //   console.log(key);
+  // }
+
+  // const ele = await page.$eval(
+  //     // '.RichText.ztext.Post-RichText',
+  //     // '.VagueImage.origin_image.zh-lightbox-thumb',
+  //     'figure',
+  //     (element) => {
+  //       console.log(element);
+
+  //       return element.innerHTML;
+  //     });
+
+  // console.log(ele);
+
+  // const jval = await ele.jsonValue();
+  // console.log(ele);
+  // console.log(jval);
 }
 
 mgrPlugins.regPlugin('zhihu.article', ismine, proc);

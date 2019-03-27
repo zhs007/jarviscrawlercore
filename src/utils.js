@@ -2,6 +2,7 @@
 const fs = require('fs');
 const {jarviscrawlercore} = require('../proto/result');
 const AdmZip = require('adm-zip');
+const crypto = require('crypto');
 
 /**
  * save protobuf message
@@ -26,5 +27,15 @@ function saveZipMessage(filename, msg) {
   zip.writeZip(filename);
 }
 
+/**
+ * hash md5
+ * @param {buffer} buf - buffer
+ * @return {string} md5 - md5 string
+ */
+function hashMD5(buf) {
+  return crypto.createHash('md5').update(buf).digest('hex');
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
+exports.hashMD5 = hashMD5;

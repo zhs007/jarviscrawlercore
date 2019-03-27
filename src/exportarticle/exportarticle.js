@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
 const {jarviscrawlercore} = require('../../proto/result');
-const {saveMessage} = require('../utils');
+const {hashMD5, saveMessage} = require('../utils');
 const images = require('images');
 // const {importScript} = require('../browserscript');
 
@@ -57,6 +57,10 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
     if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
       for (let i = 0; i < ret.imgs.length; ++i) {
         result.imgs[i].data = Buffer.from(ret.imgs[i].base64data, 'base64');
+
+        result.imgs[i].hash = hashMD5(result.imgs[i].data);
+        // console.log(result.imgs[i].hash);
+
         const img = images(result.imgs[i].data);
         if (img) {
           result.imgs[i].width = img.width();
@@ -67,7 +71,10 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
       }
     }
 
-    saveMessage('abc.zpb', result);
+    if (outputfile) {
+      saveMessage(outputfile, result);
+    }
+    // saveMessage('abc1.pb', result);
   }
 
   if (pdffile && pdffile != '') {

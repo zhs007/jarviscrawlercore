@@ -1,10 +1,32 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-03-27
+
+``protobufjs``里，会自动把``string``通过``base64``转换为``bytes``。
+
 ### 2019-03-26
 
 关于puppeteer，留点记录。
 
-首先，``$()``和``$eval()``是不一样的，``$()``返回一个nodejs对象，``$eval()``其实是做页面操作，而且``$eval()``里面的输出也在浏览器里面。
+首先，``$()``和``$eval()``是不一样的，``$()``返回一个nodejs对象，``$eval()``其实是做页面操作，而且``$eval()``里面的输出也在浏览器里面。  
+还有点需要注意的，就是``$eval()``的返回值是你自己控制的，可以用来传递跨域对象。
+
+如果需要加载页面以外的js，可以用  
+``` js
+await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
+
+await page.addScriptTag({path: './browser/base64.js'});
+```
+
+运行js代码，用``page.evaluate``，这个里面是页面的js空间，类似chrome控制台操作，这个函数的返回值是你自己控制的，可以用来传递js对象。  
+
+页面可以用``fetch``取数据，没有跨域问题。  
+```
+const response = await fetch(curimg[0].src);
+```
+返回是一个``ReadableStream``，可以转``arrayBuffer``、``json``、``text``等。
+
+关于``chrome``和``nodejs``层变量传递问题，``ArrayBuffer``是传不过来的。
 
 ### 2019-03-25
 

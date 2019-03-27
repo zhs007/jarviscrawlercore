@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,10 @@
   },
   "homepage": "https://github.com/zhs007/jarviscrawlercore#readme",
   "dependencies": {
+    "adm-zip": "^0.4.13",
     "commander": "^2.19.0",
+    "images": "^3.0.2",
+    "protobufjs": "^6.8.8",
     "puppeteer": "^1.13.0"
   },
   "devDependencies": {

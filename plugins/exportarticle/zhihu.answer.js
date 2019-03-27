@@ -28,4 +28,13 @@ async function proc(url, page) {
   await page.setContent(dom);
 }
 
-mgrPlugins.regPlugin('zhihu.answer.article', ismine, proc);
+/**
+ * formatArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
+ */
+async function formatArticle(page) {
+  return undefined;
+}
+
+mgrPlugins.regPlugin('zhihu.answer.article', ismine, proc, formatArticle);

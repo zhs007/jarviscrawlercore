@@ -1,0 +1,1 @@
+pbjs -t static-module -w commonjs -o ./proto/result.js ./proto/result.proto

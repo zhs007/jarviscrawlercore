@@ -1,0 +1,22 @@
+syntax = "proto3";
+import "google/protobuf/any.proto";
+package jarviscrawlercore;
+
+// ImageInfo - image info
+message ImageInfo {
+    string hashname = 1;
+    string url = 2;
+    int32 width = 3;
+    int32 height = 4;
+    bytes data = 5;
+}
+
+// ExportArticleResult - export article result
+message ExportArticleResult {
+    string title = 1;
+    string author = 2;
+    string writetime = 3;
+    string article = 4;
+    string url = 5;
+    repeated ImageInfo imgs = 6;
+}

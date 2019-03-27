@@ -15,6 +15,7 @@ program
     .option('-f, --pdfformat [format]', 'like A4')
     .option('-j, --jpg [filename]', 'export jpg file')
     .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-o, --output [filename]', 'export output file')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -28,6 +29,10 @@ program
         console.log('pdf - ', options.pdf);
       }
 
+      if (options.output) {
+        console.log('output - ', options.output);
+      }
+
       console.log('pdfformat - ', options.pdfformat);
       console.log('jpg - ', options.jpg);
 
@@ -39,6 +44,7 @@ program
 
       (async () => {
         await exportArticle(url,
+            options.output,
             options.pdf,
             options.pdfformat,
             options.jpg,

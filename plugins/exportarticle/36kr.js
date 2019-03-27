@@ -31,4 +31,13 @@ async function proc(url, page) {
   await page.setContent(dom);
 }
 
-mgrPlugins.regPlugin('36kr.article', ismine, proc);
+/**
+ * formatArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
+ */
+async function formatArticle(page) {
+  return undefined;
+}
+
+mgrPlugins.regPlugin('36kr.article', ismine, proc, formatArticle);

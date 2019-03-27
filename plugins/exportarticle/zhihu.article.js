@@ -55,4 +55,13 @@ async function proc(url, page) {
   // console.log(jval);
 }
 
-mgrPlugins.regPlugin('zhihu.article', ismine, proc);
+/**
+ * formatArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
+ */
+async function formatArticle(page) {
+  return undefined;
+}
+
+mgrPlugins.regPlugin('zhihu.article', ismine, proc, formatArticle);

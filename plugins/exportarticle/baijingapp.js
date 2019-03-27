@@ -1,4 +1,6 @@
 const {mgrPlugins} = require('./pluginsmgr');
+// const {jarviscrawlercore} = require('../../proto/result');
+// const images = require('images');
 
 /**
  * ismine
@@ -27,15 +29,34 @@ async function proc(url, page) {
 
   await page.setContent(dom);
 
-  await formatArticle(page);
+  // const ret = await formatArticle(page);
+
+  // const result = new jarviscrawlercore.ExportArticleResult(ret);
+  // result.url = url;
+
+  // result.imgs[0].data = Buffer.from(ret.imgs[0].data, 'base64');
+  // console.log(typeof result.imgs[0].data);
+  // const img = images(result.imgs[0].data);
+  // // img.save('abc.png');
+  // console.log(img.width());
+  // console.log(img.height());
+
+  // console.log('%j', result);
+  // console.log(result.imgs[0].data);
+  // console.log(ret.imgs[0].datalen);
 }
 
 /**
  * formatArticle
  * @param {object} page - page
+ * @return {ExportArticleResult} result - result
  */
 async function formatArticle(page) {
-  await page.evaluate(() => {
+  return await page.evaluate(async () => {
+    const ret = {};
+    ret.imgs = [];
+    // const ret = new jarviscrawlercore.ExportArticleResult();
+
     const body = $('body')[0];
 
     const lstmh = $('.mod-head');
@@ -49,6 +70,8 @@ async function formatArticle(page) {
       const lstauthorname = $('span.name');
       if (lstauthorname && lstauthorname.length > 0) {
         authorname = lstauthorname[0].innerText;
+
+        ret.author = authorname;
       }
 
       let curtime = '';
@@ -58,11 +81,15 @@ async function formatArticle(page) {
         '(0[1-9]|[1-2][0-9]|3[0-1])\\s+(20|21|22|23|[0-1]\\d):[0-5]\\d)', 'ig');
 
         curtime = varreg.exec(lstcurtime[0].innerText)[0];
+
+        ret.writetime = curtime;
       }
 
       for (let i = 0; i < lstmh[0].childNodes.length; ++i) {
         if (lstmh[0].childNodes[i].tagName == 'H1') {
           mh.appendChild(lstmh[0].childNodes[i]);
+
+          ret.title = lstmh[0].childNodes[i].innerText;
           // mh.childNodes[i].remove();
         }
       }
@@ -125,6 +152,10 @@ async function formatArticle(page) {
 
             // lstp[i].appendChild(curimgs[0]);
 
+            // const response = await fetch(curimgs[0].src);
+            // const imgbuf = await response.arrayBuffer();
+            ret.imgs.push(await fetchImage(curimgs[0].src));
+
             const curnode = document.createElement('p');
             curnode.style.cssText = 'text-align: center;';
             curnode.appendChild(curimgs[0]);
@@ -162,13 +193,17 @@ async function formatArticle(page) {
       }
     }
 
+    ret.article = body.innerHTML;
+
     // const lststyle = $('style');
     // if (lststyle && lststyle.length > 0) {
     //   for (let i = 0; i < lststyle.length; ++i) {
     //     lststyle[0].remove();
     //   }
     // }
+
+    return ret;
   });
 }
 
-mgrPlugins.regPlugin('baijingapp.article', ismine, proc);
+mgrPlugins.regPlugin('baijingapp.article', ismine, proc, formatArticle);

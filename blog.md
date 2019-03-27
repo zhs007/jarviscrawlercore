@@ -2,7 +2,8 @@
 
 ### 2019-03-27
 
-``protobufjs``里，会自动把``string``通过``base64``转换为``bytes``。
+今天把``exparticle``重构了一版，这个版本功能基本能达到目前的需求了。  
+数据没有用``json``的，而是直接用了``protobuf``，支持未压缩的文件和zip压缩文件，把图片打包进去了。
 
 ### 2019-03-26
 
@@ -13,8 +14,9 @@
 
 如果需要加载页面以外的js，可以用  
 ``` js
+// url
 await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
-
+// local file
 await page.addScriptTag({path: './browser/base64.js'});
 ```
 
@@ -26,7 +28,7 @@ const response = await fetch(curimg[0].src);
 ```
 返回是一个``ReadableStream``，可以转``arrayBuffer``、``json``、``text``等。
 
-关于``chrome``和``nodejs``层变量传递问题，``ArrayBuffer``是传不过来的。
+关于``chrome``和``nodejs``层变量传递问题，``ArrayBuffer``是传不过来的，可以通过``base64``以后传``string``。
 
 ### 2019-03-25
 

@@ -52,7 +52,9 @@ async function formatArticle(page) {
       let curtime = '';
       const lstcurtime = $('span.time');
       if (lstcurtime && lstcurtime.length > 0) {
-        const varreg = /([1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])\s+(20|21|22|23|[0-1]\d):[0-5]\d)/;
+        const varreg = new RegExp('([1-9]\\d{3}-(0[1-9]|1[0-2])-' +
+        '(0[1-9]|[1-2][0-9]|3[0-1])\\s+(20|21|22|23|[0-1]\\d):[0-5]\\d)', 'ig');
+
         curtime = varreg.exec(lstcurtime[0].innerText)[0];
       }
 

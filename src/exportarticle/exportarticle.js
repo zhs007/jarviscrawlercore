@@ -58,7 +58,7 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
       for (let i = 0; i < ret.imgs.length; ++i) {
         result.imgs[i].data = Buffer.from(ret.imgs[i].base64data, 'base64');
 
-        result.imgs[i].hash = hashMD5(result.imgs[i].data);
+        result.imgs[i].hashName = hashMD5(result.imgs[i].data);
         // console.log(result.imgs[i].hash);
 
         const img = images(result.imgs[i].data);

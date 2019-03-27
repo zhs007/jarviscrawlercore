@@ -82,7 +82,7 @@ async function formatArticle(page) {
 
         curtime = varreg.exec(lstcurtime[0].innerText)[0];
 
-        ret.writetime = curtime;
+        ret.writeTime = curtime;
       }
 
       for (let i = 0; i < lstmh[0].childNodes.length; ++i) {

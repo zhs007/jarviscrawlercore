@@ -24,7 +24,7 @@ $root.jarviscrawlercore = (function() {
          * Properties of an ImageInfo.
          * @memberof jarviscrawlercore
          * @interface IImageInfo
-         * @property {string|null} [hashname] ImageInfo hashname
+         * @property {string|null} [hashName] ImageInfo hashName
          * @property {string|null} [url] ImageInfo url
          * @property {number|null} [width] ImageInfo width
          * @property {number|null} [height] ImageInfo height
@@ -47,12 +47,12 @@ $root.jarviscrawlercore = (function() {
         }
 
         /**
-         * ImageInfo hashname.
-         * @member {string} hashname
+         * ImageInfo hashName.
+         * @member {string} hashName
          * @memberof jarviscrawlercore.ImageInfo
          * @instance
          */
-        ImageInfo.prototype.hashname = "";
+        ImageInfo.prototype.hashName = "";
 
         /**
          * ImageInfo url.
@@ -110,8 +110,8 @@ $root.jarviscrawlercore = (function() {
         ImageInfo.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.hashname != null && message.hasOwnProperty("hashname"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.hashname);
+            if (message.hashName != null && message.hasOwnProperty("hashName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.hashName);
             if (message.url != null && message.hasOwnProperty("url"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.url);
             if (message.width != null && message.hasOwnProperty("width"))
@@ -155,7 +155,7 @@ $root.jarviscrawlercore = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.hashname = reader.string();
+                    message.hashName = reader.string();
                     break;
                 case 2:
                     message.url = reader.string();
@@ -204,9 +204,9 @@ $root.jarviscrawlercore = (function() {
         ImageInfo.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.hashname != null && message.hasOwnProperty("hashname"))
-                if (!$util.isString(message.hashname))
-                    return "hashname: string expected";
+            if (message.hashName != null && message.hasOwnProperty("hashName"))
+                if (!$util.isString(message.hashName))
+                    return "hashName: string expected";
             if (message.url != null && message.hasOwnProperty("url"))
                 if (!$util.isString(message.url))
                     return "url: string expected";
@@ -234,8 +234,8 @@ $root.jarviscrawlercore = (function() {
             if (object instanceof $root.jarviscrawlercore.ImageInfo)
                 return object;
             var message = new $root.jarviscrawlercore.ImageInfo();
-            if (object.hashname != null)
-                message.hashname = String(object.hashname);
+            if (object.hashName != null)
+                message.hashName = String(object.hashName);
             if (object.url != null)
                 message.url = String(object.url);
             if (object.width != null)
@@ -264,7 +264,7 @@ $root.jarviscrawlercore = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.hashname = "";
+                object.hashName = "";
                 object.url = "";
                 object.width = 0;
                 object.height = 0;
@@ -276,8 +276,8 @@ $root.jarviscrawlercore = (function() {
                         object.data = $util.newBuffer(object.data);
                 }
             }
-            if (message.hashname != null && message.hasOwnProperty("hashname"))
-                object.hashname = message.hashname;
+            if (message.hashName != null && message.hasOwnProperty("hashName"))
+                object.hashName = message.hashName;
             if (message.url != null && message.hasOwnProperty("url"))
                 object.url = message.url;
             if (message.width != null && message.hasOwnProperty("width"))
@@ -311,10 +311,11 @@ $root.jarviscrawlercore = (function() {
          * @interface IExportArticleResult
          * @property {string|null} [title] ExportArticleResult title
          * @property {string|null} [author] ExportArticleResult author
-         * @property {string|null} [writetime] ExportArticleResult writetime
+         * @property {string|null} [writeTime] ExportArticleResult writeTime
          * @property {string|null} [article] ExportArticleResult article
          * @property {string|null} [url] ExportArticleResult url
          * @property {Array.<jarviscrawlercore.IImageInfo>|null} [imgs] ExportArticleResult imgs
+         * @property {jarviscrawlercore.IImageInfo|null} [titleImage] ExportArticleResult titleImage
          */
 
         /**
@@ -350,12 +351,12 @@ $root.jarviscrawlercore = (function() {
         ExportArticleResult.prototype.author = "";
 
         /**
-         * ExportArticleResult writetime.
-         * @member {string} writetime
+         * ExportArticleResult writeTime.
+         * @member {string} writeTime
          * @memberof jarviscrawlercore.ExportArticleResult
          * @instance
          */
-        ExportArticleResult.prototype.writetime = "";
+        ExportArticleResult.prototype.writeTime = "";
 
         /**
          * ExportArticleResult article.
@@ -380,6 +381,14 @@ $root.jarviscrawlercore = (function() {
          * @instance
          */
         ExportArticleResult.prototype.imgs = $util.emptyArray;
+
+        /**
+         * ExportArticleResult titleImage.
+         * @member {jarviscrawlercore.IImageInfo|null|undefined} titleImage
+         * @memberof jarviscrawlercore.ExportArticleResult
+         * @instance
+         */
+        ExportArticleResult.prototype.titleImage = null;
 
         /**
          * Creates a new ExportArticleResult instance using the specified properties.
@@ -409,8 +418,8 @@ $root.jarviscrawlercore = (function() {
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.title);
             if (message.author != null && message.hasOwnProperty("author"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.author);
-            if (message.writetime != null && message.hasOwnProperty("writetime"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.writetime);
+            if (message.writeTime != null && message.hasOwnProperty("writeTime"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.writeTime);
             if (message.article != null && message.hasOwnProperty("article"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.article);
             if (message.url != null && message.hasOwnProperty("url"))
@@ -418,6 +427,8 @@ $root.jarviscrawlercore = (function() {
             if (message.imgs != null && message.imgs.length)
                 for (var i = 0; i < message.imgs.length; ++i)
                     $root.jarviscrawlercore.ImageInfo.encode(message.imgs[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.titleImage != null && message.hasOwnProperty("titleImage"))
+                $root.jarviscrawlercore.ImageInfo.encode(message.titleImage, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             return writer;
         };
 
@@ -459,7 +470,7 @@ $root.jarviscrawlercore = (function() {
                     message.author = reader.string();
                     break;
                 case 3:
-                    message.writetime = reader.string();
+                    message.writeTime = reader.string();
                     break;
                 case 4:
                     message.article = reader.string();
@@ -471,6 +482,9 @@ $root.jarviscrawlercore = (function() {
                     if (!(message.imgs && message.imgs.length))
                         message.imgs = [];
                     message.imgs.push($root.jarviscrawlercore.ImageInfo.decode(reader, reader.uint32()));
+                    break;
+                case 7:
+                    message.titleImage = $root.jarviscrawlercore.ImageInfo.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -513,9 +527,9 @@ $root.jarviscrawlercore = (function() {
             if (message.author != null && message.hasOwnProperty("author"))
                 if (!$util.isString(message.author))
                     return "author: string expected";
-            if (message.writetime != null && message.hasOwnProperty("writetime"))
-                if (!$util.isString(message.writetime))
-                    return "writetime: string expected";
+            if (message.writeTime != null && message.hasOwnProperty("writeTime"))
+                if (!$util.isString(message.writeTime))
+                    return "writeTime: string expected";
             if (message.article != null && message.hasOwnProperty("article"))
                 if (!$util.isString(message.article))
                     return "article: string expected";
@@ -530,6 +544,11 @@ $root.jarviscrawlercore = (function() {
                     if (error)
                         return "imgs." + error;
                 }
+            }
+            if (message.titleImage != null && message.hasOwnProperty("titleImage")) {
+                var error = $root.jarviscrawlercore.ImageInfo.verify(message.titleImage);
+                if (error)
+                    return "titleImage." + error;
             }
             return null;
         };
@@ -550,8 +569,8 @@ $root.jarviscrawlercore = (function() {
                 message.title = String(object.title);
             if (object.author != null)
                 message.author = String(object.author);
-            if (object.writetime != null)
-                message.writetime = String(object.writetime);
+            if (object.writeTime != null)
+                message.writeTime = String(object.writeTime);
             if (object.article != null)
                 message.article = String(object.article);
             if (object.url != null)
@@ -565,6 +584,11 @@ $root.jarviscrawlercore = (function() {
                         throw TypeError(".jarviscrawlercore.ExportArticleResult.imgs: object expected");
                     message.imgs[i] = $root.jarviscrawlercore.ImageInfo.fromObject(object.imgs[i]);
                 }
+            }
+            if (object.titleImage != null) {
+                if (typeof object.titleImage !== "object")
+                    throw TypeError(".jarviscrawlercore.ExportArticleResult.titleImage: object expected");
+                message.titleImage = $root.jarviscrawlercore.ImageInfo.fromObject(object.titleImage);
             }
             return message;
         };
@@ -587,16 +611,17 @@ $root.jarviscrawlercore = (function() {
             if (options.defaults) {
                 object.title = "";
                 object.author = "";
-                object.writetime = "";
+                object.writeTime = "";
                 object.article = "";
                 object.url = "";
+                object.titleImage = null;
             }
             if (message.title != null && message.hasOwnProperty("title"))
                 object.title = message.title;
             if (message.author != null && message.hasOwnProperty("author"))
                 object.author = message.author;
-            if (message.writetime != null && message.hasOwnProperty("writetime"))
-                object.writetime = message.writetime;
+            if (message.writeTime != null && message.hasOwnProperty("writeTime"))
+                object.writeTime = message.writeTime;
             if (message.article != null && message.hasOwnProperty("article"))
                 object.article = message.article;
             if (message.url != null && message.hasOwnProperty("url"))
@@ -606,6 +631,8 @@ $root.jarviscrawlercore = (function() {
                 for (var j = 0; j < message.imgs.length; ++j)
                     object.imgs[j] = $root.jarviscrawlercore.ImageInfo.toObject(message.imgs[j], options);
             }
+            if (message.titleImage != null && message.hasOwnProperty("titleImage"))
+                object.titleImage = $root.jarviscrawlercore.ImageInfo.toObject(message.titleImage, options);
             return object;
         };
 

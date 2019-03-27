@@ -9,7 +9,7 @@ program
     .version(VERSION);
 
 program
-    .command('exparticle [url] [options]')
+    .command('exparticle [url]')
     .description('export article')
     .option('-o, --output [filename]', 'export output file')
     .option('-p, --pdf [filename]', 'export pdf file')
@@ -27,6 +27,7 @@ program
       }
 
       console.log('url - ', url);
+      // console.log('url - ', options);
 
       if (options.output) {
         console.log('output - ', options.output);

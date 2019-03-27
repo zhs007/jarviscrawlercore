@@ -4,7 +4,7 @@ package jarviscrawlercore;
 
 // ImageInfo - image info
 message ImageInfo {
-    string hashname = 1;
+    string hashName = 1;
     string url = 2;
     int32 width = 3;
     int32 height = 4;
@@ -15,8 +15,9 @@ message ImageInfo {
 message ExportArticleResult {
     string title = 1;
     string author = 2;
-    string writetime = 3;
+    string writeTime = 3;
     string article = 4;
     string url = 5;
     repeated ImageInfo imgs = 6;
+    ImageInfo titleImage = 7;
 }

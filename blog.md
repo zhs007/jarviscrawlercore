@@ -11,6 +11,12 @@
 node ./bin/jarviscrawler.js exparticle http://www.baijingapp.com/article/22156 -p ./output/abc.pdf -f A4 -h true -o ./output/abc.pb
 ```
 
+今天晚上把huxiu也处理完了，huxiu的代码质量更好一些，这个可以作为后续的样板。
+
+```
+jarviscrawler.js exparticle https://www.huxiu.com/article/291141.html -o ./output/abc. -p ./output/abc.pdf -f A4 -h true
+```
+
 ### 2019-03-26
 
 关于puppeteer，留点记录。

@@ -316,6 +316,7 @@ $root.jarviscrawlercore = (function() {
          * @property {string|null} [url] ExportArticleResult url
          * @property {Array.<jarviscrawlercore.IImageInfo>|null} [imgs] ExportArticleResult imgs
          * @property {jarviscrawlercore.IImageInfo|null} [titleImage] ExportArticleResult titleImage
+         * @property {Array.<string>|null} [tags] ExportArticleResult tags
          */
 
         /**
@@ -328,6 +329,7 @@ $root.jarviscrawlercore = (function() {
          */
         function ExportArticleResult(properties) {
             this.imgs = [];
+            this.tags = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -391,6 +393,14 @@ $root.jarviscrawlercore = (function() {
         ExportArticleResult.prototype.titleImage = null;
 
         /**
+         * ExportArticleResult tags.
+         * @member {Array.<string>} tags
+         * @memberof jarviscrawlercore.ExportArticleResult
+         * @instance
+         */
+        ExportArticleResult.prototype.tags = $util.emptyArray;
+
+        /**
          * Creates a new ExportArticleResult instance using the specified properties.
          * @function create
          * @memberof jarviscrawlercore.ExportArticleResult
@@ -429,6 +439,9 @@ $root.jarviscrawlercore = (function() {
                     $root.jarviscrawlercore.ImageInfo.encode(message.imgs[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             if (message.titleImage != null && message.hasOwnProperty("titleImage"))
                 $root.jarviscrawlercore.ImageInfo.encode(message.titleImage, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            if (message.tags != null && message.tags.length)
+                for (var i = 0; i < message.tags.length; ++i)
+                    writer.uint32(/* id 8, wireType 2 =*/66).string(message.tags[i]);
             return writer;
         };
 
@@ -485,6 +498,11 @@ $root.jarviscrawlercore = (function() {
                     break;
                 case 7:
                     message.titleImage = $root.jarviscrawlercore.ImageInfo.decode(reader, reader.uint32());
+                    break;
+                case 8:
+                    if (!(message.tags && message.tags.length))
+                        message.tags = [];
+                    message.tags.push(reader.string());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -550,6 +568,13 @@ $root.jarviscrawlercore = (function() {
                 if (error)
                     return "titleImage." + error;
             }
+            if (message.tags != null && message.hasOwnProperty("tags")) {
+                if (!Array.isArray(message.tags))
+                    return "tags: array expected";
+                for (var i = 0; i < message.tags.length; ++i)
+                    if (!$util.isString(message.tags[i]))
+                        return "tags: string[] expected";
+            }
             return null;
         };
 
@@ -590,6 +615,13 @@ $root.jarviscrawlercore = (function() {
                     throw TypeError(".jarviscrawlercore.ExportArticleResult.titleImage: object expected");
                 message.titleImage = $root.jarviscrawlercore.ImageInfo.fromObject(object.titleImage);
             }
+            if (object.tags) {
+                if (!Array.isArray(object.tags))
+                    throw TypeError(".jarviscrawlercore.ExportArticleResult.tags: array expected");
+                message.tags = [];
+                for (var i = 0; i < object.tags.length; ++i)
+                    message.tags[i] = String(object.tags[i]);
+            }
             return message;
         };
 
@@ -606,8 +638,10 @@ $root.jarviscrawlercore = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
+            if (options.arrays || options.defaults) {
                 object.imgs = [];
+                object.tags = [];
+            }
             if (options.defaults) {
                 object.title = "";
                 object.author = "";
@@ -633,6 +667,11 @@ $root.jarviscrawlercore = (function() {
             }
             if (message.titleImage != null && message.hasOwnProperty("titleImage"))
                 object.titleImage = $root.jarviscrawlercore.ImageInfo.toObject(message.titleImage, options);
+            if (message.tags && message.tags.length) {
+                object.tags = [];
+                for (var j = 0; j < message.tags.length; ++j)
+                    object.tags[j] = message.tags[j];
+            }
             return object;
         };
 

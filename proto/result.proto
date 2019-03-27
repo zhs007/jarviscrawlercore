@@ -20,4 +20,5 @@ message ExportArticleResult {
     string url = 5;
     repeated ImageInfo imgs = 6;
     ImageInfo titleImage = 7;
+    repeated string tags = 8;
 }

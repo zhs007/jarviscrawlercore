@@ -72,3 +72,32 @@ async function fetchImage(url) {
     base64data: base64ArrayBuffer(imgbuf),
   };
 }
+
+/**
+ * getElement
+ * @param {string} selector - selector
+ * @return {Element} element - element, it maybe is undefined
+ */
+function getElement(selector) {
+  const lst = $(selector);
+  if (lst.length > 0) {
+    return lst[0];
+  }
+
+  return undefined;
+}
+
+/**
+ * clearArticleElement
+ * @param {Element} body - body
+ */
+function clearArticleElement(body) {
+  for (let i = 0; i < body.childNodes.length; ) {
+    if (body.childNodes[i].className != 'article-head' &&
+    body.childNodes[i].className != 'article-body') {
+      body.childNodes[i].remove();
+    } else {
+      ++i;
+    }
+  }
+}

@@ -158,7 +158,11 @@ async function formatArticle(page) {
 
             const curnode = document.createElement('p');
             curnode.style.cssText = 'text-align: center;';
-            curnode.appendChild(curimgs[0]);
+
+            const curimg = document.createElement('img');
+            curimg.src = curimgs[0].src;
+            curnode.appendChild(curimg);
+
             newbody.appendChild(curnode);
 
             // for (let j = 0; j < lstp[i].children.length; ) {

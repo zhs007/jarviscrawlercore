@@ -3,6 +3,7 @@ const fs = require('fs');
 const {jarviscrawlercore} = require('../proto/result');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
+const images = require('images');
 
 /**
  * save protobuf message
@@ -36,6 +37,27 @@ function hashMD5(buf) {
   return crypto.createHash('md5').update(buf).digest('hex');
 }
 
+/**
+ * set ImageInfo with img
+ * @param {ImageInfo} imginfo - imginfo
+ * @param {object} img - img object
+* @return {ImageInfo} imginfo - imginfo
+ */
+function setImageInfo(imginfo, img) {
+  imginfo.data = Buffer.from(img.base64data, 'base64');
+
+  imginfo.hashName = hashMD5(imginfo.data);
+
+  const curimg = images(imginfo.data);
+  if ( curimg) {
+    imginfo.width = curimg.width();
+    imginfo.height = curimg.height();
+  }
+
+  return imginfo;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
+exports.setImageInfo = setImageInfo;

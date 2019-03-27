@@ -9,28 +9,31 @@ program
     .version(VERSION);
 
 program
-    .command('exparticle [url]')
+    .command('exparticle [url] [options]')
     .description('export article')
+    .option('-o, --output [filename]', 'export output file')
     .option('-p, --pdf [filename]', 'export pdf file')
     .option('-f, --pdfformat [format]', 'like A4')
     .option('-j, --jpg [filename]', 'export jpg file')
     .option('-h, --headless [isheadless]', 'headless mode')
-    .option('-o, --output [filename]', 'export output file')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
       if (!url) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler exparticle --help');
+
         return;
       }
 
       console.log('url - ', url);
 
-      if (options.pdf) {
-        console.log('pdf - ', options.pdf);
-      }
-
       if (options.output) {
         console.log('output - ', options.output);
+      }
+
+      if (options.pdf) {
+        console.log('pdf - ', options.pdf);
       }
 
       console.log('pdfformat - ', options.pdfformat);

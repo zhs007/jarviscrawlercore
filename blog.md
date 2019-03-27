@@ -5,6 +5,12 @@
 今天把``exparticle``重构了一版，这个版本功能基本能达到目前的需求了。  
 数据没有用``json``的，而是直接用了``protobuf``，支持未压缩的文件和zip压缩文件，把图片打包进去了。
 
+今天把baijingapp的处理完了，可以通过下面命令行使用。
+
+```
+node ./bin/jarviscrawler.js exparticle http://www.baijingapp.com/article/22156 -p ./output/abc.pdf -f A4 -h true -o ./output/abc.pb
+```
+
 ### 2019-03-26
 
 关于puppeteer，留点记录。

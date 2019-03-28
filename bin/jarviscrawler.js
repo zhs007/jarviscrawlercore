@@ -1,5 +1,6 @@
 const program = require('commander');
 const {exportArticle} = require('../src/exportarticle/exportarticle');
+const {tracing} = require('../src/tracing/tracing');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -53,6 +54,35 @@ program
             options.pdfformat,
             options.jpg,
             headless);
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('tracing [url]')
+    .description('tracing page')
+    .option('-o, --output [filename]', 'export output file')
+    .action(function(url, options) {
+      console.log('version is ', VERSION);
+
+      if (!url || !options.output) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler tracing --help');
+
+        return;
+      }
+
+      console.log('url - ', url);
+      console.log('output - ', options.output);
+
+      (async () => {
+        await tracing(url,
+            options.output);
       })().catch((err) => {
         console.log('catch a err ', err);
 

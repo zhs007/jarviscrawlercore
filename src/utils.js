@@ -41,12 +41,27 @@ function hashMD5(buf) {
  * set ImageInfo with img
  * @param {ImageInfo} imginfo - imginfo
  * @param {object} img - img object
-* @return {ImageInfo} imginfo - imginfo
+ * @param {object} mapResponse - map response
+ * @return {ImageInfo} imginfo - imginfo
  */
-function setImageInfo(imginfo, img) {
-  imginfo.data = Buffer.from(img.base64data, 'base64');
+function setImageInfo(imginfo, img, mapResponse) {
+//   console.log(img.url);
 
-  imginfo.hashName = hashMD5(imginfo.data);
+  if (mapResponse[img.url]) {
+    // if (img.url == 'https://am.zdmimg.com/201903/25/5c9890c9be965233.jpg-90_e600.jpg') {
+    //   console.log(img.url);
+    //   console.log(mapResponse[img.url].length);
+    // }
+
+    imginfo.data = mapResponse[img.url];
+
+    // console.log(imginfo.data.byteLength);
+    // imginfo.data = mapResponse[img.url].arrayBuffer();
+
+    imginfo.hashName = hashMD5(imginfo.data);
+
+    // fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+  }
 
   //   try {
   //     const curimg = images(imginfo.data);

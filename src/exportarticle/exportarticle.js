@@ -1,31 +1,46 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
+const {jarviscrawlercore} = require('../../proto/result');
+const {saveMessage, setImageInfo} = require('../utils');
 
 /**
  * export article to a pdf file or a jpg file.
  * @param {string} url - URL
+ * @param {string} outputfile - output file
  * @param {string} pdffile - pdf filename
  * @param {string} pdfformat - pdf format, like A4
  * @param {string} jpgfile - jpg filename
+ * @param {bool} headless - headless mode
  */
-async function exportArticle(url, pdffile, pdfformat, jpgfile) {
+async function exportArticle(url, outputfile, pdffile, pdfformat,
+    jpgfile, headless) {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: headless,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
     ],
   });
 
+  const mapResponse = {};
+
   const page = await browser.newPage();
-  page._onCertificateError = (error)=> {
-    console.log('invalid cert', error);
-  };
+  page.on('response', async (response) => {
+    const url = response.url();
+    const headers = response.headers();
+    if (headers && headers['content-type'] &&
+        headers['content-type'].indexOf('image') == 0) {
+      mapResponse[url] = await response.buffer();
+    }
+  });
 
   await page.goto(url, {
     waitUntil: 'networkidle2',
     timeout: 0,
   });
+  await page.addScriptTag({path: './browser/utils.js'});
+  // await importScript(page);
+  // await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
 
   if (jpgfile && jpgfile != '') {
     await page.screenshot({
@@ -36,7 +51,27 @@ async function exportArticle(url, pdffile, pdfformat, jpgfile) {
     });
   }
 
-  await mgrPlugins.procTask(url, page);
+  const ret = await mgrPlugins.procTask(url, page);
+  if (ret) {
+    const result = new jarviscrawlercore.ExportArticleResult(ret);
+
+    result.url = url;
+
+    if (ret.titleImage) {
+      result.titleImage = setImageInfo(result.titleImage,
+          ret.titleImage, mapResponse);
+    }
+
+    if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
+      for (let i = 0; i < ret.imgs.length; ++i) {
+        result.imgs[i] = setImageInfo(result.imgs[i], ret.imgs[i], mapResponse);
+      }
+    }
+
+    if (outputfile) {
+      saveMessage(outputfile, result);
+    }
+  }
 
   if (pdffile && pdffile != '') {
     if (!pdfformat) {

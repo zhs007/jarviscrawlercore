@@ -49,7 +49,7 @@ function setImageInfo(imginfo, img, mapResponse) {
 
     imginfo.hashName = hashMD5(imginfo.data);
 
-    // fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+    fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
   }
 
   return imginfo;

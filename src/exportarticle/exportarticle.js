@@ -25,8 +25,15 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
   const mapResponse = {};
 
   const page = await browser.newPage();
+  await page.setBypassCSP(true);
+  // await page.setRequestInterception(true);
+  // page.on('request', (req) => {
+  //   intercept(req, scenario.url);
+  // });
+
   page.on('response', async (response) => {
     const url = response.url();
+    // console.log(url);
     const headers = response.headers();
     if (headers && headers['content-type'] &&
         headers['content-type'].indexOf('image') == 0) {
@@ -38,6 +45,7 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
     waitUntil: 'networkidle2',
     timeout: 0,
   });
+  await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'});
   await page.addScriptTag({path: './browser/utils.js'});
   // await importScript(page);
   // await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
@@ -52,6 +60,9 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
   }
 
   const ret = await mgrPlugins.procTask(url, page);
+  await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
+    console.log('catch a err ', err);
+  });
   if (ret) {
     const result = new jarviscrawlercore.ExportArticleResult(ret);
 

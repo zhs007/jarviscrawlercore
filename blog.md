@@ -10,6 +10,12 @@
 node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pb -p ./output/abc.pdf -f A4 -h true
 ```
 
+今天还支持了知乎，解决了CSP的问题，解决了jquery加载的问题，解决了图片延迟加载的问题。
+
+```
+node ./bin/jarviscrawler.js exparticle https://zhuanlan.zhihu.com/p/59909721 -o ./output/abc. -p output/abc.pdf -f A4 -h true
+```
+
 ### 2019-03-27
 
 今天把``exparticle``重构了一版，这个版本功能基本能达到目前的需求了。  

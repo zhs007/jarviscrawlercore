@@ -6,6 +6,10 @@
 
 今天支持了smzdm，发现几个新的问题，包括当前页面请求图片可能也会出现跨域问题(#15)，和images库对图片格式支持不全(#16)。
 
+```
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pb -p ./output/abc.pdf -f A4 -h true
+```
+
 ### 2019-03-27
 
 今天把``exparticle``重构了一版，这个版本功能基本能达到目前的需求了。  
@@ -20,7 +24,7 @@ node ./bin/jarviscrawler.js exparticle http://www.baijingapp.com/article/22156 -
 今天晚上把huxiu也处理完了，huxiu的代码质量更好一些，这个可以作为后续的样板。
 
 ```
-jarviscrawler.js exparticle https://www.huxiu.com/article/291141.html -o ./output/abc. -p ./output/abc.pdf -f A4 -h true
+node ./bin/jarviscrawler.js exparticle https://www.huxiu.com/article/291141.html -o ./output/abc.pb -p ./output/abc.pdf -f A4 -h true
 ```
 
 ### 2019-03-26

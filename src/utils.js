@@ -3,7 +3,6 @@ const fs = require('fs');
 const {jarviscrawlercore} = require('../proto/result');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
-// const images = require('images');
 
 /**
  * save protobuf message
@@ -45,33 +44,13 @@ function hashMD5(buf) {
  * @return {ImageInfo} imginfo - imginfo
  */
 function setImageInfo(imginfo, img, mapResponse) {
-//   console.log(img.url);
-
   if (mapResponse[img.url]) {
-    // if (img.url == 'https://am.zdmimg.com/201903/25/5c9890c9be965233.jpg-90_e600.jpg') {
-    //   console.log(img.url);
-    //   console.log(mapResponse[img.url].length);
-    // }
-
     imginfo.data = mapResponse[img.url];
-
-    // console.log(imginfo.data.byteLength);
-    // imginfo.data = mapResponse[img.url].arrayBuffer();
 
     imginfo.hashName = hashMD5(imginfo.data);
 
     // fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
   }
-
-  //   try {
-  //     const curimg = images(imginfo.data);
-  //     if ( curimg) {
-  //       imginfo.width = curimg.width();
-  //       imginfo.height = curimg.height();
-  //     }
-  //   } catch (err) {
-  //     console.log('setImageInfo error! ', imginfo.url, err);
-  //   }
 
   return imginfo;
 }

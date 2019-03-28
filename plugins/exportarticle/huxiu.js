@@ -108,6 +108,13 @@ async function formatArticle(page) {
             curnode.style.cssText = 'text-align: center;';
 
             const curimg = document.createElement('img');
+            curimg.onload = () => {
+              ret.imgs[ret.imgs.length - 1].width = curimg.width;
+              ret.imgs[ret.imgs.length - 1].height = curimg.height;
+
+              // console.log(curimg.width);
+              // console.log(curimg.height);
+            };
             curimg.src = curimgs[0].src;
 
             curnode.appendChild(curimg);

@@ -3,7 +3,7 @@ const fs = require('fs');
 const {jarviscrawlercore} = require('../proto/result');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
-const images = require('images');
+// const images = require('images');
 
 /**
  * save protobuf message
@@ -48,11 +48,15 @@ function setImageInfo(imginfo, img) {
 
   imginfo.hashName = hashMD5(imginfo.data);
 
-  const curimg = images(imginfo.data);
-  if ( curimg) {
-    imginfo.width = curimg.width();
-    imginfo.height = curimg.height();
-  }
+  //   try {
+  //     const curimg = images(imginfo.data);
+  //     if ( curimg) {
+  //       imginfo.width = curimg.width();
+  //       imginfo.height = curimg.height();
+  //     }
+  //   } catch (err) {
+  //     console.log('setImageInfo error! ', imginfo.url, err);
+  //   }
 
   return imginfo;
 }

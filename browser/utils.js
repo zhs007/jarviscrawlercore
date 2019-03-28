@@ -64,7 +64,8 @@ function base64ArrayBuffer(arrayBuffer) {
  * @return {ImageInfo} image info
  */
 async function fetchImage(url) {
-  const response = await fetch(url);
+  // console.log(url);
+  const response = await fetch(url, {mode: 'no-cors'});
   const imgbuf = await response.arrayBuffer();
 
   return {

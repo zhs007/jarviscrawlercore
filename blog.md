@@ -1,5 +1,13 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-03-29
+
+今天加了confluence的bot，现在可以获取更新。
+
+```
+node ./bin/jarviscrawler.js confluencebot ./cfg/confluence.yaml -h false
+```
+
 ### 2019-03-28
 
 这几天还在考虑数据存储到底是用``html``还是``markdown``，``html``的格式化现在做得差不多了，但如果最后要自己渲染的话，``markdown``其实还是有些优势的，特别是代码段这些，会方便很多。  

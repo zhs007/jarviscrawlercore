@@ -1,6 +1,7 @@
 const program = require('commander');
 const {exportArticle} = require('../src/exportarticle/exportarticle');
 const {tracing} = require('../src/tracing/tracing');
+const {confluencebot} = require('../src/confluencebot/confluencebot');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -41,8 +42,7 @@ program
       console.log('pdfformat - ', options.pdfformat);
       console.log('jpg - ', options.jpg);
 
-      const headless = options.headless === 'true';
-
+      const headless = (options.headless === 'true');
       console.log('headless - ', headless);
       //   console.log(url);
       //   console.log(options);
@@ -67,6 +67,7 @@ program
     .command('tracing [url]')
     .description('tracing page')
     .option('-o, --output [filename]', 'export output file')
+    .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -80,9 +81,43 @@ program
       console.log('url - ', url);
       console.log('output - ', options.output);
 
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
       (async () => {
         await tracing(url,
-            options.output);
+            options.output,
+            headless);
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('confluencebot [cfgfile]')
+    .description('a confluence bot')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(cfgfile, options) {
+      console.log('version is ', VERSION);
+
+      if (!cfgfile) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler confluencebot --help');
+
+        return;
+      }
+
+      console.log('cfgfile - ', cfgfile);
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        await confluencebot(cfgfile,
+            headless);
       })().catch((err) => {
         console.log('catch a err ', err);
 

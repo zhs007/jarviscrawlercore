@@ -22,3 +22,21 @@ message ExportArticleResult {
     ImageInfo titleImage = 7;
     repeated string tags = 8;
 }
+
+// ConfluenceUpdateItem - confluence all updates - item
+message ConfluenceUpdateItem {
+    string title = 1;
+    string url = 2;
+    string summary = 3;
+}
+
+// ConfluenceUpdateGrouping - confluence all updates - grouping
+message ConfluenceUpdateGrouping {
+    string author = 1;
+    repeated ConfluenceUpdateItem items = 2;
+}
+
+// ExportArticleResult - export article result
+message ConfluenceAllUpdates {
+    repeated ConfluenceUpdateGrouping updates = 1;
+}

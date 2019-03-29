@@ -4,10 +4,11 @@ const puppeteer = require('puppeteer');
  * export article to a pdf file or a jpg file.
  * @param {string} url - URL
  * @param {string} outputfile - output file
+ * @param {bool} headless - headless mode
  */
-async function tracing(url, outputfile) {
+async function tracing(url, outputfile, headless) {
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: headless,
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',

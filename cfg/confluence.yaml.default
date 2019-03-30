@@ -1,3 +1,8 @@
 url: https://conf.abc.com
 username: user
 password: 123
+actions:
+  - 
+    action: addcomment
+    page: 65758
+    comment: I am a bot.

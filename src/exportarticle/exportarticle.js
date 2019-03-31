@@ -42,10 +42,10 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
   });
 
   await page.goto(url, {
-    waitUntil: 'networkidle2',
+    waitUntil: 'load',
     timeout: 0,
   });
-  await page.addScriptTag({url: 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'});
+  await page.addScriptTag({url: './jquery3.3.1.min.js'});
   await page.addScriptTag({path: './browser/utils.js'});
   // await importScript(page);
   // await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});

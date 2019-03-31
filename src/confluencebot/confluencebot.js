@@ -35,10 +35,6 @@ async function confluencebot(cfgfile, headless) {
     console.log('catch a err ', err);
   });
 
-  //   await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
-  //     console.log('catch a err ', err);
-  //   });
-
   await runActions(page, cfg);
 
 //   await browser.close();

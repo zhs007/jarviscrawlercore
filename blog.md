@@ -1,5 +1,16 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-02
+
+今天调整了``exparticle``的参数。  
+取消了以前可以同时输出``protobuf``、``pdf``、``jpg``的方案，现在一次只能输出一种格式。  
+
+```
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pdf -m pdf -h true
+
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.jpg -m jpg -h true
+```
+
 ### 2019-03-29
 
 今天加了confluence的bot，现在可以获取更新。

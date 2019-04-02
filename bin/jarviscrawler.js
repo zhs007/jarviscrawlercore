@@ -14,14 +14,15 @@ program
     .command('exparticle [url]')
     .description('export article')
     .option('-o, --output [filename]', 'export output file')
-    .option('-p, --pdf [filename]', 'export pdf file')
+    .option('-m, --mode [mode]', 'export mode, like pdf, pb, jpg')
     .option('-f, --pdfformat [format]', 'like A4')
-    .option('-j, --jpg [filename]', 'export jpg file')
     .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-q, --jquery [isattach]', 'attach jquery')
+    .option('-j, --jpgquality [quality]', 'jpg quality')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
-      if (!url) {
+      if (!url || !options.output) {
         console.log('command wrong, please type ' +
           'jarviscrawler exparticle --help');
 
@@ -29,30 +30,43 @@ program
       }
 
       console.log('url - ', url);
-      // console.log('url - ', options);
 
       if (options.output) {
         console.log('output - ', options.output);
       }
 
-      if (options.pdf) {
-        console.log('pdf - ', options.pdf);
+      if (options.mode) {
+        console.log('mode - ', options.mode);
+      } else {
+        options.mode = 'pb';
       }
 
-      console.log('pdfformat - ', options.pdfformat);
-      console.log('jpg - ', options.jpg);
+      if (options.mode == 'pdf') {
+        if (!options.pdfformat) {
+          options.pdfformat = 'A4';
+        }
+
+        console.log('pdfformat - ', options.pdfformat);
+      } else if (options.mode == 'jpg') {
+        if (!options.jpgquality) {
+          options.jpgquality = 60;
+        }
+
+        console.log('jpgquality - ', options.jpgquality);
+      }
 
       const headless = (options.headless === 'true');
       console.log('headless - ', headless);
-      //   console.log(url);
-      //   console.log(options);
+
+      const jquery = (options.jquery === 'true');
+      console.log('jquery - ', jquery);
 
       (async () => {
         await exportArticle(url,
             options.output,
-            options.pdf,
+            options.mode,
             options.pdfformat,
-            options.jpg,
+            options.jpgquality,
             headless);
       })().catch((err) => {
         console.log('catch a err ', err);

@@ -2,18 +2,20 @@ const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
 const {jarviscrawlercore} = require('../../proto/result');
 const {saveMessage, setImageInfo} = require('../utils');
+const {exportJPG} = require('./expjpg');
 
 /**
  * export article to a pdf file or a jpg file.
  * @param {string} url - URL
  * @param {string} outputfile - output file
- * @param {string} pdffile - pdf filename
+ * @param {string} mode - mode
  * @param {string} pdfformat - pdf format, like A4
- * @param {string} jpgfile - jpg filename
+ * @param {int} jpgquality - jpg quality, like 60
  * @param {bool} headless - headless mode
+ * @param {bool} jquery - attach jquery
  */
-async function exportArticle(url, outputfile, pdffile, pdfformat,
-    jpgfile, headless) {
+async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
+    headless, jquery) {
   const browser = await puppeteer.launch({
     headless: headless,
     args: [
@@ -36,63 +38,52 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
     // console.log(url);
     const headers = response.headers();
     if (headers && headers['content-type'] &&
-        headers['content-type'].indexOf('image') == 0) {
+          headers['content-type'].indexOf('image') == 0) {
       mapResponse[url] = await response.buffer();
     }
   });
 
-  await page.goto(url, {
-    waitUntil: 'load',
-    timeout: 0,
-  });
-  await page.addScriptTag({url: './jquery3.3.1.min.js'});
-  await page.addScriptTag({path: './browser/utils.js'});
-  // await importScript(page);
-  // await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
+  await page.goto(url);
 
-  if (jpgfile && jpgfile != '') {
-    await page.screenshot({
-      path: jpgfile,
-      type: 'jpeg',
-      quality: 60,
-      fullPage: true,
-    });
+  if (jquery) {
+    await page.addScriptTag({url: './jquery3.3.1.min.js'});
   }
 
-  const ret = await mgrPlugins.procTask(url, page);
-  await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
-    console.log('catch a err ', err);
-  });
-  if (ret) {
-    const result = new jarviscrawlercore.ExportArticleResult(ret);
+  await page.addScriptTag({path: './browser/utils.js'});
 
-    result.url = url;
+  if (mode == 'jpg') {
+    await exportJPG(page, outputfile);
+  } else {
+    const ret = await mgrPlugins.procTask(url, page);
 
-    if (ret.titleImage) {
-      result.titleImage = setImageInfo(result.titleImage,
-          ret.titleImage, mapResponse);
-    }
+    if (ret) {
+      const result = new jarviscrawlercore.ExportArticleResult(ret);
 
-    if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
-      for (let i = 0; i < ret.imgs.length; ++i) {
-        result.imgs[i] = setImageInfo(result.imgs[i], ret.imgs[i], mapResponse);
+      result.url = url;
+
+      if (ret.titleImage) {
+        result.titleImage = setImageInfo(result.titleImage,
+            ret.titleImage, mapResponse);
+      }
+
+      if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
+        for (let i = 0; i < ret.imgs.length; ++i) {
+          result.imgs[i] = setImageInfo(result.imgs[i],
+              ret.imgs[i], mapResponse);
+        }
+      }
+
+      if (mode == 'pb') {
+        saveMessage(outputfile, result);
       }
     }
 
-    if (outputfile) {
-      saveMessage(outputfile, result);
+    if (mode == 'pb') {
+      await page.pdf({
+        path: outputfile,
+        format: pdfformat,
+      });
     }
-  }
-
-  if (pdffile && pdffile != '') {
-    if (!pdfformat) {
-      pdfformat = 'A4';
-    }
-
-    await page.pdf({
-      path: pdffile,
-      format: pdfformat,
-    });
   }
 
   await browser.close();

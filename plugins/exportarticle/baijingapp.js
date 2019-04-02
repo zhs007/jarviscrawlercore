@@ -21,6 +21,10 @@ function ismine(url) {
  * @param {object} page -
  */
 async function proc(url, page) {
+  await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
+    console.log('catch a err ', err);
+  });
+
   const dom = await page.$eval(
       '.aw-mod.aw-question-detail',
       (element) => {

@@ -19,6 +19,10 @@ function ismine(url) {
  * @param {object} page -
  */
 async function proc(url, page) {
+  await page.waitForNavigation({waitUntil: 'domcontentloaded'}).catch((err) => {
+    console.log('catch a err ', err);
+  });
+
   const dom = await page.$eval(
       '.Post-content',
       (element) => {
@@ -61,7 +65,7 @@ async function proc(url, page) {
  * @return {ExportArticleResult} result - result
  */
 async function formatArticle(page) {
-  return await page.evaluate(async () => {
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
 
@@ -196,6 +200,12 @@ async function formatArticle(page) {
 
     return ret;
   });
+
+  await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
+    console.log('catch a err ', err);
+  });
+
+  return ret;
 }
 
 mgrPlugins.regPlugin('zhihu.article', ismine, proc, formatArticle);

@@ -37,6 +37,7 @@ message ExportArticleResult {
     ImageInfo titleImage = 7;
     repeated string tags = 8;
     repeated Paragraph paragraphs = 9;
+    string summary = 10;
 }
 
 // ConfluenceUpdateItem - confluence all updates - item

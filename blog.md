@@ -15,6 +15,8 @@ node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./o
 node ./bin/jarviscrawler.js exparticle https://zhuanlan.zhihu.com/p/60881398 -o ./output/abc.pdf -m pdf -h true -i true -q true
 
 node ./bin/jarviscrawler.js exparticle https://www.zhihu.com/question/295675918/answer/600007589 -o ./output/abc.pdf -m pdf -h true -i true -q true
+
+node ./bin/jarviscrawler.js exparticle https://36kr.com/p/5191170 -o ./output/abc.pdf -m pdf -h true -i true -q true
 ```
 
 ### 2019-03-29

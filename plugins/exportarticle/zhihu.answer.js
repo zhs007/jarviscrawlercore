@@ -39,7 +39,7 @@ async function getQuestion(page) {
 async function exportArticle(page) {
   const q = await getQuestion(page);
 
-  console.log(q);
+  // console.log(q);
 
   const dom = await page.$eval(
       '.Card.AnswerCard',
@@ -100,7 +100,8 @@ async function exportArticle(page) {
         ret.writeTime = objarticletime.innerText;
       }
 
-      const articlenode = getElement('.RichText.ztext.CopyrightRichText-richText');
+      const articlenode = getElement(
+          '.RichText.ztext.CopyrightRichText-richText');
       if (articlenode) {
         // if (articlenode.children.length > 1) {
         //   articlenode = articlenode.children[1];

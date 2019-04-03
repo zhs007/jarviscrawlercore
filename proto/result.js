@@ -606,6 +606,7 @@ $root.jarviscrawlercore = (function() {
          * @property {jarviscrawlercore.IImageInfo|null} [titleImage] ExportArticleResult titleImage
          * @property {Array.<string>|null} [tags] ExportArticleResult tags
          * @property {Array.<jarviscrawlercore.IParagraph>|null} [paragraphs] ExportArticleResult paragraphs
+         * @property {string|null} [summary] ExportArticleResult summary
          */
 
         /**
@@ -699,6 +700,14 @@ $root.jarviscrawlercore = (function() {
         ExportArticleResult.prototype.paragraphs = $util.emptyArray;
 
         /**
+         * ExportArticleResult summary.
+         * @member {string} summary
+         * @memberof jarviscrawlercore.ExportArticleResult
+         * @instance
+         */
+        ExportArticleResult.prototype.summary = "";
+
+        /**
          * Creates a new ExportArticleResult instance using the specified properties.
          * @function create
          * @memberof jarviscrawlercore.ExportArticleResult
@@ -743,6 +752,8 @@ $root.jarviscrawlercore = (function() {
             if (message.paragraphs != null && message.paragraphs.length)
                 for (var i = 0; i < message.paragraphs.length; ++i)
                     $root.jarviscrawlercore.Paragraph.encode(message.paragraphs[i], writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
+            if (message.summary != null && message.hasOwnProperty("summary"))
+                writer.uint32(/* id 10, wireType 2 =*/82).string(message.summary);
             return writer;
         };
 
@@ -809,6 +820,9 @@ $root.jarviscrawlercore = (function() {
                     if (!(message.paragraphs && message.paragraphs.length))
                         message.paragraphs = [];
                     message.paragraphs.push($root.jarviscrawlercore.Paragraph.decode(reader, reader.uint32()));
+                    break;
+                case 10:
+                    message.summary = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -890,6 +904,9 @@ $root.jarviscrawlercore = (function() {
                         return "paragraphs." + error;
                 }
             }
+            if (message.summary != null && message.hasOwnProperty("summary"))
+                if (!$util.isString(message.summary))
+                    return "summary: string expected";
             return null;
         };
 
@@ -947,6 +964,8 @@ $root.jarviscrawlercore = (function() {
                     message.paragraphs[i] = $root.jarviscrawlercore.Paragraph.fromObject(object.paragraphs[i]);
                 }
             }
+            if (object.summary != null)
+                message.summary = String(object.summary);
             return message;
         };
 
@@ -975,6 +994,7 @@ $root.jarviscrawlercore = (function() {
                 object.article = "";
                 object.url = "";
                 object.titleImage = null;
+                object.summary = "";
             }
             if (message.title != null && message.hasOwnProperty("title"))
                 object.title = message.title;
@@ -1003,6 +1023,8 @@ $root.jarviscrawlercore = (function() {
                 for (var j = 0; j < message.paragraphs.length; ++j)
                     object.paragraphs[j] = $root.jarviscrawlercore.Paragraph.toObject(message.paragraphs[j], options);
             }
+            if (message.summary != null && message.hasOwnProperty("summary"))
+                object.summary = message.summary;
             return object;
         };
 

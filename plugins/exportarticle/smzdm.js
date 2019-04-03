@@ -13,16 +13,31 @@ function ismine(url) {
   return false;
 }
 
-/**
- * ismine
- * @param {string} url - URL
- * @param {object} page -
- */
-async function proc(url, page) {
-  // await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
-  //   console.log('catch a err ', err);
-  // });
+// /**
+//  * ismine
+//  * @param {string} url - URL
+//  * @param {object} page -
+//  */
+// async function proc(url, page) {
+//   // await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
+//   //   console.log('catch a err ', err);
+//   // });
 
+//   const dom = await page.$eval(
+//       '.leftWrap',
+//       (element) => {
+//         return element.innerHTML;
+//       });
+
+//   await page.setContent(dom);
+// }
+
+/**
+ * exportArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
+ */
+async function exportArticle(page) {
   const dom = await page.$eval(
       '.leftWrap',
       (element) => {
@@ -30,14 +45,7 @@ async function proc(url, page) {
       });
 
   await page.setContent(dom);
-}
 
-/**
- * formatArticle
- * @param {object} page - page
- * @return {ExportArticleResult} result - result
- */
-async function formatArticle(page) {
   return await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
@@ -137,7 +145,7 @@ async function formatArticle(page) {
             const curnode = document.createElement('h2');
 
             curnode.innerText = articlenode.children[i].innerText;
-            curnode.className = 'article-body-h1';
+            // curnode.className = 'article-body-h2';
 
             ret.paragraphs.push({pt: 3, text: curnode.innerText});
 
@@ -172,4 +180,4 @@ async function formatArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('smzdm.article', ismine, proc, formatArticle);
+mgrPlugins.regPlugin('smzdm.article', ismine, exportArticle);

@@ -67,7 +67,7 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
 
     await page.addScriptTag({path: './browser/utils.js'});
 
-    const ret = await mgrPlugins.procTask(url, page);
+    const ret = await mgrPlugins.exportArticle(url, page);
 
     if (ret) {
       const result = new jarviscrawlercore.ExportArticleResult(ret);

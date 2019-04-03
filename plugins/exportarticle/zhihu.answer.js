@@ -29,7 +29,7 @@ async function proc(url, page) {
         return element.innerHTML;
       });
 
-  await page.setContent(dom);
+  // await page.setContent(dom);
 }
 
 /**

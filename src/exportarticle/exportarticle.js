@@ -13,9 +13,10 @@ const {exportJPG} = require('./expjpg');
  * @param {int} jpgquality - jpg quality, like 60
  * @param {bool} headless - headless mode
  * @param {bool} jquery - attach jquery
+ * @param {bool} isoutpurimages - is output images
  */
 async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
-    headless, jquery) {
+    headless, jquery, isoutpurimages) {
   const browser = await puppeteer.launch({
     headless: headless,
     args: [
@@ -34,6 +35,10 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
   // });
 
   page.on('response', async (response) => {
+    if (!response) {
+      return;
+    }
+
     const url = response.url();
     // console.log(url);
     const headers = response.headers();
@@ -43,17 +48,25 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
     }
   });
 
-  await page.goto(url);
+  await page.goto(url,
+      {
+        waitUntil: 'networkidle2',
+        timeout: 0,
+      }).catch((err) => {
+    console.log('page.goto', url, err);
+  });
 
-  if (jquery) {
-    await page.addScriptTag({url: './jquery3.3.1.min.js'});
-  }
-
-  await page.addScriptTag({path: './browser/utils.js'});
+  // await page.goto(url);
 
   if (mode == 'jpg') {
-    await exportJPG(page, outputfile);
+    await exportJPG(page, outputfile, jpgquality);
   } else {
+    if (jquery) {
+      await page.addScriptTag({url: './jquery3.3.1.min.js'});
+    }
+
+    await page.addScriptTag({path: './browser/utils.js'});
+
     const ret = await mgrPlugins.procTask(url, page);
 
     if (ret) {
@@ -63,13 +76,13 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
 
       if (ret.titleImage) {
         result.titleImage = setImageInfo(result.titleImage,
-            ret.titleImage, mapResponse);
+            ret.titleImage, mapResponse, isoutpurimages);
       }
 
       if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
         for (let i = 0; i < ret.imgs.length; ++i) {
           result.imgs[i] = setImageInfo(result.imgs[i],
-              ret.imgs[i], mapResponse);
+              ret.imgs[i], mapResponse, isoutpurimages);
         }
       }
 
@@ -78,7 +91,7 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
       }
     }
 
-    if (mode == 'pb') {
+    if (mode == 'pdf') {
       await page.pdf({
         path: outputfile,
         format: pdfformat,

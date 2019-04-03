@@ -19,6 +19,7 @@ program
     .option('-h, --headless [isheadless]', 'headless mode')
     .option('-q, --jquery [isattach]', 'attach jquery')
     .option('-j, --jpgquality [quality]', 'jpg quality')
+    .option('-i, --images [isoutput]', 'output images')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -50,9 +51,16 @@ program
       } else if (options.mode == 'jpg') {
         if (!options.jpgquality) {
           options.jpgquality = 60;
+        } else {
+          options.jpgquality = parseInt(options.jpgquality);
         }
 
         console.log('jpgquality - ', options.jpgquality);
+      }
+
+      const images = (options.images === 'true');
+      if (options.mode == 'pdf' || options.mode == 'pb') {
+        console.log('images - ', images);
       }
 
       const headless = (options.headless === 'true');
@@ -67,7 +75,9 @@ program
             options.mode,
             options.pdfformat,
             options.jpgquality,
-            headless);
+            headless,
+            jquery,
+            images);
       })().catch((err) => {
         console.log('catch a err ', err);
 

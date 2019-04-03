@@ -19,9 +19,9 @@ function ismine(url) {
  * @param {object} page -
  */
 async function proc(url, page) {
-  await page.waitForNavigation({waitUntil: 'domcontentloaded'}).catch((err) => {
-    console.log('catch a err ', err);
-  });
+  // await page.waitForNavigation({waitUntil: 'domcontentloaded'}).catch((err) => {
+  //   console.log('catch a err ', err);
+  // });
 
   const dom = await page.$eval(
       '.Post-content',

@@ -41,15 +41,18 @@ function hashMD5(buf) {
  * @param {ImageInfo} imginfo - imginfo
  * @param {object} img - img object
  * @param {object} mapResponse - map response
+ * @param {bool} isoutpurimages - is output images
  * @return {ImageInfo} imginfo - imginfo
  */
-function setImageInfo(imginfo, img, mapResponse) {
+function setImageInfo(imginfo, img, mapResponse, isoutpurimages) {
   if (mapResponse[img.url]) {
     imginfo.data = mapResponse[img.url];
 
     imginfo.hashName = hashMD5(imginfo.data);
 
-    fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+    if (isoutpurimages) {
+      fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+    }
   }
 
   return imginfo;

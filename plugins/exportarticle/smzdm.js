@@ -134,7 +134,7 @@ async function formatArticle(page) {
 
             objarticlebody.appendChild(curnode);
           } else if (articlenode.children[i].tagName == 'text-big-title') {
-            const curnode = document.createElement('p');
+            const curnode = document.createElement('h2');
 
             curnode.innerText = articlenode.children[i].innerText;
             curnode.className = 'article-body-h1';

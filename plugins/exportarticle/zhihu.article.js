@@ -68,6 +68,7 @@ async function formatArticle(page) {
   const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
+    window.waitimgs = 0;
 
     const objbody = getElement('body');
     if (objbody) {
@@ -157,11 +158,16 @@ async function formatArticle(page) {
                 ret.imgs[ret.imgs.length - 1].width = curimg.width;
                 ret.imgs[ret.imgs.length - 1].height = curimg.height;
 
+                if (window.waitimgs > 0) {
+                  --window.waitimgs;
+                }
+
                 // console.log(curimg.width);
                 // console.log(curimg.height);
               };
 
               curimg.src = curimgs[0].dataset['src'];
+              ++window.waitimgs;
 
               curnode.appendChild(curimg);
 
@@ -201,8 +207,8 @@ async function formatArticle(page) {
     return ret;
   });
 
-  await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
-    console.log('catch a err ', err);
+  await page.waitForFunction('window.waitimgs == 0').catch((err) => {
+    console.log('zhihu.article.formatArticle', err);
   });
 
   return ret;

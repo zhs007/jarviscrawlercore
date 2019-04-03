@@ -62,7 +62,7 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
     await exportJPG(page, outputfile, jpgquality);
   } else {
     if (jquery) {
-      await page.addScriptTag({url: './jquery3.3.1.min.js'});
+      await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
     }
 
     await page.addScriptTag({path: './browser/utils.js'});

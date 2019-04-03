@@ -16,11 +16,11 @@ function ismine(url) {
 }
 
 /**
- * ismine
- * @param {string} url - URL
- * @param {object} page -
+ * exportArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
  */
-async function proc(url, page) {
+async function exportArticle(page) {
   const dom = await page.$eval(
       '.aw-mod.aw-question-detail',
       (element) => {
@@ -29,32 +29,10 @@ async function proc(url, page) {
 
   await page.setContent(dom);
 
-  // const ret = await formatArticle(page);
-
-  // const result = new jarviscrawlercore.ExportArticleResult(ret);
-  // result.url = url;
-
-  // result.imgs[0].data = Buffer.from(ret.imgs[0].data, 'base64');
-  // console.log(typeof result.imgs[0].data);
-  // const img = images(result.imgs[0].data);
-  // // img.save('abc.png');
-  // console.log(img.width());
-  // console.log(img.height());
-
-  // console.log('%j', result);
-  // console.log(result.imgs[0].data);
-  // console.log(ret.imgs[0].datalen);
-}
-
-/**
- * formatArticle
- * @param {object} page - page
- * @return {ExportArticleResult} result - result
- */
-async function formatArticle(page) {
   return await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
+    ret.paragraphs = [];
     // const ret = new jarviscrawlercore.ExportArticleResult();
 
     const body = $('body')[0];
@@ -146,6 +124,9 @@ async function formatArticle(page) {
 
             const curnode = document.createElement('p');
             curnode.innerText = lstp[i].innerText;
+
+            ret.paragraphs.push({pt: 1, text: curnode.innerText});
+
             newbody.appendChild(curnode);
           } else {
             // lstp[i].style.cssText = 'text-align: center;';
@@ -155,6 +136,7 @@ async function formatArticle(page) {
             // const response = await fetch(curimgs[0].src);
             // const imgbuf = await response.arrayBuffer();
             ret.imgs.push(await fetchImage(curimgs[0].src));
+            ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
 
             const curnode = document.createElement('p');
             curnode.style.cssText = 'text-align: center;';
@@ -195,16 +177,18 @@ async function formatArticle(page) {
       // }
     }
 
-    for (let i = 0; i < body.childNodes.length; ) {
-      if (body.childNodes[i].className != 'article-body' &&
-      body.childNodes[i].className != 'article-head') {
-        body.childNodes[i].remove();
-      } else {
-        ++i;
-      }
-    }
+    // for (let i = 0; i < body.childNodes.length; ) {
+    //   if (body.childNodes[i].className != 'article-body' &&
+    //   body.childNodes[i].className != 'article-head') {
+    //     body.childNodes[i].remove();
+    //   } else {
+    //     ++i;
+    //   }
+    // }
 
-    ret.article = body.innerHTML;
+    clearArticleElement(body);
+
+    ret.article = body.innerText;
 
     // const lststyle = $('style');
     // if (lststyle && lststyle.length > 0) {
@@ -217,4 +201,4 @@ async function formatArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('baijingapp.article', ismine, proc, formatArticle);
+mgrPlugins.regPlugin('baijingapp.article', ismine, exportArticle);

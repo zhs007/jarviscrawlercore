@@ -1,19 +1,22 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
 const {jarviscrawlercore} = require('../../proto/result');
-const {saveMessage, setImageInfo} = require('../utils');
+const {saveMessage, setImageInfo, getImageHashName} = require('../utils');
+const {exportJPG} = require('./expjpg');
 
 /**
  * export article to a pdf file or a jpg file.
  * @param {string} url - URL
  * @param {string} outputfile - output file
- * @param {string} pdffile - pdf filename
+ * @param {string} mode - mode
  * @param {string} pdfformat - pdf format, like A4
- * @param {string} jpgfile - jpg filename
+ * @param {int} jpgquality - jpg quality, like 60
  * @param {bool} headless - headless mode
+ * @param {bool} jquery - attach jquery
+ * @param {bool} isoutpurimages - is output images
  */
-async function exportArticle(url, outputfile, pdffile, pdfformat,
-    jpgfile, headless) {
+async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
+    headless, jquery, isoutpurimages) {
   const browser = await puppeteer.launch({
     headless: headless,
     args: [
@@ -25,63 +28,87 @@ async function exportArticle(url, outputfile, pdffile, pdfformat,
   const mapResponse = {};
 
   const page = await browser.newPage();
+  await page.setBypassCSP(true);
+  // await page.setRequestInterception(true);
+  // page.on('request', (req) => {
+  //   intercept(req, scenario.url);
+  // });
+
   page.on('response', async (response) => {
+    if (!response) {
+      return;
+    }
+
     const url = response.url();
+    // console.log(url);
     const headers = response.headers();
     if (headers && headers['content-type'] &&
-        headers['content-type'].indexOf('image') == 0) {
+          headers['content-type'].indexOf('image') == 0) {
       mapResponse[url] = await response.buffer();
     }
   });
 
-  await page.goto(url, {
-    waitUntil: 'networkidle2',
-    timeout: 0,
+  await page.goto(url,
+      {
+        waitUntil: 'networkidle2',
+        timeout: 0,
+      }).catch((err) => {
+    console.log('page.goto', url, err);
   });
-  await page.addScriptTag({path: './browser/utils.js'});
-  // await importScript(page);
-  // await page.addScriptTag({url: 'https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/index.js'});
 
-  if (jpgfile && jpgfile != '') {
-    await page.screenshot({
-      path: jpgfile,
-      type: 'jpeg',
-      quality: 60,
-      fullPage: true,
-    });
-  }
+  // await page.goto(url);
 
-  const ret = await mgrPlugins.procTask(url, page);
-  if (ret) {
-    const result = new jarviscrawlercore.ExportArticleResult(ret);
-
-    result.url = url;
-
-    if (ret.titleImage) {
-      result.titleImage = setImageInfo(result.titleImage,
-          ret.titleImage, mapResponse);
+  if (mode == 'jpg') {
+    await exportJPG(page, outputfile, jpgquality);
+  } else {
+    if (jquery) {
+      await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
     }
 
-    if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
-      for (let i = 0; i < ret.imgs.length; ++i) {
-        result.imgs[i] = setImageInfo(result.imgs[i], ret.imgs[i], mapResponse);
+    await page.addScriptTag({path: './browser/utils.js'});
+
+    const ret = await mgrPlugins.exportArticle(url, page);
+
+    if (ret) {
+      const result = new jarviscrawlercore.ExportArticleResult(ret);
+
+      result.url = url;
+
+      if (ret.titleImage) {
+        result.titleImage = setImageInfo(result.titleImage,
+            ret.titleImage, mapResponse, isoutpurimages);
+      }
+
+      if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
+        for (let i = 0; i < ret.imgs.length; ++i) {
+          result.imgs[i] = setImageInfo(result.imgs[i],
+              ret.imgs[i], mapResponse, isoutpurimages);
+        }
+      }
+
+      if (result.paragraphs && result.paragraphs.length &&
+          result.paragraphs.length > 0) {
+        for (let i = 0; i < result.paragraphs.length; ++i) {
+          if (result.paragraphs[i].pt == 2) {
+            result.paragraphs[i].imgHashName = getImageHashName(
+                result.paragraphs[i].imgURL, mapResponse);
+
+            result.paragraphs[i].imgURL = undefined;
+          }
+        }
+      }
+
+      if (mode == 'pb') {
+        saveMessage(outputfile, result);
       }
     }
 
-    if (outputfile) {
-      saveMessage(outputfile, result);
+    if (mode == 'pdf') {
+      await page.pdf({
+        path: outputfile,
+        format: pdfformat,
+      });
     }
-  }
-
-  if (pdffile && pdffile != '') {
-    if (!pdfformat) {
-      pdfformat = 'A4';
-    }
-
-    await page.pdf({
-      path: pdffile,
-      format: pdfformat,
-    });
   }
 
   await browser.close();

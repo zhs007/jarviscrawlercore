@@ -41,21 +41,39 @@ function hashMD5(buf) {
  * @param {ImageInfo} imginfo - imginfo
  * @param {object} img - img object
  * @param {object} mapResponse - map response
+ * @param {bool} isoutpurimages - is output images
  * @return {ImageInfo} imginfo - imginfo
  */
-function setImageInfo(imginfo, img, mapResponse) {
+function setImageInfo(imginfo, img, mapResponse, isoutpurimages) {
   if (mapResponse[img.url]) {
     imginfo.data = mapResponse[img.url];
 
     imginfo.hashName = hashMD5(imginfo.data);
 
-    // fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+    if (isoutpurimages) {
+      fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+    }
   }
 
   return imginfo;
+}
+
+/**
+ * set ImageInfo with img
+ * @param {string} url - url
+ * @param {object} mapResponse - map response
+ * @return {string} hashname - maybe undefined
+ */
+function getImageHashName(url, mapResponse) {
+  if (mapResponse[url]) {
+    return hashMD5(mapResponse[url]);
+  }
+
+  return undefined;
 }
 
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
 exports.setImageInfo = setImageInfo;
+exports.getImageHashName = getImageHashName;

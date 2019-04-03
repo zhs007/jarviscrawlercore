@@ -14,11 +14,11 @@ function ismine(url) {
 }
 
 /**
- * ismine
- * @param {string} url - URL
- * @param {object} page -
+ * exportArticle
+ * @param {object} page - page
+ * @return {ExportArticleResult} result - result
  */
-async function proc(url, page) {
+async function exportArticle(page) {
   const dom = await page.$eval(
       '.leftWrap',
       (element) => {
@@ -26,17 +26,11 @@ async function proc(url, page) {
       });
 
   await page.setContent(dom);
-}
 
-/**
- * formatArticle
- * @param {object} page - page
- * @return {ExportArticleResult} result - result
- */
-async function formatArticle(page) {
   return await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
+    ret.paragraphs = [];
 
     const objbody = getElement('body');
     if (objbody) {
@@ -109,6 +103,7 @@ async function formatArticle(page) {
           const curimgs = articlenode.children[i].getElementsByTagName('img');
           if (curimgs.length > 0) {
             ret.imgs.push(await fetchImage(curimgs[0].src));
+            ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
 
             const curnode = document.createElement('p');
             curnode.style.cssText = 'text-align: center;';
@@ -128,16 +123,20 @@ async function formatArticle(page) {
 
             objarticlebody.appendChild(curnode);
           } else if (articlenode.children[i].tagName == 'text-big-title') {
-            const curnode = document.createElement('p');
+            const curnode = document.createElement('h2');
 
             curnode.innerText = articlenode.children[i].innerText;
-            curnode.className = 'article-body-h1';
+            // curnode.className = 'article-body-h2';
+
+            ret.paragraphs.push({pt: 3, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
           } else {
             const curnode = document.createElement('p');
 
             curnode.innerText = articlenode.children[i].innerText;
+
+            ret.paragraphs.push({pt: 1, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
           }
@@ -156,10 +155,10 @@ async function formatArticle(page) {
 
     clearArticleElement(objbody);
 
-    ret.article = objbody.innerHTML;
+    ret.article = objbody.innerText;
 
     return ret;
   });
 }
 
-mgrPlugins.regPlugin('smzdm.article', ismine, proc, formatArticle);
+mgrPlugins.regPlugin('smzdm.article', ismine, exportArticle);

@@ -2,6 +2,13 @@ syntax = "proto3";
 import "google/protobuf/any.proto";
 package jarviscrawlercore;
 
+// ParagraphType - paragraph type
+enum ParagraphType {
+    PT_TEXT = 1;
+    PT_IMAGE = 2;
+    PT_HEADLINE = 3;
+}
+
 // ImageInfo - image info
 message ImageInfo {
     string hashName = 1;
@@ -9,6 +16,14 @@ message ImageInfo {
     int32 width = 3;
     int32 height = 4;
     bytes data = 5;
+}
+
+// Paragraph - paragraph
+message Paragraph {
+    ParagraphType pt = 1;
+    string imgHashName = 2;
+    string text = 3;
+    string imgURL = 4;
 }
 
 // ExportArticleResult - export article result
@@ -21,4 +36,24 @@ message ExportArticleResult {
     repeated ImageInfo imgs = 6;
     ImageInfo titleImage = 7;
     repeated string tags = 8;
+    repeated Paragraph paragraphs = 9;
+    string summary = 10;
+}
+
+// ConfluenceUpdateItem - confluence all updates - item
+message ConfluenceUpdateItem {
+    string title = 1;
+    string url = 2;
+    string summary = 3;
+}
+
+// ConfluenceUpdateGrouping - confluence all updates - grouping
+message ConfluenceUpdateGrouping {
+    string author = 1;
+    repeated ConfluenceUpdateItem items = 2;
+}
+
+// ExportArticleResult - export article result
+message ConfluenceAllUpdates {
+    repeated ConfluenceUpdateGrouping updates = 1;
 }

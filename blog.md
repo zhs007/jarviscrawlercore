@@ -1,5 +1,42 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-02
+
+今天调整了``exparticle``的参数。  
+取消了以前可以同时输出``protobuf``、``pdf``、``jpg``的方案，现在一次只能输出一种格式。  
+
+```
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pdf -m pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.jpg -m jpg -h true -j 80
+
+node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pb -m pb -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://zhuanlan.zhihu.com/p/60881398 -o ./output/abc.pdf -m pdf -h true -i true -q true
+
+node ./bin/jarviscrawler.js exparticle https://www.zhihu.com/question/295675918/answer/600007589 -o ./output/abc.pdf -m pdf -h true -i true -q true
+
+node ./bin/jarviscrawler.js exparticle https://36kr.com/p/5191170 -o ./output/abc.pdf -m pdf -h true -i true -q true
+
+node ./bin/jarviscrawler.js exparticle http://www.baijingapp.com/article/22290 -o ./output/abc.pdf -m pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://www.huxiu.com/article/292563.html -o ./output/abc.pdf -m pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://www.tmtpost.com/3859873.html -o ./output/abc.pdf -pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://www.geekpark.net/news/240120 -o ./output/abc.pdf -pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://www.lieyunwang.com/archives/453240 -o ./output/abcdf -m pdf -h true -i true
+```
+
+### 2019-03-29
+
+今天加了confluence的bot，现在可以获取更新。
+
+```
+node ./bin/jarviscrawler.js confluencebot ./cfg/confluence.yaml -h false
+```
+
 ### 2019-03-28
 
 这几天还在考虑数据存储到底是用``html``还是``markdown``，``html``的格式化现在做得差不多了，但如果最后要自己渲染的话，``markdown``其实还是有些优势的，特别是代码段这些，会方便很多。  
@@ -8,6 +45,12 @@
 
 ```
 node ./bin/jarviscrawler.js exparticle https://post.smzdm.com/p/alpzl63o/ -o ./output/abc.pb -p ./output/abc.pdf -f A4 -h true
+```
+
+今天还支持了知乎，解决了CSP的问题，解决了jquery加载的问题，解决了图片延迟加载的问题。
+
+```
+node ./bin/jarviscrawler.js exparticle https://zhuanlan.zhihu.com/p/59909721 -o ./output/abc. -p output/abc.pdf -f A4 -h true
 ```
 
 ### 2019-03-27

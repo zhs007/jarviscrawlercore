@@ -49,7 +49,7 @@ async function exportArticle(page) {
 
       objbody.appendChild(objarticlebody);
 
-      const imghead = getElement('.TitleImage');
+      const imghead = getElement('.medium-zoom-image');
       if (imghead) {
         ret.titleImage = await fetchImage(imghead.src);
 
@@ -73,33 +73,39 @@ async function exportArticle(page) {
         ret.title = objtitle.innerText;
       }
 
-      const author = getElement('.AuthorInfo-head');
+      const author = getElement('.author');
       if (author) {
         const objauthor = document.createElement('div');
         objauthor.className = 'article-author';
-        objauthor.innerText = author.children[0].innerText;
+        objauthor.innerText = author.innerText;
         objhead.appendChild(objauthor);
 
         ret.author = objauthor.innerText;
       }
 
-      const articletime = getElement('.ContentItem-time');
+      const articletime = getElement('.release-date');
       if (articletime) {
         const objarticletime = document.createElement('div');
         objarticletime.className = 'article-time';
 
-        const varreg = new RegExp('([1-9]\\d{3}-(0[1-9]|1[0-2])-' +
-          '(0[1-9]|[1-2][0-9]|3[0-1]))', 'ig');
-
-        curtime = varreg.exec(articletime.innerText)[0];
-
-        objarticletime.innerText = curtime;// articletime.innerText;
+        objarticletime.innerText = articletime.innerText;
         objhead.appendChild(objarticletime);
 
         ret.writeTime = objarticletime.innerText;
       }
 
-      const articlenode = getElement('.RichText.ztext.Post-RichText');
+      const objsummary = getElement('.tips');
+      if (objsummary) {
+        const objarticlesummary = document.createElement('div');
+        objarticlesummary.className = 'article-summary';
+
+        objarticlesummary.innerText = objsummary.innerText;
+        objhead.appendChild(objarticlesummary);
+
+        ret.summary = objarticlesummary.innerText;
+      }
+
+      const articlenode = getElement('.article-content');
       if (articlenode) {
         // if (articlenode.children.length > 1) {
         //   articlenode = articlenode.children[1];
@@ -108,43 +114,12 @@ async function exportArticle(page) {
         for (let i = 0; i < articlenode.children.length; ++i) {
           if (articlenode.children[i].tagName != 'P' &&
               articlenode.children[i].tagName != 'H2' &&
-              articlenode.children[i].tagName != 'FIGURE') {
+              articlenode.children[i].tagName != 'DIV') {
             continue;
           }
 
-          if (articlenode.children[i].tagName == 'FIGURE') {
-            let curimgs = articlenode.children[i].getElementsByTagName('div');
-            if (curimgs.length > 0) {
-              ret.imgs.push(await fetchImage(curimgs[0].dataset['src']));
-              ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
-
-              const curnode = document.createElement('p');
-              curnode.style.cssText = 'text-align: center;';
-
-              const curimg = document.createElement('img');
-              curimg.onload = () => {
-                ret.imgs[ret.imgs.length - 1].width = curimg.width;
-                ret.imgs[ret.imgs.length - 1].height = curimg.height;
-
-                if (window.waitimgs > 0) {
-                  --window.waitimgs;
-                }
-
-                // console.log(curimg.width);
-                // console.log(curimg.height);
-              };
-
-              curimg.src = curimgs[0].dataset['src'];
-              ++window.waitimgs;
-
-              curnode.appendChild(curimg);
-
-              objarticlebody.appendChild(curnode);
-
-              continue;
-            }
-
-            curimgs = articlenode.children[i].getElementsByTagName('img');
+          if (articlenode.children[i].tagName == 'DIV') {
+            const curimgs = articlenode.children[i].getElementsByTagName('img');
             if (curimgs.length > 0) {
               ret.imgs.push(await fetchImage(curimgs[0].src));
               ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
@@ -202,7 +177,7 @@ async function exportArticle(page) {
     //   }
     // }
 
-    // clearArticleElement(objbody);
+    clearArticleElement(objbody);
 
     ret.article = objbody.innerText;
 

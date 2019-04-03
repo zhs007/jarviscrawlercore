@@ -177,16 +177,18 @@ async function exportArticle(page) {
       // }
     }
 
-    for (let i = 0; i < body.childNodes.length; ) {
-      if (body.childNodes[i].className != 'article-body' &&
-      body.childNodes[i].className != 'article-head') {
-        body.childNodes[i].remove();
-      } else {
-        ++i;
-      }
-    }
+    // for (let i = 0; i < body.childNodes.length; ) {
+    //   if (body.childNodes[i].className != 'article-body' &&
+    //   body.childNodes[i].className != 'article-head') {
+    //     body.childNodes[i].remove();
+    //   } else {
+    //     ++i;
+    //   }
+    // }
 
-    ret.article = body.innerHTML;
+    clearArticleElement(body);
+
+    ret.article = body.innerText;
 
     // const lststyle = $('style');
     // if (lststyle && lststyle.length > 0) {

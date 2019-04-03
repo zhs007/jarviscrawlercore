@@ -151,7 +151,7 @@ async function exportArticle(page) {
 
     clearArticleElement(objbody);
 
-    ret.article = objbody.innerHTML;
+    ret.article = objbody.innerText;
 
     return ret;
   });

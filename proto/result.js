@@ -18,6 +18,22 @@ $root.jarviscrawlercore = (function() {
      */
     var jarviscrawlercore = {};
 
+    /**
+     * ParagraphType enum.
+     * @name jarviscrawlercore.ParagraphType
+     * @enum {string}
+     * @property {number} PT_TEXT=1 PT_TEXT value
+     * @property {number} PT_IMAGE=2 PT_IMAGE value
+     * @property {number} PT_HEADLINE=3 PT_HEADLINE value
+     */
+    jarviscrawlercore.ParagraphType = (function() {
+        var valuesById = {}, values = Object.create(valuesById);
+        values[valuesById[1] = "PT_TEXT"] = 1;
+        values[valuesById[2] = "PT_IMAGE"] = 2;
+        values[valuesById[3] = "PT_HEADLINE"] = 3;
+        return values;
+    })();
+
     jarviscrawlercore.ImageInfo = (function() {
 
         /**
@@ -303,6 +319,278 @@ $root.jarviscrawlercore = (function() {
         return ImageInfo;
     })();
 
+    jarviscrawlercore.Paragraph = (function() {
+
+        /**
+         * Properties of a Paragraph.
+         * @memberof jarviscrawlercore
+         * @interface IParagraph
+         * @property {jarviscrawlercore.ParagraphType|null} [pt] Paragraph pt
+         * @property {string|null} [imgHashName] Paragraph imgHashName
+         * @property {string|null} [text] Paragraph text
+         * @property {string|null} [imgURL] Paragraph imgURL
+         */
+
+        /**
+         * Constructs a new Paragraph.
+         * @memberof jarviscrawlercore
+         * @classdesc Represents a Paragraph.
+         * @implements IParagraph
+         * @constructor
+         * @param {jarviscrawlercore.IParagraph=} [properties] Properties to set
+         */
+        function Paragraph(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * Paragraph pt.
+         * @member {jarviscrawlercore.ParagraphType} pt
+         * @memberof jarviscrawlercore.Paragraph
+         * @instance
+         */
+        Paragraph.prototype.pt = 1;
+
+        /**
+         * Paragraph imgHashName.
+         * @member {string} imgHashName
+         * @memberof jarviscrawlercore.Paragraph
+         * @instance
+         */
+        Paragraph.prototype.imgHashName = "";
+
+        /**
+         * Paragraph text.
+         * @member {string} text
+         * @memberof jarviscrawlercore.Paragraph
+         * @instance
+         */
+        Paragraph.prototype.text = "";
+
+        /**
+         * Paragraph imgURL.
+         * @member {string} imgURL
+         * @memberof jarviscrawlercore.Paragraph
+         * @instance
+         */
+        Paragraph.prototype.imgURL = "";
+
+        /**
+         * Creates a new Paragraph instance using the specified properties.
+         * @function create
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {jarviscrawlercore.IParagraph=} [properties] Properties to set
+         * @returns {jarviscrawlercore.Paragraph} Paragraph instance
+         */
+        Paragraph.create = function create(properties) {
+            return new Paragraph(properties);
+        };
+
+        /**
+         * Encodes the specified Paragraph message. Does not implicitly {@link jarviscrawlercore.Paragraph.verify|verify} messages.
+         * @function encode
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {jarviscrawlercore.IParagraph} message Paragraph message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Paragraph.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.pt != null && message.hasOwnProperty("pt"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.pt);
+            if (message.imgHashName != null && message.hasOwnProperty("imgHashName"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.imgHashName);
+            if (message.text != null && message.hasOwnProperty("text"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.text);
+            if (message.imgURL != null && message.hasOwnProperty("imgURL"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.imgURL);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified Paragraph message, length delimited. Does not implicitly {@link jarviscrawlercore.Paragraph.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {jarviscrawlercore.IParagraph} message Paragraph message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        Paragraph.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes a Paragraph message from the specified reader or buffer.
+         * @function decode
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {jarviscrawlercore.Paragraph} Paragraph
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Paragraph.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.jarviscrawlercore.Paragraph();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.pt = reader.int32();
+                    break;
+                case 2:
+                    message.imgHashName = reader.string();
+                    break;
+                case 3:
+                    message.text = reader.string();
+                    break;
+                case 4:
+                    message.imgURL = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes a Paragraph message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {jarviscrawlercore.Paragraph} Paragraph
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        Paragraph.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies a Paragraph message.
+         * @function verify
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        Paragraph.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.pt != null && message.hasOwnProperty("pt"))
+                switch (message.pt) {
+                default:
+                    return "pt: enum value expected";
+                case 1:
+                case 2:
+                case 3:
+                    break;
+                }
+            if (message.imgHashName != null && message.hasOwnProperty("imgHashName"))
+                if (!$util.isString(message.imgHashName))
+                    return "imgHashName: string expected";
+            if (message.text != null && message.hasOwnProperty("text"))
+                if (!$util.isString(message.text))
+                    return "text: string expected";
+            if (message.imgURL != null && message.hasOwnProperty("imgURL"))
+                if (!$util.isString(message.imgURL))
+                    return "imgURL: string expected";
+            return null;
+        };
+
+        /**
+         * Creates a Paragraph message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {jarviscrawlercore.Paragraph} Paragraph
+         */
+        Paragraph.fromObject = function fromObject(object) {
+            if (object instanceof $root.jarviscrawlercore.Paragraph)
+                return object;
+            var message = new $root.jarviscrawlercore.Paragraph();
+            switch (object.pt) {
+            case "PT_TEXT":
+            case 1:
+                message.pt = 1;
+                break;
+            case "PT_IMAGE":
+            case 2:
+                message.pt = 2;
+                break;
+            case "PT_HEADLINE":
+            case 3:
+                message.pt = 3;
+                break;
+            }
+            if (object.imgHashName != null)
+                message.imgHashName = String(object.imgHashName);
+            if (object.text != null)
+                message.text = String(object.text);
+            if (object.imgURL != null)
+                message.imgURL = String(object.imgURL);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from a Paragraph message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof jarviscrawlercore.Paragraph
+         * @static
+         * @param {jarviscrawlercore.Paragraph} message Paragraph
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        Paragraph.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.pt = options.enums === String ? "PT_TEXT" : 1;
+                object.imgHashName = "";
+                object.text = "";
+                object.imgURL = "";
+            }
+            if (message.pt != null && message.hasOwnProperty("pt"))
+                object.pt = options.enums === String ? $root.jarviscrawlercore.ParagraphType[message.pt] : message.pt;
+            if (message.imgHashName != null && message.hasOwnProperty("imgHashName"))
+                object.imgHashName = message.imgHashName;
+            if (message.text != null && message.hasOwnProperty("text"))
+                object.text = message.text;
+            if (message.imgURL != null && message.hasOwnProperty("imgURL"))
+                object.imgURL = message.imgURL;
+            return object;
+        };
+
+        /**
+         * Converts this Paragraph to JSON.
+         * @function toJSON
+         * @memberof jarviscrawlercore.Paragraph
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        Paragraph.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return Paragraph;
+    })();
+
     jarviscrawlercore.ExportArticleResult = (function() {
 
         /**
@@ -317,6 +605,7 @@ $root.jarviscrawlercore = (function() {
          * @property {Array.<jarviscrawlercore.IImageInfo>|null} [imgs] ExportArticleResult imgs
          * @property {jarviscrawlercore.IImageInfo|null} [titleImage] ExportArticleResult titleImage
          * @property {Array.<string>|null} [tags] ExportArticleResult tags
+         * @property {Array.<jarviscrawlercore.IParagraph>|null} [paragraphs] ExportArticleResult paragraphs
          */
 
         /**
@@ -330,6 +619,7 @@ $root.jarviscrawlercore = (function() {
         function ExportArticleResult(properties) {
             this.imgs = [];
             this.tags = [];
+            this.paragraphs = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -401,6 +691,14 @@ $root.jarviscrawlercore = (function() {
         ExportArticleResult.prototype.tags = $util.emptyArray;
 
         /**
+         * ExportArticleResult paragraphs.
+         * @member {Array.<jarviscrawlercore.IParagraph>} paragraphs
+         * @memberof jarviscrawlercore.ExportArticleResult
+         * @instance
+         */
+        ExportArticleResult.prototype.paragraphs = $util.emptyArray;
+
+        /**
          * Creates a new ExportArticleResult instance using the specified properties.
          * @function create
          * @memberof jarviscrawlercore.ExportArticleResult
@@ -442,6 +740,9 @@ $root.jarviscrawlercore = (function() {
             if (message.tags != null && message.tags.length)
                 for (var i = 0; i < message.tags.length; ++i)
                     writer.uint32(/* id 8, wireType 2 =*/66).string(message.tags[i]);
+            if (message.paragraphs != null && message.paragraphs.length)
+                for (var i = 0; i < message.paragraphs.length; ++i)
+                    $root.jarviscrawlercore.Paragraph.encode(message.paragraphs[i], writer.uint32(/* id 9, wireType 2 =*/74).fork()).ldelim();
             return writer;
         };
 
@@ -503,6 +804,11 @@ $root.jarviscrawlercore = (function() {
                     if (!(message.tags && message.tags.length))
                         message.tags = [];
                     message.tags.push(reader.string());
+                    break;
+                case 9:
+                    if (!(message.paragraphs && message.paragraphs.length))
+                        message.paragraphs = [];
+                    message.paragraphs.push($root.jarviscrawlercore.Paragraph.decode(reader, reader.uint32()));
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -575,6 +881,15 @@ $root.jarviscrawlercore = (function() {
                     if (!$util.isString(message.tags[i]))
                         return "tags: string[] expected";
             }
+            if (message.paragraphs != null && message.hasOwnProperty("paragraphs")) {
+                if (!Array.isArray(message.paragraphs))
+                    return "paragraphs: array expected";
+                for (var i = 0; i < message.paragraphs.length; ++i) {
+                    var error = $root.jarviscrawlercore.Paragraph.verify(message.paragraphs[i]);
+                    if (error)
+                        return "paragraphs." + error;
+                }
+            }
             return null;
         };
 
@@ -622,6 +937,16 @@ $root.jarviscrawlercore = (function() {
                 for (var i = 0; i < object.tags.length; ++i)
                     message.tags[i] = String(object.tags[i]);
             }
+            if (object.paragraphs) {
+                if (!Array.isArray(object.paragraphs))
+                    throw TypeError(".jarviscrawlercore.ExportArticleResult.paragraphs: array expected");
+                message.paragraphs = [];
+                for (var i = 0; i < object.paragraphs.length; ++i) {
+                    if (typeof object.paragraphs[i] !== "object")
+                        throw TypeError(".jarviscrawlercore.ExportArticleResult.paragraphs: object expected");
+                    message.paragraphs[i] = $root.jarviscrawlercore.Paragraph.fromObject(object.paragraphs[i]);
+                }
+            }
             return message;
         };
 
@@ -641,6 +966,7 @@ $root.jarviscrawlercore = (function() {
             if (options.arrays || options.defaults) {
                 object.imgs = [];
                 object.tags = [];
+                object.paragraphs = [];
             }
             if (options.defaults) {
                 object.title = "";
@@ -671,6 +997,11 @@ $root.jarviscrawlercore = (function() {
                 object.tags = [];
                 for (var j = 0; j < message.tags.length; ++j)
                     object.tags[j] = message.tags[j];
+            }
+            if (message.paragraphs && message.paragraphs.length) {
+                object.paragraphs = [];
+                for (var j = 0; j < message.paragraphs.length; ++j)
+                    object.paragraphs[j] = $root.jarviscrawlercore.Paragraph.toObject(message.paragraphs[j], options);
             }
             return object;
         };

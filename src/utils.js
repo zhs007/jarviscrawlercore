@@ -58,7 +58,22 @@ function setImageInfo(imginfo, img, mapResponse, isoutpurimages) {
   return imginfo;
 }
 
+/**
+ * set ImageInfo with img
+ * @param {string} url - url
+ * @param {object} mapResponse - map response
+ * @return {string} hashname - maybe undefined
+ */
+function getImageHashName(url, mapResponse) {
+  if (mapResponse[url]) {
+    return hashMD5(mapResponse[url]);
+  }
+
+  return undefined;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
 exports.setImageInfo = setImageInfo;
+exports.getImageHashName = getImageHashName;

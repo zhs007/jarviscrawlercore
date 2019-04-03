@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
 const {jarviscrawlercore} = require('../../proto/result');
-const {saveMessage, setImageInfo} = require('../utils');
+const {saveMessage, setImageInfo, getImageHashName} = require('../utils');
 const {exportJPG} = require('./expjpg');
 
 /**
@@ -83,6 +83,15 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
         for (let i = 0; i < ret.imgs.length; ++i) {
           result.imgs[i] = setImageInfo(result.imgs[i],
               ret.imgs[i], mapResponse, isoutpurimages);
+        }
+      }
+
+      if (result.paragraphs && result.paragraphs.length && result.paragraphs.length > 0) {
+        for (let i = 0; i < result.paragraphs.length; ++i) {
+          if (result.paragraphs[i].pt == 2) {
+            result.paragraphs[i].imgHashName = getImageHashName(result.paragraphs[i].imgURL, mapResponse);
+            result.paragraphs[i].imgURL = undefined;
+          }
         }
       }
 

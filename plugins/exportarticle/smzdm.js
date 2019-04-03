@@ -41,6 +41,7 @@ async function formatArticle(page) {
   return await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
+    ret.paragraphs = [];
 
     const objbody = getElement('body');
     if (objbody) {
@@ -113,6 +114,7 @@ async function formatArticle(page) {
           const curimgs = articlenode.children[i].getElementsByTagName('img');
           if (curimgs.length > 0) {
             ret.imgs.push(await fetchImage(curimgs[0].src));
+            ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
 
             const curnode = document.createElement('p');
             curnode.style.cssText = 'text-align: center;';
@@ -137,11 +139,15 @@ async function formatArticle(page) {
             curnode.innerText = articlenode.children[i].innerText;
             curnode.className = 'article-body-h1';
 
+            ret.paragraphs.push({pt: 3, text: curnode.innerText});
+
             objarticlebody.appendChild(curnode);
           } else {
             const curnode = document.createElement('p');
 
             curnode.innerText = articlenode.children[i].innerText;
+
+            ret.paragraphs.push({pt: 1, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
           }
@@ -160,7 +166,7 @@ async function formatArticle(page) {
 
     clearArticleElement(objbody);
 
-    ret.article = objbody.innerHTML;
+    ret.article = objbody.innerText;
 
     return ret;
   });

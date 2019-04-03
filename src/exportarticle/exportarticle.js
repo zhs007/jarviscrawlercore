@@ -86,10 +86,13 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
         }
       }
 
-      if (result.paragraphs && result.paragraphs.length && result.paragraphs.length > 0) {
+      if (result.paragraphs && result.paragraphs.length &&
+          result.paragraphs.length > 0) {
         for (let i = 0; i < result.paragraphs.length; ++i) {
           if (result.paragraphs[i].pt == 2) {
-            result.paragraphs[i].imgHashName = getImageHashName(result.paragraphs[i].imgURL, mapResponse);
+            result.paragraphs[i].imgHashName = getImageHashName(
+                result.paragraphs[i].imgURL, mapResponse);
+
             result.paragraphs[i].imgURL = undefined;
           }
         }

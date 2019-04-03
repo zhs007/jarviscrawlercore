@@ -13,25 +13,6 @@ function ismine(url) {
   return false;
 }
 
-// /**
-//  * ismine
-//  * @param {string} url - URL
-//  * @param {object} page -
-//  */
-// async function proc(url, page) {
-//   // await page.waitForNavigation({waitUntil: 'networkidle0'}).catch((err) => {
-//   //   console.log('catch a err ', err);
-//   // });
-
-//   const dom = await page.$eval(
-//       '.leftWrap',
-//       (element) => {
-//         return element.innerHTML;
-//       });
-
-//   await page.setContent(dom);
-// }
-
 /**
  * exportArticle
  * @param {object} page - page

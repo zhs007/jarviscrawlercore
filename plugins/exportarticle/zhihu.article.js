@@ -13,52 +13,6 @@ function ismine(url) {
   return false;
 }
 
-// /**
-//  * ismine
-//  * @param {string} url - URL
-//  * @param {object} page -
-//  */
-// async function proc(url, page) {
-//   // await page.waitForNavigation({waitUntil: 'domcontentloaded'}).catch((err) => {
-//   //   console.log('catch a err ', err);
-//   // });
-
-//   const dom = await page.$eval(
-//       '.Post-content',
-//       (element) => {
-//         return element.innerHTML;
-//       });
-
-//   await page.setContent(dom);
-//   // console.log('zhihu');
-
-//   // const ele = await page.$(
-//   //     '.VagueImage.origin_image.zh-lightbox-thumb');
-
-//   // // console.log(ele.asElement());
-
-//   // const properties = await ele.getProperties();
-//   // for (const key of properties.keys()) {
-//   //   console.log(key);
-//   // }
-
-//   // const ele = await page.$eval(
-//   //     // '.RichText.ztext.Post-RichText',
-//   //     // '.VagueImage.origin_image.zh-lightbox-thumb',
-//   //     'figure',
-//   //     (element) => {
-//   //       console.log(element);
-
-//   //       return element.innerHTML;
-//   //     });
-
-//   // console.log(ele);
-
-//   // const jval = await ele.jsonValue();
-//   // console.log(ele);
-//   // console.log(jval);
-// }
-
 /**
  * exportArticle
  * @param {object} page - page
@@ -76,6 +30,8 @@ async function exportArticle(page) {
   const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
+    ret.paragraphs = [];
+
     window.waitimgs = 0;
 
     const objbody = getElement('body');
@@ -154,9 +110,10 @@ async function exportArticle(page) {
           }
 
           if (articlenode.children[i].tagName == 'FIGURE') {
-            const curimgs = articlenode.children[i].getElementsByTagName('div');
+            let curimgs = articlenode.children[i].getElementsByTagName('div');
             if (curimgs.length > 0) {
               ret.imgs.push(await fetchImage(curimgs[0].dataset['src']));
+              ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
 
               const curnode = document.createElement('p');
               curnode.style.cssText = 'text-align: center;';
@@ -180,6 +137,36 @@ async function exportArticle(page) {
               curnode.appendChild(curimg);
 
               objarticlebody.appendChild(curnode);
+
+              continue;
+            }
+
+            curimgs = articlenode.children[i].getElementsByTagName('img');
+            if (curimgs.length > 0) {
+              ret.imgs.push(await fetchImage(curimgs[0].src));
+              ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
+
+              const curnode = document.createElement('p');
+              curnode.style.cssText = 'text-align: center;';
+
+              const curimg = document.createElement('img');
+              curimg.onload = () => {
+                ret.imgs[ret.imgs.length - 1].width = curimg.width;
+                ret.imgs[ret.imgs.length - 1].height = curimg.height;
+
+                if (window.waitimgs > 0) {
+                  --window.waitimgs;
+                }
+              };
+
+              curimg.src = curimgs[0].src;
+              ++window.waitimgs;
+
+              curnode.appendChild(curimg);
+
+              objarticlebody.appendChild(curnode);
+
+              continue;
             }
           } else if (articlenode.children[i].tagName == 'H2') {
             const curnode = document.createElement('h2');
@@ -187,11 +174,15 @@ async function exportArticle(page) {
             curnode.innerText = articlenode.children[i].innerText;
             // curnode.className = 'article-body-h1';
 
+            ret.paragraphs.push({pt: 3, text: curnode.innerText});
+
             objarticlebody.appendChild(curnode);
           } else {
             const curnode = document.createElement('p');
 
             curnode.innerText = articlenode.children[i].innerText;
+
+            ret.paragraphs.push({pt: 1, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
           }

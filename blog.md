@@ -25,6 +25,8 @@ node ./bin/jarviscrawler.js exparticle https://www.huxiu.com/article/292563.html
 node ./bin/jarviscrawler.js exparticle https://www.tmtpost.com/3859873.html -o ./output/abc.pdf -pdf -h true -i true
 
 node ./bin/jarviscrawler.js exparticle https://www.geekpark.net/news/240120 -o ./output/abc.pdf -pdf -h true -i true
+
+node ./bin/jarviscrawler.js exparticle https://www.lieyunwang.com/archives/453240 -o ./output/abcdf -m pdf -h true -i true
 ```
 
 ### 2019-03-29

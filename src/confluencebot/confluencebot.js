@@ -3,7 +3,7 @@ const {loadConfig, checkConfig} = require('./cfg');
 const {runActions} = require('./actions');
 
 /**
- * export article to a pdf file or a jpg file.
+ * a bot for confluence
  * @param {string} cfgfile - cfgfile
  * @param {bool} headless - headless modes
  */

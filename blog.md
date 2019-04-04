@@ -1,5 +1,15 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-04
+
+今天把google翻译支持了。
+
+```
+node ./bin/jarviscrawler.js googletranslate "你好 你很好,哈哈" -h true -s zh-CN -d en
+
+node ./bin/jarviscrawler.js googletranslate "@Peter Walker I am sure there is a problem with excel file, I need more time to check it." -h true -s en -d zh-CN
+```
+
 ### 2019-04-02
 
 今天调整了``exparticle``的参数。  

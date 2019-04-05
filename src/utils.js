@@ -1,6 +1,6 @@
 
 const fs = require('fs');
-const {jarviscrawlercore} = require('../proto/result');
+const jarviscrawlercore = require('../proto/result_pb.js');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
 
@@ -11,7 +11,7 @@ const crypto = require('crypto');
  */
 function saveMessage(filename, msg) {
   fs.writeFileSync(filename,
-      jarviscrawlercore.ExportArticleResult.encode(msg).finish());
+      msg.serializeBinary());
 }
 
 
@@ -23,7 +23,7 @@ function saveMessage(filename, msg) {
 function saveZipMessage(filename, msg) {
   const zip = new AdmZip();
   zip.addFile('msg.pb',
-      jarviscrawlercore.ExportArticleResult.encode(msg).finish());
+      msg.serializeBinary());
   zip.writeZip(filename);
 }
 
@@ -38,24 +38,23 @@ function hashMD5(buf) {
 
 /**
  * set ImageInfo with img
- * @param {ImageInfo} imginfo - imginfo
  * @param {object} img - img object
  * @param {object} mapResponse - map response
  * @param {bool} isoutpurimages - is output images
  * @return {ImageInfo} imginfo - imginfo
  */
-function setImageInfo(imginfo, img, mapResponse, isoutpurimages) {
+function setImageInfo(img, mapResponse, isoutpurimages) {
   if (mapResponse[img.url]) {
-    imginfo.data = mapResponse[img.url];
+    img.data = mapResponse[img.url];
 
-    imginfo.hashName = hashMD5(imginfo.data);
+    img.hashName = hashMD5(img.data);
 
     if (isoutpurimages) {
-      fs.writeFileSync('./output/' + imginfo.hashName + '.jpg', imginfo.data);
+      fs.writeFileSync('./output/' + img.hashName + '.jpg', img.data);
     }
   }
 
-  return imginfo;
+  return img;
 }
 
 /**
@@ -72,8 +71,126 @@ function getImageHashName(url, mapResponse) {
   return undefined;
 }
 
+/**
+ * new Paragraph with object
+ * @param {object} obj - Paragraph object
+ * @return {jarviscrawlercore.Paragraph} paragraph - Paragraph
+ */
+function newParagraph(obj) {
+  const result = new jarviscrawlercore.Paragraph();
+
+  if (obj.pt) {
+    result.setPt(obj.pt);
+  }
+
+  if (obj.imgHashName) {
+    result.setImghashname(obj.imgHashName);
+  }
+
+  if (obj.text) {
+    result.setText(obj.text);
+  }
+
+  if (obj.imgURL) {
+    result.setImgURL(obj.imgURL);
+  }
+
+  return result;
+}
+
+/**
+ * new ImageInfo with object
+ * @param {object} obj - ImageInfo object
+ * @return {jarviscrawlercore.ImageInfo} imginfo - ImageInfo
+ */
+function newImageInfo(obj) {
+  const result = new jarviscrawlercore.ImageInfo();
+
+  if (obj.hashName) {
+    result.setHashname(obj.hashName);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.width) {
+    result.setWidth(obj.width);
+  }
+
+  if (obj.height) {
+    result.setHeight(obj.height);
+  }
+
+  if (obj.data) {
+    result.setData(obj.data);
+  }
+
+  return result;
+}
+
+/**
+ * new ExportArticleResult with object
+ * @param {object} obj - ExportArticleResult object
+ * @return {jarviscrawlercore.ExportArticleResult} ear - ExportArticleResult
+ */
+function newExportArticleResult(obj) {
+  const result = new jarviscrawlercore.ExportArticleResult();
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.author) {
+    result.setAuthor(obj.author);
+  }
+
+  if (obj.writeTime) {
+    result.setWritetime(obj.writeTime);
+  }
+
+  if (obj.article) {
+    result.setArticle(obj.article);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.imgs) {
+    for (let i = 0; i < obj.imgs.length; ++i) {
+      result.addImgs(newImageInfo(obj.imgs[i]), i);
+    }
+  }
+
+  if (obj.titleImage) {
+    result.setTitleimage(newImageInfo(obj.titleImage));
+  }
+
+  if (obj.tags) {
+    for (let i = 0; i < obj.tags.length; ++i) {
+      result.addTags(obj.tags[i], i);
+    }
+  }
+
+  if (obj.paragraphs) {
+    for (let i = 0; i < obj.paragraphs.length; ++i) {
+      result.addParagraphs(newParagraph(obj.paragraphs[i]), i);
+    }
+  }
+
+  if (obj.summary) {
+    result.setSummary(obj.summary);
+  }
+
+  return result;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
 exports.setImageInfo = setImageInfo;
 exports.getImageHashName = getImageHashName;
+exports.newParagraph = newParagraph;
+exports.newImageInfo = newImageInfo;
+exports.newExportArticleResult = newExportArticleResult;

@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
-const {jarviscrawlercore} = require('../../proto/result');
-const {saveMessage, setImageInfo, getImageHashName} = require('../utils');
+const {saveMessage, setImageInfo, getImageHashName, newExportArticleResult} = require('../utils');
 const {exportJPG} = require('./expjpg');
 
 /**
@@ -70,33 +69,33 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
     const ret = await mgrPlugins.exportArticle(url, page);
 
     if (ret) {
-      const result = new jarviscrawlercore.ExportArticleResult(ret);
-
-      result.url = url;
+      ret.url = url;
 
       if (ret.titleImage) {
-        result.titleImage = setImageInfo(result.titleImage,
+        ret.titleImage = setImageInfo(
             ret.titleImage, mapResponse, isoutpurimages);
       }
 
       if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
         for (let i = 0; i < ret.imgs.length; ++i) {
-          result.imgs[i] = setImageInfo(result.imgs[i],
+          ret.imgs[i] = setImageInfo(
               ret.imgs[i], mapResponse, isoutpurimages);
         }
       }
 
-      if (result.paragraphs && result.paragraphs.length &&
-          result.paragraphs.length > 0) {
-        for (let i = 0; i < result.paragraphs.length; ++i) {
-          if (result.paragraphs[i].pt == 2) {
-            result.paragraphs[i].imgHashName = getImageHashName(
-                result.paragraphs[i].imgURL, mapResponse);
+      if (ret.paragraphs && ret.paragraphs.length &&
+        ret.paragraphs.length > 0) {
+        for (let i = 0; i < ret.paragraphs.length; ++i) {
+          if (ret.paragraphs[i].pt == 2) {
+            ret.paragraphs[i].imgHashName = getImageHashName(
+                ret.paragraphs[i].imgURL, mapResponse);
 
-            result.paragraphs[i].imgURL = undefined;
+            ret.paragraphs[i].imgURL = undefined;
           }
         }
       }
+
+      const result = newExportArticleResult(ret);
 
       if (mode == 'pb') {
         saveMessage(outputfile, result);

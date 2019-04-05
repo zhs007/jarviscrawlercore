@@ -1,5 +1,15 @@
 # JarvisCrawlerCore Development Log
 
+
+### 2019-04-05
+
+
+切换到``grpc-tools``了，如果要重新buildproto，需要先装``grpc-tools``。
+
+```
+npm install -g grpc-tools
+```
+
 ### 2019-04-04
 
 今天把google翻译支持了。

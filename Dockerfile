@@ -21,3 +21,4 @@ RUN npm i -dd
 
 COPY ./ ./
 
+CMD ["node", "./bin/jarviscrawler.js", "startservice", "./cfg/service.yaml"]

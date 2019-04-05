@@ -10,6 +10,18 @@
 npm install -g grpc-tools
 ```
 
+今天把服务也写好了，你可以通过
+
+```
+node ./bin/jarviscrawler.js startservice ./cfg/service.yaml
+```
+
+写了个简单的client，可以这样
+
+```
+node ./src/service/client.js
+```
+
 ### 2019-04-04
 
 今天把google翻译支持了。

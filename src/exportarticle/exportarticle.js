@@ -1,6 +1,11 @@
 const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
-const {saveMessage, setImageInfo, getImageHashName, newExportArticleResult} = require('../utils');
+const {
+  saveMessage,
+  setImageInfo,
+  getImageHashName,
+  newExportArticleResult,
+} = require('../utils');
 const {exportJPG} = require('./expjpg');
 
 /**

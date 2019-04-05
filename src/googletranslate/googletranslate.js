@@ -1,23 +1,18 @@
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
 
 /**
  * google translate
+ * @param {object} browser - browser
  * @param {string} srctext - source text
  * @param {string} srclang - source language
  * @param {string} destlang - destination language
  * @param {bool} headless - headless modes
  */
-async function googletranslate(srctext, srclang, destlang, headless) {
-  const browser = await puppeteer.launch({
-    headless: headless,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ],
-  });
-
+async function googletranslate(browser, srctext, srclang, destlang) {
   const page = await browser.newPage();
-  await page.goto('https://translate.google.cn/#view=home&op=translate&sl=' + srclang + '&tl=' + destlang + '&text=');
+  await page.goto('https://translate.google.cn/#view=home&op=translate&sl=' +
+    srclang + '&tl=' + destlang + '&text=');
+
   await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   await page.waitForSelector('.tlid-input.input');
   await page.type('.tlid-input.input', srctext);
@@ -35,18 +30,7 @@ async function googletranslate(srctext, srclang, destlang, headless) {
     return '';
   });
 
-  console.log(desttext);
-
-  //   await page.type('#os_password', cfg.password);
-  //   await page.click('#loginButton');
-
-  //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-  //     console.log('catch a err ', err);
-  //   });
-
-  //   await runActions(page, cfg);
-
-  await browser.close();
+  return desttext;
 }
 
 exports.googletranslate = googletranslate;

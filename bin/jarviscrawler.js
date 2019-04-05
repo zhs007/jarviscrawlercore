@@ -1,8 +1,10 @@
 const program = require('commander');
+const {startBrowser} = require('../src/browser');
 const {exportArticle} = require('../src/exportarticle/exportarticle');
 const {tracing} = require('../src/tracing/tracing');
 const {confluencebot} = require('../src/confluencebot/confluencebot');
 const {googletranslate} = require('../src/googletranslate/googletranslate');
+const {startService} = require('../src/service/service');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -182,8 +184,40 @@ program
       console.log('headless - ', headless);
 
       (async () => {
-        await googletranslate(text, options.srclang, options.destlang,
-            headless);
+        const browser = await startBrowser(headless);
+
+        const desttext = await googletranslate(browser,
+            text, options.srclang, options.destlang);
+
+        console.log(desttext);
+
+        await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('startservice [cfgfile]')
+    .description('start a grpc service')
+    .action(function(cfgfile, options) {
+      console.log('version is ', VERSION);
+
+      if (!cfgfile) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler startservice --help');
+
+        return;
+      }
+
+      console.log('cfgfile - ', cfgfile);
+
+      (async () => {
+        await startService(cfgfile);
       })().catch((err) => {
         console.log('catch a err ', err);
 

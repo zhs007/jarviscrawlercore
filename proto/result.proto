@@ -1,9 +1,9 @@
 syntax = "proto3";
-import "google/protobuf/any.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
 enum ParagraphType {
+    PT_NULL = 0;
     PT_TEXT = 1;
     PT_IMAGE = 2;
     PT_HEADLINE = 3;
@@ -56,4 +56,28 @@ message ConfluenceUpdateGrouping {
 // ExportArticleResult - export article result
 message ConfluenceAllUpdates {
     repeated ConfluenceUpdateGrouping updates = 1;
+}
+
+// RequestTranslate - request translate
+message RequestTranslate {
+    // text - source text
+    string text = 1;
+    // platform - it's like google
+    string platform = 2;
+    // srcLang - source language
+    string srcLang = 3;
+    // destLang - destination language
+    string destLang = 4;
+}
+
+// ReplyTranslate - reply translate
+message ReplyTranslate {
+    // text - destination text
+    string text = 1;
+}
+
+// JarvisCrawlerService - JarvisCrawler service
+service JarvisCrawlerService {
+    // translate - translate text
+    rpc translate(RequestTranslate) returns (ReplyTranslate) {}
 }

@@ -1,5 +1,37 @@
 # JarvisCrawlerCore Development Log
 
+
+### 2019-04-05
+
+
+切换到``grpc-tools``了，如果要重新buildproto，需要先装``grpc-tools``。
+
+```
+npm install -g grpc-tools
+```
+
+今天把服务也写好了，你可以通过
+
+```
+node ./bin/jarviscrawler.js startservice ./cfg/service.yaml
+```
+
+写了个简单的client，可以这样
+
+```
+node ./src/service/client.js
+```
+
+### 2019-04-04
+
+今天把google翻译支持了。
+
+```
+node ./bin/jarviscrawler.js googletranslate "你好 你很好,哈哈" -h true -s zh-CN -d en
+
+node ./bin/jarviscrawler.js googletranslate "@Peter Walker I am sure there is a problem with excel file, I need more time to check it." -h true -s en -d zh-CN
+```
+
 ### 2019-04-02
 
 今天调整了``exparticle``的参数。  

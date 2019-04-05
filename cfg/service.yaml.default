@@ -1,0 +1,2 @@
+servAddr: 0.0.0.0:7051
+headless: true

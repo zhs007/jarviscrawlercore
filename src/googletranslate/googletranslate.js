@@ -30,6 +30,8 @@ async function googletranslate(browser, srctext, srclang, destlang) {
     return '';
   });
 
+  await page.close();
+
   return desttext;
 }
 

@@ -30,5 +30,5 @@ function startClient(servAddr, srclang, destlang, text) {
   });
 }
 
-startClient('127.0.01:7051', 'en', 'zh-CN',
+startClient('127.0.0.1:7051', 'en', 'zh-CN',
     '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.');

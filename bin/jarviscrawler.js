@@ -75,14 +75,18 @@ program
       console.log('jquery - ', jquery);
 
       (async () => {
-        await exportArticle(url,
+        const browser = await startBrowser(headless);
+
+        await exportArticle(browser,
+            url,
             options.output,
             options.mode,
             options.pdfformat,
             options.jpgquality,
-            headless,
             jquery,
             images);
+
+        await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 

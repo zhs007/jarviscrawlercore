@@ -19,8 +19,10 @@ async function kaola(browser, srctext, srclang, destlang) {
     const jrxsg = getElementWithText('.toplevel', '今日限时购');
     if (jrxsg) {
       // 增加class，方便一次定位
+      // Increase class for easy positioning
       jrxsg.className = 'toplevel jrxsg';
       // 取消新窗口打开
+      // Cancel new window open
       jrxsg.removeAttribute('target');
     }
   });

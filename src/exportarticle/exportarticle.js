@@ -10,24 +10,24 @@ const {exportJPG} = require('./expjpg');
 
 /**
  * export article to a pdf file or a jpg file.
+ * @param {object} browser - browser
  * @param {string} url - URL
  * @param {string} outputfile - output file
  * @param {string} mode - mode
  * @param {string} pdfformat - pdf format, like A4
- * @param {int} jpgquality - jpg quality, like 60
- * @param {bool} headless - headless mode
+ * @param {number} jpgquality - jpg quality, like 60
  * @param {bool} jquery - attach jquery
  * @param {bool} isoutpurimages - is output images
  */
-async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
-    headless, jquery, isoutpurimages) {
-  const browser = await puppeteer.launch({
-    headless: headless,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ],
-  });
+async function exportArticle(browser, url, outputfile, mode,
+    pdfformat, jpgquality, jquery, isoutpurimages) {
+  // const browser = await puppeteer.launch({
+  //   headless: headless,
+  //   args: [
+  //     '--no-sandbox',
+  //     '--disable-setuid-sandbox',
+  //   ],
+  // });
 
   const mapResponse = {};
 
@@ -102,20 +102,28 @@ async function exportArticle(url, outputfile, mode, pdfformat, jpgquality,
 
       const result = newExportArticleResult(ret);
 
-      if (mode == 'pb') {
-        saveMessage(outputfile, result);
+      if (outputfile &&
+          typeof(outputfile) == 'string' &&
+          outputfile.length > 0) {
+        if (mode == 'pb') {
+          saveMessage(outputfile, result);
+        } else if (mode == 'pdf') {
+          await page.pdf({
+            path: outputfile,
+            format: pdfformat,
+          });
+        }
       }
-    }
 
-    if (mode == 'pdf') {
-      await page.pdf({
-        path: outputfile,
-        format: pdfformat,
-      });
+      await page.close();
+
+      return result;
     }
   }
 
-  await browser.close();
+  await page.close();
+
+  return undefined;
 }
 
 exports.exportArticle = exportArticle;

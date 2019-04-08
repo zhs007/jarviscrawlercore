@@ -53,7 +53,7 @@ message ConfluenceUpdateGrouping {
     repeated ConfluenceUpdateItem items = 2;
 }
 
-// ExportArticleResult - export article result
+// ConfluenceAllUpdates - confluence all updates
 message ConfluenceAllUpdates {
     repeated ConfluenceUpdateGrouping updates = 1;
 }
@@ -76,8 +76,36 @@ message ReplyTranslate {
     string text = 1;
 }
 
+// RequestArticle - request article
+message RequestArticle {
+    // url
+    string url = 1;
+    // is need attach jquery
+    bool attachJQuery = 2;
+}
+
+// ReplyArticle - reply article
+message ReplyArticle {
+    // result
+    ExportArticleResult result = 1;
+    // totalLength - If the message is too long, it will send data in multiple msg, this is the total length.
+    int32 totalLength = 2;
+    // curStart - The starting point of the current data (in bytes).
+    int32 curStart = 3;
+    // curLength - The length of the current data (in bytes).
+    int32 curLength = 4;
+    // hashData - This is the hash of each paragraph.
+    string hashData = 5;
+    // totalHashData - If multiple messages return data, this is the hash value of all data, only sent in the last message.
+    string totalHashData = 6;
+    // data
+    bytes data = 7;
+}
+
 // JarvisCrawlerService - JarvisCrawler service
 service JarvisCrawlerService {
     // translate - translate text
     rpc translate(RequestTranslate) returns (ReplyTranslate) {}
+    // export article - export article
+    rpc exportArticle(RequestArticle) returns (stream ReplyArticle) {}    
 }

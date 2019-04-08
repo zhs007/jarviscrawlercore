@@ -18,6 +18,8 @@ async function amazoncn(browser, srctext, srclang, destlang) {
   await page.evaluate(() => {
     const zms = getElementWithText('.nav-a', 'Z秒杀');
     if (zms) {
+      // 增加class，方便一次定位
+      // Increase class for easy positioning
       zms.className = 'nav-a zms';
     }
   });

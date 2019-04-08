@@ -5,6 +5,7 @@ const {tracing} = require('../src/tracing/tracing');
 const {confluencebot} = require('../src/confluencebot/confluencebot');
 const {googletranslate} = require('../src/googletranslate/googletranslate');
 const {amazoncn} = require('../src/amazon/amazon');
+const {kaola} = require('../src/kaola/kaola');
 const {startService} = require('../src/service/service');
 const fs = require('fs');
 
@@ -242,6 +243,32 @@ program
         const browser = await startBrowser(headless);
 
         await amazoncn(browser,
+            mode);
+
+        // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('kaola [mode]')
+    .description('kaola')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await kaola(browser,
             mode);
 
         // await browser.close();

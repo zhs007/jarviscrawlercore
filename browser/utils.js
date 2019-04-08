@@ -90,6 +90,25 @@ function getElement(selector) {
 }
 
 /**
+ * getElementWithText
+ * @param {string} selector - selector
+ * @param {string} text - text
+ * @return {Element} element - element, it maybe is undefined
+ */
+function getElementWithText(selector, text) {
+  const lst = $(selector);
+  if (lst.length > 0) {
+    for (let i = 0; i < lst.length; ++i) {
+      if (lst[i].innerText === text) {
+        return lst[i];
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
  * clearArticleElement
  * @param {Element} body - body
  */

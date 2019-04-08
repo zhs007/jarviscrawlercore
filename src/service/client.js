@@ -4,13 +4,13 @@ const services = require('../../proto/result_grpc_pb');
 const grpc = require('grpc');
 
 /**
- * startClient
+ * startTranslate
  * @param {string} servAddr - service addr
  * @param {string} srclang - source language
  * @param {string} destlang - destination language
  * @param {string} text - text
  */
-function startClient(servAddr, srclang, destlang, text) {
+function startTranslate(servAddr, srclang, destlang, text) {
   const client = new services.JarvisCrawlerServiceClient(servAddr,
       grpc.credentials.createInsecure());
 
@@ -30,5 +30,38 @@ function startClient(servAddr, srclang, destlang, text) {
   });
 }
 
-startClient('127.0.0.1:7051', 'en', 'zh-CN',
+/**
+ * startArticle
+ * @param {string} servAddr - service addr
+ * @param {string} url - url
+ * @param {bool} attachJQuery - is attach jquery
+ */
+function startArticle(servAddr, url, attachJQuery) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr,
+      grpc.credentials.createInsecure());
+
+  const request = new messages.RequestArticle();
+  request.setUrl(url);
+  request.setAttachjquery(attachJQuery);
+
+  const call = client.exportArticle(request);
+  call.on('data', (msg) =>{
+    const result = msg.getResult();
+    if (result) {
+      console.log(result.getTitle());
+    } else {
+      console.log(msg.getTotallength(), msg.getCurlength());
+    }
+  });
+  call.on('end', ()=>{
+    console.log('end.');
+  });
+  call.on('error', (err)=>{
+    console.log('err', err);
+  });
+}
+
+startTranslate('127.0.0.1:7051', 'en', 'zh-CN',
     '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.');
+
+startArticle('127.0.0.1:7051', 'https://post.smzdm.com/p/alpzl63o/', true);

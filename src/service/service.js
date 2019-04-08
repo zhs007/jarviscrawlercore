@@ -2,7 +2,7 @@ const services = require('../../proto/result_grpc_pb');
 const {loadConfig, checkConfig} = require('./cfg');
 const {startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
-const {exportArticle} = require('./exportarticle');
+const {callExportArticle} = require('./exportarticle');
 
 const grpc = require('grpc');
 
@@ -31,7 +31,7 @@ async function startService(cfgfile) {
       callTranslate(browser, call, callback);
     },
     exportArticle: (call, callback) => {
-      exportArticle(browser, call, callback);
+      callExportArticle(browser, call, callback);
     },
   });
 

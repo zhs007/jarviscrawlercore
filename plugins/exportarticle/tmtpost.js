@@ -186,4 +186,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('tmtpost.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('tmtpost.article', ismine, exportArticle);

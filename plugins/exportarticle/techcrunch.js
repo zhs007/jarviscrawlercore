@@ -41,4 +41,4 @@ async function formatArticle(page) {
   return undefined;
 }
 
-mgrPlugins.regPlugin('techcrunch.article', ismine, proc, formatArticle);
+mgrPlugins.regExportArticle('techcrunch.article', ismine, proc, formatArticle);

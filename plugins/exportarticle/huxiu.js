@@ -165,4 +165,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('huxiu.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('huxiu.article', ismine, exportArticle);

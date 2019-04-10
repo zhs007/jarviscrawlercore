@@ -7,6 +7,7 @@ const {googletranslate} = require('../src/googletranslate/googletranslate');
 const {amazoncn} = require('../src/amazon/amazon');
 const {kaola} = require('../src/kaola/kaola');
 const {startService} = require('../src/service/service');
+const {getArticleList} = require('../src/articlelist/articlelist');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -284,5 +285,52 @@ program
         }
       });
     });
+
+program
+    .command('getarticles [url]')
+    .description('get articles')
+    .option('-o, --output [filename]', 'export output file')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-q, --jquery [isattach]', 'attach jquery')
+    .action(function(url, options) {
+      console.log('version is ', VERSION);
+
+      if (!url || !options.output) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler exparticle --help');
+
+        return;
+      }
+
+      console.log('url - ', url);
+
+      if (options.output) {
+        console.log('output - ', options.output);
+      }
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      const jquery = (options.jquery === 'true');
+      console.log('jquery - ', jquery);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await getArticleList(browser,
+            url,
+            options.output,
+            jquery);
+
+        // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
 
 program.parse(process.argv);

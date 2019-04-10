@@ -161,4 +161,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('smzdm.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('smzdm.article', ismine, exportArticle);

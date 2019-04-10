@@ -185,4 +185,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('geekpark.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('geekpark.article', ismine, exportArticle);

@@ -1,4 +1,3 @@
-const puppeteer = require('puppeteer');
 const {mgrPlugins} = require('../../plugins/exportarticle/index');
 const {
   saveMessage,

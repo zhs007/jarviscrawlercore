@@ -40,6 +40,21 @@ message ExportArticleResult {
     string summary = 10;
 }
 
+// Article - article
+message Article {
+    string title = 1;
+    string author = 2;
+    string writeTime = 3;
+    string summary = 4;
+    string url = 5;
+    ImageInfo image = 6;
+}
+
+// ArticleList - article list
+message ArticleList {
+    repeated Article articles = 1;
+}
+
 // ConfluenceUpdateItem - confluence all updates - item
 message ConfluenceUpdateItem {
     string title = 1;

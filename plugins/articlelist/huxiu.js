@@ -8,7 +8,8 @@ const {mgrPlugins} = require('./pluginsmgr');
  * @return {bool} ismine
  */
 function ismine(url) {
-  if (url == 'https://www.geekpark.net') {
+  // console.log(url);
+  if (url == 'https://www.huxiu.com') {
     return true;
   }
 
@@ -26,19 +27,21 @@ async function getArticles(page) {
     const ret = {};
     ret.articles = [];
 
-    const lst = $('.article-item');
+    const lst = $('.mod-b.mod-art.clearfix');
+    console.log(lst.length);
     for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByTagName('h3');
+      const title = lst[i].getElementsByTagName('h2');
       if (title.length > 0) {
-        const url = title[0].parentNode;
-        const summary = lst[i].getElementsByClassName(
-            'multiline-text-overflow');
+        const url = title[0].getElementsByTagName('a');
+        const summary = lst[i].getElementsByClassName('mob-sub');
 
         co = {
           title: title[0].innerText,
         };
 
-        co.url = url.href;
+        if (url.length > 0) {
+          co.url = url[0].href;
+        }
 
         if (summary.length > 0) {
           co.summary = summary[0].innerText;
@@ -54,4 +57,4 @@ async function getArticles(page) {
   });
 }
 
-mgrPlugins.regGetArticles('geekpark.main', ismine, getArticles);
+mgrPlugins.regGetArticles('huxiu.main', ismine, getArticles);

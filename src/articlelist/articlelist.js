@@ -35,11 +35,14 @@ async function getArticleList(browser, url, outputfile, jquery) {
 
   await page.goto(url,
       {
-        waitUntil: 'networkidle2',
+        waitUntil: 'domcontentloaded',
+        // waitUntil: 'networkidle2',
         timeout: 0,
       }).catch((err) => {
     console.log('page.goto', url, err);
   });
+
+  //   await page.close();
 
   if (jquery) {
     await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});

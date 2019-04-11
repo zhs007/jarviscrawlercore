@@ -39,6 +39,8 @@ node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.baijingapp.com
 node ./bin/jarviscrawler.js getarticles -o 123.pb -q true https://36kr.com
 
 node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.geekpark.net
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.huxiu.com
 ```
 
 ### 2019-04-04

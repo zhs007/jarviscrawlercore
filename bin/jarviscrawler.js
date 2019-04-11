@@ -322,7 +322,7 @@ program
             options.output,
             jquery);
 
-        // await browser.close();
+        await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 

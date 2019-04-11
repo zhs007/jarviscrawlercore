@@ -1,9 +1,7 @@
 const {mgrPlugins} = require('../../plugins/articlelist/index');
 const {
   saveMessage,
-  setImageInfo,
-  getImageHashName,
-  newExportArticleResult,
+  newArticleList,
 } = require('../utils');
 
 /**
@@ -51,8 +49,13 @@ async function getArticleList(browser, url, outputfile, jquery) {
   await page.addScriptTag({path: './browser/utils.js'});
 
   const ret = await mgrPlugins.getArticles(url, page);
+  if (ret) {
+    const result = newArticleList(ret);
 
-  //   await page.close();
+    saveMessage(outputfile, result);
+  }
+
+  await page.close();
 
   return undefined;
 }

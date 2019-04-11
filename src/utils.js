@@ -186,6 +186,58 @@ function newExportArticleResult(obj) {
   return result;
 }
 
+/**
+ * new Article with object
+ * @param {object} obj - Article object
+ * @return {jarviscrawlercore.Article} ear - Article
+ */
+function newArticle(obj) {
+  const result = new jarviscrawlercore.Article();
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.author) {
+    result.setAuthor(obj.author);
+  }
+
+  if (obj.writeTime) {
+    result.setWritetime(obj.writeTime);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.image) {
+    result.setTitleimage(newImageInfo(obj.image));
+  }
+
+  if (obj.summary) {
+    result.setSummary(obj.summary);
+  }
+
+  return result;
+}
+
+/**
+ * new ArticleList with object
+ * @param {object} obj - ArticleList object
+ * @return {jarviscrawlercore.ArticleList} ear - ArticleList
+ */
+function newArticleList(obj) {
+  const result = new jarviscrawlercore.ArticleList();
+
+  if (obj.articles) {
+    for (let i = 0; i < obj.articles.length; ++i) {
+      result.addArticles(newArticle(obj.articles[i]), i);
+    }
+  }
+
+  return result;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -194,3 +246,5 @@ exports.getImageHashName = getImageHashName;
 exports.newParagraph = newParagraph;
 exports.newImageInfo = newImageInfo;
 exports.newExportArticleResult = newExportArticleResult;
+exports.newArticle = newArticle;
+exports.newArticleList = newArticleList;

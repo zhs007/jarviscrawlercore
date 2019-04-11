@@ -9,7 +9,7 @@ const {mgrPlugins} = require('./pluginsmgr');
  */
 function ismine(url) {
   // console.log(url);
-  if (url == 'https://www.huxiu.com') {
+  if (url == 'https://www.lieyunwang.com') {
     return true;
   }
 
@@ -27,21 +27,17 @@ async function getArticles(page) {
     const ret = {};
     ret.articles = [];
 
-    const lst = $('.mod-b.mod-art.clearfix');
+    const lst = $('.article-bar.clearfix');
     // console.log(lst.length);
     for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByTagName('h2');
+      const title = lst[i].getElementsByClassName('lyw-article-title');
       if (title.length > 0) {
-        const url = title[0].getElementsByTagName('a');
-        const summary = lst[i].getElementsByClassName('mob-sub');
+        const summary = lst[i].getElementsByClassName('article-digest mt10');
 
         co = {
           title: title[0].innerText,
+          url: title[0].href,
         };
-
-        if (url.length > 0) {
-          co.url = url[0].href;
-        }
 
         if (summary.length > 0) {
           co.summary = summary[0].innerText;
@@ -57,4 +53,4 @@ async function getArticles(page) {
   });
 }
 
-mgrPlugins.regGetArticles('huxiu.main', ismine, getArticles);
+mgrPlugins.regGetArticles('lieyunwang.main', ismine, getArticles);

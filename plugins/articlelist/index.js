@@ -4,5 +4,6 @@ require('./baijingapp');
 require('./36kr');
 require('./geekpark');
 require('./huxiu');
+require('./lieyunwang');
 
 exports.mgrPlugins = mgrPlugins;

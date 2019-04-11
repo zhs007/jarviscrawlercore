@@ -31,6 +31,16 @@ node ./bin/jarviscrawler.js startservice ./cfg/service.yaml
 node ./src/service/client.js
 ```
 
+### 2019-04-11
+
+```
+node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.baijingapp.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb -q true https://36kr.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.geekpark.net
+```
+
 ### 2019-04-04
 
 今天把google翻译支持了。

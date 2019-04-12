@@ -117,10 +117,26 @@ message ReplyArticle {
     bytes data = 7;
 }
 
+// RequestArticles - request articles
+message RequestArticles {
+    // url
+    string url = 1;
+    // is need attach jquery
+    bool attachJQuery = 2;
+}
+
+// ReplyArticles - reply articles
+message ReplyArticles {
+    // articles
+    ArticleList articles = 1;
+}
+
 // JarvisCrawlerService - JarvisCrawler service
 service JarvisCrawlerService {
     // translate - translate text
     rpc translate(RequestTranslate) returns (ReplyTranslate) {}
     // export article - export article
     rpc exportArticle(RequestArticle) returns (stream ReplyArticle) {}    
+    // get articles - get articles
+    rpc getArticles(RequestArticles) returns (ReplyArticles) {}        
 }

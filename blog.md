@@ -1,5 +1,25 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-12
+
+今天articles也支持了service。
+
+### 2019-04-11
+
+```
+node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.baijingapp.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb -q true https://36kr.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.geekpark.net
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.huxiu.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.lieyunwang.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.tmtpost.com
+```
+
 ### 2019-04-08
 
 这几天把翻译的功能接入到``JarvisTeleBot``，现在双向翻译方便很多了。
@@ -29,22 +49,6 @@ node ./bin/jarviscrawler.js startservice ./cfg/service.yaml
 
 ```
 node ./src/service/client.js
-```
-
-### 2019-04-11
-
-```
-node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.baijingapp.com
-
-node ./bin/jarviscrawler.js getarticles -o 123.pb -q true https://36kr.com
-
-node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.geekpark.net
-
-node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.huxiu.com
-
-node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.lieyunwang.com
-
-node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.tmtpost.com
 ```
 
 ### 2019-04-04

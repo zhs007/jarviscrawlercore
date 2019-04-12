@@ -3,6 +3,7 @@ const {loadConfig, checkConfig} = require('./cfg');
 const {startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
 const {callExportArticle} = require('./exportarticle');
+const {callGetArticleList} = require('./getarticles');
 
 const grpc = require('grpc');
 
@@ -32,6 +33,9 @@ async function startService(cfgfile) {
     },
     exportArticle: (call, callback) => {
       callExportArticle(browser, call, callback);
+    },
+    getArticles: (call, callback) => {
+      callGetArticleList(browser, call, callback);
     },
   });
 

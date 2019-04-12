@@ -52,7 +52,15 @@ async function getArticleList(browser, url, outputfile, jquery) {
   if (ret) {
     const result = newArticleList(ret);
 
-    saveMessage(outputfile, result);
+    if (outputfile &&
+      typeof(outputfile) == 'string' &&
+      outputfile.length > 0) {
+      saveMessage(outputfile, result);
+    }
+
+    await page.close();
+
+    return result;
   }
 
   await page.close();

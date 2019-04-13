@@ -55,6 +55,15 @@ async function exportArticle(page) {
         ret.title = objtitle.innerText;
       }
 
+      const secondtitle = getElement('h2');
+      if (secondtitle) {
+        const objsecondtitle = document.createElement('h2');
+        objsecondtitle.innerText = secondtitle.innerText;
+        objhead.appendChild(objsecondtitle);
+
+        ret.secondTitle = objsecondtitle.innerText;
+      }
+
       const imghead = getElement('.article__featured-image.article__featured-image--block.breakout');
       if (imghead) {
         ret.titleImage = await fetchImage(imghead.src);

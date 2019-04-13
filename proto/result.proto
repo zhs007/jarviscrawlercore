@@ -50,6 +50,7 @@ message Article {
     string summary = 4;
     string url = 5;
     ImageInfo image = 6;
+    string secondTitle = 7;
 }
 
 // ArticleList - article list

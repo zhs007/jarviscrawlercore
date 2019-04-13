@@ -1036,7 +1036,8 @@ proto.jarviscrawlercore.Article.toObject = function(includeInstance, msg) {
     writetime: jspb.Message.getFieldWithDefault(msg, 3, ""),
     summary: jspb.Message.getFieldWithDefault(msg, 4, ""),
     url: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    image: (f = msg.getImage()) && proto.jarviscrawlercore.ImageInfo.toObject(includeInstance, f)
+    image: (f = msg.getImage()) && proto.jarviscrawlercore.ImageInfo.toObject(includeInstance, f),
+    secondtitle: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
   if (includeInstance) {
@@ -1097,6 +1098,10 @@ proto.jarviscrawlercore.Article.deserializeBinaryFromReader = function(msg, read
       var value = new proto.jarviscrawlercore.ImageInfo;
       reader.readMessage(value,proto.jarviscrawlercore.ImageInfo.deserializeBinaryFromReader);
       msg.setImage(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSecondtitle(value);
       break;
     default:
       reader.skipField();
@@ -1168,6 +1173,13 @@ proto.jarviscrawlercore.Article.serializeBinaryToWriter = function(message, writ
       6,
       f,
       proto.jarviscrawlercore.ImageInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getSecondtitle();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
     );
   }
 };
@@ -1275,6 +1287,21 @@ proto.jarviscrawlercore.Article.prototype.clearImage = function() {
  */
 proto.jarviscrawlercore.Article.prototype.hasImage = function() {
   return jspb.Message.getField(this, 6) != null;
+};
+
+
+/**
+ * optional string secondTitle = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.Article.prototype.getSecondtitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.Article.prototype.setSecondtitle = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

@@ -218,6 +218,10 @@ function newArticle(obj) {
     result.setSummary(obj.summary);
   }
 
+  if (obj.secondTitle) {
+    result.setSecondtitle(obj.secondTitle);
+  }
+
   return result;
 }
 

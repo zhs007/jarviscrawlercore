@@ -64,7 +64,7 @@ async function exportArticle(page) {
         ret.secondTitle = objsecondtitle.innerText;
       }
 
-      const imghead = getElement('.article__featured-image.article__featured-image--block.breakout');
+      const imghead = getElement('.article__featured-image');
       if (imghead) {
         ret.titleImage = await fetchImage(imghead.src);
 
@@ -169,7 +169,7 @@ async function exportArticle(page) {
     //   }
     // }
 
-    clearArticleElement(objbody);
+    // clearArticleElement(objbody);
 
     ret.article = objbody.innerText;
 

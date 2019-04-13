@@ -6,7 +6,7 @@ const {mgrPlugins} = require('./pluginsmgr');
  * @return {bool} ismine
  */
 function ismine(url) {
-  if (url.indexOf('https://techcrunch.com/') == 0) {
+  if (url.indexOf('https://www.techinasia.com/') == 0) {
     return true;
   }
 
@@ -19,13 +19,23 @@ function ismine(url) {
  * @return {ExportArticleResult} result - result
  */
 async function exportArticle(page) {
+  await page.waitForSelector('.infinite-scroll').catch((err) => {
+    console.log('techinasia.article.exportArticle', err);
+  });
+
   const dom = await page.$eval(
-      '#tc-main-content',
+      '.infinite-scroll',
       (element) => {
         return element.innerHTML;
       });
 
-  await page.setContent(dom);
+  //   try {
+  await page.setContent(dom).catch((err) => {
+    console.log('techinasia.article.exportArticle', err);
+  });
+  //   } catch (err) {
+  //     console.log('techinasia.article.exportArticle try', err);
+  //   }
 
   const ret = await page.evaluate(async () => {
     const ret = {};
@@ -55,41 +65,38 @@ async function exportArticle(page) {
         ret.title = objtitle.innerText;
       }
 
-      const secondtitle = getElement('h2');
-      if (secondtitle) {
-        const objsecondtitle = document.createElement('h2');
-        objsecondtitle.innerText = secondtitle.innerText;
-        objhead.appendChild(objsecondtitle);
+      //   const secondtitle = getElement('h2');
+      //   if (secondtitle) {
+      //     const objsecondtitle = document.createElement('h2');
+      //     objsecondtitle.innerText = secondtitle.innerText;
+      //     objhead.appendChild(objsecondtitle);
 
-        ret.secondTitle = objsecondtitle.innerText;
-      }
+      //     ret.secondTitle = objsecondtitle.innerText;
+      //   }
 
-      const imghead = getElement('.article__featured-image');
-      if (imghead) {
-        ret.titleImage = await fetchImage(imghead.src);
+      //   const imghead = getElement('.article__featured-image');
+      //   if (imghead) {
+      //     ret.titleImage = await fetchImage(imghead.src);
 
-        const curnode = document.createElement('p');
-        curnode.style.cssText = 'text-align: center;';
+      //     const curnode = document.createElement('p');
+      //     curnode.style.cssText = 'text-align: center;';
 
-        const curimg = document.createElement('img');
-        curimg.src = imghead.src;
+      //     const curimg = document.createElement('img');
+      //     curimg.src = imghead.src;
 
-        curnode.appendChild(curimg);
+      //     curnode.appendChild(curimg);
 
-        objhead.appendChild(curnode);
-      }
+      //     objhead.appendChild(curnode);
+      //   }
 
-      const author = getElement('.article__byline');
+      const author = getElement('.author.inline-block');
       if (author) {
-        cura = author.getElementsByTagName('a');
-        if (cura && cura.length > 0) {
-          const objauthor = document.createElement('div');
-          objauthor.className = 'article-author';
-          objauthor.innerText = cura[0].innerText;
-          objhead.appendChild(objauthor);
+        const objauthor = document.createElement('div');
+        objauthor.className = 'article-author';
+        objauthor.innerText = author.innerText;
+        objhead.appendChild(objauthor);
 
-          ret.author = objauthor.innerText;
-        }
+        ret.author = objauthor.innerText;
       }
 
       const articletime = getElement('time');
@@ -105,23 +112,15 @@ async function exportArticle(page) {
         ret.writeTime = objarticletime.innerText;
       }
 
-      const articlenode = getElement('.article-content');
+      const articlenode = getElement('.content');
       if (articlenode) {
         for (let i = 0; i < articlenode.children.length; ++i) {
           if (articlenode.children[i].tagName != 'P' &&
-            articlenode.children[i].tagName != 'DIV') {
+            articlenode.children[i].tagName != 'H2') {
             continue;
           }
 
           if (articlenode.children[i].tagName == 'P') {
-            const curnode = document.createElement('p');
-
-            curnode.innerText = articlenode.children[i].innerText;
-
-            ret.paragraphs.push({pt: 1, text: curnode.innerText});
-
-            objarticlebody.appendChild(curnode);
-          } else {
             const curimgs = articlenode.children[i].getElementsByTagName('img');
             if (curimgs.length > 0) {
               ret.imgs.push(await fetchImage(curimgs[0].src));
@@ -143,18 +142,24 @@ async function exportArticle(page) {
               curnode.appendChild(curimg);
 
               objarticlebody.appendChild(curnode);
-            }
-
-            const curp = articlenode.children[i].getElementsByTagName('p');
-            for (let j = 0; j < curp.length; ++j) {
+            } else {
               const curnode = document.createElement('p');
 
-              curnode.innerText = curp[j].innerText;
+              curnode.innerText = articlenode.children[i].innerText;
 
-              ret.paragraphs.push({pt: 5, text: curnode.innerText});
+              ret.paragraphs.push({pt: 1, text: curnode.innerText});
 
               objarticlebody.appendChild(curnode);
             }
+          } else if (articlenode.children[i].tagName == 'H2') {
+            const curnode = document.createElement('h2');
+
+            curnode.innerText = articlenode.children[i].innerText;
+            // curnode.className = 'article-body-h1';
+
+            ret.paragraphs.push({pt: 3, text: curnode.innerText});
+
+            objarticlebody.appendChild(curnode);
           }
         }
       }
@@ -183,4 +188,4 @@ async function exportArticle(page) {
   return ret;
 }
 
-mgrPlugins.regExportArticle('techcrunch.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('techinasia.article', ismine, exportArticle);

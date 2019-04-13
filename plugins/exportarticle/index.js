@@ -11,5 +11,6 @@ require('./techcrunch');
 require('./zhihu.answer');
 require('./zhihu.article');
 require('./medium');
+require('./techinasia');
 
 exports.mgrPlugins = mgrPlugins;

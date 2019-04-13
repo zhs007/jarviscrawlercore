@@ -60,6 +60,10 @@ async function exportArticle(browser, url, outputfile, mode,
     console.log('page.goto', url, err);
   });
 
+  // await page.goto(url).catch((err) => {
+  //   console.log('page.goto', url, err);
+  // });
+
   // await page.goto(url);
 
   if (mode == 'jpg') {

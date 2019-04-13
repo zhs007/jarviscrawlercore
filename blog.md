@@ -8,6 +8,8 @@
 node ./bin/jarviscrawler.js exparticle https://medium.com/@sean22492249/%E5%88%A9%E7%94%A8-rasa-n-rasa-core-%E4%BE%86%E5%BB%BA%E7%AB%8B%E4%B8%AD%E6%96%87%E7%9A%84-chatbot-aa65436efa5f -o ./output/abc.pdf -m pdf -h false -i true -q true -d true
 
 node ./bin/jarviscrawler.js exparticle https://techcrunch.com/2019/04/03/ruhnn-ipo/ -o ./output/a.pdf -m pdf -h false -i true -q true -d true
+
+node ./bin/jarviscrawler.js exparticle https://www.techinasia.com/3-vietnamese-platforms-visited-ommerce-sites-sea -o ./output/abc.pdf -m pdf -h false -i true -q true -d true
 ```
 
 ### 2019-04-12

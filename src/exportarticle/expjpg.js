@@ -6,12 +6,12 @@
  * @param {int} jpgquality - jpg quality
  */
 async function exportJPG(page, outputfile, jpgquality) {
-//   await page.waitForNavigation({
-//     waitUntil: 'networkidle2',
-//     // timeout: 0,
-//   }).catch((err) => {
-//     console.log('exportJPG.waitForNavigation:networkidle2', err);
-//   });
+  // await page.waitForNavigation({
+  //   waitUntil: 'networkidle2',
+  //   // timeout: 0,
+  // }).catch((err) => {
+  //   console.log('exportJPG.waitForNavigation:networkidle2', err);
+  // });
 
   await page.screenshot({
     path: outputfile,

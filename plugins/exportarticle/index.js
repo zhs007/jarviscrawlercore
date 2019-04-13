@@ -10,5 +10,6 @@ require('./tmtpost');
 require('./techcrunch');
 require('./zhihu.answer');
 require('./zhihu.article');
+require('./medium');
 
 exports.mgrPlugins = mgrPlugins;

@@ -17,9 +17,10 @@ const {exportJPG} = require('./expjpg');
  * @param {number} jpgquality - jpg quality, like 60
  * @param {bool} jquery - attach jquery
  * @param {bool} isoutpurimages - is output images
+ * @param {bool} debugmode - is debug mode
  */
 async function exportArticle(browser, url, outputfile, mode,
-    pdfformat, jpgquality, jquery, isoutpurimages) {
+    pdfformat, jpgquality, jquery, isoutpurimages, debugmode) {
   // const browser = await puppeteer.launch({
   //   headless: headless,
   //   args: [
@@ -114,13 +115,17 @@ async function exportArticle(browser, url, outputfile, mode,
         }
       }
 
-      await page.close();
+      if (!debugmode) {
+        await page.close();
+      }
 
       return result;
     }
   }
 
-  await page.close();
+  if (!debugmode) {
+    await page.close();
+  }
 
   return undefined;
 }

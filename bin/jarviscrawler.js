@@ -26,6 +26,7 @@ program
     .option('-q, --jquery [isattach]', 'attach jquery')
     .option('-j, --jpgquality [quality]', 'jpg quality')
     .option('-i, --images [isoutput]', 'output images')
+    .option('-d, --debug [isdebug]', 'debug mode')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -75,6 +76,9 @@ program
       const jquery = (options.jquery === 'true');
       console.log('jquery - ', jquery);
 
+      const debugmode = (options.debug === 'true');
+      console.log('debug - ', debugmode);
+
       (async () => {
         const browser = await startBrowser(headless);
 
@@ -85,9 +89,12 @@ program
             options.pdfformat,
             options.jpgquality,
             jquery,
-            images);
+            images,
+            debugmode);
 
-        await browser.close();
+        if (!debugmode) {
+          await browser.close();
+        }
       })().catch((err) => {
         console.log('catch a err ', err);
 

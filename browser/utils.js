@@ -122,3 +122,17 @@ function clearArticleElement(body) {
     }
   }
 }
+
+/**
+ * getElementAttributes
+ * @param {Element} ele - element
+ * @param {string} key - key
+ */
+function getElementAttributes(ele, key) {
+  const attrs = ele.attributes;
+  for (let i = 0; i < attrs.length; ++i) {
+    if (attrs[i].name == key) {
+      return attrs[i].value;
+    }
+  }
+}

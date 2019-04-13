@@ -3224,7 +3224,8 @@ proto.jarviscrawlercore.ParagraphType = {
   PT_TEXT: 1,
   PT_IMAGE: 2,
   PT_HEADLINE: 3,
-  PT_POSTLIST: 4
+  PT_POSTLIST: 4,
+  PT_COMMENT: 5
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

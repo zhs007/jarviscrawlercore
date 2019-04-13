@@ -8,6 +8,7 @@ enum ParagraphType {
     PT_IMAGE = 2;
     PT_HEADLINE = 3;
     PT_POSTLIST = 4;
+    PT_COMMENT = 5;
 }
 
 // ImageInfo - image info

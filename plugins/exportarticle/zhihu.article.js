@@ -213,4 +213,4 @@ async function exportArticle(page) {
   return ret;
 }
 
-mgrPlugins.regPlugin('zhihu.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('zhihu.article', ismine, exportArticle);

@@ -157,4 +157,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('36kr.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('36kr.article', ismine, exportArticle);

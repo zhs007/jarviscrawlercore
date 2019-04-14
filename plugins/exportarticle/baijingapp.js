@@ -201,4 +201,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('baijingapp.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('baijingapp.article', ismine, exportArticle);

@@ -4,7 +4,10 @@ const {exportArticle} = require('../src/exportarticle/exportarticle');
 const {tracing} = require('../src/tracing/tracing');
 const {confluencebot} = require('../src/confluencebot/confluencebot');
 const {googletranslate} = require('../src/googletranslate/googletranslate');
+const {amazoncn} = require('../src/amazon/amazon');
+const {kaola} = require('../src/kaola/kaola');
 const {startService} = require('../src/service/service');
+const {getArticleList} = require('../src/articlelist/articlelist');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -23,6 +26,7 @@ program
     .option('-q, --jquery [isattach]', 'attach jquery')
     .option('-j, --jpgquality [quality]', 'jpg quality')
     .option('-i, --images [isoutput]', 'output images')
+    .option('-d, --debug [isdebug]', 'debug mode')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -72,15 +76,25 @@ program
       const jquery = (options.jquery === 'true');
       console.log('jquery - ', jquery);
 
+      const debugmode = (options.debug === 'true');
+      console.log('debug - ', debugmode);
+
       (async () => {
-        await exportArticle(url,
+        const browser = await startBrowser(headless);
+
+        await exportArticle(browser,
+            url,
             options.output,
             options.mode,
             options.pdfformat,
             options.jpgquality,
-            headless,
             jquery,
-            images);
+            images,
+            debugmode);
+
+        if (!debugmode) {
+          await browser.close();
+        }
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -226,5 +240,104 @@ program
         }
       });
     });
+
+program
+    .command('amazon [mode]')
+    .description('amazon')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await amazoncn(browser,
+            mode);
+
+        // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('kaola [mode]')
+    .description('kaola')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await kaola(browser,
+            mode);
+
+        // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('getarticles [url]')
+    .description('get articles')
+    .option('-o, --output [filename]', 'export output file')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-q, --jquery [isattach]', 'attach jquery')
+    .action(function(url, options) {
+      console.log('version is ', VERSION);
+
+      if (!url || !options.output) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler exparticle --help');
+
+        return;
+      }
+
+      console.log('url - ', url);
+
+      if (options.output) {
+        console.log('output - ', options.output);
+      }
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      const jquery = (options.jquery === 'true');
+      console.log('jquery - ', jquery);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await getArticleList(browser,
+            url,
+            options.output,
+            jquery);
+
+        await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
 
 program.parse(process.argv);

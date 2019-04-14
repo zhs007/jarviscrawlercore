@@ -90,6 +90,25 @@ function getElement(selector) {
 }
 
 /**
+ * getElementWithText
+ * @param {string} selector - selector
+ * @param {string} text - text
+ * @return {Element} element - element, it maybe is undefined
+ */
+function getElementWithText(selector, text) {
+  const lst = $(selector);
+  if (lst.length > 0) {
+    for (let i = 0; i < lst.length; ++i) {
+      if (lst[i].innerText === text) {
+        return lst[i];
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
  * clearArticleElement
  * @param {Element} body - body
  */
@@ -100,6 +119,20 @@ function clearArticleElement(body) {
       body.childNodes[i].remove();
     } else {
       ++i;
+    }
+  }
+}
+
+/**
+ * getElementAttributes
+ * @param {Element} ele - element
+ * @param {string} key - key
+ */
+function getElementAttributes(ele, key) {
+  const attrs = ele.attributes;
+  for (let i = 0; i < attrs.length; ++i) {
+    if (attrs[i].name == key) {
+      return attrs[i].value;
     }
   }
 }

@@ -180,4 +180,4 @@ async function exportArticle(page) {
   });
 }
 
-mgrPlugins.regPlugin('lieyunwang.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('lieyunwang.article', ismine, exportArticle);

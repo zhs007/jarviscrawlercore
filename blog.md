@@ -1,8 +1,49 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-13
+
+今天处理了``medium``、``techcrunch``。
+
+```
+node ./bin/jarviscrawler.js exparticle https://medium.com/@sean22492249/%E5%88%A9%E7%94%A8-rasa-n-rasa-core-%E4%BE%86%E5%BB%BA%E7%AB%8B%E4%B8%AD%E6%96%87%E7%9A%84-chatbot-aa65436efa5f -o ./output/abc.pdf -m pdf -h false -i true -q true -d true
+
+node ./bin/jarviscrawler.js exparticle https://techcrunch.com/2019/04/03/ruhnn-ipo/ -o ./output/a.pdf -m pdf -h false -i true -q true -d true
+
+node ./bin/jarviscrawler.js exparticle https://www.techinasia.com/3-vietnamese-platforms-visited-ommerce-sites-sea -o ./output/abc.pdf -m pdf -h false -i true -q true -d true
+```
+
+### 2019-04-12
+
+今天articles也支持了service。
+
+### 2019-04-11
+
+```
+node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.baijingapp.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb -q true https://36kr.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.geekpark.net
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.huxiu.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.lieyunwang.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.tmtpost.com
+```
+
+### 2019-04-08
+
+这几天把翻译的功能接入到``JarvisTeleBot``，现在双向翻译方便很多了。
+
+这几天简单处理了一下电商网站，有几个小技巧，其实就是改本地``DOM``，怎么方便怎么来，没必要太拘泥于一些”好“的实现，浏览器都在手上了，能控制住的就控制住，省得进一步折腾。
+
+今天开始将``exportarticle``移植到``service``里去，支持了长消息（``grpc``不允许大于4mb的消息）。
+
+然后就是，代码量越来越大了，需要有单元测试才好，否则后面代码重构风险越来越大。  
+目前想到的还是单独写单元测试，一方面可以测代码本身，另外还可以测网站是否升级，尽可能用现成的代码来做单元测试。
 
 ### 2019-04-05
-
 
 切换到``grpc-tools``了，如果要重新buildproto，需要先装``grpc-tools``。
 

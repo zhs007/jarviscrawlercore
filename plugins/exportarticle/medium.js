@@ -6,7 +6,7 @@ const {mgrPlugins} = require('./pluginsmgr');
  * @return {bool} ismine
  */
 function ismine(url) {
-  if (url.indexOf('https://post.smzdm.com/p/') == 0) {
+  if (url.indexOf('medium.com/') > 0) {
     return true;
   }
 
@@ -20,17 +20,19 @@ function ismine(url) {
  */
 async function exportArticle(page) {
   const dom = await page.$eval(
-      '.leftWrap',
+      'main',
       (element) => {
         return element.innerHTML;
       });
 
   await page.setContent(dom);
 
-  return await page.evaluate(async () => {
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
     ret.paragraphs = [];
+
+    window.waitimgs = 0;
 
     const objbody = getElement('body');
     if (objbody) {
@@ -44,21 +46,6 @@ async function exportArticle(page) {
 
       objbody.appendChild(objarticlebody);
 
-      const imghead = getElement('.detailed_banner');
-      if (imghead) {
-        ret.titleImage = await fetchImage(imghead.children[0].src);
-
-        const curnode = document.createElement('p');
-        curnode.style.cssText = 'text-align: center;';
-
-        const curimg = document.createElement('img');
-        curimg.src = imghead.children[0].src;
-
-        curnode.appendChild(curimg);
-
-        objhead.appendChild(curnode);
-      }
-
       const title = getElement('h1');
       if (title) {
         const objtitle = document.createElement('h1');
@@ -68,75 +55,70 @@ async function exportArticle(page) {
         ret.title = objtitle.innerText;
       }
 
-      const author = getElement('.xilie');
+      const author = getElement('.ds-link.ds-link--styleSubtle.ui-captionStrong.u-inlineBlock.link.link--darken.link--darker');
       if (author) {
         const objauthor = document.createElement('div');
         objauthor.className = 'article-author';
-        objauthor.innerText = author.children[0].innerText;
+        objauthor.innerText = author.innerText;
         objhead.appendChild(objauthor);
 
         ret.author = objauthor.innerText;
       }
 
-      const articletime = getElement('.grey');
+      const articletime = getElement('time');
       if (articletime) {
         const objarticletime = document.createElement('div');
         objarticletime.className = 'article-time';
-        objarticletime.innerText = articletime.innerText;
+
+        curtime = getElementAttributes(articletime, 'datetime');
+
+        objarticletime.innerText = curtime;
         objhead.appendChild(objarticletime);
 
         ret.writeTime = objarticletime.innerText;
       }
 
-      let articlenode = getElement('article');
-      if (articlenode) {
-        if (articlenode.children.length > 1) {
-          articlenode = articlenode.children[1];
-        }
-
+      const lstsection = $('.section-inner.sectionLayout--insetColumn');
+      for (let i = 0; i < lstsection.length; ++i) {
+        const articlenode = lstsection[i];
         for (let i = 0; i < articlenode.children.length; ++i) {
           if (articlenode.children[i].tagName != 'P' &&
-              articlenode.children[i].tagName != 'H2') {
+            articlenode.children[i].tagName != 'H3' &&
+            articlenode.children[i].tagName != 'OL' &&
+            articlenode.children[i].tagName != 'PRE') {
             continue;
           }
 
-          const curimgs = articlenode.children[i].getElementsByTagName('img');
-          if (curimgs.length > 0) {
-            ret.imgs.push(await fetchImage(curimgs[0].src));
-            ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
-
-            const curnode = document.createElement('p');
-            curnode.style.cssText = 'text-align: center;';
-
-            const curimg = document.createElement('img');
-            curimg.onload = () => {
-              ret.imgs[ret.imgs.length - 1].width = curimg.width;
-              ret.imgs[ret.imgs.length - 1].height = curimg.height;
-
-              // console.log(curimg.width);
-              // console.log(curimg.height);
-            };
-
-            curimg.src = curimgs[0].src;
-
-            curnode.appendChild(curimg);
-
-            objarticlebody.appendChild(curnode);
-          } else if (articlenode.children[i].tagName == 'text-big-title') {
+          if (articlenode.children[i].tagName == 'H3') {
             const curnode = document.createElement('h2');
 
             curnode.innerText = articlenode.children[i].innerText;
-            // curnode.className = 'article-body-h2';
 
             ret.paragraphs.push({pt: 3, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
-          } else {
+          } else if (articlenode.children[i].tagName == 'P') {
             const curnode = document.createElement('p');
 
             curnode.innerText = articlenode.children[i].innerText;
 
             ret.paragraphs.push({pt: 1, text: curnode.innerText});
+
+            objarticlebody.appendChild(curnode);
+          } else if (articlenode.children[i].tagName == 'OL') {
+            const curnode = document.createElement('h4');
+
+            curnode.innerText = articlenode.children[i].innerText;
+
+            ret.paragraphs.push({pt: 4, text: curnode.innerText});
+
+            objarticlebody.appendChild(curnode);
+          } else if (articlenode.children[i].tagName == 'PRE') {
+            const curnode = document.createElement('p');
+
+            curnode.innerText = articlenode.children[i].innerText;
+
+            ret.paragraphs.push({pt: 4, text: curnode.innerText});
 
             objarticlebody.appendChild(curnode);
           }
@@ -159,6 +141,12 @@ async function exportArticle(page) {
 
     return ret;
   });
+
+  //   await page.waitForFunction('window.waitimgs == 0').catch((err) => {
+  //     console.log('zhihu.article.formatArticle', err);
+  //   });
+
+  return ret;
 }
 
-mgrPlugins.regExportArticle('smzdm.article', ismine, exportArticle);
+mgrPlugins.regExportArticle('medium.article', ismine, exportArticle);

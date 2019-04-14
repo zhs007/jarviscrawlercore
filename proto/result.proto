@@ -7,6 +7,8 @@ enum ParagraphType {
     PT_TEXT = 1;
     PT_IMAGE = 2;
     PT_HEADLINE = 3;
+    PT_POSTLIST = 4;
+    PT_COMMENT = 5;
 }
 
 // ImageInfo - image info
@@ -40,6 +42,22 @@ message ExportArticleResult {
     string summary = 10;
 }
 
+// Article - article
+message Article {
+    string title = 1;
+    string author = 2;
+    string writeTime = 3;
+    string summary = 4;
+    string url = 5;
+    ImageInfo image = 6;
+    string secondTitle = 7;
+}
+
+// ArticleList - article list
+message ArticleList {
+    repeated Article articles = 1;
+}
+
 // ConfluenceUpdateItem - confluence all updates - item
 message ConfluenceUpdateItem {
     string title = 1;
@@ -53,7 +71,7 @@ message ConfluenceUpdateGrouping {
     repeated ConfluenceUpdateItem items = 2;
 }
 
-// ExportArticleResult - export article result
+// ConfluenceAllUpdates - confluence all updates
 message ConfluenceAllUpdates {
     repeated ConfluenceUpdateGrouping updates = 1;
 }
@@ -76,8 +94,52 @@ message ReplyTranslate {
     string text = 1;
 }
 
+// RequestArticle - request article
+message RequestArticle {
+    // url
+    string url = 1;
+    // is need attach jquery
+    bool attachJQuery = 2;
+}
+
+// ReplyArticle - reply article
+message ReplyArticle {
+    // result
+    ExportArticleResult result = 1;
+    // totalLength - If the message is too long, it will send data in multiple msg, this is the total length.
+    int32 totalLength = 2;
+    // curStart - The starting point of the current data (in bytes).
+    int32 curStart = 3;
+    // curLength - The length of the current data (in bytes).
+    int32 curLength = 4;
+    // hashData - This is the hash of each paragraph.
+    string hashData = 5;
+    // totalHashData - If multiple messages return data, this is the hash value of all data, only sent in the last message.
+    string totalHashData = 6;
+    // data
+    bytes data = 7;
+}
+
+// RequestArticles - request articles
+message RequestArticles {
+    // url
+    string url = 1;
+    // is need attach jquery
+    bool attachJQuery = 2;
+}
+
+// ReplyArticles - reply articles
+message ReplyArticles {
+    // articles
+    ArticleList articles = 1;
+}
+
 // JarvisCrawlerService - JarvisCrawler service
 service JarvisCrawlerService {
     // translate - translate text
     rpc translate(RequestTranslate) returns (ReplyTranslate) {}
+    // export article - export article
+    rpc exportArticle(RequestArticle) returns (stream ReplyArticle) {}    
+    // get articles - get articles
+    rpc getArticles(RequestArticles) returns (ReplyArticles) {}        
 }

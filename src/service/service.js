@@ -1,28 +1,13 @@
-const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
 const {loadConfig, checkConfig} = require('./cfg');
 const {startBrowser} = require('../browser');
-const {googletranslate} = require('../googletranslate/googletranslate');
+const {callTranslate} = require('./translate');
+const {callExportArticle} = require('./exportarticle');
+const {callGetArticleList} = require('./getarticles');
 
 const grpc = require('grpc');
 
 let browser = undefined;
-
-/**
- * translate
- * @param {object} call - call
- * @param {function} callback - callback(err, ReplyTranslate)
- */
-function translate(call, callback) {
-  googletranslate(browser, call.request.getText(), call.request.getSrclang(),
-      call.request.getDestlang()).then((desttext) => {
-    const reply = new messages.ReplyTranslate();
-    reply.setText(desttext);
-    callback(null, reply);
-  }).catch((err) => {
-    callback(err, null);
-  });
-}
 
 /**
  * startService
@@ -43,7 +28,15 @@ async function startService(cfgfile) {
   const server = new grpc.Server();
 
   server.addService(services.JarvisCrawlerServiceService, {
-    translate: translate,
+    translate: (call, callback) => {
+      callTranslate(browser, call, callback);
+    },
+    exportArticle: (call, callback) => {
+      callExportArticle(browser, call, callback);
+    },
+    getArticles: (call, callback) => {
+      callGetArticleList(browser, call, callback);
+    },
   });
 
   server.bind(cfg.servAddr, grpc.ServerCredentials.createInsecure());

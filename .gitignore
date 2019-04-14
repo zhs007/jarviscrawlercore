@@ -60,6 +60,7 @@ typings/
 # next.js build output
 .next
 .vscode
-*.yaml
+cfg/dtconfluence.yaml
+cfg/service.yaml
 output
 output/*

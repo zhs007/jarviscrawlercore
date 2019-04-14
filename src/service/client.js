@@ -72,8 +72,9 @@ function startGetArticles(servAddr, url, jquery) {
       grpc.credentials.createInsecure());
 
   const request = new messages.RequestArticles();
-  request.setUrl(url);
-  request.setAttachjquery(jquery);
+  request.setWebsite('huxiu');
+  // request.setUrl(url);
+  // request.setAttachjquery(jquery);
 
   client.getArticles(request, function(err, response) {
     if (err) {

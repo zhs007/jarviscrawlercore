@@ -1,5 +1,6 @@
 const messages = require('../../proto/result_pb');
 const {getArticleList} = require('../articlelist/articlelist');
+const {mgrWebSite} = require('../websitemgr');
 
 /**
  * translate
@@ -8,16 +9,34 @@ const {getArticleList} = require('../articlelist/articlelist');
  * @param {function} callback - callback(err, ReplyArticles)
  */
 function callGetArticleList(browser, call, callback) {
-  getArticleList(browser,
-      call.request.getUrl(),
-      '',
-      call.request.getAttachjquery()).then((result) => {
-    const reply = new messages.ReplyArticles();
-    reply.setArticles(result);
-    callback(null, reply);
-  }).catch((err) => {
-    callback(err, null);
-  });
+  if (call.request.getWebsite()) {
+    const curcfg = mgrWebSite.getArticles(call.request.getWebsite());
+    if (curcfg) {
+      getArticleList(browser,
+          curcfg.url,
+          '',
+          curcfg.jquery).then((result) => {
+        const reply = new messages.ReplyArticles();
+        reply.setArticles(result);
+        callback(null, reply);
+      }).catch((err) => {
+        callback(err, null);
+      });
+    } else {
+      callback(new Error('Don\'t support ' + call.request.getWebsite()), null);
+    }
+  } else {
+    getArticleList(browser,
+        call.request.getUrl(),
+        '',
+        call.request.getAttachjquery()).then((result) => {
+      const reply = new messages.ReplyArticles();
+      reply.setArticles(result);
+      callback(null, reply);
+    }).catch((err) => {
+      callback(err, null);
+    });
+  }
 }
 
 exports.callGetArticleList = callGetArticleList;

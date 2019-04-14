@@ -2961,7 +2961,8 @@ proto.jarviscrawlercore.RequestArticles.prototype.toObject = function(opt_includ
 proto.jarviscrawlercore.RequestArticles.toObject = function(includeInstance, msg) {
   var f, obj = {
     url: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    attachjquery: jspb.Message.getFieldWithDefault(msg, 2, false)
+    attachjquery: jspb.Message.getFieldWithDefault(msg, 2, false),
+    website: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -3006,6 +3007,10 @@ proto.jarviscrawlercore.RequestArticles.deserializeBinaryFromReader = function(m
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setAttachjquery(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setWebsite(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -3049,6 +3054,13 @@ proto.jarviscrawlercore.RequestArticles.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = message.getWebsite();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -3081,6 +3093,21 @@ proto.jarviscrawlercore.RequestArticles.prototype.getAttachjquery = function() {
 /** @param {boolean} value */
 proto.jarviscrawlercore.RequestArticles.prototype.setAttachjquery = function(value) {
   jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional string website = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestArticles.prototype.getWebsite = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestArticles.prototype.setWebsite = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

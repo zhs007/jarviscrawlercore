@@ -1,0 +1,32 @@
+getarticles:
+  baijingapp: 
+    url: http://www.baijingapp.com
+    jquery: false
+  36kr:
+    url: https://36kr.com
+    jquery: true
+  geekpark:
+    url: https://www.geekpark.net
+    jquery: false
+  huxiu:
+    url: https://www.huxiu.com
+    jquery: false    
+  lieyunwang:
+    url: https://www.lieyunwang.com
+    jquery: false
+  tmtpost:
+    url: https://www.tmtpost.com
+    jquery: false
+exportarticle:
+  baijingapp:
+    jquery: false
+  36kr:
+    jquery: true
+  geekpark:
+    jquery: false
+  huxiu:
+    jquery: false    
+  lieyunwang:
+    jquery: false
+  tmtpost:
+    jquery: false

@@ -2,24 +2,31 @@ getarticles:
   baijingapp: 
     url: http://www.baijingapp.com
     jquery: false
+    lang: zh-CN
   36kr:
     url: https://36kr.com
     jquery: true
+    lang: zh-CN
   geekpark:
     url: https://www.geekpark.net
     jquery: false
+    lang: zh-CN
   huxiu:
     url: https://www.huxiu.com
     jquery: false    
+    lang: zh-CN
   lieyunwang:
     url: https://www.lieyunwang.com
     jquery: false
+    lang: zh-CN
   tmtpost:
     url: https://www.tmtpost.com
     jquery: false
+    lang: zh-CN
   techcrunch:
     url: https://techcrunch.com
     jquery: true    
+    lang: en
 exportarticle:
   baijingapp:
     jquery: false

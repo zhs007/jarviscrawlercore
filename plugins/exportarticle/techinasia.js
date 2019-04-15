@@ -24,7 +24,7 @@ async function exportArticle(page) {
   });
 
   const dom = await page.$eval(
-      '.infinite-scroll',
+      '.site-main-content',
       (element) => {
         return element.innerHTML;
       });
@@ -116,11 +116,35 @@ async function exportArticle(page) {
       if (articlenode) {
         for (let i = 0; i < articlenode.children.length; ++i) {
           if (articlenode.children[i].tagName != 'P' &&
-            articlenode.children[i].tagName != 'H2') {
+            articlenode.children[i].tagName != 'H2' &&
+            articlenode.children[i].tagName != 'DIV') {
             continue;
           }
 
-          if (articlenode.children[i].tagName == 'P') {
+          if (articlenode.children[i].tagName == 'DIV') {
+            const curimgs = articlenode.children[i].getElementsByTagName('img');
+            if (curimgs.length > 0) {
+              ret.imgs.push(await fetchImage(curimgs[0].src));
+              ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
+
+              const curnode = document.createElement('p');
+              curnode.style.cssText = 'text-align: center;';
+
+              const curimg = document.createElement('img');
+              curimg.onload = () => {
+                ret.imgs[ret.imgs.length - 1].width = curimg.width;
+                ret.imgs[ret.imgs.length - 1].height = curimg.height;
+
+                // console.log(curimg.width);
+                // console.log(curimg.height);
+              };
+              curimg.src = curimgs[0].src;
+
+              curnode.appendChild(curimg);
+
+              objarticlebody.appendChild(curnode);
+            }
+          } else if (articlenode.children[i].tagName == 'P') {
             const curimgs = articlenode.children[i].getElementsByTagName('img');
             if (curimgs.length > 0) {
               ret.imgs.push(await fetchImage(curimgs[0].src));

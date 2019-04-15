@@ -299,6 +299,7 @@ program
     .option('-o, --output [filename]', 'export output file')
     .option('-h, --headless [isheadless]', 'headless mode')
     .option('-q, --jquery [isattach]', 'attach jquery')
+    .option('-d, --debug [isdebug]', 'debug mode')
     .action(function(url, options) {
       console.log('version is ', VERSION);
 
@@ -321,15 +322,21 @@ program
       const jquery = (options.jquery === 'true');
       console.log('jquery - ', jquery);
 
+      const debugmode = (options.debug === 'true');
+      console.log('debug - ', debugmode);
+
       (async () => {
         const browser = await startBrowser(headless);
 
         await getArticleList(browser,
             url,
             options.output,
-            jquery);
+            jquery,
+            debugmode);
 
-        await browser.close();
+        if (!debugmode) {
+          await browser.close();
+        }
       })().catch((err) => {
         console.log('catch a err ', err);
 

@@ -32,6 +32,7 @@ async function getArticles(page) {
     for (let i = 0; i < lst.length; ++i) {
       const title = lst[i].getElementsByTagName('h2');
       if (title.length > 0) {
+        const premium = lst[i].getElementsByTagName('.premium-content__label');
         const url = title[0].getElementsByTagName('a');
         // const summary = lst[i].getElementsByClassName('mob-sub');
 
@@ -41,6 +42,10 @@ async function getArticles(page) {
 
         if (url.length > 0) {
           co.url = url[0].href;
+        }
+
+        if (premium) {
+          co.premium = true;
         }
 
         // if (summary.length > 0) {

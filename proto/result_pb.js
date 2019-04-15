@@ -1037,7 +1037,9 @@ proto.jarviscrawlercore.Article.toObject = function(includeInstance, msg) {
     summary: jspb.Message.getFieldWithDefault(msg, 4, ""),
     url: jspb.Message.getFieldWithDefault(msg, 5, ""),
     image: (f = msg.getImage()) && proto.jarviscrawlercore.ImageInfo.toObject(includeInstance, f),
-    secondtitle: jspb.Message.getFieldWithDefault(msg, 7, "")
+    secondtitle: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    premium: jspb.Message.getFieldWithDefault(msg, 8, false),
+    lang: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -1102,6 +1104,14 @@ proto.jarviscrawlercore.Article.deserializeBinaryFromReader = function(msg, read
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setSecondtitle(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setPremium(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLang(value);
       break;
     default:
       reader.skipField();
@@ -1179,6 +1189,20 @@ proto.jarviscrawlercore.Article.serializeBinaryToWriter = function(message, writ
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getPremium();
+  if (f) {
+    writer.writeBool(
+      8,
+      f
+    );
+  }
+  f = message.getLang();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -1302,6 +1326,38 @@ proto.jarviscrawlercore.Article.prototype.getSecondtitle = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.Article.prototype.setSecondtitle = function(value) {
   jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional bool premium = 8;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.Article.prototype.getPremium = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.Article.prototype.setPremium = function(value) {
+  jspb.Message.setProto3BooleanField(this, 8, value);
+};
+
+
+/**
+ * optional string lang = 9;
+ * @return {string}
+ */
+proto.jarviscrawlercore.Article.prototype.getLang = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.Article.prototype.setLang = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 

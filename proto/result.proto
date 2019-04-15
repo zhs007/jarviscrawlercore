@@ -51,6 +51,8 @@ message Article {
     string url = 5;
     ImageInfo image = 6;
     string secondTitle = 7;
+    bool premium = 8;
+    string lang = 9;
 }
 
 // ArticleList - article list

@@ -16,6 +16,10 @@ function callGetArticleList(browser, call, callback) {
           curcfg.url,
           '',
           curcfg.jquery).then((result) => {
+        for (let i = 0; i < result.articles.length; ++i) {
+          result.articles[i].setLang(curcfg.lang);
+        }
+
         const reply = new messages.ReplyArticles();
         reply.setArticles(result);
         callback(null, reply);

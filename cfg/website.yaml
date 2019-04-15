@@ -17,6 +17,9 @@ getarticles:
   tmtpost:
     url: https://www.tmtpost.com
     jquery: false
+  techcrunch:
+    url: https://techcrunch.com
+    jquery: true    
 exportarticle:
   baijingapp:
     jquery: false

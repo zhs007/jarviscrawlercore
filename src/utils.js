@@ -248,13 +248,13 @@ function newArticleList(obj) {
  */
 async function attachJQuery(page) {
   const jquery = await page.evaluate(()=>{
-    return typeof jQuery;
+    return typeof $;
   });
 
-  if (jquery === 'undefined') {
+  if (jquery !== 'function') {
     await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
 
-    await page.waitForFunction('typeof jQuery !== "undefined"').catch((err) => {
+    await page.waitForFunction('typeof $ === "function"').catch((err) => {
       console.log('attachJQuery', err);
     });
   }

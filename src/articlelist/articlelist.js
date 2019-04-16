@@ -13,6 +13,8 @@ const {
  * @param {string} outputfile - output file
  * @param {bool} jquery - jquery
  * @param {bool} debugmode - debugmode
+ * @return {ArticleList} result - ArticleList
+ * @return {error} err - error
  */
 async function getArticleList(browser, url, outputfile, jquery, debugmode) {
   const mapResponse = {};
@@ -31,7 +33,6 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
     }
 
     const url = response.url();
-    // console.log(url);
     const headers = response.headers();
     if (headers && headers['content-type'] &&
           headers['content-type'].indexOf('image') == 0) {
@@ -42,25 +43,13 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
   await page.goto(url,
       {
         waitUntil: 'domcontentloaded',
-        // waitUntil: 'networkidle2',
         timeout: 0,
       }).catch((err) => {
     console.log('page.goto', url, err);
   });
 
-  // console.log('goto end');
-
-  //   await page.close();
-
   await attachJQuery(page);
   await attachJarvisCrawlerCore(page);
-  // if (jquery) {
-  //   await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-  // }
-
-  // await page.addScriptTag({path: './browser/utils.js'});
-
-  // console.log('getArticles');
 
   const ret = await mgrPlugins.getArticles(url, page);
   if (ret) {
@@ -76,14 +65,20 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
       await page.close();
     }
 
-    return result;
+    return {
+      result: result,
+      err: undefined,
+    };
   }
 
   if (!debugmode) {
     await page.close();
   }
 
-  return undefined;
+  return {
+    result: undefined,
+    err: undefined,
+  };
 }
 
 exports.getArticleList = getArticleList;

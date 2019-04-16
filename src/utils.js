@@ -260,6 +260,18 @@ async function attachJQuery(page) {
   }
 }
 
+/**
+ * attachJarvisCrawlerCore
+ * @param {object} page - page
+ */
+async function attachJarvisCrawlerCore(page) {
+  await page.addScriptTag({path: './browser/utils.js'});
+
+  await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
+    console.log('attachJQuery', err);
+  });
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -271,3 +283,4 @@ exports.newExportArticleResult = newExportArticleResult;
 exports.newArticle = newArticle;
 exports.newArticleList = newArticleList;
 exports.attachJQuery = attachJQuery;
+exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;

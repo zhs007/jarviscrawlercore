@@ -1,6 +1,15 @@
-const {loadConfig, checkConfig} = require('./cfg');
-const {getGameTodayDataSummary} = require('./gametodaydata');
-const {attachJQuery} = require('../utils');
+const {
+  loadConfig,
+  checkConfig,
+} = require('./cfg');
+const {
+  getGameTodayDataSummary,
+  onRightFrameLoadedGTDS,
+} = require('./gametodaydata');
+const {
+  attachJQuery,
+  attachJarvisCrawlerCore,
+} = require('../utils');
 
 /**
  * a bot for dtbk
@@ -39,16 +48,20 @@ async function dtbkbot(browser, cfgfile, debugmode) {
   page.on('framenavigated', async (frame) => {
     if (frame.name() === 'rightFrame') {
       await attachJQuery(rightFrame);
-      await rightFrame.addScriptTag({path: './browser/utils.js'});
+      await attachJarvisCrawlerCore(rightFrame);
+      //   await rightFrame.addScriptTag({path: './browser/utils.js'});
+
+      await onRightFrameLoadedGTDS(rightFrame);
     }
   });
 
   await attachJQuery(leftFrame);
-  await leftFrame.addScriptTag({path: './browser/utils.js'});
+  await attachJarvisCrawlerCore(leftFrame);
+  //   await leftFrame.addScriptTag({path: './browser/utils.js'});
 
   // 标记需要的菜单元素
   await leftFrame.evaluate(()=>{
-    console.log('I am start...');
+    // console.log('I am start...');
 
     const jlxx = getElementWithText('.title', '记录信息');
     if (jlxx) {
@@ -64,6 +77,8 @@ async function dtbkbot(browser, cfgfile, debugmode) {
         lstmenuson[i].className = 'menuson jlxx';
       }
     }
+  }).catch((err) => {
+    console.log('dtbkbot:leftFrame.evaluate', err);
   });
 
   await getGameTodayDataSummary(page, leftFrame, rightFrame);

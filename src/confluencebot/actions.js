@@ -1,6 +1,9 @@
 const {allUpdates} = require('./allupdates');
 const {likePage} = require('./like');
 const {addComment} = require('./addcomment');
+const {
+  attachJarvisCrawlerCore,
+} = require('../utils');
 
 /**
  * run actions
@@ -13,7 +16,8 @@ async function runActions(page, cfg) {
 
     const curaction = cfg.actions[i];
     if (curaction.action === 'allupdates') {
-      await page.addScriptTag({path: './browser/utils.js'});
+      await attachJarvisCrawlerCore(page);
+      // await page.addScriptTag({path: './browser/utils.js'});
       const allupdates = await allUpdates(page);
 
       console.log('%j', allupdates);

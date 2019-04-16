@@ -1,20 +1,32 @@
 
 /**
- * wait for btn
+ * onRightFrameLoaded GTDS
  * @param {object} rightFrame - rightFrame
  */
-async function waitForBtn(rightFrame) {
+async function onRightFrameLoadedGTDS(rightFrame) {
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');
       if (btncx) {
+        btncx.className = 'scbtn cx';
+
         return true;
       }
     }
 
     return false;
   });
+
+  //   // 标记
+  //   await rightFrame.evaluate(()=>{
+  //     console.log('I am start...');
+
+//     const btncx = getElementWithDefaultValue('.scbtn', '查询');
+//     if (btncx) {
+//       btncx.className = 'scbtn cx';
+//     }
+//   });
 }
 
 /**
@@ -24,32 +36,32 @@ async function waitForBtn(rightFrame) {
  * @param {object} rightFrame - rightFrame
  */
 async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
-  page.on('framenavigated', async (frame) => {
-    if (frame.name() === 'rightFrame') {
-      // 等待页面加载
-    //   await waitForBtn(rightFrame);
-      await rightFrame.waitForFunction(() => {
-        if (typeof jarvisCrawlerCoreVer === 'string') {
-          const btncx = getElementWithDefaultValue('.scbtn', '查询');
-          if (btncx) {
-            return true;
-          }
-        }
+//   page.on('framenavigated', async (frame) => {
+//     if (frame.name() === 'rightFrame') {
+//       // 等待页面加载
+//     //   await waitForBtn(rightFrame);
+//       await rightFrame.waitForFunction(() => {
+//         if (typeof jarvisCrawlerCoreVer === 'string') {
+//           const btncx = getElementWithDefaultValue('.scbtn', '查询');
+//           if (btncx) {
+//             return true;
+//           }
+//         }
 
-        return false;
-      });
+  //         return false;
+  //       });
 
-      // 标记
-      await rightFrame.evaluate(()=>{
-        console.log('I am start...');
+  //       // 标记
+  //       await rightFrame.evaluate(()=>{
+  //         console.log('I am start...');
 
-        const btncx = getElementWithDefaultValue('.scbtn', '查询');
-        if (btncx) {
-          btncx.className = 'scbtn cx';
-        }
-      });
-    }
-  });
+  //         const btncx = getElementWithDefaultValue('.scbtn', '查询');
+  //         if (btncx) {
+  //           btncx.className = 'scbtn cx';
+  //         }
+  //       });
+  //     }
+  //   });
 
   // 打开一级菜单
   await leftFrame.click('.title.jlxx');
@@ -96,6 +108,43 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   //   });
 
   await rightFrame.click('.scbtn.cx');
+
+  // 等待页面加载
+  await rightFrame.waitForFunction(() => {
+    if (typeof jarvisCrawlerCoreVer === 'string') {
+      const btncx = getElementWithDefaultValue('.scbtn', '查询');
+      if (btncx) {
+        const paginList = getElement('.paginList');
+        if (paginList) {
+          const paginListI = paginList.getElementsByTagName('I');
+          if (paginListI.length > 0) {
+            if (parseInt(paginListI[0].innerText) > 0) {
+              paginListI[0].className = 'blue gamenums';
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  });
+
+  const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
+    return parseInt(ele.innerText);
+  });
+
+  console.log(gamenums);
+  //   // 标记
+  //   await rightFrame.evaluate(()=>{
+  //     console.log('I am start...');
+
+//     const btncx = getElementWithDefaultValue('.scbtn', '查询');
+//     if (btncx) {
+//       btncx.className = 'scbtn cx';
+//     }
+//   });
 }
 
+exports.onRightFrameLoadedGTDS = onRightFrameLoadedGTDS;
 exports.getGameTodayDataSummary = getGameTodayDataSummary;

@@ -2,6 +2,8 @@ const {mgrPlugins} = require('../../plugins/articlelist/index');
 const {
   saveMessage,
   newArticleList,
+  attachJQuery,
+  attachJarvisCrawlerCore,
 } = require('../utils');
 
 /**
@@ -50,11 +52,13 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
 
   //   await page.close();
 
-  if (jquery) {
-    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-  }
+  await attachJQuery(page);
+  await attachJarvisCrawlerCore(page);
+  // if (jquery) {
+  //   await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+  // }
 
-  await page.addScriptTag({path: './browser/utils.js'});
+  // await page.addScriptTag({path: './browser/utils.js'});
 
   // console.log('getArticles');
 

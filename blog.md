@@ -1,5 +1,13 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-15
+
+关于``puppeteer``的几个问题：  
+
+1. 感觉一直在wait那块有bug，我的感觉是有些时候，调用的时间点，event已经触发过了，所以就只能timeout，其实这种可以用我们zhihu的一些处理方法，就是在浏览器环境里，加标志量，在nodejs里wait那个变量就好，这样不会出问题。  
+2. 还有就是前几天处理``techinasia``遇到的，那个是页面动态加载的，如果取了动态加载部分，再来设置``setContent``就会卡timeout，后来回避了这个问题，就好了。  
+3. 就是可能会出现``$ is not defined``的错误，我觉得是``addScriptTag``没有等待加载完成，就返回导致的，现在可以用``attachJQuery``这个接口来加载``jquery``了，这个接口会检查是否需要加载，并等待加载完成。
+
 ### 2019-04-13
 
 今天处理了``medium``、``techcrunch``。

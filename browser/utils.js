@@ -99,6 +99,7 @@ function getElementWithText(selector, text) {
   const lst = $(selector);
   if (lst.length > 0) {
     for (let i = 0; i < lst.length; ++i) {
+      // console.log(lst[i].innerText);
       if (lst[i].innerText === text) {
         return lst[i];
       }
@@ -136,3 +137,44 @@ function getElementAttributes(ele, key) {
     }
   }
 }
+
+/**
+ * getElementChildWithTagAndText
+ * @param {object} ele - element
+ * @param {string} tag - tag
+ * @param {string} text - text
+ * @return {Element} element - element, it maybe is undefined
+ */
+function getElementChildWithTagAndText(ele, tag, text) {
+  const lst = ele.getElementsByTagName(tag);
+  for (let i = 0; i < lst.length; ++i) {
+    // console.log(lst[i].innerText);
+    if (lst[i].innerText === text) {
+      return lst[i];
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * getElementWithDefaultValue
+ * @param {string} selector - selector
+ * @param {string} value - default value
+ * @return {Element} element - element, it maybe is undefined
+ */
+function getElementWithDefaultValue(selector, value) {
+  const lst = $(selector);
+  if (lst.length > 0) {
+    for (let i = 0; i < lst.length; ++i) {
+      // console.log(lst[i].innerText);
+      if (lst[i].defaultValue === value) {
+        return lst[i];
+      }
+    }
+  }
+
+  return undefined;
+}
+
+const jarvisCrawlerCoreVer = '0.1.30';

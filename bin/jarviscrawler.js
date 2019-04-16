@@ -8,6 +8,7 @@ const {amazoncn} = require('../src/amazon/amazon');
 const {kaola} = require('../src/kaola/kaola');
 const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
+const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -346,5 +347,45 @@ program
       });
     });
 
+program
+    .command('dtbkbot [cfgfile]')
+    .description('I am a dtbk bot')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-d, --debug [isdebug]', 'debug mode')
+    .action(function(cfgfile, options) {
+      console.log('version is ', VERSION);
+
+      if (!cfgfile) {
+        console.log('command wrong, please type ' +
+          'jarviscrawler dtbkbot --help');
+
+        return;
+      }
+
+      console.log('cfgfile - ', cfgfile);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      const debugmode = (options.debug === 'true');
+      console.log('debug - ', debugmode);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await dtbkbot(browser,
+            cfgfile, debugmode);
+
+        if (!debugmode) {
+          await browser.close();
+        }
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
 
 program.parse(process.argv);

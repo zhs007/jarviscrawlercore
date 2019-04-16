@@ -177,4 +177,4 @@ function getElementWithDefaultValue(selector, value) {
   return undefined;
 }
 
-const jarvisCrawlerCoreVer = '0.1.32';
+const jarvisCrawlerCoreVer = '0.1.33';

@@ -40,6 +40,8 @@ node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.huxiu.com
 node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.lieyunwang.com
 
 node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.tmtpost.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://techcrunch.com
 ```
 
 ### 2019-04-08

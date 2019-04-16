@@ -62,6 +62,6 @@ typings/
 .vscode
 cfg/dtconfluence.yaml
 cfg/service.yaml
-cfg/dttestbot.yaml
+cfg/dt*bot.yaml
 output
 output/*

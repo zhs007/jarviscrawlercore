@@ -242,6 +242,36 @@ function newArticleList(obj) {
   return result;
 }
 
+/**
+ * attachJQuery
+ * @param {object} page - page
+ */
+async function attachJQuery(page) {
+  const jquery = await page.evaluate(()=>{
+    return typeof jQuery;
+  });
+
+  if (jquery === 'undefined') {
+    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+
+    await page.waitForFunction('typeof jQuery !== "undefined"').catch((err) => {
+      console.log('attachJQuery', err);
+    });
+  }
+}
+
+/**
+ * attachJarvisCrawlerCore
+ * @param {object} page - page
+ */
+async function attachJarvisCrawlerCore(page) {
+  await page.addScriptTag({path: './browser/utils.js'});
+
+  await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
+    console.log('attachJQuery', err);
+  });
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -252,3 +282,5 @@ exports.newImageInfo = newImageInfo;
 exports.newExportArticleResult = newExportArticleResult;
 exports.newArticle = newArticle;
 exports.newArticleList = newArticleList;
+exports.attachJQuery = attachJQuery;
+exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;

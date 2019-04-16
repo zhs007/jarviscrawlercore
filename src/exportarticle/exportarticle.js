@@ -4,6 +4,8 @@ const {
   setImageInfo,
   getImageHashName,
   newExportArticleResult,
+  attachJQuery,
+  attachJarvisCrawlerCore,
 } = require('../utils');
 const {exportJPG} = require('./expjpg');
 
@@ -69,11 +71,13 @@ async function exportArticle(browser, url, outputfile, mode,
   if (mode == 'jpg') {
     await exportJPG(page, outputfile, jpgquality);
   } else {
-    if (jquery) {
-      await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-    }
+    await attachJQuery(page);
+    await attachJarvisCrawlerCore(page);
+    // if (jquery) {
+    //   await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+    // }
 
-    await page.addScriptTag({path: './browser/utils.js'});
+    // await page.addScriptTag({path: './browser/utils.js'});
 
     const ret = await mgrPlugins.exportArticle(url, page);
 

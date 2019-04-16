@@ -1,4 +1,7 @@
-// const puppeteer = require('puppeteer');
+const {
+  attachJQuery,
+  attachJarvisCrawlerCore,
+} = require('../utils');
 
 /**
  * amazon
@@ -12,8 +15,10 @@ async function amazoncn(browser, srctext, srclang, destlang) {
   const page = await browser.newPage();
   await page.goto('https://www.amazon.cn');
 
-  await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-  await page.addScriptTag({path: './browser/utils.js'});
+  await attachJQuery(page);
+  await attachJarvisCrawlerCore(page);
+  // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+  // await page.addScriptTag({path: './browser/utils.js'});
 
   await page.evaluate(() => {
     const zms = getElementWithText('.nav-a', 'Z秒杀');

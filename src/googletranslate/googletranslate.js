@@ -1,4 +1,4 @@
-// const puppeteer = require('puppeteer');
+const {attachJQuery} = require('../utils');
 
 /**
  * google translate
@@ -13,7 +13,8 @@ async function googletranslate(browser, srctext, srclang, destlang) {
   await page.goto('https://translate.google.cn/#view=home&op=translate&sl=' +
     srclang + '&tl=' + destlang + '&text=');
 
-  await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+  // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+  await attachJQuery(page);
   await page.waitForSelector('.tlid-input.input');
   await page.type('.tlid-input.input', srctext);
 

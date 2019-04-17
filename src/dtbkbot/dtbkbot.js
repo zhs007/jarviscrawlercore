@@ -7,6 +7,10 @@ const {
   onRightFrameLoadedGTDS,
 } = require('./gametodaydata');
 const {
+  getGameDataReport,
+  onRightFrameLoadedGDR,
+} = require('./gamedatareport');
+const {
   attachJQuery,
   attachJarvisCrawlerCore,
 } = require('../utils');
@@ -85,7 +89,7 @@ async function dtbkbot(browser, cfgfile, debugmode) {
         const yxbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏报表');
         if (yxbb) {
           yxbb.className = 'yxbb';
-          lstmenuson[i].className = 'menuson yxbb';
+          lstmenuson[i].className = 'menuson bbtj';
         }
       }
     }).catch((err) => {
@@ -93,6 +97,8 @@ async function dtbkbot(browser, cfgfile, debugmode) {
     });
 
     await getGameTodayDataSummary(page, leftFrame, rightFrame);
+
+    await getGameDataReport(page, leftFrame, rightFrame);
   }
 
   if (!debugmode) {

@@ -27,13 +27,13 @@ async function onRightFrameLoadedGDR(rightFrame) {
    */
 async function getGameDataReport(page, leftFrame, rightFrame) {
   // 打开一级菜单
-  await leftFrame.click('.title.jlxx');
+  await leftFrame.click('.title.bbtj');
 
   // 等待一级菜单打开
   await leftFrame.waitForFunction(() => {
-    const jlxxmenu = getElement('.menuson.jlxx');
-    if (jlxxmenu) {
-      if (jlxxmenu.style.cssText === 'display: block;') {
+    const bbtjmenu = getElement('.menuson.bbtj');
+    if (bbtjmenu) {
+      if (bbtjmenu.style[0] === 'display') {
         return true;
       }
     }
@@ -41,8 +41,62 @@ async function getGameDataReport(page, leftFrame, rightFrame) {
     return false;
   });
 
+  //   await leftFrame.waitFor(3000);
+
   // 点击二级菜单
-  await leftFrame.click('.yxjl');
+  await leftFrame.click('.yxbb');
+
+  //   // 等待页面跳转完成
+  //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
+  //     console.log('catch a err ', err);
+  //   });
+
+  // 等待页面加载
+  await rightFrame.waitForFunction(() => {
+    if (typeof jarvisCrawlerCoreVer === 'string') {
+      const placeul = getElement('.placeul');
+      if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏报表') {
+        const paginList = getElement('.paginList');
+        if (paginList) {
+          const paginListI = paginList.getElementsByTagName('I');
+          if (paginListI.length > 0) {
+            if (parseInt(paginListI[0].innerText) > 0) {
+              paginListI[0].className = 'blue recordnums';
+              return true;
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  });
+
+  await rightFrame.$eval('#startTime', (ele) => {
+    ele.value = '2019-04-16';
+  });
+
+  await rightFrame.$eval('#endTime', (ele) => {
+    ele.value = '2019-04-16';
+  });
+
+  await rightFrame.$eval('#size.select3', (ele) => {
+    ele.value = '5000';
+  });
+
+  //   await rightFrame.type('#startTime', '2019-04-16');
+  //   await rightFrame.type('#endTime', '2019-04-16');
+
+  await rightFrame.click('.scbtn.cx');
+
+  const recordnums = await rightFrame.$eval('.blue.recordnums', (ele) => {
+    return parseInt(ele.innerText);
+  });
+
+
+  console.log('recordnums - ' + recordnums);
+
+  return;
 
   // 等待页面加载
   await rightFrame.waitForFunction(() => {

@@ -252,6 +252,10 @@ async function attachJQuery(page) {
   });
 
   if (jquery !== 'function') {
+    // await page.waitForFunction(() => {
+    //   document.head != null;
+    // });
+
     await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
@@ -265,6 +269,10 @@ async function attachJQuery(page) {
  * @param {object} page - page
  */
 async function attachJarvisCrawlerCore(page) {
+  // await page.waitForFunction(() => {
+  //   document.head !== null;
+  // });
+
   await page.addScriptTag({path: './browser/utils.js'});
 
   await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {

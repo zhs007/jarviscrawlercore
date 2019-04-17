@@ -33,7 +33,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await leftFrame.waitForFunction(() => {
     const jlxxmenu = getElement('.menuson.jlxx');
     if (jlxxmenu) {
-      if (jlxxmenu.style.cssText === 'display: block;') {
+      if (jlxxmenu.style[0] === 'display') {
         return true;
       }
     }
@@ -44,12 +44,20 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   // 点击二级菜单
   await leftFrame.click('.yxjl');
 
+  //   // 等待页面跳转完成
+  //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
+  //     console.log('catch a err ', err);
+  //   });
+
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      if (btncx) {
-        return true;
+      const placeul = getElement('.placeul');
+      if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
+        const btncx = getElementWithDefaultValue('.scbtn', '查询');
+        if (btncx) {
+          return true;
+        }
       }
     }
 

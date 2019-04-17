@@ -12,7 +12,14 @@ const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
  */
 function callExportArticle(browser, call) {
   exportArticle(browser, call.request.getUrl(), '', 'pb', '', 60,
-      call.request.getAttachjquery(), false).then((result)=>{
+      call.request.getAttachjquery(), false).then(({result, err})=>{
+    if (err) {
+      console.log('callExportArticle', err);
+      call.end();
+
+      return;
+    }
+
     const reply = new messages.ReplyArticle();
 
     reply.setResult(result);

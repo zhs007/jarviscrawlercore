@@ -42,57 +42,58 @@ async function dtbkbot(browser, cfgfile, debugmode) {
   });
 
   // 处理frames
-  const leftFrame = page.frames().find((frame) => frame.name() === 'leftFrame');
-  const rightFrame = page.frames().find((frame) => frame.name() === 'rightFrame');
-
-  page.on('framenavigated', async (frame) => {
-    if (frame.name() === 'rightFrame') {
-      await attachJQuery(rightFrame);
-      await attachJarvisCrawlerCore(rightFrame);
-      //   await rightFrame.addScriptTag({path: './browser/utils.js'});
-
-      await onRightFrameLoadedGTDS(rightFrame);
-    }
+  const leftFrame = page.frames().find((frame) => {
+    return frame.name() === 'leftFrame';
+  });
+  const rightFrame = page.frames().find((frame) => {
+    return frame.name() === 'rightFrame';
   });
 
-  await attachJQuery(leftFrame);
-  await attachJarvisCrawlerCore(leftFrame);
-  //   await leftFrame.addScriptTag({path: './browser/utils.js'});
+  if (leftFrame && rightFrame) {
+    page.on('framenavigated', async (frame) => {
+      if (frame.name() === 'rightFrame') {
+        await attachJQuery(rightFrame);
+        await attachJarvisCrawlerCore(rightFrame);
 
-  // 标记需要的菜单元素
-  await leftFrame.evaluate(()=>{
-    // console.log('I am start...');
+        await onRightFrameLoadedGTDS(rightFrame);
+      }
+    });
 
-    const jlxx = getElementWithText('.title', '记录信息');
-    if (jlxx) {
-      jlxx.className = 'title jlxx';
-    }
+    await attachJQuery(leftFrame);
+    await attachJarvisCrawlerCore(leftFrame);
 
-    const bbtj = getElementWithText('.title', '报表统计');
-    if (jlxx) {
-      bbtj.className = 'title bbtj';
-    }
-
-    const lstmenuson = $('.menuson');
-    // console.log(lstmenuson.length);
-    for (let i = 0; i < lstmenuson.length; ++i) {
-      const yxjl = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏记录');
-      if (yxjl) {
-        yxjl.className = 'yxjl';
-        lstmenuson[i].className = 'menuson jlxx';
+    // 标记需要的菜单元素
+    await leftFrame.evaluate(()=>{
+      const jlxx = getElementWithText('.title', '记录信息');
+      if (jlxx) {
+        jlxx.className = 'title jlxx';
       }
 
-      const yxzhbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏综合报表');
-      if (yxzhbb) {
-        yxzhbb.className = 'yxzhbb';
-        lstmenuson[i].className = 'menuson yxzhbb';
+      const bbtj = getElementWithText('.title', '报表统计');
+      if (jlxx) {
+        bbtj.className = 'title bbtj';
       }
-    }
-  }).catch((err) => {
-    console.log('dtbkbot:leftFrame.evaluate', err);
-  });
 
-  await getGameTodayDataSummary(page, leftFrame, rightFrame);
+      const lstmenuson = $('.menuson');
+      for (let i = 0; i < lstmenuson.length; ++i) {
+        const yxjl = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏记录');
+        if (yxjl) {
+          yxjl.className = 'yxjl';
+          lstmenuson[i].className = 'menuson jlxx';
+        }
+
+        const yxbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏报表');
+        if (yxbb) {
+          yxbb.className = 'yxbb';
+          lstmenuson[i].className = 'menuson yxbb';
+        }
+      }
+    }).catch((err) => {
+      console.log('dtbkbot:leftFrame.evaluate', err);
+    });
+
+    await getGameTodayDataSummary(page, leftFrame, rightFrame);
+  }
 
   if (!debugmode) {
     await page.close();

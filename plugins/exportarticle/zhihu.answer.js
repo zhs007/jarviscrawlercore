@@ -19,7 +19,8 @@ function ismine(url) {
  * @return {object} result - {question, text}
  */
 async function getQuestion(page) {
-  return await page.evaluate(async () => {
+  let errret = undefined;
+  const ret = await page.evaluate(async () => {
     const ret = {};
 
     const qt = getElement('.QuestionHeader-title');
@@ -28,7 +29,16 @@ async function getQuestion(page) {
     }
 
     return ret;
+  }).catch((err) => {
+    console.log('zhihu.answer:getQuestion.evaluate', err);
+
+    errret = err;
   });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 /**
@@ -49,6 +59,7 @@ async function exportArticle(page) {
 
   await page.setContent(dom);
 
+  let errret = undefined;
   const ret = await page.evaluate(async (question) => {
     const ret = {};
     ret.imgs = [];
@@ -197,13 +208,20 @@ async function exportArticle(page) {
     ret.article = objbody.innerText;
 
     return ret;
-  }, q);
+  }, q.result).catch((err) => {
+    console.log('zhihu.answer:exportArticle.evaluate', err);
 
-  await page.waitForFunction('window.waitimgs == 0').catch((err) => {
-    console.log('zhihu.article.formatArticle', err);
+    errret = err;
   });
 
-  return ret;
+  await page.waitForFunction('window.waitimgs == 0').catch((err) => {
+    console.log('zhihu.answer.formatArticle', err);
+  });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 mgrPlugins.regExportArticle('zhihu.answer.article', ismine, exportArticle);

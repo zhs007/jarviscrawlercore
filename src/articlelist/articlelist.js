@@ -51,14 +51,21 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
   await attachJQuery(page);
   await attachJarvisCrawlerCore(page);
 
-  const ret = await mgrPlugins.getArticles(url, page);
-  if (ret) {
-    const result = newArticleList(ret);
+  const {result, err} = await mgrPlugins.getArticles(url, page);
+  if (err) {
+    return {
+      result: undefined,
+      err: err,
+    };
+  }
+
+  if (result) {
+    const lst = newArticleList(result);
 
     if (outputfile &&
       typeof(outputfile) == 'string' &&
       outputfile.length > 0) {
-      saveMessage(outputfile, result);
+      saveMessage(outputfile, lst);
     }
 
     if (!debugmode) {
@@ -66,7 +73,7 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
     }
 
     return {
-      result: result,
+      result: lst,
       err: undefined,
     };
   }

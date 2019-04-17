@@ -22,8 +22,8 @@ function ismine(url) {
  * @return {ArticleList} result - result
  */
 async function getArticles(page) {
-  // articleSingle
-  return await page.evaluate(async () => {
+  let errret = undefined;
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.articles = [];
 
@@ -50,7 +50,16 @@ async function getArticles(page) {
     console.log(ret);
 
     return ret;
+  }).catch((err) => {
+    console.log('lieyunwang.main:getArticles.evaluate', err);
+
+    errret = err;
   });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 mgrPlugins.regGetArticles('lieyunwang.main', ismine, getArticles);

@@ -4,7 +4,8 @@
  * @return {ExportArticleResult} result - result
  */
 async function allUpdates(page) {
-  return await page.evaluate(async () => {
+  const errret = undefined;
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.updates = [];
 
@@ -60,7 +61,14 @@ async function allUpdates(page) {
     }
 
     return ret;
+  }).catch((err) => {
+    console.log('allUpdates.evaluate', err);
   });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 exports.allUpdates = allUpdates;

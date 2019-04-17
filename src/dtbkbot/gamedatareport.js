@@ -1,9 +1,9 @@
 
 /**
- * onRightFrameLoaded GTDS
+ * onRightFrameLoaded GDR
  * @param {object} rightFrame - rightFrame
  */
-async function onRightFrameLoadedGTDS(rightFrame) {
+async function onRightFrameLoadedGDR(rightFrame) {
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
@@ -20,12 +20,12 @@ async function onRightFrameLoadedGTDS(rightFrame) {
 }
 
 /**
- * Game Today Data Summary
- * @param {object} page - page
- * @param {object} leftFrame - leftFrame
- * @param {object} rightFrame - rightFrame
- */
-async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
+   * Game Today Data Summary
+   * @param {object} page - page
+   * @param {object} leftFrame - leftFrame
+   * @param {object} rightFrame - rightFrame
+   */
+async function getGameDataReport(page, leftFrame, rightFrame) {
   // 打开一级菜单
   await leftFrame.click('.title.jlxx');
 
@@ -100,5 +100,6 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   console.log('win - ' + win);
 }
 
-exports.onRightFrameLoadedGTDS = onRightFrameLoadedGTDS;
-exports.getGameTodayDataSummary = getGameTodayDataSummary;
+exports.onRightFrameLoadedGDR = onRightFrameLoadedGDR;
+exports.getGameDataReport = getGameDataReport;
+

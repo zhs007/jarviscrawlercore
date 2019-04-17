@@ -27,6 +27,8 @@ async function amazoncn(browser, srctext, srclang, destlang) {
       // Increase class for easy positioning
       zms.className = 'nav-a zms';
     }
+  }).catch((err) => {
+    console.log('amazoncn.evaluate', err);
   });
 
   await page.click('.nav-a.zms');

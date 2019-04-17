@@ -30,6 +30,8 @@ async function kaola(browser, srctext, srclang, destlang) {
       // Cancel new window open
       jrxsg.removeAttribute('target');
     }
+  }).catch((err) => {
+    console.log('kaola.evaluate', err);
   });
 
   await page.click('.toplevel.jrxsg');

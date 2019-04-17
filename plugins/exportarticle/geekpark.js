@@ -30,7 +30,8 @@ async function exportArticle(page) {
 
   await page.setContent(dom);
 
-  return await page.evaluate(async () => {
+  let errret = undefined;
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
     ret.paragraphs = [];
@@ -182,7 +183,16 @@ async function exportArticle(page) {
     ret.article = objbody.innerText;
 
     return ret;
+  }).catch((err) => {
+    console.log('geekpark.article:exportArticle.evaluate', err);
+
+    errret = err;
   });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 mgrPlugins.regExportArticle('geekpark.article', ismine, exportArticle);

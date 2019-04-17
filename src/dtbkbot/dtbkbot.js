@@ -52,10 +52,10 @@ async function dtbkbot(browser, cfgfile, debugmode) {
   if (leftFrame && rightFrame) {
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {
-        await attachJQuery(rightFrame);
-        await attachJarvisCrawlerCore(rightFrame);
+        await attachJQuery(frame);
+        await attachJarvisCrawlerCore(frame);
 
-        await onRightFrameLoadedGTDS(rightFrame);
+        await onRightFrameLoadedGTDS(frame);
       }
     });
 

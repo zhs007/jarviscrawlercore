@@ -134,7 +134,22 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
     return parseInt(ele.innerText);
   });
 
-  console.log(gamenums);
+  const {bet, win} = await rightFrame.$$eval('tr', (eles) => {
+    if (eles.length > 2) {
+      const curtr = eles[eles.length - 1];
+      if (curtr.children.length == 6) {
+        return {
+          bet: parseFloat(curtr.children[2].innerText.replace(/,/g, '')),
+          win: parseFloat(curtr.children[3].innerText.replace(/,/g, '')),
+        };
+      }
+    }
+  });
+
+  console.log('gamenums - ' + gamenums);
+  console.log('bet - ' + bet);
+  console.log('win - ' + win);
+
   //   // 标记
   //   await rightFrame.evaluate(()=>{
   //     console.log('I am start...');

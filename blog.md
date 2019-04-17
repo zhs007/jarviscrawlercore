@@ -1,5 +1,9 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-17
+
+从昨天开始，我发现其实很多``evaluate``的事情，其实``$eval``和``$$eval``也都能做。
+
 ### 2019-04-15
 
 关于``puppeteer``的几个问题：  

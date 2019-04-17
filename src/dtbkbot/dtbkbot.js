@@ -68,6 +68,11 @@ async function dtbkbot(browser, cfgfile, debugmode) {
       jlxx.className = 'title jlxx';
     }
 
+    const bbtj = getElementWithText('.title', '报表统计');
+    if (jlxx) {
+      bbtj.className = 'title bbtj';
+    }
+
     const lstmenuson = $('.menuson');
     // console.log(lstmenuson.length);
     for (let i = 0; i < lstmenuson.length; ++i) {
@@ -75,6 +80,12 @@ async function dtbkbot(browser, cfgfile, debugmode) {
       if (yxjl) {
         yxjl.className = 'yxjl';
         lstmenuson[i].className = 'menuson jlxx';
+      }
+
+      const yxzhbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏综合报表');
+      if (yxzhbb) {
+        yxzhbb.className = 'yxzhbb';
+        lstmenuson[i].className = 'menuson yxzhbb';
       }
     }
   }).catch((err) => {

@@ -27,6 +27,7 @@ async function exportArticle(page) {
 
   await page.setContent(dom);
 
+  let errret = undefined;
   const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
@@ -140,13 +141,16 @@ async function exportArticle(page) {
     ret.article = objbody.innerText;
 
     return ret;
+  }).catch((err) => {
+    console.log('medium.article:exportArticle.evaluate', err);
+
+    errret = err;
   });
 
-  //   await page.waitForFunction('window.waitimgs == 0').catch((err) => {
-  //     console.log('zhihu.article.formatArticle', err);
-  //   });
-
-  return ret;
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 mgrPlugins.regExportArticle('medium.article', ismine, exportArticle);

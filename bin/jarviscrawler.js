@@ -352,10 +352,13 @@ program
     .description('I am a dtbk bot')
     .option('-h, --headless [isheadless]', 'headless mode')
     .option('-d, --debug [isdebug]', 'debug mode')
+    .option('-m, --mode [mode]', 'mode')
+    .option('-s, --starttime [starttime]', 'starttime')
+    .option('-e, --endtime [endtime]', 'endtime')
     .action(function(cfgfile, options) {
       console.log('version is ', VERSION);
 
-      if (!cfgfile) {
+      if (!cfgfile || !options.mode) {
         console.log('command wrong, please type ' +
           'jarviscrawler dtbkbot --help');
 
@@ -374,7 +377,11 @@ program
         const browser = await startBrowser(headless);
 
         await dtbkbot(browser,
-            cfgfile, debugmode);
+            cfgfile,
+            debugmode,
+            options.mode,
+            options.starttime,
+            options.endtime);
 
         if (!debugmode) {
           await browser.close();

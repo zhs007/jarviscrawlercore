@@ -4,6 +4,7 @@ const {startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
 const {callExportArticle} = require('./exportarticle');
 const {callGetArticleList} = require('./getarticles');
+const {callGetDTData} = require('./dtdata');
 
 const grpc = require('grpc');
 
@@ -36,6 +37,9 @@ async function startService(cfgfile) {
     },
     getArticles: (call, callback) => {
       callGetArticleList(browser, call, callback);
+    },
+    getDTData: (call, callback) => {
+      callGetDTData(browser, cfg.dtconfig, call, callback);
     },
   });
 

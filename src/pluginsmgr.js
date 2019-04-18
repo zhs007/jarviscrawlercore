@@ -71,7 +71,8 @@ class PluginsMgr {
  * getArticles
  * @param {string} url - url
  * @param {object} page - puppeteer page
- * @return {object} ArticleList - articles
+ * @return {ArticleList} result - ArticleList
+ * @return {error} err - error
  */
   async getArticles(url, page) {
     for (let i = 0; i < this.lstPlugins.length; ++i) {
@@ -80,7 +81,10 @@ class PluginsMgr {
       }
     }
 
-    return undefined;
+    return {
+      result: result,
+      err: err,
+    };
   }
 }
 

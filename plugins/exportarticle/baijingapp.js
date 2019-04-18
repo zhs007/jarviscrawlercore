@@ -29,7 +29,8 @@ async function exportArticle(page) {
 
   await page.setContent(dom);
 
-  return await page.evaluate(async () => {
+  let errret = undefined;
+  const ret = await page.evaluate(async () => {
     const ret = {};
     ret.imgs = [];
     ret.paragraphs = [];
@@ -198,7 +199,16 @@ async function exportArticle(page) {
     // }
 
     return ret;
+  }).catch((err) => {
+    console.log('baijingapp.article:exportArticle.evaluate', err);
+
+    errret = err;
   });
+
+  return {
+    result: ret,
+    err: errret,
+  };
 }
 
 mgrPlugins.regExportArticle('baijingapp.article', ismine, exportArticle);

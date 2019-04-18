@@ -29,6 +29,8 @@ async function googletranslate(browser, srctext, srclang, destlang) {
     }
 
     return '';
+  }).catch((err) => {
+    console.log('googletranslate.evaluate', err);
   });
 
   await page.close();

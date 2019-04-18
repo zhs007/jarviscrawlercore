@@ -1,3 +1,6 @@
+const {
+  newDTTodayGameData,
+} = require('../utils');
 
 /**
  * onRightFrameLoaded GTDS
@@ -17,16 +20,6 @@ async function onRightFrameLoadedGTDS(rightFrame) {
 
     return false;
   });
-
-  //   // 标记
-  //   await rightFrame.evaluate(()=>{
-  //     console.log('I am start...');
-
-//     const btncx = getElementWithDefaultValue('.scbtn', '查询');
-//     if (btncx) {
-//       btncx.className = 'scbtn cx';
-//     }
-//   });
 }
 
 /**
@@ -36,33 +29,6 @@ async function onRightFrameLoadedGTDS(rightFrame) {
  * @param {object} rightFrame - rightFrame
  */
 async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
-//   page.on('framenavigated', async (frame) => {
-//     if (frame.name() === 'rightFrame') {
-//       // 等待页面加载
-//     //   await waitForBtn(rightFrame);
-//       await rightFrame.waitForFunction(() => {
-//         if (typeof jarvisCrawlerCoreVer === 'string') {
-//           const btncx = getElementWithDefaultValue('.scbtn', '查询');
-//           if (btncx) {
-//             return true;
-//           }
-//         }
-
-  //         return false;
-  //       });
-
-  //       // 标记
-  //       await rightFrame.evaluate(()=>{
-  //         console.log('I am start...');
-
-  //         const btncx = getElementWithDefaultValue('.scbtn', '查询');
-  //         if (btncx) {
-  //           btncx.className = 'scbtn cx';
-  //         }
-  //       });
-  //     }
-  //   });
-
   // 打开一级菜单
   await leftFrame.click('.title.jlxx');
 
@@ -70,7 +36,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await leftFrame.waitForFunction(() => {
     const jlxxmenu = getElement('.menuson.jlxx');
     if (jlxxmenu) {
-      if (jlxxmenu.style.cssText === 'display: block;') {
+      if (jlxxmenu.style[0] === 'display') {
         return true;
       }
     }
@@ -81,31 +47,25 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   // 点击二级菜单
   await leftFrame.click('.yxjl');
 
-  //   await page.waitForSelector('.scbtn.cx');
+  //   // 等待页面跳转完成
+  //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
+  //     console.log('catch a err ', err);
+  //   });
 
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      if (btncx) {
-        return true;
+      const placeul = getElement('.placeul');
+      if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
+        const btncx = getElementWithDefaultValue('.scbtn', '查询');
+        if (btncx) {
+          return true;
+        }
       }
     }
 
     return false;
   });
-
-  //   await waitForBtn(rightFrame);
-
-  //   // 标记
-  //   await rightFrame.evaluate(()=>{
-  //     console.log('I am start...');
-
-  //     const btncx = getElementWithDefaultValue('.scbtn', '查询');
-  //     if (btncx) {
-  //       btncx.className = 'scbtn cx';
-  //     }
-  //   });
 
   await rightFrame.click('.scbtn.cx');
 
@@ -134,16 +94,27 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
     return parseInt(ele.innerText);
   });
 
-  console.log(gamenums);
-  //   // 标记
-  //   await rightFrame.evaluate(()=>{
-  //     console.log('I am start...');
+  const {bet, win} = await rightFrame.$$eval('tr', (eles) => {
+    if (eles.length > 2) {
+      const curtr = eles[eles.length - 1];
+      if (curtr.children.length == 6) {
+        return {
+          bet: parseFloat(curtr.children[2].innerText.replace(/,/g, '')),
+          win: parseFloat(curtr.children[3].innerText.replace(/,/g, '')),
+        };
+      }
+    }
+  });
 
-//     const btncx = getElementWithDefaultValue('.scbtn', '查询');
-//     if (btncx) {
-//       btncx.className = 'scbtn cx';
-//     }
-//   });
+  console.log('gamenums - ' + gamenums);
+  console.log('bet - ' + bet);
+  console.log('win - ' + win);
+
+  return newDTTodayGameData({
+    gameNums: gamenums,
+    totalBet: bet,
+    totalWin: win,
+  });
 }
 
 exports.onRightFrameLoadedGTDS = onRightFrameLoadedGTDS;

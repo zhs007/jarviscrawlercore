@@ -7,30 +7,49 @@ const {
   onRightFrameLoadedGTDS,
 } = require('./gametodaydata');
 const {
+  getGameDataReport,
+  onRightFrameLoadedGDR,
+} = require('./gamedatareport');
+const {
   attachJQuery,
   attachJarvisCrawlerCore,
 } = require('../utils');
+
+const MODE_GAMETODAYDATA = 'gametodaydata';
+const MODE_GAMEDATAREPORT = 'gamedatareport';
 
 /**
  * a bot for dtbk
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
  * @param {bool} debugmode - debug modes
+ * @param {string} mode - modes
+ * @param {string} starttime - start time
+ * @param {string} endtime - end time
  */
-async function dtbkbot(browser, cfgfile, debugmode) {
+async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
+  let ret = undefined;
+
   const cfg = loadConfig(cfgfile);
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
     console.log('config file error: ' + cfgerr);
 
-    return;
+    return ret;
   }
 
   const page = await browser.newPage();
   await page.goto(cfg.url);
 
   // 等待登录加载完成
-  await page.waitForSelector('.loginbox');
+  await page.waitForFunction(() => {
+    const objs = document.getElementsByClassName('loginbox');
+    if (objs.length > 0) {
+      return true;
+    }
+    return false;
+  });
+
   // 登录
   await page.type('.loginuser', cfg.username);
   await page.type('.loginpwd', cfg.password);
@@ -42,50 +61,77 @@ async function dtbkbot(browser, cfgfile, debugmode) {
   });
 
   // 处理frames
-  const leftFrame = page.frames().find((frame) => frame.name() === 'leftFrame');
-  const rightFrame = page.frames().find((frame) => frame.name() === 'rightFrame');
-
-  page.on('framenavigated', async (frame) => {
-    if (frame.name() === 'rightFrame') {
-      await attachJQuery(rightFrame);
-      await attachJarvisCrawlerCore(rightFrame);
-      //   await rightFrame.addScriptTag({path: './browser/utils.js'});
-
-      await onRightFrameLoadedGTDS(rightFrame);
-    }
+  const leftFrame = page.frames().find((frame) => {
+    return frame.name() === 'leftFrame';
+  });
+  const rightFrame = page.frames().find((frame) => {
+    return frame.name() === 'rightFrame';
   });
 
-  await attachJQuery(leftFrame);
-  await attachJarvisCrawlerCore(leftFrame);
-  //   await leftFrame.addScriptTag({path: './browser/utils.js'});
+  if (leftFrame && rightFrame) {
+    page.on('framenavigated', async (frame) => {
+      if (frame.name() === 'rightFrame') {
+        console.log(frame.url());
 
-  // 标记需要的菜单元素
-  await leftFrame.evaluate(()=>{
-    // console.log('I am start...');
+        await attachJQuery(frame);
+        await attachJarvisCrawlerCore(frame);
 
-    const jlxx = getElementWithText('.title', '记录信息');
-    if (jlxx) {
-      jlxx.className = 'title jlxx';
-    }
-
-    const lstmenuson = $('.menuson');
-    // console.log(lstmenuson.length);
-    for (let i = 0; i < lstmenuson.length; ++i) {
-      const yxjl = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏记录');
-      if (yxjl) {
-        yxjl.className = 'yxjl';
-        lstmenuson[i].className = 'menuson jlxx';
+        if (mode == MODE_GAMETODAYDATA) {
+          await onRightFrameLoadedGTDS(frame);
+        } else if (mode == MODE_GAMEDATAREPORT) {
+          await onRightFrameLoadedGDR(frame);
+        }
       }
-    }
-  }).catch((err) => {
-    console.log('dtbkbot:leftFrame.evaluate', err);
-  });
+    });
 
-  await getGameTodayDataSummary(page, leftFrame, rightFrame);
+    await attachJQuery(leftFrame);
+    await attachJarvisCrawlerCore(leftFrame);
+
+    // 标记需要的菜单元素
+    await leftFrame.evaluate(()=>{
+      const jlxx = getElementWithText('.title', '记录信息');
+      if (jlxx) {
+        jlxx.className = 'title jlxx';
+      }
+
+      const bbtj = getElementWithText('.title', '报表统计');
+      if (jlxx) {
+        bbtj.className = 'title bbtj';
+      }
+
+      const lstmenuson = $('.menuson');
+      for (let i = 0; i < lstmenuson.length; ++i) {
+        const yxjl = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏记录');
+        if (yxjl) {
+          yxjl.className = 'yxjl';
+          lstmenuson[i].className = 'menuson jlxx';
+        }
+
+        const yxbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏报表');
+        if (yxbb) {
+          yxbb.className = 'yxbb';
+          lstmenuson[i].className = 'menuson bbtj';
+        }
+      }
+    }).catch((err) => {
+      console.log('dtbkbot:leftFrame.evaluate', err);
+    });
+
+    if (mode == MODE_GAMETODAYDATA) {
+      ret = await getGameTodayDataSummary(page, leftFrame, rightFrame);
+    } else if (mode == MODE_GAMEDATAREPORT) {
+      ret = await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
+    }
+  }
 
   if (!debugmode) {
     await page.close();
   }
+
+  return ret;
 }
 
 exports.dtbkbot = dtbkbot;
+
+exports.MODE_GAMETODAYDATA = MODE_GAMETODAYDATA;
+exports.MODE_GAMEDATAREPORT = MODE_GAMEDATAREPORT;

@@ -79,7 +79,16 @@ async function exportArticle(browser, url, outputfile, mode,
 
     // await page.addScriptTag({path: './browser/utils.js'});
 
-    const ret = await mgrPlugins.exportArticle(url, page);
+    const {result, err} = await mgrPlugins.exportArticle(url, page);
+
+    if (err) {
+      return {
+        result: undefined,
+        err: err,
+      };
+    }
+
+    const ret = result;
 
     if (ret) {
       ret.url = url;
@@ -108,13 +117,13 @@ async function exportArticle(browser, url, outputfile, mode,
         }
       }
 
-      const result = newExportArticleResult(ret);
+      const ear = newExportArticleResult(ret);
 
       if (outputfile &&
           typeof(outputfile) == 'string' &&
           outputfile.length > 0) {
         if (mode == 'pb') {
-          saveMessage(outputfile, result);
+          saveMessage(outputfile, ear);
         } else if (mode == 'pdf') {
           await page.pdf({
             path: outputfile,
@@ -127,7 +136,10 @@ async function exportArticle(browser, url, outputfile, mode,
         await page.close();
       }
 
-      return result;
+      return {
+        result: ear,
+        err: undefined,
+      };
     }
   }
 
@@ -135,7 +147,10 @@ async function exportArticle(browser, url, outputfile, mode,
     await page.close();
   }
 
-  return undefined;
+  return {
+    result: undefined,
+    err: undefined,
+  };
 }
 
 exports.exportArticle = exportArticle;

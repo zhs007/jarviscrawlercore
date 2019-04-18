@@ -28,19 +28,28 @@ const MODE_GAMEDATAREPORT = 'gamedatareport';
  * @param {string} endtime - end time
  */
 async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
+  let ret = undefined;
+
   const cfg = loadConfig(cfgfile);
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
     console.log('config file error: ' + cfgerr);
 
-    return;
+    return ret;
   }
 
   const page = await browser.newPage();
   await page.goto(cfg.url);
 
   // 等待登录加载完成
-  await page.waitForSelector('.loginbox');
+  await page.waitForFunction(() => {
+    const objs = document.getElementsByClassName('loginbox');
+    if (objs.length > 0) {
+      return true;
+    }
+    return false;
+  });
+
   // 登录
   await page.type('.loginuser', cfg.username);
   await page.type('.loginpwd', cfg.password);
@@ -109,15 +118,20 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     });
 
     if (mode == MODE_GAMETODAYDATA) {
-      await getGameTodayDataSummary(page, leftFrame, rightFrame);
+      ret = await getGameTodayDataSummary(page, leftFrame, rightFrame);
     } else if (mode == MODE_GAMEDATAREPORT) {
-      await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
+      ret = await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
     }
   }
 
   if (!debugmode) {
     await page.close();
   }
+
+  return ret;
 }
 
 exports.dtbkbot = dtbkbot;
+
+exports.MODE_GAMETODAYDATA = MODE_GAMETODAYDATA;
+exports.MODE_GAMEDATAREPORT = MODE_GAMEDATAREPORT;

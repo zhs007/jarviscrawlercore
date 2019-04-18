@@ -290,6 +290,64 @@ async function attachJarvisCrawlerCore(page) {
   });
 }
 
+/**
+ * new DTBusinessGameReport with object
+ * @param {object} obj - DTBusinessGameReport object
+ * @return {jarviscrawlercore.DTBusinessGameReport} result - DTBusinessGameReport
+ */
+function newDTBusinessGameReport(obj) {
+  const result = new jarviscrawlercore.DTBusinessGameReport();
+
+  if (obj.businessid) {
+    result.setBusinessid(obj.businessid);
+  }
+
+  if (obj.gamecode) {
+    result.setGamecode(obj.gamecode);
+  }
+
+  if (obj.totalWin) {
+    result.setTotalwin(obj.totalWin);
+  }
+
+  if (obj.totalBet) {
+    result.setTotalbet(obj.totalBet);
+  }
+
+  if (obj.gameNums) {
+    result.setGamenums(obj.gameNums);
+  }
+
+  if (obj.currency) {
+    result.setCurrency(obj.currency);
+  }
+
+  return result;
+}
+
+/**
+ * new DTTodayGameData with object
+ * @param {object} obj - DTTodayGameData object
+ * @return {jarviscrawlercore.DTTodayGameData} result - DTTodayGameData
+ */
+function newDTTodayGameData(obj) {
+  const result = new jarviscrawlercore.DTTodayGameData();
+
+  if (obj.totalWin) {
+    result.setTotalwin(obj.totalWin);
+  }
+
+  if (obj.totalBet) {
+    result.setTotalbet(obj.totalBet);
+  }
+
+  if (obj.gameNums) {
+    result.setGamenums(obj.gameNums);
+  }
+
+  return result;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -302,3 +360,5 @@ exports.newArticle = newArticle;
 exports.newArticleList = newArticleList;
 exports.attachJQuery = attachJQuery;
 exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;
+exports.newDTBusinessGameReport = newDTBusinessGameReport;
+exports.newDTTodayGameData = newDTTodayGameData;

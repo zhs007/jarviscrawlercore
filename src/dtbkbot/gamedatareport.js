@@ -1,3 +1,6 @@
+const {
+  newDTBusinessGameReport,
+} = require('../utils');
 
 /**
  * onRightFrameLoaded GDR
@@ -130,9 +133,9 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
         lst.push({
           businessid: eles[i].children[1].innerText,
           gamecode: eles[i].children[2].innerText,
-          totalwin: parseFloat(eles[i].children[4].innerText),
-          totalbet: parseFloat(eles[i].children[5].innerText),
-          gamenums: parseInt(eles[i].children[9].innerText),
+          totalWin: parseFloat(eles[i].children[4].innerText),
+          totalBet: parseFloat(eles[i].children[5].innerText),
+          gameNums: parseInt(eles[i].children[9].innerText),
           currency: eles[i].children[10].innerText,
         });
       }
@@ -143,62 +146,7 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
 
   console.log('records - %j', lst);
 
-  return;
-
-  // 等待页面加载
-  await rightFrame.waitForFunction(() => {
-    if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      if (btncx) {
-        return true;
-      }
-    }
-
-    return false;
-  });
-
-  await rightFrame.click('.scbtn.cx');
-
-  // 等待页面加载
-  await rightFrame.waitForFunction(() => {
-    if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      if (btncx) {
-        const paginList = getElement('.paginList');
-        if (paginList) {
-          const paginListI = paginList.getElementsByTagName('I');
-          if (paginListI.length > 0) {
-            if (parseInt(paginListI[0].innerText) > 0) {
-              paginListI[0].className = 'blue gamenums';
-              return true;
-            }
-          }
-        }
-      }
-    }
-
-    return false;
-  });
-
-  const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
-    return parseInt(ele.innerText);
-  });
-
-  const {bet, win} = await rightFrame.$$eval('tr', (eles) => {
-    if (eles.length > 2) {
-      const curtr = eles[eles.length - 1];
-      if (curtr.children.length == 6) {
-        return {
-          bet: parseFloat(curtr.children[2].innerText.replace(/,/g, '')),
-          win: parseFloat(curtr.children[3].innerText.replace(/,/g, '')),
-        };
-      }
-    }
-  });
-
-  console.log('gamenums - ' + gamenums);
-  console.log('bet - ' + bet);
-  console.log('win - ' + win);
+  return lst;
 }
 
 exports.onRightFrameLoadedGDR = onRightFrameLoadedGDR;

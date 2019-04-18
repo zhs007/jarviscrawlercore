@@ -1,3 +1,6 @@
+const {
+  newDTTodayGameData,
+} = require('../utils');
 
 /**
  * onRightFrameLoaded GTDS
@@ -106,6 +109,12 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   console.log('gamenums - ' + gamenums);
   console.log('bet - ' + bet);
   console.log('win - ' + win);
+
+  return newDTTodayGameData({
+    gameNums: gamenums,
+    totalBet: bet,
+    totalWin: win,
+  });
 }
 
 exports.onRightFrameLoadedGTDS = onRightFrameLoadedGTDS;

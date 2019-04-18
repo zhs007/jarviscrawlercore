@@ -138,12 +138,59 @@ message ReplyArticles {
     ArticleList articles = 1;
 }
 
+// RequestDTData - request DT Data
+message RequestDTData {
+    // mode
+    string mode = 1;
+    // startTime
+    string startTime = 2;
+    // endTime
+    string endTime = 3;
+}
+
+// DTBusinessGameReport - 
+message DTBusinessGameReport {
+    // businessid
+    string businessid = 1;
+    // gamecode
+    string gamecode = 2;
+    // totalWin
+    float totalWin = 3;
+    // totalBet
+    float totalBet = 4;
+    // gameNums
+    int32 gameNums = 5;
+    // currency
+    string currency = 6;
+}
+
+// DTTodayGameData - 
+message DTTodayGameData {
+    // totalWin
+    float totalWin = 1;
+    // totalBet
+    float totalBet = 2;
+    // gameNums
+    int32 gameNums = 3;
+}
+
+// ReplyDTData - reply DT Data
+message ReplyDTData {
+    // gameReport
+    repeated DTBusinessGameReport gameReports = 1;
+    // todayGameData
+    DTTodayGameData todayGameData = 2;
+}
+
 // JarvisCrawlerService - JarvisCrawler service
 service JarvisCrawlerService {
     // translate - translate text
     rpc translate(RequestTranslate) returns (ReplyTranslate) {}
-    // export article - export article
+    // exportArticle - export article
     rpc exportArticle(RequestArticle) returns (stream ReplyArticle) {}    
-    // get articles - get articles
-    rpc getArticles(RequestArticles) returns (ReplyArticles) {}        
+    // getArticles - get articles
+    rpc getArticles(RequestArticles) returns (ReplyArticles) {}
+
+    // getDTData - get DT data
+    rpc getDTData(RequestDTData) returns (ReplyDTData) {}    
 }

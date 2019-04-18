@@ -89,12 +89,56 @@ async function getGameDataReport(page, leftFrame, rightFrame) {
 
   await rightFrame.click('.scbtn.cx');
 
+  // 等待页面加载
+  await rightFrame.waitForFunction(() => {
+    if (typeof jarvisCrawlerCoreVer === 'string') {
+      const recordnums = getElement('.blue.recordnums');
+      if (recordnums == undefined) {
+        const placeul = getElement('.placeul');
+        if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏报表') {
+          const paginList = getElement('.paginList');
+          if (paginList) {
+            const paginListI = paginList.getElementsByTagName('I');
+            if (paginListI.length > 0) {
+              if (parseInt(paginListI[0].innerText) > 0) {
+                paginListI[0].className = 'blue recordnums';
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return false;
+  });
+
   const recordnums = await rightFrame.$eval('.blue.recordnums', (ele) => {
     return parseInt(ele.innerText);
   });
 
-
   console.log('recordnums - ' + recordnums);
+
+  const lst = await rightFrame.$$eval('tr', (eles) => {
+    const lst = [];
+
+    for (let i = 1; i < eles.length - 2; ++i) {
+      if (eles[i].children.length == 12) {
+        lst.push({
+          businessid: eles[i].children[1].innerText,
+          gamecode: eles[i].children[2].innerText,
+          totalwin: parseFloat(eles[i].children[4].innerText),
+          totalbet: parseFloat(eles[i].children[5].innerText),
+          gamenums: parseInt(eles[i].children[9].innerText),
+          currency: eles[i].children[10].innerText,
+        });
+      }
+    }
+
+    return lst;
+  });
+
+  console.log('records - %j', lst);
 
   return;
 

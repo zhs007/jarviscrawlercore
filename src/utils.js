@@ -256,10 +256,17 @@ async function attachJQuery(page) {
     //   document.head != null;
     // });
 
-    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
+    // let isok = true;
+
+    // do {
+    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'}).catch((err) => {
+      console.log('attachJQuery:addScriptTag', err);
+      // isok = false;
+    });
+    // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
-      console.log('attachJQuery', err);
+      console.log('attachJQuery:waitForFunction', err);
     });
   }
 }
@@ -273,10 +280,13 @@ async function attachJarvisCrawlerCore(page) {
   //   document.head !== null;
   // });
 
-  await page.addScriptTag({path: './browser/utils.js'});
+  await page.addScriptTag({path: './browser/utils.js'}).catch((err) => {
+    console.log('attachJarvisCrawlerCore:addScriptTag', err);
+    // isok = false;
+  });
 
   await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
-    console.log('attachJQuery', err);
+    console.log('attachJQuery:waitForFunction', err);
   });
 }
 

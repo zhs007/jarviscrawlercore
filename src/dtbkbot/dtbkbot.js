@@ -56,6 +56,8 @@ async function dtbkbot(browser, cfgfile, debugmode) {
   if (leftFrame && rightFrame) {
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {
+        console.log(frame.url());
+
         await attachJQuery(frame);
         await attachJarvisCrawlerCore(frame);
 

@@ -24,8 +24,10 @@ async function onRightFrameLoadedGDR(rightFrame) {
    * @param {object} page - page
    * @param {object} leftFrame - leftFrame
    * @param {object} rightFrame - rightFrame
+   * @param {string} starttime - start time
+   * @param {string} endtime - end time
    */
-async function getGameDataReport(page, leftFrame, rightFrame) {
+async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime) {
   // 打开一级菜单
   await leftFrame.click('.title.bbtj');
 
@@ -72,13 +74,13 @@ async function getGameDataReport(page, leftFrame, rightFrame) {
     return false;
   });
 
-  await rightFrame.$eval('#startTime', (ele) => {
-    ele.value = '2019-04-16';
-  });
+  await rightFrame.$eval('#startTime', (ele, starttime) => {
+    ele.value = starttime;
+  }, starttime);
 
-  await rightFrame.$eval('#endTime', (ele) => {
-    ele.value = '2019-04-16';
-  });
+  await rightFrame.$eval('#endTime', (ele, endtime) => {
+    ele.value = endtime;
+  }, endtime);
 
   await rightFrame.$eval('#size.select3', (ele) => {
     ele.value = '5000';
@@ -91,6 +93,7 @@ async function getGameDataReport(page, leftFrame, rightFrame) {
 
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
+    // console.log(typeof jarvisCrawlerCoreVer);
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const recordnums = getElement('.blue.recordnums');
       if (recordnums == undefined) {

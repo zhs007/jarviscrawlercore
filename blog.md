@@ -1,5 +1,14 @@
 # JarvisCrawlerCore Development Log
 
+
+### 2019-04-18
+
+```
+node ./bin/jarviscrawler.js dtbkbot ./cfg/dttestbot.yaml -h false -d false -m gametodaydata
+
+node ./bin/jarviscrawler.js dtbkbot ./cfg/dttestbot.yaml -h false -d false -m gamedatareport -s 2019-04-17 -e 2019-04-17
+```
+
 ### 2019-04-17
 
 从昨天开始，我发现其实很多``evaluate``的事情，其实``$eval``和``$$eval``也都能做。

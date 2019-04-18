@@ -15,13 +15,19 @@ const {
   attachJarvisCrawlerCore,
 } = require('../utils');
 
+const MODE_GAMETODAYDATA = 'gametodaydata';
+const MODE_GAMEDATAREPORT = 'gamedatareport';
+
 /**
  * a bot for dtbk
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
  * @param {bool} debugmode - debug modes
+ * @param {string} mode - modes
+ * @param {string} starttime - start time
+ * @param {string} endtime - end time
  */
-async function dtbkbot(browser, cfgfile, debugmode) {
+async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
   const cfg = loadConfig(cfgfile);
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
@@ -61,7 +67,11 @@ async function dtbkbot(browser, cfgfile, debugmode) {
         await attachJQuery(frame);
         await attachJarvisCrawlerCore(frame);
 
-        await onRightFrameLoadedGTDS(frame);
+        if (mode == MODE_GAMETODAYDATA) {
+          await onRightFrameLoadedGTDS(frame);
+        } else if (mode == MODE_GAMEDATAREPORT) {
+          await onRightFrameLoadedGDR(frame);
+        }
       }
     });
 
@@ -98,9 +108,11 @@ async function dtbkbot(browser, cfgfile, debugmode) {
       console.log('dtbkbot:leftFrame.evaluate', err);
     });
 
-    await getGameTodayDataSummary(page, leftFrame, rightFrame);
-
-    await getGameDataReport(page, leftFrame, rightFrame);
+    if (mode == MODE_GAMETODAYDATA) {
+      await getGameTodayDataSummary(page, leftFrame, rightFrame);
+    } else if (mode == MODE_GAMEDATAREPORT) {
+      await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
+    }
   }
 
   if (!debugmode) {

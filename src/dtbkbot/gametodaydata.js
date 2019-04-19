@@ -9,7 +9,7 @@ const {
 async function onRightFrameLoadedGTDS(rightFrame) {
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
-    console.log(typeof jarvisCrawlerCoreVer);
+    // console.log(typeof jarvisCrawlerCoreVer);
 
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');
@@ -40,12 +40,16 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await leftFrame.waitForFunction(() => {
     const jlxxmenu = getElement('.menuson.jlxx');
     if (jlxxmenu) {
+      console.log(jlxxmenu.style[0]);
+
       if (jlxxmenu.style[0] === 'display') {
         return true;
       }
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
   });
 
   // 点击二级菜单
@@ -60,6 +64,16 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const placeul = getElement('.placeul');
+
+      console.log(placeul);
+      if (placeul) {
+        console.log(placeul.children.length);
+
+        if (placeul.children.length == 3) {
+          console.log(placeul.children[2].innerText);
+        }
+      }
+
       if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
         const btncx = getElementWithDefaultValue('.scbtn', '查询');
         if (btncx) {
@@ -69,6 +83,8 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameTodayDataSummary:waitFor.yxjl', err);
   });
 
   await rightFrame.click('.scbtn.cx');
@@ -92,6 +108,8 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameTodayDataSummary:waitFor.paginList', err);
   });
 
   const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {

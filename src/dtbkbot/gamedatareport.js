@@ -9,6 +9,8 @@ const {
 async function onRightFrameLoadedGDR(rightFrame) {
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
+    console.log(typeof jarvisCrawlerCoreVer);
+
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');
       if (btncx) {
@@ -19,6 +21,8 @@ async function onRightFrameLoadedGDR(rightFrame) {
     }
 
     return false;
+  }).catch((err) => {
+    console.log('onRightFrameLoadedGDR', err);
   });
 }
 

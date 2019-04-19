@@ -39,6 +39,10 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
   }
 
   const page = await browser.newPage();
+  page.on('console', (msg) => {
+    console.log('PAGE LOG:', msg.text());
+  });
+
   await page.goto(cfg.url);
 
   // 等待登录加载完成

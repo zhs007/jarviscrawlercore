@@ -40,7 +40,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await leftFrame.waitForFunction(() => {
     const jlxxmenu = getElement('.menuson.jlxx');
     if (jlxxmenu) {
-      console.log(jlxxmenu.style[0]);
+    //   console.log(jlxxmenu.style[0]);
 
       if (jlxxmenu.style[0] === 'display') {
         return true;
@@ -60,19 +60,21 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   //     console.log('catch a err ', err);
   //   });
 
+  //   await rightFrame.goto(cfg.url + '/log/bets!findAll.html');
+
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const placeul = getElement('.placeul');
 
-      console.log(placeul);
-      if (placeul) {
-        console.log(placeul.children.length);
+      //   console.log(placeul);
+      //   if (placeul) {
+      //     console.log(placeul.children.length);
 
-        if (placeul.children.length == 3) {
-          console.log(placeul.children[2].innerText);
-        }
-      }
+      //     if (placeul.children.length == 3) {
+      //       console.log(placeul.children[2].innerText);
+      //     }
+      //   }
 
       if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
         const btncx = getElementWithDefaultValue('.scbtn', '查询');
@@ -91,22 +93,24 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
 
   await rightFrame.click('.scbtn.cx');
 
+  await rightFrame.waitFor(60*1000*3);
+
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      console.log(btncx);
+      //   console.log(btncx);
 
       if (btncx) {
         const paginList = getElement('.paginList');
-        console.log(paginList);
+        // console.log(paginList);
 
         if (paginList) {
           const paginListI = paginList.getElementsByTagName('I');
-          console.log(paginListI.length);
+          //   console.log(paginListI.length);
 
           if (paginListI.length > 0) {
-            console.log(paginListI[0].innerText);
+            // console.log(paginListI[0].innerText);
 
             if (parseInt(paginListI[0].innerText) > 0) {
               paginListI[0].className = 'blue gamenums';

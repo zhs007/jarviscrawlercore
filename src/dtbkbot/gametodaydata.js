@@ -93,11 +93,19 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await rightFrame.waitForFunction(() => {
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');
+      console.log(btncx);
+
       if (btncx) {
         const paginList = getElement('.paginList');
+        console.log(paginList);
+
         if (paginList) {
           const paginListI = paginList.getElementsByTagName('I');
+          console.log(paginListI.length);
+
           if (paginListI.length > 0) {
+            console.log(paginListI[0].innerText);
+
             if (parseInt(paginListI[0].innerText) > 0) {
               paginListI[0].className = 'blue gamenums';
               return true;

@@ -77,6 +77,8 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
       if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
         const btncx = getElementWithDefaultValue('.scbtn', '查询');
         if (btncx) {
+          btncx.className = 'scbtn cx';
+
           return true;
         }
       }

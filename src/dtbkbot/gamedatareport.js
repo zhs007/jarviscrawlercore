@@ -48,6 +48,8 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameDataReport.waitFor.menuson.bbtj', err);
   });
 
   //   await leftFrame.waitFor(3000);
@@ -79,6 +81,8 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameDataReport.waitFor.paginList', err);
   });
 
   await rightFrame.$eval('#startTime', (ele, starttime) => {
@@ -121,6 +125,8 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
     }
 
     return false;
+  }).catch((err) => {
+    console.log('getGameDataReport.waitFor.recordnums', err);
   });
 
   const recordnums = await rightFrame.$eval('.blue.recordnums', (ele) => {

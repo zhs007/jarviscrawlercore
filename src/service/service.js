@@ -1,5 +1,9 @@
 const services = require('../../proto/result_grpc_pb');
-const {loadConfig, checkConfig} = require('./cfg');
+const {
+  loadConfig,
+  checkConfig,
+  isValidToken,
+} = require('./cfg');
 const {startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
 const {callExportArticle} = require('./exportarticle');
@@ -30,15 +34,41 @@ async function startService(cfgfile) {
 
   server.addService(services.JarvisCrawlerServiceService, {
     translate: (call, callback) => {
+      if (!isValidToken(cfg, call.request.getToken())) {
+        callback(new Error('invalid token'), null);
+
+        return;
+      }
+
       callTranslate(browser, call, callback);
     },
-    exportArticle: (call, callback) => {
-      callExportArticle(browser, call, callback);
+    exportArticle: (call) => {
+      if (!isValidToken(cfg, call.request.getToken())) {
+        console.log('invalid token.', call.request.getToken());
+
+        call.end();
+
+        return;
+      }
+
+      callExportArticle(browser, call);
     },
     getArticles: (call, callback) => {
+      if (!isValidToken(cfg, call.request.getToken())) {
+        callback(new Error('invalid token'), null);
+
+        return;
+      }
+
       callGetArticleList(browser, call, callback);
     },
     getDTData: (call, callback) => {
+      if (!isValidToken(cfg, call.request.getToken())) {
+        callback(new Error('invalid token'), null);
+
+        return;
+      }
+
       callGetDTData(browser, cfg.dtconfig, call, callback);
     },
   });

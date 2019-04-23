@@ -8,6 +8,12 @@
 npm publish https://github.com/zhs007/jarviscrawlercore/archive/v0.1.41.tar.gz
 ```
 
+后来处理了techinasia。
+
+```
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.techinasia.com
+```
+
 ### 2019-04-18
 
 ```

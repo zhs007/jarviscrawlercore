@@ -43,7 +43,28 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     console.log('PAGE LOG:', msg.text());
   });
 
-  await page.goto(cfg.url);
+  await page.goto(cfg.url).catch((err) => {
+    console.log('dtbkbot.goto', err);
+  });
+
+  // await attachJQuery(page);
+  // await attachJarvisCrawlerCore(page);
+
+  // await page.goto(cfg.url, {
+  //   waitUntil: 'domcontentloaded',
+  //   timeout: 0,
+  // }).catch((err) => {
+  //   console.log('dtbkbot.goto', err);
+  // });
+
+  // 判断是否已经登录
+  // const frames = await page.frames();
+  // const islogin = (frames.length > 1);
+
+  // console.log('dtbkbot is login', islogin, frames.length);
+  // const loginbox = await page.$('loginbox');
+  // const islogin = (loginbox == null);
+  // console.log('dtbkbot is login', loginbox);
 
   // 等待登录加载完成
   await page.waitForFunction(() => {
@@ -51,11 +72,22 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     if (objs.length > 0) {
       return true;
     }
+
+    // const frames = document.getElementsByTagName('frameset');
+    // if (frames.length > 0) {
+    //   return true;
+    // }
+
     return false;
   }).catch((err) => {
     console.log('dtbkbot.waitForFunction.loginbox', err);
   });
 
+  // const loginbox = await page.$('.loginbox');
+  // const islogin = (loginbox == null);
+  // console.log('dtbkbot is login', islogin, loginbox);
+
+  // if (!islogin) {
   // 登录
   await page.type('.loginuser', cfg.username);
   await page.type('.loginpwd', cfg.password);
@@ -65,14 +97,24 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
     console.log('catch a err ', err);
   });
+  // }
 
   // 处理frames
+  const topFrame = page.frames().find((frame) => {
+    return frame.name() === 'topFrame';
+  });
   const leftFrame = page.frames().find((frame) => {
     return frame.name() === 'leftFrame';
   });
   const rightFrame = page.frames().find((frame) => {
     return frame.name() === 'rightFrame';
   });
+
+  if (topFrame) {
+    topFrame.$eval('.user', (ele) => {
+      ele.children[0].children[1].className = 'logoutbtn';
+    });
+  }
 
   if (leftFrame && rightFrame) {
     page.on('framenavigated', async (frame) => {
@@ -128,6 +170,10 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     } else if (mode == MODE_GAMEDATAREPORT) {
       ret = await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
     }
+  }
+
+  if (topFrame) {
+    await topFrame.click('.logoutbtn');
   }
 
   if (!debugmode) {

@@ -9,7 +9,7 @@ const {
 async function onRightFrameLoadedGDR(rightFrame) {
   // 等待页面加载
   await rightFrame.waitForFunction(() => {
-    console.log(typeof jarvisCrawlerCoreVer);
+    // console.log(typeof jarvisCrawlerCoreVer);
 
     if (typeof jarvisCrawlerCoreVer === 'string') {
       const btncx = getElementWithDefaultValue('.scbtn', '查询');

@@ -52,6 +52,8 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
       return true;
     }
     return false;
+  }).catch((err) => {
+    console.log('dtbkbot.waitForFunction.loginbox', err);
   });
 
   // 登录

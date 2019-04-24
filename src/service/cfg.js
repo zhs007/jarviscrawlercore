@@ -36,5 +36,32 @@ function checkConfig(cfg) {
   return undefined;
 }
 
+/**
+ * is valid token
+ * @param {object} cfg - config
+ * @param {string} token - token
+ * @return {bool} isvalid - is valid token
+ */
+function isValidToken(cfg, token) {
+  if (!cfg) {
+    return false;
+  }
+
+  if (!cfg.clientToken) {
+    return true;
+  }
+
+  if (typeof cfg.clientToken === 'string') {
+    return token === cfg.clientToken;
+  }
+
+  if (Array.isArray(cfg.clientToken)) {
+    return cfg.clientToken.indexOf(token) >= 0;
+  }
+
+  return false;
+}
+
 exports.loadConfig = loadConfig;
 exports.checkConfig = checkConfig;
+exports.isValidToken = isValidToken;

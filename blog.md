@@ -1,5 +1,18 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-04-23
+
+今天发布了一个非docker版本，这样发布，可以直接安装。
+
+```
+npm publish https://github.com/zhs007/jarviscrawlercore/archive/v0.1.41.tar.gz
+```
+
+后来处理了techinasia。
+
+```
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.techinasia.com
+```
 
 ### 2019-04-18
 

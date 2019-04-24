@@ -2142,7 +2142,8 @@ proto.jarviscrawlercore.RequestTranslate.toObject = function(includeInstance, ms
     text: jspb.Message.getFieldWithDefault(msg, 1, ""),
     platform: jspb.Message.getFieldWithDefault(msg, 2, ""),
     srclang: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    destlang: jspb.Message.getFieldWithDefault(msg, 4, "")
+    destlang: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
   if (includeInstance) {
@@ -2194,6 +2195,10 @@ proto.jarviscrawlercore.RequestTranslate.deserializeBinaryFromReader = function(
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setDestlang(value);
+      break;
+    case 100:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
       break;
     default:
       reader.skipField();
@@ -2249,6 +2254,13 @@ proto.jarviscrawlercore.RequestTranslate.serializeBinaryToWriter = function(mess
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      100,
       f
     );
   }
@@ -2312,6 +2324,21 @@ proto.jarviscrawlercore.RequestTranslate.prototype.getDestlang = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.RequestTranslate.prototype.setDestlang = function(value) {
   jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string token = 100;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTranslate.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTranslate.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 100, value);
 };
 
 
@@ -2505,7 +2532,8 @@ proto.jarviscrawlercore.RequestArticle.prototype.toObject = function(opt_include
 proto.jarviscrawlercore.RequestArticle.toObject = function(includeInstance, msg) {
   var f, obj = {
     url: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    attachjquery: jspb.Message.getFieldWithDefault(msg, 2, false)
+    attachjquery: jspb.Message.getFieldWithDefault(msg, 2, false),
+    token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
   if (includeInstance) {
@@ -2550,6 +2578,10 @@ proto.jarviscrawlercore.RequestArticle.deserializeBinaryFromReader = function(ms
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setAttachjquery(value);
       break;
+    case 100:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -2593,6 +2625,13 @@ proto.jarviscrawlercore.RequestArticle.serializeBinaryToWriter = function(messag
       f
     );
   }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      100,
+      f
+    );
+  }
 };
 
 
@@ -2625,6 +2664,21 @@ proto.jarviscrawlercore.RequestArticle.prototype.getAttachjquery = function() {
 /** @param {boolean} value */
 proto.jarviscrawlercore.RequestArticle.prototype.setAttachjquery = function(value) {
   jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+/**
+ * optional string token = 100;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestArticle.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestArticle.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 100, value);
 };
 
 
@@ -3022,7 +3076,8 @@ proto.jarviscrawlercore.RequestArticles.toObject = function(includeInstance, msg
   var f, obj = {
     url: jspb.Message.getFieldWithDefault(msg, 1, ""),
     attachjquery: jspb.Message.getFieldWithDefault(msg, 2, false),
-    website: jspb.Message.getFieldWithDefault(msg, 3, "")
+    website: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
   if (includeInstance) {
@@ -3070,6 +3125,10 @@ proto.jarviscrawlercore.RequestArticles.deserializeBinaryFromReader = function(m
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setWebsite(value);
+      break;
+    case 100:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
       break;
     default:
       reader.skipField();
@@ -3121,6 +3180,13 @@ proto.jarviscrawlercore.RequestArticles.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      100,
+      f
+    );
+  }
 };
 
 
@@ -3168,6 +3234,21 @@ proto.jarviscrawlercore.RequestArticles.prototype.getWebsite = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.RequestArticles.prototype.setWebsite = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string token = 100;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestArticles.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestArticles.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 100, value);
 };
 
 
@@ -3379,7 +3460,8 @@ proto.jarviscrawlercore.RequestDTData.toObject = function(includeInstance, msg) 
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, ""),
     starttime: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    endtime: jspb.Message.getFieldWithDefault(msg, 3, "")
+    endtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
   if (includeInstance) {
@@ -3427,6 +3509,10 @@ proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader = function(msg
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setEndtime(value);
+      break;
+    case 100:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setToken(value);
       break;
     default:
       reader.skipField();
@@ -3478,6 +3564,13 @@ proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter = function(message
       f
     );
   }
+  f = message.getToken();
+  if (f.length > 0) {
+    writer.writeString(
+      100,
+      f
+    );
+  }
 };
 
 
@@ -3523,6 +3616,21 @@ proto.jarviscrawlercore.RequestDTData.prototype.getEndtime = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.RequestDTData.prototype.setEndtime = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string token = 100;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDTData.prototype.getToken = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDTData.prototype.setToken = function(value) {
+  jspb.Message.setProto3StringField(this, 100, value);
 };
 
 

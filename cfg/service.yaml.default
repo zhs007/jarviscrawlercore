@@ -2,3 +2,6 @@ servAddr: 0.0.0.0:7051
 headless: true
 
 # dtconfig: ./cfg/dtcfg.yaml
+
+clientToken:
+  - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3

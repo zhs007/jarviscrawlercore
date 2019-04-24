@@ -82,8 +82,8 @@ class PluginsMgr {
     }
 
     return {
-      result: result,
-      err: err,
+      result: undefined,
+      err: new Error('no website plugin.'),
     };
   }
 }

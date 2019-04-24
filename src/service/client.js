@@ -3,6 +3,8 @@ const services = require('../../proto/result_grpc_pb');
 
 const grpc = require('grpc');
 
+const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
+
 /**
  * startTranslate
  * @param {string} servAddr - service addr
@@ -18,6 +20,7 @@ function startTranslate(servAddr, srclang, destlang, text) {
   request.setText(text);
   request.setSrclang(srclang);
   request.setDestlang(destlang);
+  request.setToken(TOKEN);
 
   client.translate(request, function(err, response) {
     if (err) {
@@ -43,6 +46,7 @@ function startArticle(servAddr, url, attachJQuery) {
   const request = new messages.RequestArticle();
   request.setUrl(url);
   request.setAttachjquery(attachJQuery);
+  request.setToken(TOKEN);
 
   const call = client.exportArticle(request);
   call.on('data', (msg) =>{
@@ -72,6 +76,7 @@ function startGetArticles(servAddr, website) {
 
   const request = new messages.RequestArticles();
   request.setWebsite(website);
+  request.setToken(TOKEN);
   // request.setUrl(url);
   // request.setAttachjquery(jquery);
 
@@ -102,6 +107,7 @@ function startGetDTData(servAddr, mode, startTime, endTime) {
   request.setMode(mode);
   request.setStarttime(startTime);
   request.setEndtime(endTime);
+  request.setToken(TOKEN);
 
   client.getDTData(request, function(err, response) {
     if (err) {

@@ -88,6 +88,9 @@ message RequestTranslate {
     string srcLang = 3;
     // destLang - destination language
     string destLang = 4;
+
+    // token - You need to have a valid token in order to get back correctly
+    string token = 100;
 }
 
 // ReplyTranslate - reply translate
@@ -102,6 +105,9 @@ message RequestArticle {
     string url = 1;
     // is need attach jquery
     bool attachJQuery = 2;
+
+    // token - You need to have a valid token in order to get back correctly
+    string token = 100;    
 }
 
 // ReplyArticle - reply article
@@ -130,6 +136,9 @@ message RequestArticles {
     bool attachJQuery = 2 [deprecated = true];
     // website
     string website = 3;
+
+    // token - You need to have a valid token in order to get back correctly
+    string token = 100;
 }
 
 // ReplyArticles - reply articles
@@ -146,6 +155,9 @@ message RequestDTData {
     string startTime = 2;
     // endTime
     string endTime = 3;
+
+    // token - You need to have a valid token in order to get back correctly
+    string token = 100;    
 }
 
 // DTBusinessGameReport - 

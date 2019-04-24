@@ -154,7 +154,7 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
     return lst;
   });
 
-  console.log('records - %j', lst);
+  // console.log('records - %j', lst);
 
   return lst;
 }

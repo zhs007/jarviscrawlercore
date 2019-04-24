@@ -161,4 +161,3 @@ async function getGameDataReport(page, leftFrame, rightFrame, starttime, endtime
 
 exports.onRightFrameLoadedGDR = onRightFrameLoadedGDR;
 exports.getGameDataReport = getGameDataReport;
-

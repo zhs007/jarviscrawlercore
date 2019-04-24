@@ -27,6 +27,10 @@ getarticles:
     url: https://techcrunch.com
     jquery: true    
     lang: en
+  techinasia:
+    url: https://www.techinasia.com
+    jquery: false    
+    lang: en    
 exportarticle:
   baijingapp:
     jquery: false

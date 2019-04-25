@@ -8,5 +8,8 @@ require('./lieyunwang');
 require('./tmtpost');
 require('./techcrunch');
 require('./techinasia');
+require('./iheima');
+require('./smzdm.post');
+require('./smzdm.news');
 
 exports.mgrPlugins = mgrPlugins;

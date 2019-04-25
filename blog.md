@@ -8,10 +8,16 @@
 npm publish https://github.com/zhs007/jarviscrawlercore/archive/v0.1.41.tar.gz
 ```
 
-后来处理了techinasia。
+后来处理了techinasia, iheima, smzdm。
 
 ```
 node ./bin/jarviscrawler.js getarticles -o 123.pb https://www.techinasia.com
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb http://www.iheima.com -d true
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://post.smzdm.com -d true
+
+node ./bin/jarviscrawler.js getarticles -o 123.pb https://news.smzdm.com -d true
 ```
 
 ### 2019-04-18

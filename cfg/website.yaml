@@ -30,7 +30,19 @@ getarticles:
   techinasia:
     url: https://www.techinasia.com
     jquery: false    
-    lang: en    
+    lang: en
+  iheima:
+    url: http://www.iheima.com
+    jquery: false
+    lang: zh-CN
+  smzdm.post:
+    url: https://post.smzdm.com
+    jquery: false
+    lang: zh-CN
+  smzdm.news:
+    url: https://news.smzdm.com
+    jquery: false
+    lang: zh-CN    
 exportarticle:
   baijingapp:
     jquery: false

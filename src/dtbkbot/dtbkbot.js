@@ -47,25 +47,6 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     console.log('dtbkbot.goto', err);
   });
 
-  // await attachJQuery(page);
-  // await attachJarvisCrawlerCore(page);
-
-  // await page.goto(cfg.url, {
-  //   waitUntil: 'domcontentloaded',
-  //   timeout: 0,
-  // }).catch((err) => {
-  //   console.log('dtbkbot.goto', err);
-  // });
-
-  // 判断是否已经登录
-  // const frames = await page.frames();
-  // const islogin = (frames.length > 1);
-
-  // console.log('dtbkbot is login', islogin, frames.length);
-  // const loginbox = await page.$('loginbox');
-  // const islogin = (loginbox == null);
-  // console.log('dtbkbot is login', loginbox);
-
   // 等待登录加载完成
   await page.waitForFunction(() => {
     const objs = document.getElementsByClassName('loginbox');
@@ -73,21 +54,11 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
       return true;
     }
 
-    // const frames = document.getElementsByTagName('frameset');
-    // if (frames.length > 0) {
-    //   return true;
-    // }
-
     return false;
   }).catch((err) => {
     console.log('dtbkbot.waitForFunction.loginbox', err);
   });
 
-  // const loginbox = await page.$('.loginbox');
-  // const islogin = (loginbox == null);
-  // console.log('dtbkbot is login', islogin, loginbox);
-
-  // if (!islogin) {
   // 登录
   await page.type('.loginuser', cfg.username);
   await page.type('.loginpwd', cfg.password);
@@ -97,7 +68,6 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
     console.log('catch a err ', err);
   });
-  // }
 
   // 处理frames
   const topFrame = page.frames().find((frame) => {
@@ -174,6 +144,18 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
 
   if (topFrame) {
     await topFrame.click('.logoutbtn');
+
+    // 等待登录加载完成
+    await page.waitForFunction(() => {
+      const objs = document.getElementsByClassName('loginbox');
+      if (objs.length > 0) {
+        return true;
+      }
+
+      return false;
+    }).catch((err) => {
+      console.log('dtbkbot.logout.waitForFunction.loginbox', err);
+    });
   }
 
   if (!debugmode) {

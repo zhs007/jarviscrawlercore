@@ -41,7 +41,7 @@ async function getArticles(page) {
 
         const lrInfo = lst[i].getElementsByClassName('lrInfo');
         if (lrInfo.length > 0) {
-          co.summary = lrInfo.innerText;
+          co.summary = lrInfo[0].innerText;
         }
 
         ret.articles.push(co);

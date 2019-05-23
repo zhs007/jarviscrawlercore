@@ -11,5 +11,6 @@ require('./techinasia');
 require('./iheima');
 require('./smzdm.post');
 require('./smzdm.news');
+require('./zdreview');
 
 exports.mgrPlugins = mgrPlugins;

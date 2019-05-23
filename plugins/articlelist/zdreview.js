@@ -8,7 +8,8 @@ const {mgrPlugins} = require('./pluginsmgr');
  * @return {bool} ismine
  */
 function ismine(url) {
-  if (url == 'https://news.smzdm.com') {
+  // console.log(url);
+  if (url == 'https://zdreview.com') {
     return true;
   }
 
@@ -26,25 +27,24 @@ async function getArticles(page) {
     const ret = {};
     ret.articles = [];
 
-    const lst = $('.list');
-    for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByClassName('listTitle');
-      if (title.length > 0) {
-        co = {
-          title: title[0].innerText,
-        };
+    const lp = getElement('.nice-ajax-con');
+    if (lp) {
+      for (let i = 0; i < lp.children.length; ++i) {
+        const cn = lp.children[i];
+        const title = cn.getElementsByTagName('h2');
+        if (title.length > 0) {
+          const url = title[0].getElementsByTagName('a');
 
-        const href = title[0].getElementsByTagName('a');
-        if (href.length > 0) {
-          co.url = href[0].href;
+          co = {
+            title: title[0].innerText,
+          };
+
+          if (url.length > 0) {
+            co.url = url[0].href;
+          }
+
+          ret.articles.push(co);
         }
-
-        const lrInfo = lst[i].getElementsByClassName('lrInfo');
-        if (lrInfo.length > 0) {
-          co.summary = lrInfo[0].innerText;
-        }
-
-        ret.articles.push(co);
       }
     }
 
@@ -52,7 +52,7 @@ async function getArticles(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('iheima.main:getArticles.evaluate', err);
+    console.log('tmtpost.main:getArticles.evaluate', err);
 
     errret = err;
   });
@@ -63,4 +63,4 @@ async function getArticles(page) {
   };
 }
 
-mgrPlugins.regGetArticles('smzdm.news', ismine, getArticles);
+mgrPlugins.regGetArticles('zdreview', ismine, getArticles);

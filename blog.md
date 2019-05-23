@@ -1,5 +1,13 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-05-23
+
+今天增加了zdreview.com
+
+```
+node ./bin/jarviscrawler.js getarticle-o 123.pb https://zdreview.com -d true
+```
+
 ### 2019-04-23
 
 今天发布了一个非docker版本，这样发布，可以直接安装。

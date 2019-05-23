@@ -42,7 +42,11 @@ getarticles:
   smzdm.news:
     url: https://news.smzdm.com
     jquery: false
-    lang: zh-CN    
+    lang: zh-CN
+  zdreview:
+    url: https://zdreview.com
+    jquery: false
+    lang: zh-CN        
 exportarticle:
   baijingapp:
     jquery: false

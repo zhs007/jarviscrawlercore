@@ -78,6 +78,13 @@ message ConfluenceAllUpdates {
     repeated ConfluenceUpdateGrouping updates = 1;
 }
 
+// YCCompanies - YC Companies
+message YCCompanies {
+    string name = 1;
+    string url = 2;
+    string info = 3;
+}
+
 // RequestTranslate - request translate
 message RequestTranslate {
     // text - source text

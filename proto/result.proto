@@ -83,6 +83,8 @@ message YCCompanies {
     string name = 1;
     string url = 2;
     string info = 3;
+    string batch = 4;
+    bool isapp = 5;
 }
 
 // RequestTranslate - request translate

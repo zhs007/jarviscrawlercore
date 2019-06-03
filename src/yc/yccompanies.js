@@ -1,5 +1,4 @@
 const {
-  attachJQuery,
   attachJarvisCrawlerCore,
 } = require('../utils');
 
@@ -13,28 +12,45 @@ const {
    */
 async function yccompanies(browser, srctext, srclang, destlang) {
   const page = await browser.newPage();
-  await page.goto('https://www.kaola.com/');
-
-  await attachJQuery(page);
-  await attachJarvisCrawlerCore(page);
-  // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-  // await page.addScriptTag({path: './browser/utils.js'});
-
-  await page.evaluate(() => {
-    const jrxsg = getElementWithText('.toplevel', '今日限时购');
-    if (jrxsg) {
-      // 增加class，方便一次定位
-      // Increase class for easy positioning
-      jrxsg.className = 'toplevel jrxsg';
-      // 取消新窗口打开
-      // Cancel new window open
-      jrxsg.removeAttribute('target');
-    }
-  }).catch((err) => {
-    console.log('kaola.evaluate', err);
+  await page.goto('https://www.ycombinator.com/companies/', {
+    waitUntil: 'networkidle0',
+    timeout: 0,
   });
 
-  await page.click('.toplevel.jrxsg');
+  // await attachJQuery(page);
+  await attachJarvisCrawlerCore(page);
+
+  const companies = await page.evaluate(() => {
+    const table = getElement('table');
+    if (table) {
+      const companies = [];
+      for (let i = 0; i < table.children.length; ++i) {
+        const cl = table.children[i];
+        const co = {
+          name: cl.children[0].innerText,
+          batch: cl.children[1].innerText,
+          info: cl.children[2].innerText,
+        };
+
+        const urlobj = cl.children[0].getElementsByTagName('a');
+        if (urlobj.length > 0) {
+          co.url = urlobj[0].href;
+        }
+
+        companies.push(co);
+      }
+
+      console.log(companies);
+
+      return;
+    }
+  }).catch((err) => {
+    console.log('yccompanies.evaluate', err);
+  });
+
+  console.log(companies);
+
+  // await page.click('.toplevel.jrxsg');
 }
 
 exports.yccompanies = yccompanies;

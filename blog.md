@@ -1,11 +1,17 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-03
+
+```
+node ./bin/jarviscrawler.js yc company
+```
+
 ### 2019-05-23
 
 今天增加了zdreview.com
 
 ```
-node ./bin/jarviscrawler.js getarticle-o 123.pb https://zdreview.com -d true
+node ./bin/jarviscrawler.js getarticle -o 123.pb https://zdreview.com -d true
 ```
 
 ### 2019-04-23

@@ -2142,7 +2142,9 @@ proto.jarviscrawlercore.YCCompanies.toObject = function(includeInstance, msg) {
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     url: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    info: jspb.Message.getFieldWithDefault(msg, 3, "")
+    info: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    batch: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    isapp: jspb.Message.getFieldWithDefault(msg, 5, false)
   };
 
   if (includeInstance) {
@@ -2190,6 +2192,14 @@ proto.jarviscrawlercore.YCCompanies.deserializeBinaryFromReader = function(msg, 
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setInfo(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBatch(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsapp(value);
       break;
     default:
       reader.skipField();
@@ -2241,6 +2251,20 @@ proto.jarviscrawlercore.YCCompanies.serializeBinaryToWriter = function(message, 
       f
     );
   }
+  f = message.getBatch();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getIsapp();
+  if (f) {
+    writer.writeBool(
+      5,
+      f
+    );
+  }
 };
 
 
@@ -2286,6 +2310,38 @@ proto.jarviscrawlercore.YCCompanies.prototype.getInfo = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.YCCompanies.prototype.setInfo = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string batch = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.YCCompanies.prototype.getBatch = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.YCCompanies.prototype.setBatch = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional bool isapp = 5;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.YCCompanies.prototype.getIsapp = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.YCCompanies.prototype.setIsapp = function(value) {
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 

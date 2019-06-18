@@ -6,6 +6,8 @@ const {confluencebot} = require('../src/confluencebot/confluencebot');
 const {googletranslate} = require('../src/googletranslate/googletranslate');
 const {amazoncn} = require('../src/amazon/amazon');
 const {kaola} = require('../src/kaola/kaola');
+const {yccompanies} = require('../src/yc/yccompanies');
+const {blobimg} = require('../src/playngo/blobimg');
 const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
 const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
@@ -386,6 +388,58 @@ program
         if (!debugmode) {
           await browser.close();
         }
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('yc [mode]')
+    .description('yc')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await yccompanies(browser,
+            mode);
+
+        // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('playngo [mode]')
+    .description('playngo')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      const headless = (options.headless === 'true');
+      console.log('headless - ', headless);
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await blobimg(browser,
+            'gameofgladiators', './output');
+
+        // await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 

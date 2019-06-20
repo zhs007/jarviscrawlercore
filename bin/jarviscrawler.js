@@ -12,6 +12,7 @@ const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
 const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
 const {cbcompanies} = require('../src/crunchbase/companies');
+const {cbcompany} = require('../src/crunchbase/company');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -478,13 +479,23 @@ program
         return;
       }
 
+      if (!(mode == 'companies' || mode == 'company')) {
+        console.log('command wrong, the mode is companies or company');
+
+        return;
+      }
+
       const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await cbcompanies(browser, options.company);
+        if (mode == 'companies') {
+          await cbcompanies(browser, options.company);
+        } else if (mode == 'company') {
+          await cbcompany(browser, options.company);
+        }
 
       // await browser.close();
       })().catch((err) => {

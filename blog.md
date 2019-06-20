@@ -2,10 +2,18 @@
 
 ### 2019-06-20
 
-这个可以通过crunchbase查询公司情况。
+这个可以通过crunchbase查询公司情况，这个接口是查询公司的，可以根据常规的名字查到公司代码。
 ```
-node ./bin/jarviscrawler.js crunchbase -c facebook
+node ./bin/jarviscrawler.js crunchbase companies -c Facebook
 ```
+
+这个用来查询公司明细，需要传入companycode才行。
+
+```
+node ./bin/jarviscrawler.js crunchbase company -c slack
+```
+
+crunchbase前面有个检查，暂时没有处理，有些时候需要主动点一下。
 
 这个可以下载blob的图片。  
 ```

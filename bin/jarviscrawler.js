@@ -11,13 +11,13 @@ const {blobimg} = require('../src/playngo/blobimg');
 const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
 const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
+const {cbcompanies} = require('../src/crunchbase/companies');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
 const VERSION = package.version;
 
-program
-    .version(VERSION);
+program.version(VERSION);
 
 program
     .command('exparticle [url]')
@@ -34,8 +34,9 @@ program
       console.log('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler exparticle --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler exparticle --help'
+        );
 
         return;
       }
@@ -68,24 +69,25 @@ program
         console.log('jpgquality - ', options.jpgquality);
       }
 
-      const images = (options.images === 'true');
+      const images = options.images === 'true';
       if (options.mode == 'pdf' || options.mode == 'pb') {
         console.log('images - ', images);
       }
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
-      const jquery = (options.jquery === 'true');
+      const jquery = options.jquery === 'true';
       console.log('jquery - ', jquery);
 
-      const debugmode = (options.debug === 'true');
+      const debugmode = options.debug === 'true';
       console.log('debug - ', debugmode);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await exportArticle(browser,
+        await exportArticle(
+            browser,
             url,
             options.output,
             options.mode,
@@ -93,7 +95,8 @@ program
             options.jpgquality,
             jquery,
             images,
-            debugmode);
+            debugmode
+        );
 
         if (!debugmode) {
           await browser.close();
@@ -116,8 +119,9 @@ program
       console.log('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler tracing --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler tracing --help'
+        );
 
         return;
       }
@@ -125,13 +129,11 @@ program
       console.log('url - ', url);
       console.log('output - ', options.output);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
-        await tracing(url,
-            options.output,
-            headless);
+        await tracing(url, options.output, headless);
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -149,19 +151,19 @@ program
       console.log('version is ', VERSION);
 
       if (!cfgfile) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler confluencebot --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler confluencebot --help'
+        );
 
         return;
       }
 
       console.log('cfgfile - ', cfgfile);
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
-        await confluencebot(cfgfile,
-            headless);
+        await confluencebot(cfgfile, headless);
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -181,8 +183,9 @@ program
       console.log('version is ', VERSION);
 
       if (!text) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler googletranslate --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler googletranslate --help'
+        );
 
         return;
       }
@@ -197,14 +200,18 @@ program
         options.destlang = 'en';
       }
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        const desttext = await googletranslate(browser,
-            text, options.srclang, options.destlang);
+        const desttext = await googletranslate(
+            browser,
+            text,
+            options.srclang,
+            options.destlang
+        );
 
         console.log(desttext);
 
@@ -225,8 +232,9 @@ program
       console.log('version is ', VERSION);
 
       if (!cfgfile) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler startservice --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler startservice --help'
+        );
 
         return;
       }
@@ -251,16 +259,15 @@ program
     .action(function(mode, options) {
       console.log('version is ', VERSION);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await amazoncn(browser,
-            mode);
+        await amazoncn(browser, mode);
 
-        // await browser.close();
+      // await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -277,16 +284,15 @@ program
     .action(function(mode, options) {
       console.log('version is ', VERSION);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await kaola(browser,
-            mode);
+        await kaola(browser, mode);
 
-        // await browser.close();
+      // await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -307,8 +313,9 @@ program
       console.log('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler exparticle --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler exparticle --help'
+        );
 
         return;
       }
@@ -319,23 +326,19 @@ program
         console.log('output - ', options.output);
       }
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
-      const jquery = (options.jquery === 'true');
+      const jquery = options.jquery === 'true';
       console.log('jquery - ', jquery);
 
-      const debugmode = (options.debug === 'true');
+      const debugmode = options.debug === 'true';
       console.log('debug - ', debugmode);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await getArticleList(browser,
-            url,
-            options.output,
-            jquery,
-            debugmode);
+        await getArticleList(browser, url, options.output, jquery, debugmode);
 
         if (!debugmode) {
           await browser.close();
@@ -361,29 +364,32 @@ program
       console.log('version is ', VERSION);
 
       if (!cfgfile || !options.mode) {
-        console.log('command wrong, please type ' +
-          'jarviscrawler dtbkbot --help');
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler dtbkbot --help'
+        );
 
         return;
       }
 
       console.log('cfgfile - ', cfgfile);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
-      const debugmode = (options.debug === 'true');
+      const debugmode = options.debug === 'true';
       console.log('debug - ', debugmode);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await dtbkbot(browser,
+        await dtbkbot(
+            browser,
             cfgfile,
             debugmode,
             options.mode,
             options.starttime,
-            options.endtime);
+            options.endtime
+        );
 
         if (!debugmode) {
           await browser.close();
@@ -404,16 +410,15 @@ program
     .action(function(mode, options) {
       console.log('version is ', VERSION);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await yccompanies(browser,
-            mode);
+        await yccompanies(browser, mode);
 
-        // await browser.close();
+      // await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -427,19 +432,61 @@ program
     .command('playngo [mode]')
     .description('playngo')
     .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-g, --gamecode [gamecode]', 'gamecode')
     .action(function(mode, options) {
       console.log('version is ', VERSION);
 
-      const headless = (options.headless === 'true');
+      const headless = options.headless === 'true';
+      console.log('headless - ', headless);
+
+      if (!options.gamecode) {
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler dtbkbot --help'
+        );
+
+        return;
+      }
+
+      (async () => {
+        const browser = await startBrowser(headless);
+
+        await blobimg(browser, options.gamecode, './output');
+
+      // await browser.close();
+      })().catch((err) => {
+        console.log('catch a err ', err);
+
+        if (headless) {
+          process.exit(-1);
+        }
+      });
+    });
+
+program
+    .command('crunchbase [mode]')
+    .description('crunchbase')
+    .option('-h, --headless [isheadless]', 'headless mode')
+    .option('-c, --company [company]', 'company name')
+    .action(function(mode, options) {
+      console.log('version is ', VERSION);
+
+      if (!options.company) {
+        console.log(
+            'command wrong, please type ' + 'jarviscrawler crunchbase --help'
+        );
+
+        return;
+      }
+
+      const headless = options.headless === 'true';
       console.log('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
 
-        await blobimg(browser,
-            'gameofgladiators', './output');
+        await cbcompanies(browser, options.company);
 
-        // await browser.close();
+      // await browser.close();
       })().catch((err) => {
         console.log('catch a err ', err);
 

@@ -1,5 +1,17 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-20
+
+这个可以通过crunchbase查询公司情况。
+```
+node ./bin/jarviscrawler.js crunchbase -c facebook
+```
+
+这个可以下载blob的图片。  
+```
+node ./bin/jarviscrawler.js playngo blobimg -g gameofgladiators
+```
+
 ### 2019-06-03
 
 ```

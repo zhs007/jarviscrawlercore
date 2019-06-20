@@ -1,7 +1,4 @@
-const {
-  loadConfig,
-  checkConfig,
-} = require('./cfg');
+const {loadConfig, checkConfig} = require('./cfg');
 const {
   getGameTodayDataSummary,
   onRightFrameLoadedGTDS,
@@ -10,10 +7,7 @@ const {
   getGameDataReport,
   onRightFrameLoadedGDR,
 } = require('./gamedatareport');
-const {
-  attachJQuery,
-  attachJarvisCrawlerCore,
-} = require('../utils');
+const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
 
 const MODE_GAMETODAYDATA = 'gametodaydata';
 const MODE_GAMEDATAREPORT = 'gamedatareport';
@@ -48,16 +42,18 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
   });
 
   // 等待登录加载完成
-  await page.waitForFunction(() => {
-    const objs = document.getElementsByClassName('loginbox');
-    if (objs.length > 0) {
-      return true;
-    }
+  await page
+      .waitForFunction(() => {
+        const objs = document.getElementsByClassName('loginbox');
+        if (objs.length > 0) {
+          return true;
+        }
 
-    return false;
-  }).catch((err) => {
-    console.log('dtbkbot.waitForFunction.loginbox', err);
-  });
+        return false;
+      })
+      .catch((err) => {
+        console.log('dtbkbot.waitForFunction.loginbox', err);
+      });
 
   // 登录
   await page.type('.loginuser', cfg.username);
@@ -106,39 +102,55 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     await attachJarvisCrawlerCore(leftFrame);
 
     // 标记需要的菜单元素
-    await leftFrame.evaluate(()=>{
-      const jlxx = getElementWithText('.title', '记录信息');
-      if (jlxx) {
-        jlxx.className = 'title jlxx';
-      }
+    await leftFrame
+        .evaluate(() => {
+          const jlxx = getElementWithText('.title', '记录信息');
+          if (jlxx) {
+            jlxx.className = 'title jlxx';
+          }
 
-      const bbtj = getElementWithText('.title', '报表统计');
-      if (jlxx) {
-        bbtj.className = 'title bbtj';
-      }
+          const bbtj = getElementWithText('.title', '报表统计');
+          if (jlxx) {
+            bbtj.className = 'title bbtj';
+          }
 
-      const lstmenuson = $('.menuson');
-      for (let i = 0; i < lstmenuson.length; ++i) {
-        const yxjl = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏记录');
-        if (yxjl) {
-          yxjl.className = 'yxjl';
-          lstmenuson[i].className = 'menuson jlxx';
-        }
+          const lstmenuson = $('.menuson');
+          for (let i = 0; i < lstmenuson.length; ++i) {
+            const yxjl = getElementChildWithTagAndText(
+                lstmenuson[i],
+                'A',
+                '游戏记录'
+            );
+            if (yxjl) {
+              yxjl.className = 'yxjl';
+              lstmenuson[i].className = 'menuson jlxx';
+            }
 
-        const yxbb = getElementChildWithTagAndText(lstmenuson[i], 'A', '游戏报表');
-        if (yxbb) {
-          yxbb.className = 'yxbb';
-          lstmenuson[i].className = 'menuson bbtj';
-        }
-      }
-    }).catch((err) => {
-      console.log('dtbkbot:leftFrame.evaluate', err);
-    });
+            const yxbb = getElementChildWithTagAndText(
+                lstmenuson[i],
+                'A',
+                '游戏报表'
+            );
+            if (yxbb) {
+              yxbb.className = 'yxbb';
+              lstmenuson[i].className = 'menuson bbtj';
+            }
+          }
+        })
+        .catch((err) => {
+          console.log('dtbkbot:leftFrame.evaluate', err);
+        });
 
     if (mode == MODE_GAMETODAYDATA) {
       ret = await getGameTodayDataSummary(page, leftFrame, rightFrame);
     } else if (mode == MODE_GAMEDATAREPORT) {
-      ret = await getGameDataReport(page, leftFrame, rightFrame, starttime, endtime);
+      ret = await getGameDataReport(
+          page,
+          leftFrame,
+          rightFrame,
+          starttime,
+          endtime
+      );
     }
   }
 
@@ -146,16 +158,18 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
     await topFrame.click('.logoutbtn');
 
     // 等待登录加载完成
-    await page.waitForFunction(() => {
-      const objs = document.getElementsByClassName('loginbox');
-      if (objs.length > 0) {
-        return true;
-      }
+    await page
+        .waitForFunction(() => {
+          const objs = document.getElementsByClassName('loginbox');
+          if (objs.length > 0) {
+            return true;
+          }
 
-      return false;
-    }).catch((err) => {
-      console.log('dtbkbot.logout.waitForFunction.loginbox', err);
-    });
+          return false;
+        })
+        .catch((err) => {
+          console.log('dtbkbot.logout.waitForFunction.loginbox', err);
+        });
   }
 
   if (!debugmode) {

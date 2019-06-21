@@ -87,6 +87,43 @@ message YCCompanies {
     bool isapp = 5;
 }
 
+// CrunchBaseInvestor - CrunchBase Investor
+message CrunchBaseInvestor {
+    string investorName = 1;
+    bool leadInvestor = 2;
+    repeated string Partners = 3;
+}
+
+// CrunchBaseFundingRound - CrunchBase FundingRound
+message CrunchBaseFundingRound {
+    string announcedDate = 1;
+    string transactionName = 2;
+    string moneyRaised = 3;
+
+    repeated CrunchBaseInvestor investors = 100;
+}
+
+// CrunchBaseOrganization - CrunchBase Organization
+message CrunchBaseOrganization {
+    string name = 1;
+    string code = 2;
+    repeated string categories = 3;
+    repeated string headquartersRegions = 4;
+    string foundedDate = 5;
+    repeated string founders = 6;
+    string operatingStatus = 7;
+    string fundingStatus = 8;
+    string lastFundingType = 9;
+    string legalName = 10;
+
+    string stockSymbol = 100;
+    string valuationIPO = 101;
+    string priceIPO = 102;
+    string dateIPO = 103;
+
+    repeated CrunchBaseFundingRound fundingRounds = 200;
+}
+
 // RequestTranslate - request translate
 message RequestTranslate {
     // text - source text

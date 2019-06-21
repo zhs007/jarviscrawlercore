@@ -1,5 +1,13 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-21
+
+crunchbase organization 页面的一点记录：
+
+- 大栏目 ``layout-row section-header ng-star-inserted``
+- 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目
+
+
 ### 2019-06-20
 
 这个可以通过crunchbase查询公司情况，这个接口是查询公司的，可以根据常规的名字查到公司代码。

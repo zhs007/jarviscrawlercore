@@ -87,6 +87,34 @@ message YCCompanies {
     bool isapp = 5;
 }
 
+// CrunchBaseEmployee - CrunchBase Employee
+message CrunchBaseEmployee {
+    string name = 1;
+    string code = 2;
+    string title = 3;
+    string startDate = 4;
+    string endDate = 5;
+}
+
+// CrunchBaseInvestment - CrunchBase Investment
+message CrunchBaseInvestment {
+    string announcedDate = 1;
+    string organizationName = 2;
+    bool leadInvestor = 3;
+    string fundingRound = 4;
+    string moneyRaised = 5;
+}
+
+// CrunchBaseAcquisition - CrunchBase Acquisition
+message CrunchBaseAcquisition {
+    string acquiredOrganizationName = 1;
+    string acquiredOrganizationCode = 2;
+    string announcedDate = 3;
+    string price = 4;
+    string acquiringOrganizationName = 5;
+    string acquiringOrganizationCode = 6;
+}
+
 // CrunchBaseInvestor - CrunchBase Investor
 message CrunchBaseInvestor {
     string investorName = 1;
@@ -122,6 +150,12 @@ message CrunchBaseOrganization {
     string dateIPO = 103;
 
     repeated CrunchBaseFundingRound fundingRounds = 200;
+
+    repeated CrunchBaseEmployee curEmployees = 301;
+
+    repeated CrunchBaseEmployee boardMembers = 401;
+
+    repeated CrunchBaseEmployee pastEmployees = 501;
 }
 
 // RequestTranslate - request translate

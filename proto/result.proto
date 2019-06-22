@@ -314,6 +314,8 @@ message ReplyCrawlerStream {
     string totalHashData = 5;
     // data
     bytes data = 6;
+
+    string error = 100;
 }
 
 // JarvisCrawlerService - JarvisCrawler service

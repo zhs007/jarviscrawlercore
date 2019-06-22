@@ -1,5 +1,12 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-22
+
+今天新开了``0.2``的分支，主要是下面几个结构调整：
+
+1. 命令行模式切换到具体模块内，这样 ``bin/jarviscrawler.js`` 代码结构会更清晰。
+2. ``service``模式下，增加统一的请求协议，统一来处理协议过长需要``stream``的情况。
+
 ### 2019-06-21
 
 crunchbase organization 页面的一点记录：

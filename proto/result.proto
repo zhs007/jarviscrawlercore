@@ -148,6 +148,7 @@ message CrunchBaseOrganization {
     string valuationIPO = 101;
     string priceIPO = 102;
     string dateIPO = 103;
+    string moneyRaisedIPO = 104;
 
     repeated CrunchBaseFundingRound fundingRounds = 200;
 

@@ -3666,6 +3666,7 @@ proto.jarviscrawlercore.CrunchBaseOrganization.toObject = function(includeInstan
     valuationipo: jspb.Message.getFieldWithDefault(msg, 101, ""),
     priceipo: jspb.Message.getFieldWithDefault(msg, 102, ""),
     dateipo: jspb.Message.getFieldWithDefault(msg, 103, ""),
+    moneyraisedipo: jspb.Message.getFieldWithDefault(msg, 104, ""),
     fundingroundsList: jspb.Message.toObjectList(msg.getFundingroundsList(),
     proto.jarviscrawlercore.CrunchBaseFundingRound.toObject, includeInstance),
     curemployeesList: jspb.Message.toObjectList(msg.getCuremployeesList(),
@@ -3765,6 +3766,10 @@ proto.jarviscrawlercore.CrunchBaseOrganization.deserializeBinaryFromReader = fun
     case 103:
       var value = /** @type {string} */ (reader.readString());
       msg.setDateipo(value);
+      break;
+    case 104:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMoneyraisedipo(value);
       break;
     case 200:
       var value = new proto.jarviscrawlercore.CrunchBaseFundingRound;
@@ -3910,6 +3915,13 @@ proto.jarviscrawlercore.CrunchBaseOrganization.serializeBinaryToWriter = functio
   if (f.length > 0) {
     writer.writeString(
       103,
+      f
+    );
+  }
+  f = message.getMoneyraisedipo();
+  if (f.length > 0) {
+    writer.writeString(
+      104,
       f
     );
   }
@@ -4197,6 +4209,21 @@ proto.jarviscrawlercore.CrunchBaseOrganization.prototype.getDateipo = function()
 /** @param {string} value */
 proto.jarviscrawlercore.CrunchBaseOrganization.prototype.setDateipo = function(value) {
   jspb.Message.setProto3StringField(this, 103, value);
+};
+
+
+/**
+ * optional string moneyRaisedIPO = 104;
+ * @return {string}
+ */
+proto.jarviscrawlercore.CrunchBaseOrganization.prototype.getMoneyraisedipo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 104, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.CrunchBaseOrganization.prototype.setMoneyraisedipo = function(value) {
+  jspb.Message.setProto3StringField(this, 104, value);
 };
 
 

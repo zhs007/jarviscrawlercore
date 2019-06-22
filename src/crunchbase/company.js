@@ -80,6 +80,31 @@ async function cbcompany(browser, company) {
                 cbobj.legalname = cursubobj.nextElementSibling.innerText;
               }
             }
+          } else if (curobj.innerText == 'IPO & Stock Price') {
+            const lsteles = curobj.parentElement.getElementsByClassName(
+                'cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted'
+            );
+
+            // console.log(lsteles);
+
+            for (let j = 0; j < lsteles.length; ++j) {
+              const cursubobj = lsteles[j];
+
+              console.log(cursubobj.innerText);
+              console.log(cursubobj.nextElementSibling.innerText);
+
+              if (cursubobj.innerText == 'Stock Symbol ') {
+                cbobj.stocksymbol = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Valuation at IPO ') {
+                cbobj.valuationipo = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Money Raised at IPO ') {
+                cbobj.moneyraisedipo = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'IPO Share Price ') {
+                cbobj.priceipo = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'IPO Date ') {
+                cbobj.dateipo = cursubobj.nextElementSibling.innerText;
+              }
+            }
           }
         }
 

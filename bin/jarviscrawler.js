@@ -11,8 +11,7 @@ const {blobimg} = require('../src/playngo/blobimg');
 const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
 const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
-const {cbcompanies} = require('../src/crunchbase/companies');
-const {cbcompany} = require('../src/crunchbase/company');
+const {crunchbaseexec} = require('../src/crunchbase/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -463,48 +462,6 @@ program
       });
     });
 
-program
-    .command('crunchbase [mode]')
-    .description('crunchbase')
-    .option('-h, --headless [isheadless]', 'headless mode')
-    .option('-c, --company [company]', 'company name')
-    .action(function(mode, options) {
-      console.log('version is ', VERSION);
-
-      if (!options.company) {
-        console.log(
-            'command wrong, please type ' + 'jarviscrawler crunchbase --help'
-        );
-
-        return;
-      }
-
-      if (!(mode == 'companies' || mode == 'company')) {
-        console.log('command wrong, the mode is companies or company');
-
-        return;
-      }
-
-      const headless = options.headless === 'true';
-      console.log('headless - ', headless);
-
-      (async () => {
-        const browser = await startBrowser(headless);
-
-        if (mode == 'companies') {
-          await cbcompanies(browser, options.company);
-        } else if (mode == 'company') {
-          await cbcompany(browser, options.company);
-        }
-
-      // await browser.close();
-      })().catch((err) => {
-        console.log('catch a err ', err);
-
-        if (headless) {
-          process.exit(-1);
-        }
-      });
-    });
+crunchbaseexec(program, VERSION);
 
 program.parse(process.argv);

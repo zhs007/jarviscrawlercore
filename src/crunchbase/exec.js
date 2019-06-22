@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {cbcompanies} = require('./companies');
 const {cbcompany} = require('./company');
+const {cblogin} = require('./login');
 
 /**
  * crunchbaseexec
@@ -13,6 +14,8 @@ async function crunchbaseexec(program, version) {
       .description('crunchbase')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-c, --company [company]', 'company name')
+      .option('-u, --user [user]', 'user name')
+      .option('-p, --password [password]', 'password name')
       .action(function(mode, options) {
         console.log('version is ', version);
 
@@ -24,8 +27,18 @@ async function crunchbaseexec(program, version) {
           return;
         }
 
-        if (!(mode == 'companies' || mode == 'company')) {
-          console.log('command wrong, the mode is companies or company');
+        if (mode == 'login') {
+          if (!options.user || !options.password) {
+            console.log(
+                'command wrong, please type ' + 'jarviscrawler crunchbase --help'
+            );
+
+            return;
+          }
+        }
+
+        if (!(mode == 'companies' || mode == 'company' || mode == 'login')) {
+          console.log('command wrong, the mode is companies or company or login');
 
           return;
         }
@@ -40,6 +53,8 @@ async function crunchbaseexec(program, version) {
             await cbcompanies(browser, options.company);
           } else if (mode == 'company') {
             await cbcompany(browser, options.company);
+          } else if (mode == 'login') {
+            await cblogin(browser, options.user, options.password);
           }
 
         // await browser.close();

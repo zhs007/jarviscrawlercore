@@ -34,8 +34,6 @@ async function cbcompanies(browser, company) {
         console.log('cbcompanies.waitForFunction:multi-search', err);
       });
 
-  // console.log('haha');
-
   await page.type('input', company, {delay: 100});
   await page.keyboard.press('Enter');
 

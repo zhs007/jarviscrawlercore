@@ -4,8 +4,9 @@
 
 crunchbase organization 页面的一点记录：
 
-- 大栏目 ``layout-row section-header ng-star-inserted``
-- 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目
+- ``cb-overflow-ellipsis`` 名字。
+- 大栏目 ``layout-row section-header ng-star-inserted`` ，该元素的父节点才是card节点。
+- 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目，该节点的next是内容。
 
 
 ### 2019-06-20

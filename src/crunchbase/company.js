@@ -12,87 +12,87 @@ async function cbcompany(browser, company) {
         deviceScaleFactor: 1,
       })
       .catch((err) => {
-        console.log('cbcompanies.setViewport', err);
+        console.log('cbcompany.setViewport', err);
       });
 
   await page
       .goto('https://www.crunchbase.com/organization/' + company, {
-        waitUntil: 'networkidle0',
+        waitUntil: 'domcontentloaded',
         timeout: 0,
       })
       .catch((err) => {
-        console.log('cbcompanies.goto', err);
+        console.log('cbcompany.goto', err);
       });
 
   console.log('haha');
-  //   await page.waitFor(3000);
 
-  //   await page
-  //       .waitForFunction(() => {
-  //         const objs = document.getElementsByTagName('multi-search');
-  //         if (objs.length > 0) {
-  //           return true;
-  //         }
+  const cbobj = await page
+      .$$eval('.layout-row.section-header.ng-star-inserted', (objs) => {
+        console.log(objs);
 
-  //         return false;
-  //       })
-  //       .catch((err) => {
-  //         console.log('cbcompanies.waitForFunction:multi-search', err);
-  //       });
+        const nameobj = document.getElementsByClassName('cb-overflow-ellipsis');
 
-  //   // console.log('haha');
+        const cbobj = {};
 
-  //   await page.type('input', company, {delay: 100});
-  //   await page.keyboard.press('Enter');
+        if (nameobj.length > 0) {
+          cbobj.name = nameobj[0].innerText;
+        }
 
-  //   await page
-  //       .waitForFunction(() => {
-  //         const objs = document.getElementsByTagName('results-info');
-  //         if (objs.length > 0) {
-  //           if (objs[0].innerText.indexOf(' 1-5 ') == 0) {
-  //             return true;
-  //           }
-  //         }
+        for (let i = 0; i < objs.length; ++i) {
+          const curobj = objs[i];
 
-  //         return false;
-  //       })
-  //       .catch((err) => {
-  //         console.log('cbcompanies.waitForFunction:component--results-info', err);
-  //       });
+          //   console.log(curobj.innerText);
 
-  //   const companies = await page.$$eval(
-  //       '.cb-link.component--field-formatter.field-type-identifier.ng-star-inserted',
-  //       (objs) => {
-  //         console.log(objs);
+          if (curobj.innerText == 'Overview') {
+            const lsteles = curobj.parentElement.getElementsByClassName(
+                'cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted'
+            );
 
-  //         const companies = [];
-  //         for (let i = 0; i < objs.length; ++i) {
-  //           if (
-  //             objs[i].href.indexOf('https://www.crunchbase.com/organization/') == 0
-  //           ) {
-  //             companies.push({
-  //               name: objs[i].innerText,
-  //               href: objs[i].href,
-  //             });
-  //           }
-  //         }
+            // console.log(lsteles);
 
-  //         console.log(companies);
+            for (let j = 0; j < lsteles.length; ++j) {
+              const cursubobj = lsteles[j];
 
-  //         return companies;
-  //       }
-  //   );
+              console.log(cursubobj.innerText);
+              console.log(cursubobj.nextElementSibling.innerText);
 
-  //   console.log(companies);
+              if (cursubobj.innerText == 'Categories ') {
+                cbobj.categories = cursubobj.nextElementSibling.innerText.split(
+                    ', '
+                );
+              } else if (cursubobj.innerText == 'Headquarters Regions ') {
+                cbobj.headquartersregions = cursubobj.nextElementSibling.innerText.split(
+                    ', '
+                );
+              } else if (cursubobj.innerText == 'Founded Date ') {
+                cbobj.foundeddate = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Founders ') {
+                cbobj.founders = cursubobj.nextElementSibling.innerText.split(
+                    ', '
+                );
+              } else if (cursubobj.innerText == 'Operating Status ') {
+                cbobj.operatingstatus = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Funding Status ') {
+                cbobj.fundingstatus = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Last Funding Type ') {
+                cbobj.lastfundingtype = cursubobj.nextElementSibling.innerText;
+              } else if (cursubobj.innerText == 'Legal Name ') {
+                cbobj.legalname = cursubobj.nextElementSibling.innerText;
+              }
+            }
+          }
+        }
 
-  //   for (let i = 0; i < companies.length; ++i) {
-  //     if (
-  //       companies[i].href ==
-  //         'https://www.crunchbase.com/organization/' + company
-  //     ) {
-  //       console.log(companies[i]);
-  //     }
-  //   }
+        return cbobj;
+      })
+      .catch((err) => {
+        console.log(
+            'cbcompany.$$eval:.layout-row.section-header.ng-star-inserted',
+            err
+        );
+      });
+
+  console.log(cbobj);
 }
 
 exports.cbcompany = cbcompany;

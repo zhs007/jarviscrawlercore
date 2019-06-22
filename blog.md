@@ -1,5 +1,35 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-21
+
+crunchbase organization 页面的一点记录：
+
+- ``cb-overflow-ellipsis`` 名字。
+- 大栏目 ``layout-row section-header ng-star-inserted`` ，该元素的父节点才是card节点。
+- 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目，该节点的next是内容。
+- 剩下几个表格card里，``tr.ng-star-inserted``取到行。
+
+
+### 2019-06-20
+
+这个可以通过crunchbase查询公司情况，这个接口是查询公司的，可以根据常规的名字查到公司代码。
+```
+node ./bin/jarviscrawler.js crunchbase companies -c Facebook
+```
+
+这个用来查询公司明细，需要传入companycode才行。
+
+```
+node ./bin/jarviscrawler.js crunchbase company -c slack
+```
+
+crunchbase前面有个检查，暂时没有处理，有些时候需要主动点一下。
+
+这个可以下载blob的图片。  
+```
+node ./bin/jarviscrawler.js playngo blobimg -g gameofgladiators
+```
+
 ### 2019-06-03
 
 ```

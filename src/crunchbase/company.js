@@ -105,6 +105,36 @@ async function cbcompany(browser, company) {
                 cbobj.dateipo = cursubobj.nextElementSibling.innerText;
               }
             }
+          } else if (curobj.innerText == 'Funding Rounds') {
+            const lsteles = curobj.parentElement.getElementsByTagName('tr');
+
+            // console.log(lsteles);
+
+            if (lsteles.length > 1) {
+              cbobj.fundingrounds = [];
+
+              for (let j = 0; j < lsteles.length; ++j) {
+                const cursubobj = lsteles[j];
+
+                if (cursubobj.className == 'ng-star-inserted') {
+                  const lsttds = cursubobj.getElementsByTagName('td');
+
+                  if (lsttds.length >= 5) {
+                    const fundinground = {
+                      announceddate: lsttds[0].innerText,
+                      transactionname: lsttds[1].innerText.split(' - ')[0],
+                      investors: lsttds[4].innerText.split(', '),
+                    };
+
+                    if (lsttds[3].innerText != '—') {
+                      fundinground.moneyraised = lsttds[3].innerText;
+                    }
+
+                    cbobj.fundingrounds.push(fundinground);
+                  }
+                }
+              }
+            }
           }
         }
 
@@ -116,6 +146,8 @@ async function cbcompany(browser, company) {
             err
         );
       });
+
+  cbobj.code = company;
 
   console.log(cbobj);
 }

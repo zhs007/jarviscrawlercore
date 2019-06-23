@@ -353,7 +353,7 @@ function newDTTodayGameData(obj) {
  * @param {number} ms - ms
  * @return {Promise} result -
  */
-function sleep(ms) {
+async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 

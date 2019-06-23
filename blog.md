@@ -23,7 +23,8 @@ crunchbase login 页面的一点记录：
 
 怎么判断``reCAPTCHA``？  
 crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，就会进入``reCAPTCHA``流程。  
-譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。
+譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。  
+今天实现了这个，但有个小问题，再登录时，有可能点击登录按钮再跳转页面的时候出现``reCAPTCHA``。
 
 ### 2019-06-20
 

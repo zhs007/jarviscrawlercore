@@ -15,6 +15,37 @@ async function cbcompany(browser, company) {
         console.log('cbcompany.setViewport', err);
       });
 
+  page.on('framenavigated', (frame) => {
+    console.log('framenavigated ' + frame.name() + ' ' + frame.url());
+  });
+
+  page.on('load', () => console.log('Page loaded!'));
+  page.on('domcontentloaded', () => console.log('Page domcontentloaded!'));
+  page.on('response', async (response) => {
+    // if (response.status())
+    console.log('response ' + response.status() + ' ' + response.url());
+
+    // if ('https://www.crunchbase.com/v4/cb/sessions' == response.url()) {
+    //   const str = await response.text();
+    //   console.log(str);
+    // }
+    // if (response.url().indexOf('/api/v1/collector') > 0) {
+    // const str = await response.text();
+    // if (str.length < 512) {
+    //   console.log(str);
+    // }
+    // }
+  });
+
+  page.on('requestfinished', (request) => {
+    console.log(request.url());
+
+    // if ('https://www.crunchbase.com/v4/cb/sessions' == request.url()) {
+    //   const str = request.response().text();
+    //   console.log(str);
+    // }
+  });
+
   await page
       .goto('https://www.crunchbase.com/organization/' + company, {
         waitUntil: 'domcontentloaded',

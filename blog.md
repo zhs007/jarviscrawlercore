@@ -21,6 +21,9 @@ crunchbase login 页面的一点记录：
 - ``id``为``mat-input-1``是email，``mat-input-2``是密码。
 - ``.cb-text-transform-upper.mat-raised-button.mat-primary``这个是登录按钮。
 
+怎么判断``reCAPTCHA``？  
+crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，就会进入``reCAPTCHA``流程。  
+譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。
 
 ### 2019-06-20
 

@@ -16,6 +16,11 @@ crunchbase organization 页面的一点记录：
 - 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目，该节点的next是内容。
 - 剩下几个表格card里，``tr.ng-star-inserted``取到行。
 
+crunchbase login 页面的一点记录：
+- ``tag``为``mat-form-field``的是输入框，search也是一个输入框。
+- ``id``为``mat-input-1``是email，``mat-input-2``是密码。
+- ``.cb-text-transform-upper.mat-raised-button.mat-primary``这个是登录按钮。
+
 
 ### 2019-06-20
 

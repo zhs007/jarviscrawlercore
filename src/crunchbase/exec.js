@@ -19,12 +19,14 @@ async function crunchbaseexec(program, version) {
       .action(function(mode, options) {
         console.log('version is ', version);
 
-        if (!options.company) {
-          console.log(
-              'command wrong, please type ' + 'jarviscrawler crunchbase --help'
-          );
+        if (mode == 'companies' || mode == 'company') {
+          if (!options.company) {
+            console.log(
+                'command wrong, please type ' + 'jarviscrawler crunchbase --help'
+            );
 
-          return;
+            return;
+          }
         }
 
         if (mode == 'login') {

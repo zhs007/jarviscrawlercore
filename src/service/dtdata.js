@@ -4,9 +4,7 @@ const {
   MODE_GAMETODAYDATA,
   MODE_GAMEDATAREPORT,
 } = require('../dtbkbot/dtbkbot');
-const {
-  newDTBusinessGameReport,
-} = require('../utils');
+const {newDTBusinessGameReport} = require('../utils');
 
 /**
  * get dt data
@@ -16,26 +14,30 @@ const {
  * @param {function} callback - callback(err, ReplyTranslate)
  */
 function callGetDTData(browser, cfgfile, call, callback) {
-  dtbkbot(browser,
+  dtbkbot(
+      browser,
       cfgfile,
       false,
       call.request.getMode(),
       call.request.getStarttime(),
-      call.request.getEndtime()).then((ret) => {
-    const reply = new messages.ReplyDTData();
+      call.request.getEndtime()
+  )
+      .then((ret) => {
+        const reply = new messages.ReplyDTData();
 
-    if (call.request.getMode() == MODE_GAMETODAYDATA) {
-      reply.setTodaygamedata(ret);
-    } else if (call.request.getMode() == MODE_GAMEDATAREPORT) {
-      for (let i = 0; i < ret.length; ++i) {
-        reply.addGamereports(newDTBusinessGameReport(ret[i]));
-      }
-    }
+        if (call.request.getMode() == MODE_GAMETODAYDATA) {
+          reply.setTodaygamedata(ret);
+        } else if (call.request.getMode() == MODE_GAMEDATAREPORT) {
+          for (let i = 0; i < ret.length; ++i) {
+            reply.addGamereports(newDTBusinessGameReport(ret[i]));
+          }
+        }
 
-    callback(null, reply);
-  }).catch((err) => {
-    callback(err, null);
-  });
+        callback(null, reply);
+      })
+      .catch((err) => {
+        callback(err, null);
+      });
 }
 
 exports.callGetDTData = callGetDTData;

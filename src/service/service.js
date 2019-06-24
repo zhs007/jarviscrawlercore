@@ -1,14 +1,12 @@
 const services = require('../../proto/result_grpc_pb');
-const {
-  loadConfig,
-  checkConfig,
-  isValidToken,
-} = require('./cfg');
+const {loadConfig, checkConfig, isValidToken} = require('./cfg');
 const {startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
 const {callExportArticle} = require('./exportarticle');
 const {callGetArticleList} = require('./getarticles');
 const {callGetDTData} = require('./dtdata');
+const {replyError} = require('./utils');
+const {callRequestCrawler} = require('./requestcrawler');
 
 const grpc = require('grpc');
 
@@ -44,7 +42,7 @@ async function startService(cfgfile) {
     },
     exportArticle: (call) => {
       if (!isValidToken(cfg, call.request.getToken())) {
-        console.log('invalid token.', call.request.getToken());
+        console.log('invalid token', call.request.getToken());
 
         call.end();
 
@@ -69,7 +67,22 @@ async function startService(cfgfile) {
         return;
       }
 
+      if (!cfg.dtconfig) {
+        callback(new Error('invalid dtconfig'), null);
+
+        return;
+      }
+
       callGetDTData(browser, cfg.dtconfig, call, callback);
+    },
+    requestCrawler: (call) => {
+      if (!isValidToken(cfg, call.request.getToken())) {
+        replyError(call, 'invalid token', call.request.getToken(), true);
+
+        return;
+      }
+
+      callRequestCrawler(browser, cfg, call);
     },
   });
 
@@ -77,9 +90,9 @@ async function startService(cfgfile) {
 
   server.start();
 
-//   server.tryShutdown(async () => {
-//     await browser.close();
-//   });
+  //   server.tryShutdown(async () => {
+  //     await browser.close();
+  //   });
 }
 
 exports.startService = startService;

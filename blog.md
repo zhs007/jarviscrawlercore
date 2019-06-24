@@ -1,5 +1,18 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-06-23
+
+关于爬虫，其实这次写这个项目，并不是希望把数据全拉下来（不现实也没啥必要）。  
+其实我只是想能有个更方便的查询方式而已。  
+目的是自动化，不是拿到全部。
+
+### 2019-06-22
+
+今天新开了``0.2``的分支，主要是下面几个结构调整：
+
+1. 命令行模式切换到具体模块内，这样 ``bin/jarviscrawler.js`` 代码结构会更清晰。
+2. ``service``模式下，增加统一的请求协议，统一来处理协议过长需要``stream``的情况。
+
 ### 2019-06-21
 
 crunchbase organization 页面的一点记录：
@@ -9,6 +22,15 @@ crunchbase organization 页面的一点记录：
 - 在 overview 和 IPO 分栏里， ``cb-text-color-medium field-label flex-100 flex-gt-sm-25 ng-star-inserted`` 是所有的小栏目，该节点的next是内容。
 - 剩下几个表格card里，``tr.ng-star-inserted``取到行。
 
+crunchbase login 页面的一点记录：
+- ``tag``为``mat-form-field``的是输入框，search也是一个输入框。
+- ``id``为``mat-input-1``是email，``mat-input-2``是密码。
+- ``.cb-text-transform-upper.mat-raised-button.mat-primary``这个是登录按钮。
+
+怎么判断``reCAPTCHA``？  
+crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，就会进入``reCAPTCHA``流程。  
+譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。  
+今天实现了这个，但有个小问题，再登录时，有可能点击登录按钮再跳转页面的时候出现``reCAPTCHA``。
 
 ### 2019-06-20
 

@@ -63,5 +63,6 @@ typings/
 cfg/dtconfluence.yaml
 cfg/service.yaml
 cfg/dt*bot.yaml
+cfg/crunchbase.yaml
 output
 output/*

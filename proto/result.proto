@@ -275,6 +275,49 @@ message ReplyDTData {
     DTTodayGameData todayGameData = 2;
 }
 
+// RequestCrunchBaseCompany - request a company infomation in crunchbase
+message RequestCrunchBaseCompany {
+    string search = 1;
+}
+
+// RequestCrawler - request crawler
+message RequestCrawler {
+    string token = 1;
+    string crawlerType = 2;
+
+    oneof crawlerParam {
+        RequestCrunchBaseCompany cbCompany = 100;
+    }
+}
+
+// ReplyCrawler - reply crawler
+message ReplyCrawler {
+    string error = 1;
+    string crawlerType = 2;
+
+    oneof crawlerResult {
+        CrunchBaseOrganization cbCompany = 100;
+    }
+}
+
+// ReplyCrawler - reply crawler
+message ReplyCrawlerStream {
+    // totalLength - If the message is too long, it will send data in multiple msg, this is the total length.
+    int32 totalLength = 1;
+    // curStart - The starting point of the current data (in bytes).
+    int32 curStart = 2;
+    // curLength - The length of the current data (in bytes).
+    int32 curLength = 3;
+    // hashData - This is the hash of each paragraph.
+    string hashData = 4;
+    // totalHashData - If multiple messages return data, this is the hash value of all data, only sent in the last message.
+    string totalHashData = 5;
+    // data
+    bytes data = 6;
+
+    string error = 100;
+}
+
 // JarvisCrawlerService - JarvisCrawler service
 service JarvisCrawlerService {
     // translate - translate text
@@ -286,4 +329,7 @@ service JarvisCrawlerService {
 
     // getDTData - get DT data
     rpc getDTData(RequestDTData) returns (ReplyDTData) {}    
+
+    // requestCrawler - request crawler
+    rpc requestCrawler(RequestCrawler) returns (stream ReplyCrawlerStream) {}
 }

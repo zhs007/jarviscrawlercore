@@ -26,6 +26,17 @@ function deserialize_jarviscrawlercore_ReplyArticles(buffer_arg) {
   return proto_result_pb.ReplyArticles.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_jarviscrawlercore_ReplyCrawlerStream(arg) {
+  if (!(arg instanceof proto_result_pb.ReplyCrawlerStream)) {
+    throw new Error('Expected argument of type jarviscrawlercore.ReplyCrawlerStream');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_jarviscrawlercore_ReplyCrawlerStream(buffer_arg) {
+  return proto_result_pb.ReplyCrawlerStream.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_jarviscrawlercore_ReplyDTData(arg) {
   if (!(arg instanceof proto_result_pb.ReplyDTData)) {
     throw new Error('Expected argument of type jarviscrawlercore.ReplyDTData');
@@ -68,6 +79,17 @@ function serialize_jarviscrawlercore_RequestArticles(arg) {
 
 function deserialize_jarviscrawlercore_RequestArticles(buffer_arg) {
   return proto_result_pb.RequestArticles.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_jarviscrawlercore_RequestCrawler(arg) {
+  if (!(arg instanceof proto_result_pb.RequestCrawler)) {
+    throw new Error('Expected argument of type jarviscrawlercore.RequestCrawler');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_jarviscrawlercore_RequestCrawler(buffer_arg) {
+  return proto_result_pb.RequestCrawler.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_jarviscrawlercore_RequestDTData(arg) {
@@ -142,6 +164,18 @@ var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
     requestDeserialize: deserialize_jarviscrawlercore_RequestDTData,
     responseSerialize: serialize_jarviscrawlercore_ReplyDTData,
     responseDeserialize: deserialize_jarviscrawlercore_ReplyDTData,
+  },
+  // requestCrawler - request crawler
+  requestCrawler: {
+    path: '/jarviscrawlercore.JarvisCrawlerService/requestCrawler',
+    requestStream: false,
+    responseStream: true,
+    requestType: proto_result_pb.RequestCrawler,
+    responseType: proto_result_pb.ReplyCrawlerStream,
+    requestSerialize: serialize_jarviscrawlercore_RequestCrawler,
+    requestDeserialize: deserialize_jarviscrawlercore_RequestCrawler,
+    responseSerialize: serialize_jarviscrawlercore_ReplyCrawlerStream,
+    responseDeserialize: deserialize_jarviscrawlercore_ReplyCrawlerStream,
   },
 };
 

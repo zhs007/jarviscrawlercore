@@ -3,5 +3,7 @@ headless: true
 
 # dtconfig: ./cfg/dtcfg.yaml
 
+# crunchbaseconfig: ./cfg/crunchbase.yaml
+
 clientToken:
   - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3

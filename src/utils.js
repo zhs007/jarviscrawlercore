@@ -348,6 +348,15 @@ function newDTTodayGameData(obj) {
   return result;
 }
 
+/**
+ * sleep
+ * @param {number} ms - ms
+ * @return {Promise} result -
+ */
+async function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -362,3 +371,4 @@ exports.attachJQuery = attachJQuery;
 exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;
 exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
+exports.sleep = sleep;

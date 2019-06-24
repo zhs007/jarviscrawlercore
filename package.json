@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.1.57",
+  "version": "0.2.6",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {

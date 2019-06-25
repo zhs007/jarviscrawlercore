@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const jarviscrawlercore = require('../proto/result_pb.js');
 const AdmZip = require('adm-zip');
@@ -10,10 +9,8 @@ const crypto = require('crypto');
  * @param {string} msg - message
  */
 function saveMessage(filename, msg) {
-  fs.writeFileSync(filename,
-      msg.serializeBinary());
+  fs.writeFileSync(filename, msg.serializeBinary());
 }
-
 
 /**
  * save protobuf message with zip
@@ -22,8 +19,7 @@ function saveMessage(filename, msg) {
  */
 function saveZipMessage(filename, msg) {
   const zip = new AdmZip();
-  zip.addFile('msg.pb',
-      msg.serializeBinary());
+  zip.addFile('msg.pb', msg.serializeBinary());
   zip.writeZip(filename);
 }
 
@@ -33,7 +29,10 @@ function saveZipMessage(filename, msg) {
  * @return {string} md5 - md5 string
  */
 function hashMD5(buf) {
-  return crypto.createHash('md5').update(buf).digest('hex');
+  return crypto
+      .createHash('md5')
+      .update(buf)
+      .digest('hex');
 }
 
 /**
@@ -247,7 +246,7 @@ function newArticleList(obj) {
  * @param {object} page - page
  */
 async function attachJQuery(page) {
-  const jquery = await page.evaluate(()=>{
+  const jquery = await page.evaluate(() => {
     return typeof $;
   });
 
@@ -259,10 +258,12 @@ async function attachJQuery(page) {
     // let isok = true;
 
     // do {
-    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'}).catch((err) => {
-      console.log('attachJQuery:addScriptTag', err);
-      // isok = false;
-    });
+    await page
+        .addScriptTag({path: './browser/jquery3.3.1.min.js'})
+        .catch((err) => {
+          console.log('attachJQuery:addScriptTag', err);
+        // isok = false;
+        });
     // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
@@ -285,9 +286,11 @@ async function attachJarvisCrawlerCore(page) {
     // isok = false;
   });
 
-  await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
-    console.log('attachJQuery:waitForFunction', err);
-  });
+  await page
+      .waitForFunction('typeof jarvisCrawlerCoreVer === "string"')
+      .catch((err) => {
+        console.log('attachJQuery:waitForFunction', err);
+      });
 }
 
 /**

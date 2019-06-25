@@ -7,9 +7,9 @@ const {amazoncn} = require('../src/amazon/amazon');
 const {kaola} = require('../src/kaola/kaola');
 const {yccompanies} = require('../src/yc/yccompanies');
 const {blobimg} = require('../src/playngo/blobimg');
-const {startService} = require('../src/service/service');
 const {getArticleList} = require('../src/articlelist/articlelist');
 const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
+const {serviceexec} = require('../src/service/exec');
 const {googletranslateexec} = require('../src/googletranslate/exec');
 const {crunchbaseexec} = require('../src/crunchbase/exec');
 const fs = require('fs');
@@ -164,33 +164,6 @@ program
 
       (async () => {
         await confluencebot(cfgfile, headless);
-      })().catch((err) => {
-        console.log('catch a err ', err);
-
-        if (headless) {
-          process.exit(-1);
-        }
-      });
-    });
-
-program
-    .command('startservice [cfgfile]')
-    .description('start a grpc service')
-    .action(function(cfgfile, options) {
-      console.log('version is ', VERSION);
-
-      if (!cfgfile) {
-        console.log(
-            'command wrong, please type ' + 'jarviscrawler startservice --help'
-        );
-
-        return;
-      }
-
-      console.log('cfgfile - ', cfgfile);
-
-      (async () => {
-        await startService(cfgfile);
       })().catch((err) => {
         console.log('catch a err ', err);
 
@@ -410,6 +383,7 @@ program
       });
     });
 
+serviceexec(program, VERSION);
 googletranslateexec(program, VERSION);
 crunchbaseexec(program, VERSION);
 

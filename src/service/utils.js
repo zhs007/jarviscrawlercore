@@ -20,4 +20,23 @@ function replyError(call, error, isend) {
   }
 }
 
+/**
+ * replyMsg
+ * @param {object} call - call
+ * @param {object} msg - ReplyCrawler
+ * @param {bool} isend - is end
+ */
+function replyMsg(call, msg, isend) {
+  const reply = new messages.ReplyCrawlerStream();
+
+  reply.setReplycrawler(msg);
+
+  call.write(reply);
+
+  if (isend) {
+    call.end();
+  }
+}
+
 exports.replyError = replyError;
+exports.replyMsg = replyMsg;

@@ -311,8 +311,7 @@ message RequestCrawler {
 
 // ReplyCrawler - reply crawler
 message ReplyCrawler {
-    string error = 1;
-    string crawlerType = 2;
+    string crawlerType = 1;
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;
@@ -336,6 +335,8 @@ message ReplyCrawlerStream {
     bytes data = 6;
 
     string error = 100;
+
+    ReplyCrawler replyCrawler = 200;
 }
 
 // JarvisCrawlerService - JarvisCrawler service

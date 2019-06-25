@@ -7447,8 +7447,7 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.toObject = function(opt_includeIn
  */
 proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
   var f, obj = {
-    error: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    crawlertype: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    crawlertype: jspb.Message.getFieldWithDefault(msg, 1, ""),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f)
   };
@@ -7488,10 +7487,6 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setError(value);
-      break;
-    case 2:
       var value = /** @type {string} */ (reader.readString());
       msg.setCrawlertype(value);
       break;
@@ -7534,17 +7529,10 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.serializeBinary = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getError();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
   f = message.getCrawlertype();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      1,
       f
     );
   }
@@ -7568,32 +7556,17 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional string error = 1;
+ * optional string crawlerType = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.ReplyCrawler.prototype.getError = function() {
+proto.jarviscrawlercore.ReplyCrawler.prototype.getCrawlertype = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.ReplyCrawler.prototype.setError = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string crawlerType = 2;
- * @return {string}
- */
-proto.jarviscrawlercore.ReplyCrawler.prototype.getCrawlertype = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
 proto.jarviscrawlercore.ReplyCrawler.prototype.setCrawlertype = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
@@ -7710,7 +7683,8 @@ proto.jarviscrawlercore.ReplyCrawlerStream.toObject = function(includeInstance, 
     hashdata: jspb.Message.getFieldWithDefault(msg, 4, ""),
     totalhashdata: jspb.Message.getFieldWithDefault(msg, 5, ""),
     data: msg.getData_asB64(),
-    error: jspb.Message.getFieldWithDefault(msg, 100, "")
+    error: jspb.Message.getFieldWithDefault(msg, 100, ""),
+    replycrawler: (f = msg.getReplycrawler()) && proto.jarviscrawlercore.ReplyCrawler.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7774,6 +7748,11 @@ proto.jarviscrawlercore.ReplyCrawlerStream.deserializeBinaryFromReader = functio
     case 100:
       var value = /** @type {string} */ (reader.readString());
       msg.setError(value);
+      break;
+    case 200:
+      var value = new proto.jarviscrawlercore.ReplyCrawler;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader);
+      msg.setReplycrawler(value);
       break;
     default:
       reader.skipField();
@@ -7851,6 +7830,14 @@ proto.jarviscrawlercore.ReplyCrawlerStream.serializeBinaryToWriter = function(me
     writer.writeString(
       100,
       f
+    );
+  }
+  f = message.getReplycrawler();
+  if (f != null) {
+    writer.writeMessage(
+      200,
+      f,
+      proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter
     );
   }
 };
@@ -7982,6 +7969,36 @@ proto.jarviscrawlercore.ReplyCrawlerStream.prototype.getError = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.ReplyCrawlerStream.prototype.setError = function(value) {
   jspb.Message.setProto3StringField(this, 100, value);
+};
+
+
+/**
+ * optional ReplyCrawler replyCrawler = 200;
+ * @return {?proto.jarviscrawlercore.ReplyCrawler}
+ */
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.getReplycrawler = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyCrawler} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyCrawler, 200));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyCrawler|undefined} value */
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.setReplycrawler = function(value) {
+  jspb.Message.setWrapperField(this, 200, value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.clearReplycrawler = function() {
+  this.setReplycrawler(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.hasReplycrawler = function() {
+  return jspb.Message.getField(this, 200) != null;
 };
 
 

@@ -1,4 +1,3 @@
-const messages = require('../../proto/result_pb');
 const {callSearchInCrunchBase} = require('./plugins/crunchbase');
 const {callTranslate} = require('./plugins/translate');
 

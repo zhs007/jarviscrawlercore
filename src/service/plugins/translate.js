@@ -23,7 +23,12 @@ function callTranslate(browser, cfg, call, param) {
           return;
         }
 
-        call.end();
+        const reply = new messages.ReplyCrawler();
+        const val = new messages.TranslateResult();
+        value.setText(ret.text);
+        reply.setTranslateresult(val);
+
+        replyMsg(call, reply, true);
       })
       .catch((err) => {
         replyError(call, err.toString(), true);

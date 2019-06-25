@@ -1,6 +1,6 @@
-const messages = require('../../proto/result_pb');
-const {searchInCrunchBase} = require('../crunchbase/service');
-const {replyError} = require('./utils');
+const messages = require('../../../proto/result_pb');
+const {searchInCrunchBase} = require('../../crunchbase/service');
+const {replyError} = require('../utils');
 
 /**
  * search in crunchbase

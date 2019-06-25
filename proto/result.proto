@@ -280,6 +280,24 @@ message RequestCrunchBaseCompany {
     string search = 1;
 }
 
+// RequestTranslate2 - request translate
+message RequestTranslate2 {
+    // text - source text
+    string text = 1;
+    // platform - it's like google
+    string platform = 2;
+    // srcLang - source language
+    string srcLang = 3;
+    // destLang - destination language
+    string destLang = 4;
+}
+
+// TranslateResult - reply translate
+message TranslateResult {
+    // text - destination text
+    string text = 1;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -287,6 +305,7 @@ message RequestCrawler {
 
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;
+        RequestTranslate2 translate2 = 101;
     }
 }
 
@@ -297,6 +316,7 @@ message ReplyCrawler {
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;
+        TranslateResult translateResult = 101;
     }
 }
 

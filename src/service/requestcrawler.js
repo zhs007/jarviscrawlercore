@@ -1,5 +1,6 @@
 const messages = require('../../proto/result_pb');
-const {callSearchInCrunchBase} = require('./crunchbase');
+const {callSearchInCrunchBase} = require('./plugins/crunchbase');
+const {callTranslate} = require('./plugins/translate');
 
 /**
  * get dt data
@@ -13,6 +14,10 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.hasCbcompany();
 
     callSearchInCrunchBase(browser, cfg, call, param);
+  } else if (crawlertype == 'translate') {
+    const param = call.request.hasTranslate2();
+
+    callTranslate(browser, cfg, call, param);
   }
 }
 

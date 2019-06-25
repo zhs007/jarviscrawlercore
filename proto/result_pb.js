@@ -40,6 +40,8 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TranslateResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.YCCompanies', null, global);
 
 /**
@@ -6735,6 +6737,371 @@ proto.jarviscrawlercore.RequestCrunchBaseCompany.prototype.setSearch = function(
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.RequestTranslate2 = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestTranslate2, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestTranslate2.displayName = 'proto.jarviscrawlercore.RequestTranslate2';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestTranslate2.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestTranslate2} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestTranslate2.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    text: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    platform: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    srclang: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    destlang: jspb.Message.getFieldWithDefault(msg, 4, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestTranslate2}
+ */
+proto.jarviscrawlercore.RequestTranslate2.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestTranslate2;
+  return proto.jarviscrawlercore.RequestTranslate2.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestTranslate2} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestTranslate2}
+ */
+proto.jarviscrawlercore.RequestTranslate2.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPlatform(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSrclang(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDestlang(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestTranslate2.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestTranslate2} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestTranslate2.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPlatform();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getSrclang();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getDestlang();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string text = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTranslate2.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string platform = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.getPlatform = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTranslate2.prototype.setPlatform = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string srcLang = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.getSrclang = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTranslate2.prototype.setSrclang = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string destLang = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTranslate2.prototype.getDestlang = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTranslate2.prototype.setDestlang = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.TranslateResult = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.TranslateResult, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TranslateResult.displayName = 'proto.jarviscrawlercore.TranslateResult';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TranslateResult.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TranslateResult.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TranslateResult} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TranslateResult.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    text: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TranslateResult}
+ */
+proto.jarviscrawlercore.TranslateResult.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TranslateResult;
+  return proto.jarviscrawlercore.TranslateResult.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TranslateResult} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TranslateResult}
+ */
+proto.jarviscrawlercore.TranslateResult.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TranslateResult.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TranslateResult.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TranslateResult} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TranslateResult.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string text = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TranslateResult.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TranslateResult.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestCrawler = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.RequestCrawler.oneofGroups_);
 };
@@ -6750,14 +7117,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   CRAWLERPARAM_NOT_SET: 0,
-  CBCOMPANY: 100
+  CBCOMPANY: 100,
+  TRANSLATE2: 101
 };
 
 /**
@@ -6798,7 +7166,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
   var f, obj = {
     token: jspb.Message.getFieldWithDefault(msg, 1, ""),
     crawlertype: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f)
+    cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f),
+    translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -6847,6 +7216,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.RequestCrunchBaseCompany;
       reader.readMessage(value,proto.jarviscrawlercore.RequestCrunchBaseCompany.deserializeBinaryFromReader);
       msg.setCbcompany(value);
+      break;
+    case 101:
+      var value = new proto.jarviscrawlercore.RequestTranslate2;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestTranslate2.deserializeBinaryFromReader);
+      msg.setTranslate2(value);
       break;
     default:
       reader.skipField();
@@ -6897,6 +7271,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       100,
       f,
       proto.jarviscrawlercore.RequestCrunchBaseCompany.serializeBinaryToWriter
+    );
+  }
+  f = message.getTranslate2();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.RequestTranslate2.serializeBinaryToWriter
     );
   }
 };
@@ -6962,6 +7344,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasCbcompany = function() {
 };
 
 
+/**
+ * optional RequestTranslate2 translate2 = 101;
+ * @return {?proto.jarviscrawlercore.RequestTranslate2}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getTranslate2 = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestTranslate2} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestTranslate2, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestTranslate2|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setTranslate2 = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearTranslate2 = function() {
+  this.setTranslate2(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasTranslate2 = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -6988,14 +7400,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   CRAWLERRESULT_NOT_SET: 0,
-  CBCOMPANY: 100
+  CBCOMPANY: 100,
+  TRANSLATERESULT: 101
 };
 
 /**
@@ -7036,7 +7449,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
   var f, obj = {
     error: jspb.Message.getFieldWithDefault(msg, 1, ""),
     crawlertype: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f)
+    cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
+    translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7085,6 +7499,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.CrunchBaseOrganization;
       reader.readMessage(value,proto.jarviscrawlercore.CrunchBaseOrganization.deserializeBinaryFromReader);
       msg.setCbcompany(value);
+      break;
+    case 101:
+      var value = new proto.jarviscrawlercore.TranslateResult;
+      reader.readMessage(value,proto.jarviscrawlercore.TranslateResult.deserializeBinaryFromReader);
+      msg.setTranslateresult(value);
       break;
     default:
       reader.skipField();
@@ -7135,6 +7554,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       100,
       f,
       proto.jarviscrawlercore.CrunchBaseOrganization.serializeBinaryToWriter
+    );
+  }
+  f = message.getTranslateresult();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.TranslateResult.serializeBinaryToWriter
     );
   }
 };
@@ -7197,6 +7624,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearCbcompany = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasCbcompany = function() {
   return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional TranslateResult translateResult = 101;
+ * @return {?proto.jarviscrawlercore.TranslateResult}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getTranslateresult = function() {
+  return /** @type{?proto.jarviscrawlercore.TranslateResult} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TranslateResult, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TranslateResult|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setTranslateresult = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearTranslateresult = function() {
+  this.setTranslateresult(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasTranslateresult = function() {
+  return jspb.Message.getField(this, 101) != null;
 };
 
 

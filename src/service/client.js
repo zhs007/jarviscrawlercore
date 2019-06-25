@@ -91,35 +91,6 @@ function startGetArticles(servAddr, website) {
   });
 }
 
-/**
- * startGetDTData
- * @param {string} servAddr - service addr
- * @param {string} mode - mode
- * @param {string} startTime - startTime
- * @param {string} endTime - endTime
- */
-function startGetDTData(servAddr, mode, startTime, endTime) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr,
-      grpc.credentials.createInsecure());
-
-  const request = new messages.RequestDTData();
-
-  request.setMode(mode);
-  request.setStarttime(startTime);
-  request.setEndtime(endTime);
-  request.setToken(TOKEN);
-
-  client.getDTData(request, function(err, response) {
-    if (err) {
-      console.log('err:', err);
-    }
-
-    if (response) {
-      console.log('result:', JSON.stringify(response.toObject()));
-    }
-  });
-}
-
 startTranslate('127.0.0.1:7051', 'en', 'zh-CN',
     '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.');
 
@@ -130,8 +101,5 @@ startGetArticles('127.0.0.1:7051', 'huxiu');
 startGetArticles('127.0.0.1:7051', 'lieyunwang');
 startGetArticles('127.0.0.1:7051', 'tmtpost');
 startGetArticles('127.0.0.1:7051', 'techcrunch');
-
-// startGetDTData('127.0.0.1:7051', 'gametodaydata', '', '');
-// startGetDTData('127.0.0.1:7051', 'gamedatareport', '2019-04-17', '2019-04-17');
 
 startArticle('127.0.0.1:7051', 'https://post.smzdm.com/p/alpzl63o/', true);

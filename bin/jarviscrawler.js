@@ -3,7 +3,7 @@ const {startBrowser} = require('../src/browser');
 const {exportArticle} = require('../src/exportarticle/exportarticle');
 const {tracing} = require('../src/tracing/tracing');
 const {confluencebot} = require('../src/confluencebot/confluencebot');
-const {googletranslate} = require('../src/googletranslate/googletranslate');
+const {googletranslateexec} = require('../src/googletranslate/exec');
 const {amazoncn} = require('../src/amazon/amazon');
 const {kaola} = require('../src/kaola/kaola');
 const {yccompanies} = require('../src/yc/yccompanies');
@@ -173,57 +173,57 @@ program
       });
     });
 
-program
-    .command('googletranslate [text]')
-    .description('google translate')
-    .option('-s, --srclang [language]', 'source language')
-    .option('-d, --destlang [language]', 'destination language')
-    .option('-h, --headless [isheadless]', 'headless mode')
-    .action(function(text, options) {
-      console.log('version is ', VERSION);
+// program
+//     .command('googletranslate [text]')
+//     .description('google translate')
+//     .option('-s, --srclang [language]', 'source language')
+//     .option('-d, --destlang [language]', 'destination language')
+//     .option('-h, --headless [isheadless]', 'headless mode')
+//     .action(function(text, options) {
+//       console.log('version is ', VERSION);
 
-      if (!text) {
-        console.log(
-            'command wrong, please type ' + 'jarviscrawler googletranslate --help'
-        );
+//       if (!text) {
+//         console.log(
+//             'command wrong, please type ' + 'jarviscrawler googletranslate --help'
+//         );
 
-        return;
-      }
+//         return;
+//       }
 
-      console.log('text - ', text);
+//       console.log('text - ', text);
 
-      if (!options.srclang) {
-        options.srclang = 'zh-CN';
-      }
+//       if (!options.srclang) {
+//         options.srclang = 'zh-CN';
+//       }
 
-      if (!options.destlang) {
-        options.destlang = 'en';
-      }
+//       if (!options.destlang) {
+//         options.destlang = 'en';
+//       }
 
-      const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+//       const headless = options.headless === 'true';
+//       console.log('headless - ', headless);
 
-      (async () => {
-        const browser = await startBrowser(headless);
+//       (async () => {
+//         const browser = await startBrowser(headless);
 
-        const desttext = await googletranslate(
-            browser,
-            text,
-            options.srclang,
-            options.destlang
-        );
+//         const desttext = await googletranslate(
+//             browser,
+//             text,
+//             options.srclang,
+//             options.destlang
+//         );
 
-        console.log(desttext);
+//         console.log(desttext);
 
-        await browser.close();
-      })().catch((err) => {
-        console.log('catch a err ', err);
+//         await browser.close();
+//       })().catch((err) => {
+//         console.log('catch a err ', err);
 
-        if (headless) {
-          process.exit(-1);
-        }
-      });
-    });
+//         if (headless) {
+//           process.exit(-1);
+//         }
+//       });
+//     });
 
 program
     .command('startservice [cfgfile]')
@@ -462,6 +462,7 @@ program
       });
     });
 
+googletranslateexec(program, VERSION);
 crunchbaseexec(program, VERSION);
 
 program.parse(process.argv);

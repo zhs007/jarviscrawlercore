@@ -11,7 +11,7 @@ const {googletranslate} = require('./googletranslate');
 async function translateInGoogle(browser, srctext, srclang, destlang) {
   let errstr = undefined;
 
-  const text = googletranslate(browser, srctext, srclang, destlang).catch(
+  const text = await googletranslate(browser, srctext, srclang, destlang).catch(
       (err) => {
         errstr = err.toString();
       }

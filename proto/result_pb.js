@@ -16,6 +16,7 @@ goog.exportSymbol('proto.jarviscrawlercore.ArticleList', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ConfluenceAllUpdates', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ConfluenceUpdateGrouping', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ConfluenceUpdateItem', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.CrawlerType', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseAcquisition', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseEmployee', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseFundingRound', null, global);
@@ -7165,7 +7166,7 @@ proto.jarviscrawlercore.RequestCrawler.prototype.toObject = function(opt_include
 proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg) {
   var f, obj = {
     token: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    crawlertype: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    crawlertype: jspb.Message.getFieldWithDefault(msg, 2, 0),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f),
     translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f)
   };
@@ -7209,7 +7210,7 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       msg.setToken(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.jarviscrawlercore.CrawlerType} */ (reader.readEnum());
       msg.setCrawlertype(value);
       break;
     case 100:
@@ -7259,8 +7260,8 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
     );
   }
   f = message.getCrawlertype();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       2,
       f
     );
@@ -7300,17 +7301,17 @@ proto.jarviscrawlercore.RequestCrawler.prototype.setToken = function(value) {
 
 
 /**
- * optional string crawlerType = 2;
- * @return {string}
+ * optional CrawlerType crawlerType = 2;
+ * @return {!proto.jarviscrawlercore.CrawlerType}
  */
 proto.jarviscrawlercore.RequestCrawler.prototype.getCrawlertype = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {!proto.jarviscrawlercore.CrawlerType} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
-/** @param {string} value */
+/** @param {!proto.jarviscrawlercore.CrawlerType} value */
 proto.jarviscrawlercore.RequestCrawler.prototype.setCrawlertype = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
+  jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -7447,7 +7448,7 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.toObject = function(opt_includeIn
  */
 proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
   var f, obj = {
-    crawlertype: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    crawlertype: jspb.Message.getFieldWithDefault(msg, 1, 0),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f)
   };
@@ -7487,7 +7488,7 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.jarviscrawlercore.CrawlerType} */ (reader.readEnum());
       msg.setCrawlertype(value);
       break;
     case 100:
@@ -7530,8 +7531,8 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.serializeBinary = function() {
 proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getCrawlertype();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       1,
       f
     );
@@ -7556,17 +7557,17 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional string crawlerType = 1;
- * @return {string}
+ * optional CrawlerType crawlerType = 1;
+ * @return {!proto.jarviscrawlercore.CrawlerType}
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.getCrawlertype = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+  return /** @type {!proto.jarviscrawlercore.CrawlerType} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {string} value */
+/** @param {!proto.jarviscrawlercore.CrawlerType} value */
 proto.jarviscrawlercore.ReplyCrawler.prototype.setCrawlertype = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -8012,6 +8013,14 @@ proto.jarviscrawlercore.ParagraphType = {
   PT_HEADLINE: 3,
   PT_POSTLIST: 4,
   PT_COMMENT: 5
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.CrawlerType = {
+  CT_TRANSLATE2: 0,
+  CT_CB_COMPANY: 1
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

@@ -280,6 +280,12 @@ message RequestCrunchBaseCompany {
     string search = 1;
 }
 
+// CrawlerType - crawler type
+enum CrawlerType {
+    CT_TRANSLATE2 = 0;
+    CT_CB_COMPANY = 1;
+}
+
 // RequestTranslate2 - request translate
 message RequestTranslate2 {
     // text - source text
@@ -301,7 +307,7 @@ message TranslateResult {
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
-    string crawlerType = 2;
+    CrawlerType crawlerType = 2;
 
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;
@@ -311,7 +317,7 @@ message RequestCrawler {
 
 // ReplyCrawler - reply crawler
 message ReplyCrawler {
-    string crawlerType = 1;
+    CrawlerType crawlerType = 1;
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;

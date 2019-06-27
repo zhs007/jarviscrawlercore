@@ -1,6 +1,6 @@
 const messages = require('../../../proto/result_pb');
 const {translateInGoogle} = require('../../googletranslate/service');
-const {replyError, replyMsg} = require('../utils');
+const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 
 /**
  * translate
@@ -26,9 +26,11 @@ function callTranslate(browser, cfg, call, param) {
         // console.log(ret);
 
         const reply = new messages.ReplyCrawler();
+
         const val = new messages.TranslateResult();
         val.setText(ret.text);
-        reply.setTranslateresult(val);
+
+        setReplyCrawler(reply, messages.CrawlerType.CT_TRANSLATE2, val);
 
         replyMsg(call, reply, true);
       })

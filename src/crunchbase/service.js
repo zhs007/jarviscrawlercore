@@ -21,7 +21,7 @@ async function searchInCrunchBase(browser, cfgfile, searchstr) {
 
   let errstr = undefined;
 
-  const ret = cbcompany(browser, searchstr).catch((err) => {
+  const ret = await cbcompany(browser, searchstr).catch((err) => {
     errstr = err.toString();
   });
 

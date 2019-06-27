@@ -125,6 +125,23 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
   });
 }
 
+/**
+ * setReplyCrawler
+ * @param {object} reply - reply
+ * @param {number} crawlerType - CrawlerType
+ * @param {object} val - value
+ */
+function setReplyCrawler(reply, crawlerType, val) {
+  if (crawlerType == messages.CrawlerType.CT_TRANSLATE2) {
+    reply.setTranslateresult(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_CB_COMPANY) {
+    reply.setCbcompany(val);
+    reply.setCrawlertype(crawlerType);
+  }
+}
+
 exports.replyError = replyError;
 exports.replyMsg = replyMsg;
 exports.requestCrawler = requestCrawler;
+exports.setReplyCrawler = setReplyCrawler;

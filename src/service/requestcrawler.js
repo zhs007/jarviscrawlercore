@@ -11,7 +11,7 @@ const {replyError} = require('./utils');
  */
 function callRequestCrawler(browser, cfg, call) {
   const crawlertype = call.request.getCrawlertype();
-  if (crawlertype == messages.CT_CB_COMPANY) {
+  if (crawlertype == messages.CrawlerType.CT_CB_COMPANY) {
     if (!call.request.hasCbcompany()) {
       replyError(call, 'no cbcompany');
 

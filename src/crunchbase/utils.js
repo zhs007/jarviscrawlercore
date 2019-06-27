@@ -14,7 +14,7 @@ async function reCAPTCHA(browser, page, url) {
   let ct = 0;
 
   page.on('framenavigated', (frame) => {
-    if (frame.name() == '') {
+    if (frame == page.mainFrame()) {
       if (frame.url() == url) {
         ++frametimes;
       }
@@ -23,7 +23,7 @@ async function reCAPTCHA(browser, page, url) {
         ct = new Date().getTime();
       }
 
-      console.log('framenavigated ' + frame.name() + ' ' + frame.url());
+      console.log('mainframenavigated ' + frame.name() + ' ' + frame.url());
     }
   });
 

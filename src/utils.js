@@ -1,5 +1,5 @@
 const fs = require('fs');
-const jarviscrawlercore = require('../proto/result_pb.js');
+const messages = require('../proto/result_pb');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
 
@@ -73,10 +73,10 @@ function getImageHashName(url, mapResponse) {
 /**
  * new Paragraph with object
  * @param {object} obj - Paragraph object
- * @return {jarviscrawlercore.Paragraph} paragraph - Paragraph
+ * @return {messages.Paragraph} paragraph - Paragraph
  */
 function newParagraph(obj) {
-  const result = new jarviscrawlercore.Paragraph();
+  const result = new messages.Paragraph();
 
   if (obj.pt) {
     result.setPt(obj.pt);
@@ -100,10 +100,10 @@ function newParagraph(obj) {
 /**
  * new ImageInfo with object
  * @param {object} obj - ImageInfo object
- * @return {jarviscrawlercore.ImageInfo} imginfo - ImageInfo
+ * @return {messages.ImageInfo} imginfo - ImageInfo
  */
 function newImageInfo(obj) {
-  const result = new jarviscrawlercore.ImageInfo();
+  const result = new messages.ImageInfo();
 
   if (obj.hashName) {
     result.setHashname(obj.hashName);
@@ -131,10 +131,10 @@ function newImageInfo(obj) {
 /**
  * new ExportArticleResult with object
  * @param {object} obj - ExportArticleResult object
- * @return {jarviscrawlercore.ExportArticleResult} ear - ExportArticleResult
+ * @return {messages.ExportArticleResult} ear - ExportArticleResult
  */
 function newExportArticleResult(obj) {
-  const result = new jarviscrawlercore.ExportArticleResult();
+  const result = new messages.ExportArticleResult();
 
   if (obj.title) {
     result.setTitle(obj.title);
@@ -188,10 +188,10 @@ function newExportArticleResult(obj) {
 /**
  * new Article with object
  * @param {object} obj - Article object
- * @return {jarviscrawlercore.Article} ear - Article
+ * @return {messages.Article} ear - Article
  */
 function newArticle(obj) {
-  const result = new jarviscrawlercore.Article();
+  const result = new messages.Article();
 
   if (obj.title) {
     result.setTitle(obj.title);
@@ -227,10 +227,10 @@ function newArticle(obj) {
 /**
  * new ArticleList with object
  * @param {object} obj - ArticleList object
- * @return {jarviscrawlercore.ArticleList} ear - ArticleList
+ * @return {messages.ArticleList} ear - ArticleList
  */
 function newArticleList(obj) {
-  const result = new jarviscrawlercore.ArticleList();
+  const result = new messages.ArticleList();
 
   if (obj.articles) {
     for (let i = 0; i < obj.articles.length; ++i) {
@@ -296,10 +296,10 @@ async function attachJarvisCrawlerCore(page) {
 /**
  * new DTBusinessGameReport with object
  * @param {object} obj - DTBusinessGameReport object
- * @return {jarviscrawlercore.DTBusinessGameReport} result - DTBusinessGameReport
+ * @return {messages.DTBusinessGameReport} result - DTBusinessGameReport
  */
 function newDTBusinessGameReport(obj) {
-  const result = new jarviscrawlercore.DTBusinessGameReport();
+  const result = new messages.DTBusinessGameReport();
 
   if (obj.businessid) {
     result.setBusinessid(obj.businessid);
@@ -331,10 +331,10 @@ function newDTBusinessGameReport(obj) {
 /**
  * new DTTodayGameData with object
  * @param {object} obj - DTTodayGameData object
- * @return {jarviscrawlercore.DTTodayGameData} result - DTTodayGameData
+ * @return {messages.DTTodayGameData} result - DTTodayGameData
  */
 function newDTTodayGameData(obj) {
-  const result = new jarviscrawlercore.DTTodayGameData();
+  const result = new messages.DTTodayGameData();
 
   if (obj.totalWin) {
     result.setTotalwin(obj.totalWin);
@@ -346,6 +346,77 @@ function newDTTodayGameData(obj) {
 
   if (obj.gameNums) {
     result.setGamenums(obj.gameNums);
+  }
+
+  return result;
+}
+
+/**
+ * new CrunchBaseOrganization with object
+ * @param {object} obj - CrunchBaseOrganization object
+ * @return {messages.CrunchBaseOrganization} result - CrunchBaseOrganization
+ */
+function newCrunchBaseOrganization(obj) {
+  const result = new messages.CrunchBaseOrganization();
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.code) {
+    result.setCode(obj.code);
+  }
+
+  if (Array.isArray(obj.categories)) {
+    result.setCategoriesList(obj.categories);
+  }
+
+  if (Array.isArray(obj.headquartersRegions)) {
+    result.setHeadquartersregionsList(obj.headquartersRegions);
+  }
+
+  if (obj.foundeddate) {
+    result.setFoundeddate(obj.foundeddate);
+  }
+
+  if (Array.isArray(obj.founders)) {
+    result.setFoundersList(obj.founders);
+  }
+
+  if (obj.operatingstatus) {
+    result.setOperatingstatus(obj.operatingstatus);
+  }
+
+  if (obj.fundingstatus) {
+    result.setFundingstatus(obj.fundingstatus);
+  }
+
+  if (obj.lastfundingtype) {
+    result.setLastfundingtype(obj.lastfundingtype);
+  }
+
+  if (obj.legalname) {
+    result.setLegalname(obj.legalname);
+  }
+
+  if (obj.stocksymbol) {
+    result.setStocksymbol(obj.stocksymbol);
+  }
+
+  if (obj.valuationipo) {
+    result.setValuationipo(obj.valuationipo);
+  }
+
+  if (obj.priceipo) {
+    result.setPriceipo(obj.priceipo);
+  }
+
+  if (obj.dateipo) {
+    result.setDateipo(obj.dateipo);
+  }
+
+  if (obj.moneyraisedipo) {
+    result.setMoneyraisedipo(obj.moneyraisedipo);
   }
 
   return result;
@@ -374,4 +445,5 @@ exports.attachJQuery = attachJQuery;
 exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;
 exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
+exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.sleep = sleep;

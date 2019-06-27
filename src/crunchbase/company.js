@@ -191,6 +191,8 @@ async function cbcompany(browser, company) {
   cbobj.code = company;
 
   console.log(cbobj);
+
+  return cbobj;
 }
 
 exports.cbcompany = cbcompany;

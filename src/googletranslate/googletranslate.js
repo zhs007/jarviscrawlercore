@@ -24,8 +24,12 @@ async function googletranslate(browser, srctext, srclang, destlang) {
 
   // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   await attachJQuery(page);
-  await page.waitForSelector('.tlid-input.input');
-  await page.type('.tlid-input.input', srctext);
+  await page.waitForSelector('.tlid-input.input').catch((err) => {
+    console.log('googletranslate.waitForSelector', err);
+  });
+  await page.type('.tlid-input.input', srctext).catch((err) => {
+    console.log('googletranslate.type', err);
+  });
 
   await page
       .waitForFunction(

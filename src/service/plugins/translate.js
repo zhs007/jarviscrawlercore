@@ -10,6 +10,19 @@ const {replyError, replyMsg, setReplyCrawler} = require('../utils');
  * @param {object} param - RequestTranslate2
  */
 function callTranslate(browser, cfg, call, param) {
+  if (param.getText() == '') {
+    const reply = new messages.ReplyCrawler();
+
+    const val = new messages.TranslateResult();
+    val.setText(ret.text);
+
+    setReplyCrawler(reply, messages.CrawlerType.CT_TRANSLATE2, val);
+
+    replyMsg(call, reply, true);
+
+    return;
+  }
+
   translateInGoogle(
       browser,
       param.getText(),

@@ -232,7 +232,7 @@ function newArticle(obj) {
 function newArticleList(obj) {
   const result = new messages.ArticleList();
 
-  if (obj.articles) {
+  if (Array.isArray(obj.articles)) {
     for (let i = 0; i < obj.articles.length; ++i) {
       result.addArticles(newArticle(obj.articles[i]), i);
     }
@@ -419,6 +419,68 @@ function newCrunchBaseOrganization(obj) {
     result.setMoneyraisedipo(obj.moneyraisedipo);
   }
 
+  if (Array.isArray(obj.fundingrounds)) {
+    for (let i = 0; i < obj.fundingrounds.length; ++i) {
+      result.addFundingrounds(
+          newCrunchBaseFundingRound(obj.fundingrounds[i]),
+          i
+      );
+    }
+    // result.setFoundersList(obj.fundingrounds);
+  }
+
+  return result;
+}
+
+/**
+ * new CrunchBaseFundingRound with object
+ * @param {object} obj - CrunchBaseFundingRound object
+ * @return {messages.CrunchBaseFundingRound} result - CrunchBaseFundingRound
+ */
+function newCrunchBaseFundingRound(obj) {
+  const result = new messages.CrunchBaseFundingRound();
+
+  if (obj.announceddate) {
+    result.setAnnounceddate(obj.announceddate);
+  }
+
+  if (obj.transactionname) {
+    result.setTransactionname(obj.transactionname);
+  }
+
+  if (obj.moneyraised) {
+    result.setMoneyraised(obj.moneyraised);
+  }
+
+  if (Array.isArray(obj.investors)) {
+    for (let i = 0; i < obj.investors.length; ++i) {
+      result.addInvestors(newCrunchBaseInvestor(obj.investors[i]), i);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * new CrunchBaseInvestor with object
+ * @param {object} obj - CrunchBaseInvestor object
+ * @return {messages.CrunchBaseInvestor} result - CrunchBaseInvestor
+ */
+function newCrunchBaseInvestor(obj) {
+  const result = new messages.CrunchBaseInvestor();
+
+  if (obj.investorname) {
+    result.setInvestorname(obj.investorname);
+  }
+
+  if (obj.leadinvestor) {
+    result.setLeadinvestor(obj.leadinvestor);
+  }
+
+  if (Array.isArray(obj.partners)) {
+    result.setPartnersList(obj.partners);
+  }
+
   return result;
 }
 
@@ -446,4 +508,6 @@ exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;
 exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
+exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
+exports.newCrunchBaseInvestor = newCrunchBaseInvestor;
 exports.sleep = sleep;

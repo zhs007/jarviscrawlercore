@@ -41,9 +41,42 @@ function startTranslate2(servAddr, srclang, destlang, text) {
   );
 }
 
+/**
+ * getCrunchBaseCompany
+ * @param {string} servAddr - service addr
+ * @param {string} company - company code
+ */
+function getCrunchBaseCompany(servAddr, company) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestCrunchBaseCompany();
+  request.setSearch(company);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_CB_COMPANY,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('text:', reply);
+        }
+      }
+  );
+}
+
 startTranslate2(
     '127.0.0.1:7051',
     'en',
     'zh-CN',
     '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.'
 );
+
+getCrunchBaseCompany('127.0.0.1:7051', 'slack');

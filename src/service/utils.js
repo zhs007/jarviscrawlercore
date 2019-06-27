@@ -58,6 +58,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
 
   if (crawlerType == messages.CrawlerType.CT_TRANSLATE2) {
     req.setTranslate2(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_CB_COMPANY) {
+    req.setCbcompany(msg);
   }
 
   let isend = false;
@@ -98,6 +100,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         }
 
         cb(undefined, reply.getTranslateresult());
+
+        isend = true;
+
+        return;
+      } else if (crawlerType == messages.CrawlerType.CT_CB_COMPANY) {
+        if (!reply.getCbcompany()) {
+          cb('no crunchbase company');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getCbcompany());
 
         isend = true;
 

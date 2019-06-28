@@ -1,4 +1,4 @@
-const {reCAPTCHA} = require('./utils');
+const {reCAPTCHA, procCAPTCHA} = require('./utils');
 
 /**
  * cbcompany
@@ -56,6 +56,14 @@ async function cbcompany(browser, company) {
 
   console.log('cbcompany.reCAPTCHA ' + recaptcha);
 
+  if (recaptcha) {
+    // await procCAPTCHA(
+    //     browser,
+    //     page,
+    //     'https://www.crunchbase.com/organization/' + company
+    // );
+  }
+
   // await page
   //     .goto('https://www.crunchbase.com/organization/' + company, {
   //       waitUntil: 'domcontentloaded',
@@ -66,6 +74,33 @@ async function cbcompany(browser, company) {
   //     });
 
   console.log('haha');
+
+  let x = 10;
+  const y = 50;
+  while (true) {
+    // console.log(x);
+
+    await page.mouse.move(330, 50);
+    // await page.mouse.down();
+    // await page.waitFor(3 * 1000);
+    // await page.mouse.up();
+
+    // await page.mouse.click(x, y);
+
+    x += 10;
+
+    // await page.mouse.up();
+
+    if (x > 500) {
+      x = 10;
+    }
+
+    await page.waitFor(3 * 1000);
+
+    await page.mouse.move(475, 551);
+
+    await page.waitFor(3 * 1000);
+  }
 
   const cbobj = await page
       .$$eval('.layout-row.section-header.ng-star-inserted', (objs) => {

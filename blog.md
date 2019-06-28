@@ -32,6 +32,10 @@ crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，�
 譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。  
 今天实现了这个，但有个小问题，再登录时，有可能点击登录按钮再跳转页面的时候出现``reCAPTCHA``。
 
+处理``captcha``  
+通过``#px-captcha``得到区域，然后模拟鼠标操作。  
+鼠标操作有问题，如果页面比较大，不能直接用mouse来操作，而应该自己发送event，因为client坐标需要写对。
+
 ### 2019-06-20
 
 这个可以通过crunchbase查询公司情况，这个接口是查询公司的，可以根据常规的名字查到公司代码。

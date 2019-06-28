@@ -31,6 +31,7 @@ async function reCAPTCHA(browser, page, url) {
     ++domcontentloadedtimes;
     console.log('domcontentloaded ' + domcontentloadedtimes);
   });
+
   page.on('response', async (response) => {
     if (response.url() == url) {
       ++urlresponse;
@@ -42,6 +43,7 @@ async function reCAPTCHA(browser, page, url) {
       console.log('response ' + urlresponse + ' ' + url403);
     }
   });
+
   // page.on('request', async (request) => {
   //   if (request.url() == url) {
   //     console.log('request ' + url);
@@ -53,7 +55,9 @@ async function reCAPTCHA(browser, page, url) {
   });
 
   while (true) {
-    await sleep(100);
+    if (urlresponse == 1 && url403) {
+      break;
+    }
 
     if (urlresponse == 2 && domcontentloadedtimes == 2) {
       break;
@@ -67,9 +71,41 @@ async function reCAPTCHA(browser, page, url) {
         }
       }
     }
+
+    await sleep(100);
   }
 
   return url403;
 }
 
+/**
+ * procCAPTCHA
+ * @param {object} browser - browser
+ * @param {object} page - page
+ * @param {string} url - url
+ */
+async function procCAPTCHA(browser, page, url) {
+  console.log(page.frames()[0].childFrames().length);
+
+  const pos = await page.$eval('#px-captcha', (ele) => {
+    return {
+      x: ele.offsetLeft + ele.offsetWidth / 2,
+      y: ele.offsetTop + ele.offsetHeight,
+    };
+  });
+
+  console.log(pos);
+
+  const elementHandle = await page.$('iframe');
+  const frame = await elementHandle.contentFrame();
+
+  await page.mouse.move(pos.x, pos.y);
+  await page.mouse.down();
+
+  await sleep(10 * 1000);
+
+  await page.mouse.up();
+}
+
 exports.reCAPTCHA = reCAPTCHA;
+exports.procCAPTCHA = procCAPTCHA;

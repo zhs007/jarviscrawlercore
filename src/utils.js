@@ -502,22 +502,24 @@ async function sleep(ms) {
  * @param {number} cy - client y
  */
 async function mouseMove(page, x, y, cx, cy) {
-  await page.evaluate(
-      (param) => {
-        console.log(param);
+  await page
+      .evaluate(
+          (param) => {
+            console.log(param);
 
-        const e = new MouseEvent('mousemove', {
-          screenX: param.x,
-          screenY: param.y,
-          clientX: param.cx,
-          clientY: param.cy,
-        });
-        document.body.dispatchEvent(e);
-      },
-      {x: x, y: y, cx: cx, cy: cy}
-  ).catch((err) => {
-    console.log('mouseMove ' + err);
-  });
+            const e = new MouseEvent('mousemove', {
+              screenX: param.x,
+              screenY: param.y,
+              clientX: param.cx,
+              clientY: param.cy,
+            });
+            document.body.dispatchEvent(e);
+          },
+          {x: x, y: y, cx: cx, cy: cy}
+      )
+      .catch((err) => {
+        console.log('mouseMove ' + err);
+      });
 }
 
 /**
@@ -533,7 +535,10 @@ async function mouseMoveToEle(page, selector) {
   if (ele) {
     const bbox = await ele.boundingBox();
     console.log(bbox);
-    await page.mouse.move(bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
+    await page.mouse.move(
+        Math.floor(bbox.x + bbox.width / 2),
+        Math.floor(bbox.y + bbox.height / 2)
+    );
   }
 }
 
@@ -550,11 +555,141 @@ async function mouseMoveToEleEx(page, selector, isThis) {
 
   for (let i = 0; i < eles.length; ++i) {
     if (await isThis(eles[i])) {
-      const bbox = await ele.boundingBox();
+      const bbox = await eles[i].boundingBox();
       console.log(bbox);
-      await page.mouse.move(bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
+      await page.mouse.move(
+          Math.floor(bbox.x + bbox.width / 2),
+          Math.floor(bbox.y + bbox.height / 2)
+      );
 
       return;
+    }
+  }
+}
+
+/**
+ * mouseMoveToFrameEleEx
+ * @param {object} page - page
+ * @param {string} selector - selector
+ * @param {function} isFrame - async function (Frame) bool
+ * @param {function} isThis - async function (ElementHandle) bool
+ */
+async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
+  const lstFrames = await page.frames();
+
+  for (let i = 0; i < lstFrames.length; ++i) {
+    const frame = lstFrames[i];
+    if (isFrame(frame)) {
+      const eles = await frame.$$(selector).catch((err) => {
+        console.log('mouseMoveToFrameEleEx:$$(' + selector + ') ' + err);
+      });
+
+      for (let j = 0; j < eles.length; ++j) {
+        if (await isThis(eles[j])) {
+          const bbox = await eles[j].boundingBox();
+          console.log(bbox);
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
+
+          return;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * mouseClickEle
+ * @param {object} page - page
+ * @param {string} selector - selector
+ */
+async function mouseClickEle(page, selector) {
+  const ele = await page.$(selector).catch((err) => {
+    console.log('mouseClickEle ' + err);
+  });
+
+  if (ele) {
+    const bbox = await ele.boundingBox();
+    console.log(bbox);
+    await page.mouse.move(
+        Math.floor(bbox.x + bbox.width / 2),
+        Math.floor(bbox.y + bbox.height / 2)
+    );
+    await page.mouse.down();
+    await page.mouse.up();
+  }
+}
+
+/**
+ * mouseClickFrameEleEx
+ * @param {object} page - page
+ * @param {string} selector - selector
+ * @param {function} isFrame - async function (Frame) bool
+ * @param {function} isThis - async function (ElementHandle) bool
+ */
+async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
+  const lstFrames = await page.frames();
+
+  for (let i = 0; i < lstFrames.length; ++i) {
+    const frame = lstFrames[i];
+    if (isFrame(frame)) {
+      const eles = await frame.$$(selector).catch((err) => {
+        console.log('mouseClickFrameEleEx:$$(' + selector + ') ' + err);
+      });
+
+      for (let j = 0; j < eles.length; ++j) {
+        if (await isThis(eles[j])) {
+          const bbox = await eles[j].boundingBox();
+          console.log(bbox);
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
+          await page.mouse.down();
+          await page.mouse.up();
+
+          return;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * mouseHoldFrameEleEx
+ * @param {object} page - page
+ * @param {string} selector - selector
+ * @param {function} isFrame - async function (Frame) bool
+ * @param {function} isThis - async function (ElementHandle) bool
+ * @param {number} timeHold - time to hold
+ */
+async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
+  const lstFrames = await page.frames();
+
+  for (let i = 0; i < lstFrames.length; ++i) {
+    const frame = lstFrames[i];
+    if (isFrame(frame)) {
+      const eles = await frame.$$(selector).catch((err) => {
+        console.log('mouseHoldFrameEleEx:$$(' + selector + ') ' + err);
+      });
+
+      for (let j = 0; j < eles.length; ++j) {
+        if (await isThis(eles[j])) {
+          const bbox = await eles[j].boundingBox();
+          console.log(bbox);
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
+          await page.mouse.down();
+          await sleep(timeHold);
+          await page.mouse.up();
+
+          return;
+        }
+      }
     }
   }
 }
@@ -579,4 +714,8 @@ exports.newCrunchBaseInvestor = newCrunchBaseInvestor;
 exports.mouseMove = mouseMove;
 exports.mouseMoveToEle = mouseMoveToEle;
 exports.mouseMoveToEleEx = mouseMoveToEleEx;
+exports.mouseMoveToFrameEleEx = mouseMoveToFrameEleEx;
+exports.mouseClickEle = mouseClickEle;
+exports.mouseClickFrameEleEx = mouseClickFrameEleEx;
+exports.mouseHoldFrameEleEx = mouseHoldFrameEleEx;
 exports.sleep = sleep;

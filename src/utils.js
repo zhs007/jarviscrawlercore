@@ -668,6 +668,8 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
 async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
   const lstFrames = await page.frames();
 
+  console.log('mouseHoldFrameEleEx ' + lstFrames.length);
+
   for (let i = 0; i < lstFrames.length; ++i) {
     const frame = lstFrames[i];
     if (isFrame(frame)) {

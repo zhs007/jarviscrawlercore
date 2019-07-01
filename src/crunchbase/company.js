@@ -7,6 +7,7 @@ const {
   mouseMoveToFrameEleEx,
   mouseClickFrameEleEx,
   mouseHoldFrameEleEx,
+  sleep,
 } = require('../utils');
 
 /**
@@ -66,11 +67,13 @@ async function cbcompany(browser, company) {
   console.log('cbcompany.reCAPTCHA ' + recaptcha);
 
   if (recaptcha) {
-    // await procCAPTCHA(
-    //     browser,
-    //     page,
-    //     'https://www.crunchbase.com/organization/' + company
-    // );
+    await sleep(10 * 1000);
+
+    await procCAPTCHA(
+        browser,
+        page,
+        'https://www.crunchbase.com/organization/' + company
+    );
   }
 
   // await page

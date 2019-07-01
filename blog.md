@@ -34,7 +34,8 @@ crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，�
 
 处理``captcha``  
 通过``#px-captcha``得到区域，然后模拟鼠标操作。  
-鼠标操作有问题，如果页面比较大，不能直接用mouse来操作，而应该自己发送event，因为client坐标需要写对。
+鼠标操作有问题，如果页面比较大，不能直接用mouse来操作，而应该自己发送event，因为client坐标需要写对。  
+在控制台，这个指令可以查看``event``，``monitorEvents(document.body, "click");``。
 
 ### 2019-06-20
 

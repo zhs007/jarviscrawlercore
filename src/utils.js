@@ -493,6 +493,72 @@ async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/**
+ * mouseMove
+ * @param {object} page - page
+ * @param {number} x - screen x
+ * @param {number} y - screen y
+ * @param {number} cx - client x
+ * @param {number} cy - client y
+ */
+async function mouseMove(page, x, y, cx, cy) {
+  await page.evaluate(
+      (param) => {
+        console.log(param);
+
+        const e = new MouseEvent('mousemove', {
+          screenX: param.x,
+          screenY: param.y,
+          clientX: param.cx,
+          clientY: param.cy,
+        });
+        document.body.dispatchEvent(e);
+      },
+      {x: x, y: y, cx: cx, cy: cy}
+  ).catch((err) => {
+    console.log('mouseMove ' + err);
+  });
+}
+
+/**
+ * mouseMoveToEle
+ * @param {object} page - page
+ * @param {string} selector - selector
+ */
+async function mouseMoveToEle(page, selector) {
+  const ele = await page.$(selector).catch((err) => {
+    console.log('mouseMoveToEle ' + err);
+  });
+
+  if (ele) {
+    const bbox = await ele.boundingBox();
+    console.log(bbox);
+    await page.mouse.move(bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
+  }
+}
+
+/**
+ * mouseMoveToEleEx
+ * @param {object} page - page
+ * @param {string} selector - selector
+ * @param {function} isThis - async function (ElementHandle) bool
+ */
+async function mouseMoveToEleEx(page, selector, isThis) {
+  const eles = await page.$$(selector).catch((err) => {
+    console.log('mouseMoveToEleEx ' + err);
+  });
+
+  for (let i = 0; i < eles.length; ++i) {
+    if (await isThis(eles[i])) {
+      const bbox = await ele.boundingBox();
+      console.log(bbox);
+      await page.mouse.move(bbox.x + bbox.width / 2, bbox.y + bbox.height / 2);
+
+      return;
+    }
+  }
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -510,4 +576,7 @@ exports.newDTTodayGameData = newDTTodayGameData;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
 exports.newCrunchBaseInvestor = newCrunchBaseInvestor;
+exports.mouseMove = mouseMove;
+exports.mouseMoveToEle = mouseMoveToEle;
+exports.mouseMoveToEleEx = mouseMoveToEleEx;
 exports.sleep = sleep;

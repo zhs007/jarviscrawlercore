@@ -1,6 +1,7 @@
-const messages = require('../../proto/result_pb');
-const {searchInCrunchBase} = require('../crunchbase/service');
-const {replyError} = require('./utils');
+const messages = require('../../../proto/result_pb');
+const {searchInCrunchBase} = require('../../crunchbase/service');
+const {replyError, replyMsg, setReplyCrawler} = require('../utils');
+const {newCrunchBaseOrganization} = require('../../utils');
 
 /**
  * search in crunchbase
@@ -18,13 +19,22 @@ function callSearchInCrunchBase(browser, cfg, call, param) {
 
   searchInCrunchBase(browser, cfg.crunchbaseconfig, param.getSearch())
       .then((ret) => {
+        console.log(ret);
+
         if (ret.error) {
           replyError(call, ret.error, true);
 
           return;
         }
 
-        call.end();
+        if (ret.company) {
+          const reply = new messages.ReplyCrawler();
+
+          const val = newCrunchBaseOrganization(ret.company);
+          setReplyCrawler(reply, messages.CrawlerType.CT_CB_COMPANY, val);
+
+          replyMsg(call, reply, true);
+        }
       })
       .catch((err) => {
         replyError(call, err.toString(), true);

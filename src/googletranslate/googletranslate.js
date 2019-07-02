@@ -10,25 +10,33 @@ const {attachJQuery} = require('../utils');
  */
 async function googletranslate(browser, srctext, srclang, destlang) {
   const page = await browser.newPage();
-  await page.goto(
-      'https://translate.google.cn/#view=home&op=translate&sl=' +
-      srclang +
-      '&tl=' +
-      destlang +
-      '&text='
-  );
+  await page
+      .goto(
+          'https://translate.google.cn/#view=home&op=translate&sl=' +
+        srclang +
+        '&tl=' +
+        destlang +
+        '&text='
+      )
+      .catch((err) => {
+        console.log('googletranslate.goto', err);
+      });
 
   // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   await attachJQuery(page);
-  await page.waitForSelector('.tlid-input.input');
-  await page.type('.tlid-input.input', srctext);
+  await page.waitForSelector('.tlid-input.input').catch((err) => {
+    console.log('googletranslate.waitForSelector', err);
+  });
+  await page.type('.tlid-input.input', srctext).catch((err) => {
+    console.log('googletranslate.type', err);
+  });
 
   await page
       .waitForFunction(
           '$(\'.tlid-translation.translation\').length > 0 && $(\'.tlid-translation.translation\')[0].innerText != \'\''
       )
       .catch((err) => {
-        console.log('zhihu.article.formatArticle', err);
+        console.log('googletranslate.waitForFunction', err);
       });
   //   await page.waitForSelector('.tlid-results-container.results-container');
   const desttext = await page

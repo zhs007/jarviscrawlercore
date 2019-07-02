@@ -1,4 +1,14 @@
-const {reCAPTCHA} = require('./utils');
+const {reCAPTCHA, procCAPTCHA} = require('./utils');
+const {
+  mouseMove,
+  mouseMoveToEle,
+  mouseMoveToEleEx,
+  mouseClickEle,
+  mouseMoveToFrameEleEx,
+  mouseClickFrameEleEx,
+  mouseHoldFrameEleEx,
+  sleep,
+} = require('../utils');
 
 /**
  * cbcompany
@@ -56,6 +66,16 @@ async function cbcompany(browser, company) {
 
   console.log('cbcompany.reCAPTCHA ' + recaptcha);
 
+  if (recaptcha) {
+    await sleep(10 * 1000);
+
+    await procCAPTCHA(
+        browser,
+        page,
+        'https://www.crunchbase.com/organization/' + company
+    );
+  }
+
   // await page
   //     .goto('https://www.crunchbase.com/organization/' + company, {
   //       waitUntil: 'domcontentloaded',
@@ -66,6 +86,123 @@ async function cbcompany(browser, company) {
   //     });
 
   console.log('haha');
+
+  let x = 10;
+  const y = 50;
+  while (true) {
+    // console.log(x);
+
+    // await mouseMove(page, 330, 50, 330, 50);
+    // await page.mouse.move(330, 50);
+    await mouseMoveToEle(page, '.mat-button.ng-star-inserted');
+
+    // await page.mouse.down();
+    // await page.waitFor(3 * 1000);
+    // await page.mouse.up();
+
+    // await page.mouse.click(x, y);
+
+    x += 10;
+
+    // await page.mouse.up();
+
+    if (x > 500) {
+      x = 10;
+    }
+
+    await page.waitFor(3 * 1000);
+
+    // await page.mouse.move(472, 568 - 196);
+    await mouseMoveToEle(
+        page,
+        '.cb-link.component--field-formatter.field-type-integer.ng-star-inserted'
+    );
+
+    await page.waitFor(3 * 1000);
+
+    // await mouseClickEle(
+    //     page,
+    //     '.cb-link.component--field-formatter.field-type-integer.ng-star-inserted'
+    // );
+
+    // await page.waitFor(3 * 1000);
+
+    await mouseHoldFrameEleEx(
+        page,
+        'a',
+        async (frame) => {
+          if (frame.url().indexOf('tradingview.com') > 0) {
+            return true;
+          }
+
+          return false;
+        },
+        async (ele) => {
+          const jshref = await ele.getProperty('href');
+          const href = await jshref.toString();
+          // console.log(href);
+
+          if (href && href.indexOf('tradingview.com/') > 0) {
+            return true;
+          }
+
+          return false;
+        },
+        3 * 1000
+    );
+
+    // const frames = await page.frames();
+    // for (let i = 0; i < frames.length; ++i) {
+    //   if (frames[i].url().indexOf('tradingview.com') > 0) {
+    //     console.log(frames[i].url());
+
+    //     const lsta = await frames[i].$$('a');
+    //     console.log(lsta.length);
+    //     for (let j = 0; j < lsta.length; ++j) {
+    //       const ele = lsta[j];
+    //       const jshref = await ele.getProperty('href');
+    //       const href = await jshref.toString();
+    //       console.log(href);
+
+    //       if (href && href.indexOf('tradingview.com/') > 0) {
+    //         const bbox = await ele.boundingBox();
+    //         console.log(bbox);
+    //         await page.mouse.move(
+    //             bbox.x + bbox.width / 2,
+    //             bbox.y + bbox.height / 2
+    //         );
+
+    //         await page.waitFor(1000);
+    //         await page.mouse.click(
+    //             bbox.x + bbox.width / 2,
+    //             bbox.y + bbox.height / 2
+    //         );
+    //         // await page.mouse.down();
+    //         // await page.waitFor(1000);
+    //         // await page.mouse.up();
+
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
+
+    // await mouseMoveToEleEx(page, 'a', async (ele) => {
+    //   const jshref = await ele.getProperty('href');
+    //   const href = await jshref.toString();
+    //   console.log(href);
+
+    //   if (href && href.indexOf('tradingview.com/') > 0) {
+    //     return true;
+    //   }
+
+    //   return false;
+    // });
+
+    await page.waitFor(3 * 1000);
+
+    // break;
+  }
 
   const cbobj = await page
       .$$eval('.layout-row.section-header.ng-star-inserted', (objs) => {
@@ -191,6 +328,8 @@ async function cbcompany(browser, company) {
   cbobj.code = company;
 
   console.log(cbobj);
+
+  return cbobj;
 }
 
 exports.cbcompany = cbcompany;

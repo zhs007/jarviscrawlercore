@@ -3,8 +3,8 @@
 ### 2019-06-23
 
 关于爬虫，其实这次写这个项目，并不是希望把数据全拉下来（不现实也没啥必要）。  
-其实我只是想能有个更方便的查询方式而已。  
-目的是自动化，不是拿到全部。
+只是想能有个更方便的查询方式而已。  
+目的是自动化，不是拿到数据。
 
 ### 2019-06-22
 
@@ -31,6 +31,11 @@ crunchbase login 页面的一点记录：
 crunchbase页面会多产生一次跳转，且如果第二次跳转返回403，就会进入``reCAPTCHA``流程。  
 譬如我们访问``https://www.crunchbase.com/organization/slack``，当mainframe第二次定位到这个url时，如果response的status是403的话，就是``reCAPTCHA``。  
 今天实现了这个，但有个小问题，再登录时，有可能点击登录按钮再跳转页面的时候出现``reCAPTCHA``。
+
+处理``captcha``  
+通过``#px-captcha``得到区域，然后模拟鼠标操作。  
+鼠标操作有问题，如果页面比较大，不能直接用mouse来操作，而应该自己发送event，因为client坐标需要写对。  
+在控制台，这个指令可以查看``event``，``monitorEvents(document.body, "click");``。
 
 ### 2019-06-20
 

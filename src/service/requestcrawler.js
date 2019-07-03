@@ -1,5 +1,6 @@
 const {callSearchInCrunchBase} = require('./plugins/crunchbase');
 const {callTranslate} = require('./plugins/translate');
+const {callGetDTData} = require('./plugins/dtdata');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -31,6 +32,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getTranslate2();
 
     callTranslate(browser, cfg, call, param);
+  } else if (crawlertype == messages.CrawlerType.CT_DTDATA) {
+    if (!call.request.hasDtdata()) {
+      replyError(call, 'no dtdata');
+
+      return;
+    }
+
+    const param = call.request.getDtdata();
+
+    callGetDTData(browser, cfg, call, param);
   }
 }
 

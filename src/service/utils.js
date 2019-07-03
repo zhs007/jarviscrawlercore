@@ -60,6 +60,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setTranslate2(msg);
   } else if (crawlerType == messages.CrawlerType.CT_CB_COMPANY) {
     req.setCbcompany(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_DTDATA) {
+    req.setDtdata(msg);
   }
 
   let isend = false;
@@ -118,6 +120,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_DTDATA) {
+        if (!reply.getDtdata()) {
+          cb('no dtdata reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getDtdata());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -153,6 +169,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_CB_COMPANY) {
     reply.setCbcompany(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_DTDATA) {
+    reply.setDtdata(val);
     reply.setCrawlertype(crawlerType);
   }
 }

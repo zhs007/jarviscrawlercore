@@ -8,43 +8,36 @@ const messages = require('../../proto/result_pb');
  * @param {DTDataType} dtDataType - dtDataType
  * @param {string} starttime - start time
  * @param {string} endtime - end time
- * @return {object} result - {error: string, text: text}
+ * @return {object} result - {error: string, dtdata: ReplyDTData}
  */
 async function getDTData(browser, cfgfile, dtDataType, starttime, endtime) {
-  dtbkbot(browser, cfgfile, false, dtDataType, starttime, endtime)
-      .then((ret) => {
-        const reply = new messages.ReplyDTData();
+  let errstr;
+  const ret = await dtbkbot(
+      browser,
+      cfgfile,
+      false,
+      dtDataType,
+      starttime,
+      endtime
+  ).catch((err) => {
+    errstr = err.toString();
+  });
 
-        if (
-          call.request.getDtdatatype() == messages.DTDataType.DT_DT_TODAYGAMEDATA
-        ) {
-          reply.setTodaygamedata(ret);
-        } else if (
-          call.request.getDtdatatype() ==
-        messages.DTDataType.DT_DT_BUSINESSGAMEREPORT
-        ) {
-          for (let i = 0; i < ret.length; ++i) {
-            reply.addGamereports(newDTBusinessGameReport(ret[i]));
-          }
-        }
+  const reply = new messages.ReplyDTData();
 
-        callback(null, reply);
-      })
-      .catch((err) => {
-        callback(err, null);
-      });
-
-  const text = await googletranslate(browser, srctext, srclang, destlang).catch(
-      (err) => {
-        errstr = err.toString();
-      }
-  );
+  if (dtDataType == messages.DTDataType.DT_DT_TODAYGAMEDATA) {
+    reply.setTodaygamedata(ret);
+  } else if (dtDataType == messages.DTDataType.DT_DT_BUSINESSGAMEREPORT) {
+    for (let i = 0; i < ret.length; ++i) {
+      reply.addGamereports(newDTBusinessGameReport(ret[i]));
+    }
+  }
 
   if (errstr) {
     return {error: errstr};
   }
 
-  return {text: text};
+  return {dtdata: reply};
 }
 
 exports.getDTData = getDTData;

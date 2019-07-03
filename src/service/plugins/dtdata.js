@@ -1,33 +1,27 @@
 const messages = require('../../../proto/result_pb');
-const {translateInGoogle} = require('../../googletranslate/service');
+const {getDTData} = require('../../dtbkbot/service');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 
 /**
- * translate
+ * call getDTData
  * @param {object} browser - browser
  * @param {object} cfg - cfg
  * @param {object} call - call
- * @param {object} param - RequestTranslate2
+ * @param {object} param - RequestDTData
  */
-function callTranslate(browser, cfg, call, param) {
-  if (param.getText() == '') {
-    const reply = new messages.ReplyCrawler();
-
-    const val = new messages.TranslateResult();
-    val.setText(ret.text);
-
-    setReplyCrawler(reply, messages.CrawlerType.CT_TRANSLATE2, val);
-
-    replyMsg(call, reply, true);
+function callGetDTData(browser, cfg, call, param) {
+  if (!cfg.dtconfig) {
+    replyError(call, 'no dtconfig', true);
 
     return;
   }
 
-  translateInGoogle(
+  getDTData(
       browser,
-      param.getText(),
-      param.getSrclang(),
-      param.getDestlang()
+      cfg.dtconfig,
+      param.getDtdatatype(),
+      param.getStarttime(),
+      param.getEndtime()
   )
       .then((ret) => {
         if (ret.error) {
@@ -40,10 +34,7 @@ function callTranslate(browser, cfg, call, param) {
 
         const reply = new messages.ReplyCrawler();
 
-        const val = new messages.TranslateResult();
-        val.setText(ret.text);
-
-        setReplyCrawler(reply, messages.CrawlerType.CT_TRANSLATE2, val);
+        setReplyCrawler(reply, messages.CrawlerType.CT_DTDATA, ret.dtdata);
 
         replyMsg(call, reply, true);
       })
@@ -52,4 +43,4 @@ function callTranslate(browser, cfg, call, param) {
       });
 }
 
-exports.callTranslate = callTranslate;
+exports.callGetDTData = callGetDTData;

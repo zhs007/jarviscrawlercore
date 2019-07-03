@@ -8,7 +8,7 @@ const {kaola} = require('../src/kaola/kaola');
 const {yccompanies} = require('../src/yc/yccompanies');
 const {blobimg} = require('../src/playngo/blobimg');
 const {getArticleList} = require('../src/articlelist/articlelist');
-const {dtbkbot} = require('../src/dtbkbot/dtbkbot');
+const {dtbkbotexec} = require('../src/dtbkbot/exec');
 const {serviceexec} = require('../src/service/exec');
 const {googletranslateexec} = require('../src/googletranslate/exec');
 const {crunchbaseexec} = require('../src/crunchbase/exec');
@@ -274,57 +274,6 @@ program
     });
 
 program
-    .command('dtbkbot [cfgfile]')
-    .description('I am a dtbk bot')
-    .option('-h, --headless [isheadless]', 'headless mode')
-    .option('-d, --debug [isdebug]', 'debug mode')
-    .option('-m, --mode [mode]', 'mode')
-    .option('-s, --starttime [starttime]', 'starttime')
-    .option('-e, --endtime [endtime]', 'endtime')
-    .action(function(cfgfile, options) {
-      console.log('version is ', VERSION);
-
-      if (!cfgfile || !options.mode) {
-        console.log(
-            'command wrong, please type ' + 'jarviscrawler dtbkbot --help'
-        );
-
-        return;
-      }
-
-      console.log('cfgfile - ', cfgfile);
-
-      const headless = options.headless === 'true';
-      console.log('headless - ', headless);
-
-      const debugmode = options.debug === 'true';
-      console.log('debug - ', debugmode);
-
-      (async () => {
-        const browser = await startBrowser(headless);
-
-        await dtbkbot(
-            browser,
-            cfgfile,
-            debugmode,
-            options.mode,
-            options.starttime,
-            options.endtime
-        );
-
-        if (!debugmode) {
-          await browser.close();
-        }
-      })().catch((err) => {
-        console.log('catch a err ', err);
-
-        if (headless) {
-          process.exit(-1);
-        }
-      });
-    });
-
-program
     .command('yc [mode]')
     .description('yc')
     .option('-h, --headless [isheadless]', 'headless mode')
@@ -383,6 +332,7 @@ program
       });
     });
 
+dtbkbotexec(program, VERSION);
 serviceexec(program, VERSION);
 googletranslateexec(program, VERSION);
 crunchbaseexec(program, VERSION);

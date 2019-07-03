@@ -672,7 +672,7 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
 
   for (let i = 0; i < lstFrames.length; ++i) {
     const frame = lstFrames[i];
-    if (isFrame(frame)) {
+    if (frame != page.mainFrame() && isFrame(frame)) {
       const eles = await frame.$$(selector).catch((err) => {
         console.log('mouseHoldFrameEleEx:$$(' + selector + ') ' + err);
       });

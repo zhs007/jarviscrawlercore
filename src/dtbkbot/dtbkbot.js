@@ -8,20 +8,25 @@ const {
   onRightFrameLoadedGDR,
 } = require('./gamedatareport');
 const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
-
-const MODE_GAMETODAYDATA = 'gametodaydata';
-const MODE_GAMEDATAREPORT = 'gamedatareport';
+const messages = require('../../proto/result_pb');
 
 /**
  * a bot for dtbk
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
  * @param {bool} debugmode - debug modes
- * @param {string} mode - modes
+ * @param {DTDataType} dtDataType - dtDataType
  * @param {string} starttime - start time
  * @param {string} endtime - end time
  */
-async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
+async function dtbkbot(
+    browser,
+    cfgfile,
+    debugmode,
+    dtDataType,
+    starttime,
+    endtime
+) {
   let ret = undefined;
 
   const cfg = loadConfig(cfgfile);
@@ -90,9 +95,9 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
         await attachJQuery(frame);
         await attachJarvisCrawlerCore(frame);
 
-        if (mode == MODE_GAMETODAYDATA) {
+        if (dtDataType == messages.DTDataType.DT_DT_TODAYGAMEDATA) {
           await onRightFrameLoadedGTDS(frame);
-        } else if (mode == MODE_GAMEDATAREPORT) {
+        } else if (dtDataType == messages.DTDataType.DT_DT_BUSINESSGAMEREPORT) {
           await onRightFrameLoadedGDR(frame);
         }
       }
@@ -141,9 +146,9 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
           console.log('dtbkbot:leftFrame.evaluate', err);
         });
 
-    if (mode == MODE_GAMETODAYDATA) {
+    if (dtDataType == messages.DTDataType.DT_DT_TODAYGAMEDATA) {
       ret = await getGameTodayDataSummary(page, leftFrame, rightFrame);
-    } else if (mode == MODE_GAMEDATAREPORT) {
+    } else if (dtDataType == messages.DTDataType.DT_DT_BUSINESSGAMEREPORT) {
       ret = await getGameDataReport(
           page,
           leftFrame,
@@ -180,6 +185,3 @@ async function dtbkbot(browser, cfgfile, debugmode, mode, starttime, endtime) {
 }
 
 exports.dtbkbot = dtbkbot;
-
-exports.MODE_GAMETODAYDATA = MODE_GAMETODAYDATA;
-exports.MODE_GAMEDATAREPORT = MODE_GAMEDATAREPORT;

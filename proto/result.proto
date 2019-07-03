@@ -228,14 +228,22 @@ message ReplyArticles {
     ArticleList articles = 1;
 }
 
+// DTDataType -
+enum DTDataType {
+    DT_DT_BUSINESSGAMEREPORT = 0;
+    DT_DT_TODAYGAMEDATA = 1;
+}
+
 // RequestDTData - request DT Data
 message RequestDTData {
     // mode
-    string mode = 1;
+    string mode = 1 [deprecated = true];
     // startTime
     string startTime = 2;
     // endTime
     string endTime = 3;
+    // dtDataType
+    DTDataType dtDataType = 4;
 
     // token - You need to have a valid token in order to get back correctly
     string token = 100;    
@@ -284,6 +292,7 @@ message RequestCrunchBaseCompany {
 enum CrawlerType {
     CT_TRANSLATE2 = 0;
     CT_CB_COMPANY = 1;
+    CT_DTDATA = 2;
 }
 
 // RequestTranslate2 - request translate
@@ -312,6 +321,7 @@ message RequestCrawler {
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;
         RequestTranslate2 translate2 = 101;
+        RequestDTData dtdata = 102;
     }
 }
 
@@ -322,6 +332,7 @@ message ReplyCrawler {
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;
         TranslateResult translateResult = 101;
+        ReplyDTData dtdata = 102;
     }
 }
 

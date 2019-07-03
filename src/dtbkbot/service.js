@@ -1,23 +1,17 @@
+const {dtbkbot} = require('./dtbkbot');
 const messages = require('../../proto/result_pb');
-const {dtbkbot} = require('../dtbkbot/dtbkbot');
-const {newDTBusinessGameReport} = require('../utils');
 
 /**
- * get dt data
+ * getDTData
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
- * @param {object} call - call
- * @param {function} callback - callback(err, ReplyTranslate)
+ * @param {DTDataType} dtDataType - dtDataType
+ * @param {string} starttime - start time
+ * @param {string} endtime - end time
+ * @return {object} result - {error: string, text: text}
  */
-function callGetDTData(browser, cfgfile, call, callback) {
-  dtbkbot(
-      browser,
-      cfgfile,
-      false,
-      call.request.getDtdatatype(),
-      call.request.getStarttime(),
-      call.request.getEndtime()
-  )
+async function getDTData(browser, cfgfile, dtDataType, starttime, endtime) {
+  dtbkbot(browser, cfgfile, false, dtDataType, starttime, endtime)
       .then((ret) => {
         const reply = new messages.ReplyDTData();
 
@@ -39,6 +33,18 @@ function callGetDTData(browser, cfgfile, call, callback) {
       .catch((err) => {
         callback(err, null);
       });
+
+  const text = await googletranslate(browser, srctext, srclang, destlang).catch(
+      (err) => {
+        errstr = err.toString();
+      }
+  );
+
+  if (errstr) {
+    return {error: errstr};
+  }
+
+  return {text: text};
 }
 
-exports.callGetDTData = callGetDTData;
+exports.getDTData = getDTData;

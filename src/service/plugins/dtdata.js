@@ -19,6 +19,7 @@ function callGetDTData(browser, cfg, call, param) {
   getDTData(
       browser,
       cfg.dtconfig,
+      param.getEnvname(),
       param.getDtdatatype(),
       param.getStarttime(),
       param.getEndtime()

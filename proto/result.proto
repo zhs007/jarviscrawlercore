@@ -244,6 +244,8 @@ message RequestDTData {
     string endTime = 3;
     // dtDataType
     DTDataType dtDataType = 4;
+    // environment name
+    string envName = 5;
 
     // token - You need to have a valid token in order to get back correctly
     string token = 100;    

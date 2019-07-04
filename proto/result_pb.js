@@ -5729,6 +5729,7 @@ proto.jarviscrawlercore.RequestDTData.toObject = function(includeInstance, msg) 
     starttime: jspb.Message.getFieldWithDefault(msg, 2, ""),
     endtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
     dtdatatype: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    envname: jspb.Message.getFieldWithDefault(msg, 5, ""),
     token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
@@ -5781,6 +5782,10 @@ proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader = function(msg
     case 4:
       var value = /** @type {!proto.jarviscrawlercore.DTDataType} */ (reader.readEnum());
       msg.setDtdatatype(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEnvname(value);
       break;
     case 100:
       var value = /** @type {string} */ (reader.readString());
@@ -5840,6 +5845,13 @@ proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter = function(message
   if (f !== 0.0) {
     writer.writeEnum(
       4,
+      f
+    );
+  }
+  f = message.getEnvname();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -5910,6 +5922,21 @@ proto.jarviscrawlercore.RequestDTData.prototype.getDtdatatype = function() {
 /** @param {!proto.jarviscrawlercore.DTDataType} value */
 proto.jarviscrawlercore.RequestDTData.prototype.setDtdatatype = function(value) {
   jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+
+/**
+ * optional string envName = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDTData.prototype.getEnvname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDTData.prototype.setEnvname = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

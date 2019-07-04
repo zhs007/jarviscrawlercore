@@ -8,11 +8,12 @@ const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
 /**
  * startGetDTData
  * @param {string} servAddr - service addr
- * @param {string} dtDataType - dtDataType
+ * @param {string} envName - envName
+ * @param {DTDataType} dtDataType - dtDataType
  * @param {string} startTime - startTime
  * @param {string} endTime - endTime
  */
-function startGetDTData(servAddr, dtDataType, startTime, endTime) {
+function startGetDTData(servAddr, envName, dtDataType, startTime, endTime) {
   const client = new services.JarvisCrawlerServiceClient(
       servAddr,
       grpc.credentials.createInsecure()
@@ -20,6 +21,7 @@ function startGetDTData(servAddr, dtDataType, startTime, endTime) {
 
   const request = new messages.RequestDTData();
 
+  request.setEnvname(envName);
   request.setDtdatatype(dtDataType);
   request.setStarttime(startTime);
   request.setEndtime(endTime);
@@ -39,6 +41,7 @@ function startGetDTData(servAddr, dtDataType, startTime, endTime) {
 // startGetDTData('127.0.0.1:7051', 'gametodaydata', '', '');
 startGetDTData(
     '127.0.0.1:7051',
+    'dtserv2',
     messages.DTDataType.DT_DT_BUSINESSGAMEREPORT,
     '2019-04-17',
     '2019-04-17'

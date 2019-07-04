@@ -12,13 +12,14 @@ async function dtbkbotexec(program, version) {
       .description('I am a dtbk bot')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-d, --debug [isdebug]', 'debug mode')
+      .option('-n, --envname [envname]', 'envname')
       .option('-m, --mode [mode]', 'mode')
       .option('-s, --starttime [starttime]', 'starttime')
       .option('-e, --endtime [endtime]', 'endtime')
       .action(function(cfgfile, options) {
         console.log('version is ', version);
 
-        if (!cfgfile || !options.mode) {
+        if (!cfgfile || !options.mode || !options.envname) {
           console.log(
               'command wrong, please type ' + 'jarviscrawler dtbkbot --help'
           );
@@ -41,6 +42,7 @@ async function dtbkbotexec(program, version) {
               browser,
               cfgfile,
               debugmode,
+              options.envname,
               options.mode,
               options.starttime,
               options.endtime

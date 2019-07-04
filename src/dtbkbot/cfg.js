@@ -25,16 +25,44 @@ function checkConfig(cfg) {
     return 'config undefined';
   }
 
-  if (!cfg.url) {
-    return 'no config.url';
+  if (!Array.isArray(cfg.dtcfg)) {
+    return 'no config.dtcfg';
   }
 
-  if (!cfg.username) {
-    return 'no config.username';
+  for (let i = 0; i < cfg.dtcfg.length; ++i) {
+    const envcfg = cfg.dtcfg[i];
+
+    if (!envcfg.envname) {
+      return 'no config.envname';
+    }
+
+    if (!envcfg.url) {
+      return 'no config.url in ' + envcfg.envname;
+    }
+
+    if (!envcfg.username) {
+      return 'no config.username in ' + envcfg.envname;
+    }
+
+    if (!envcfg.password) {
+      return 'no config.password in ' + envcfg.envname;
+    }
   }
 
-  if (!cfg.password) {
-    return 'no config.password';
+  return undefined;
+}
+
+/**
+ * getEnvConfig
+ * @param {object} cfg - config
+ * @param {string} envname - name for environment
+ * @return {object} envcfg - config for environment
+ */
+function getEnvConfig(cfg, envname) {
+  for (let i = 0; i < cfg.dtcfg.length; ++i) {
+    if (cfg.dtcfg[i].envname == envname) {
+      return cfg.dtcfg[i];
+    }
   }
 
   return undefined;
@@ -42,3 +70,4 @@ function checkConfig(cfg) {
 
 exports.loadConfig = loadConfig;
 exports.checkConfig = checkConfig;
+exports.getEnvConfig = getEnvConfig;

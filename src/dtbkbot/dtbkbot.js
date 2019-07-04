@@ -1,4 +1,4 @@
-const {loadConfig, checkConfig} = require('./cfg');
+const {loadConfig, checkConfig, getEnvConfig} = require('./cfg');
 const {
   getGameTodayDataSummary,
   onRightFrameLoadedGTDS,
@@ -15,6 +15,7 @@ const messages = require('../../proto/result_pb');
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
  * @param {bool} debugmode - debug modes
+ * @param {string} envName - name for environment
  * @param {DTDataType} dtDataType - dtDataType
  * @param {string} starttime - start time
  * @param {string} endtime - end time
@@ -23,6 +24,7 @@ async function dtbkbot(
     browser,
     cfgfile,
     debugmode,
+    envName,
     dtDataType,
     starttime,
     endtime
@@ -37,12 +39,19 @@ async function dtbkbot(
     return ret;
   }
 
+  const envcfg = getEnvConfig(cfg, envName);
+  if (!envcfg) {
+    console.log('no envName ' + envName);
+
+    return ret;
+  }
+
   const page = await browser.newPage();
   page.on('console', (msg) => {
     console.log('PAGE LOG:', msg.text());
   });
 
-  await page.goto(cfg.url).catch((err) => {
+  await page.goto(envcfg.url).catch((err) => {
     console.log('dtbkbot.goto', err);
   });
 
@@ -61,8 +70,8 @@ async function dtbkbot(
       });
 
   // 登录
-  await page.type('.loginuser', cfg.username);
-  await page.type('.loginpwd', cfg.password);
+  await page.type('.loginuser', envcfg.username);
+  await page.type('.loginpwd', envcfg.password);
   await page.click('.loginbtn');
 
   // 等待页面跳转完成

@@ -6,23 +6,40 @@ const {newDTBusinessGameReport} = require('../utils');
  * getDTData
  * @param {object} browser - browser
  * @param {string} cfgfile - cfgfile
+ * @param {string} envName - envName
  * @param {DTDataType} dtDataType - dtDataType
  * @param {string} starttime - start time
  * @param {string} endtime - end time
  * @return {object} result - {error: string, dtdata: ReplyDTData}
  */
-async function getDTData(browser, cfgfile, dtDataType, starttime, endtime) {
+async function getDTData(
+    browser,
+    cfgfile,
+    envName,
+    dtDataType,
+    starttime,
+    endtime
+) {
   let errstr;
   const ret = await dtbkbot(
       browser,
       cfgfile,
       true,
+      envName,
       dtDataType,
       starttime,
       endtime
   ).catch((err) => {
     errstr = err.toString();
   });
+
+  if (errstr) {
+    return {error: errstr};
+  }
+
+  if (ret == undefined) {
+    return {error: 'no result'};
+  }
 
   const reply = new messages.ReplyDTData();
 
@@ -32,10 +49,6 @@ async function getDTData(browser, cfgfile, dtDataType, starttime, endtime) {
     for (let i = 0; i < ret.length; ++i) {
       reply.addGamereports(newDTBusinessGameReport(ret[i]));
     }
-  }
-
-  if (errstr) {
-    return {error: errstr};
   }
 
   return {dtdata: reply};

@@ -14,11 +14,18 @@ function callGetDTData(browser, cfgfile, call, callback) {
       browser,
       cfgfile,
       false,
+      call.request.getEnvname(),
       call.request.getDtdatatype(),
       call.request.getStarttime(),
       call.request.getEndtime()
   )
       .then((ret) => {
+        if (ret == undefined) {
+          callback('no result', null);
+
+          return;
+        }
+
         const reply = new messages.ReplyDTData();
 
         if (

@@ -232,6 +232,7 @@ message ReplyArticles {
 enum DTDataType {
     DT_DT_BUSINESSGAMEREPORT = 0;
     DT_DT_TODAYGAMEDATA = 1;
+    DT_DT_GPKCHECKGAMERESULT = 2;
 }
 
 // RequestDTData - request DT Data
@@ -246,6 +247,12 @@ message RequestDTData {
     DTDataType dtDataType = 4;
     // environment name
     string envName = 5;
+    // business id
+    string businessid = 6;
+    // game code
+    string gameCode = 7;
+    // player name
+    string playerName = 8;
 
     // token - You need to have a valid token in order to get back correctly
     string token = 100;    

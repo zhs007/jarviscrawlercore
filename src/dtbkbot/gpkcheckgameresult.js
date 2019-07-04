@@ -1,10 +1,10 @@
 const {newDTTodayGameData} = require('../utils');
 
 /**
- * onRightFrameLoaded GTDS
+ * onRightFrameLoaded GPKCGR - GPK check gameresult
  * @param {object} rightFrame - rightFrame
  */
-async function onRightFrameLoadedGTDS(rightFrame) {
+async function onRightFrameLoadedGPKCGR(rightFrame) {
   // 等待页面加载
   await rightFrame
       .waitForFunction(() => {
@@ -22,17 +22,33 @@ async function onRightFrameLoadedGTDS(rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('onRightFrameLoadedGTDS', err);
+        console.log('onRightFrameLoadedGPKCGR', err);
       });
 }
 
 /**
- * Game Today Data Summary
+ * check GPK game result
  * @param {object} page - page
  * @param {object} leftFrame - leftFrame
  * @param {object} rightFrame - rightFrame
+ * @param {WaitRightFrame} waitRightFrame - waitRightFrame
+ * @param {string} businessid - businessid
+ * @param {string} gamecode - gamecode
+ * @param {string} playername - playername
+ * @param {string} starttime - start time
+ * @param {string} endtime - end time
  */
-async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
+async function checkGPKGameResult(
+    page,
+    leftFrame,
+    rightFrame,
+    waitRightFrame,
+    businessid,
+    gamecode,
+    playername,
+    starttime,
+    endtime
+) {
   // 打开一级菜单
   await leftFrame.click('.title.jlxx');
 
@@ -51,18 +67,17 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
+        console.log('checkGPKGameResult:waitFor.menuson.jlxx', err);
       });
 
-  // 点击二级菜单
-  await leftFrame.click('.yxjl');
+  await waitRightFrame.wait4URL('log/gpkbets!findAll.html', async () => {
+    // 点击二级菜单
+    await leftFrame.click('.gpkyxjl');
+  });
 
-  //   // 等待页面跳转完成
-  //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-  //     console.log('catch a err ', err);
-  //   });
+  console.log('haha');
 
-  //   await rightFrame.goto(cfg.url + '/log/bets!findAll.html');
+  return undefined;
 
   // 等待页面加载
   await rightFrame
@@ -70,19 +85,10 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         if (typeof jarvisCrawlerCoreVer === 'string') {
           const placeul = getElement('.placeul');
 
-          //   console.log(placeul);
-          //   if (placeul) {
-          //     console.log(placeul.children.length);
-
-          //     if (placeul.children.length == 3) {
-          //       console.log(placeul.children[2].innerText);
-          //     }
-          //   }
-
           if (
             placeul &&
           placeul.children.length == 3 &&
-          placeul.children[2].innerText == '游戏记录'
+          placeul.children[2].innerText == 'GPK游戏记录'
           ) {
             const btncx = getElementWithDefaultValue('.scbtn', '查询');
             if (btncx) {
@@ -96,7 +102,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.yxjl', err);
+        console.log('checkGPKGameResult:waitFor.yxjl', err);
       });
 
   await rightFrame.click('.scbtn.cx');
@@ -133,7 +139,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.paginList', err);
+        console.log('checkGPKGameResult:waitFor.paginList', err);
       });
 
   const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
@@ -163,5 +169,5 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   });
 }
 
-exports.onRightFrameLoadedGTDS = onRightFrameLoadedGTDS;
-exports.getGameTodayDataSummary = getGameTodayDataSummary;
+exports.onRightFrameLoadedGPKCGR = onRightFrameLoadedGPKCGR;
+exports.checkGPKGameResult = checkGPKGameResult;

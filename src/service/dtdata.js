@@ -16,6 +16,9 @@ function callGetDTData(browser, cfgfile, call, callback) {
       false,
       call.request.getEnvname(),
       call.request.getDtdatatype(),
+      call.request.getBusinessid(),
+      call.request.getGamecode(),
+      call.request.getPlayername(),
       call.request.getStarttime(),
       call.request.getEndtime()
   )

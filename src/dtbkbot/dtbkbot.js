@@ -7,7 +7,12 @@ const {
   getGameDataReport,
   onRightFrameLoadedGDR,
 } = require('./gamedatareport');
+const {
+  onRightFrameLoadedGPKCGR,
+  checkGPKGameResult,
+} = require('./gpkcheckgameresult');
 const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
+const {WaitRightFrame} = require('./utils');
 const messages = require('../../proto/result_pb');
 
 /**
@@ -17,6 +22,9 @@ const messages = require('../../proto/result_pb');
  * @param {bool} debugmode - debug modes
  * @param {string} envName - name for environment
  * @param {DTDataType} dtDataType - dtDataType
+ * @param {string} businessid - businessid
+ * @param {string} gamecode - gamecode
+ * @param {string} playername - playername
  * @param {string} starttime - start time
  * @param {string} endtime - end time
  */
@@ -26,6 +34,9 @@ async function dtbkbot(
     debugmode,
     envName,
     dtDataType,
+    businessid,
+    gamecode,
+    playername,
     starttime,
     endtime
 ) {
@@ -97,6 +108,8 @@ async function dtbkbot(
   }
 
   if (leftFrame && rightFrame) {
+    const waitRightFrame = new WaitRightFrame(page, rightFrame);
+
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {
         console.log(frame.url());
@@ -108,6 +121,8 @@ async function dtbkbot(
           await onRightFrameLoadedGTDS(frame);
         } else if (dtDataType == messages.DTDataType.DT_DT_BUSINESSGAMEREPORT) {
           await onRightFrameLoadedGDR(frame);
+        } else if (dtDataType == messages.DTDataType.DT_DT_GPKCHECKGAMERESULT) {
+          await onRightFrameLoadedGPKCGR(frame);
         }
       }
     });
@@ -140,6 +155,15 @@ async function dtbkbot(
               lstmenuson[i].className = 'menuson jlxx';
             }
 
+            const gpkyxjl = getElementChildWithTagAndText(
+                lstmenuson[i],
+                'A',
+                'GPK游戏记录'
+            );
+            if (gpkyxjl) {
+              gpkyxjl.className = 'gpkyxjl';
+            }
+
             const yxbb = getElementChildWithTagAndText(
                 lstmenuson[i],
                 'A',
@@ -162,6 +186,18 @@ async function dtbkbot(
           page,
           leftFrame,
           rightFrame,
+          starttime,
+          endtime
+      );
+    } else if (dtDataType == messages.DTDataType.DT_DT_GPKCHECKGAMERESULT) {
+      ret = await checkGPKGameResult(
+          page,
+          leftFrame,
+          rightFrame,
+          waitRightFrame,
+          businessid,
+          gamecode,
+          playername,
           starttime,
           endtime
       );

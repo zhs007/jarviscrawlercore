@@ -21,6 +21,9 @@ function callGetDTData(browser, cfg, call, param) {
       cfg.dtconfig,
       param.getEnvname(),
       param.getDtdatatype(),
+      param.getBusinessid(),
+      param.getGamecode(),
+      param.getPlayername(),
       param.getStarttime(),
       param.getEndtime()
   )

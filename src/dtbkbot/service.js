@@ -8,6 +8,9 @@ const {newDTBusinessGameReport} = require('../utils');
  * @param {string} cfgfile - cfgfile
  * @param {string} envName - envName
  * @param {DTDataType} dtDataType - dtDataType
+ * @param {string} businessid - businessid
+ * @param {string} gamecode - gamecode
+ * @param {string} playername - playername
  * @param {string} starttime - start time
  * @param {string} endtime - end time
  * @return {object} result - {error: string, dtdata: ReplyDTData}
@@ -17,6 +20,9 @@ async function getDTData(
     cfgfile,
     envName,
     dtDataType,
+    businessid,
+    gamecode,
+    playername,
     starttime,
     endtime
 ) {
@@ -27,6 +33,9 @@ async function getDTData(
       true,
       envName,
       dtDataType,
+      businessid,
+      gamecode,
+      playername,
       starttime,
       endtime
   ).catch((err) => {

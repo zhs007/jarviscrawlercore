@@ -5730,6 +5730,9 @@ proto.jarviscrawlercore.RequestDTData.toObject = function(includeInstance, msg) 
     endtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
     dtdatatype: jspb.Message.getFieldWithDefault(msg, 4, 0),
     envname: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    businessid: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    gamecode: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    playername: jspb.Message.getFieldWithDefault(msg, 8, ""),
     token: jspb.Message.getFieldWithDefault(msg, 100, "")
   };
 
@@ -5786,6 +5789,18 @@ proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader = function(msg
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setEnvname(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBusinessid(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setGamecode(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPlayername(value);
       break;
     case 100:
       var value = /** @type {string} */ (reader.readString());
@@ -5852,6 +5867,27 @@ proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter = function(message
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getBusinessid();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getGamecode();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getPlayername();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -5937,6 +5973,51 @@ proto.jarviscrawlercore.RequestDTData.prototype.getEnvname = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.RequestDTData.prototype.setEnvname = function(value) {
   jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string businessid = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDTData.prototype.getBusinessid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDTData.prototype.setBusinessid = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string gameCode = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDTData.prototype.getGamecode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDTData.prototype.setGamecode = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string playerName = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDTData.prototype.getPlayername = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDTData.prototype.setPlayername = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
@@ -8165,7 +8246,8 @@ proto.jarviscrawlercore.ParagraphType = {
  */
 proto.jarviscrawlercore.DTDataType = {
   DT_DT_BUSINESSGAMEREPORT: 0,
-  DT_DT_TODAYGAMEDATA: 1
+  DT_DT_TODAYGAMEDATA: 1,
+  DT_DT_GPKCHECKGAMERESULT: 2
 };
 
 /**

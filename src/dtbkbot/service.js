@@ -1,5 +1,6 @@
 const {dtbkbot} = require('./dtbkbot');
 const messages = require('../../proto/result_pb');
+const {newDTBusinessGameReport} = require('../utils');
 
 /**
  * getDTData
@@ -15,7 +16,7 @@ async function getDTData(browser, cfgfile, dtDataType, starttime, endtime) {
   const ret = await dtbkbot(
       browser,
       cfgfile,
-      false,
+      true,
       dtDataType,
       starttime,
       endtime

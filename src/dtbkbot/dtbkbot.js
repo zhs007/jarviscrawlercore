@@ -159,25 +159,25 @@ async function dtbkbot(
     }
   }
 
-  if (topFrame) {
-    await topFrame.click('.logoutbtn');
-
-    // 等待登录加载完成
-    await page
-        .waitForFunction(() => {
-          const objs = document.getElementsByClassName('loginbox');
-          if (objs.length > 0) {
-            return true;
-          }
-
-          return false;
-        })
-        .catch((err) => {
-          console.log('dtbkbot.logout.waitForFunction.loginbox', err);
-        });
-  }
-
   if (!debugmode) {
+    if (topFrame) {
+      await topFrame.click('.logoutbtn');
+
+      // 等待登录加载完成
+      await page
+          .waitForFunction(() => {
+            const objs = document.getElementsByClassName('loginbox');
+            if (objs.length > 0) {
+              return true;
+            }
+
+            return false;
+          })
+          .catch((err) => {
+            console.log('dtbkbot.logout.waitForFunction.loginbox', err);
+          });
+    }
+
     await page.close();
   }
 

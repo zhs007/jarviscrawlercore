@@ -36,7 +36,7 @@ function startGetDTData(servAddr, dtDataType, startTime, endTime) {
         }
 
         if (reply) {
-          console.log('dtdata:', reply);
+          console.log('dtdata:', reply.toObject(false));
         }
       }
   );

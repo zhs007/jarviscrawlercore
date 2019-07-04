@@ -164,8 +164,8 @@ async function getGameDataReport(
   const lst = await rightFrame.$$eval('tr', (eles) => {
     const lst = [];
 
-    for (let i = 1; i < eles.length - 2; ++i) {
-      if (eles[i].children.length == 12) {
+    if (eles[1].children.length == 12) {
+      for (let i = 1; i < eles.length - 2; ++i) {
         lst.push({
           businessid: eles[i].children[1].innerText,
           gamecode: eles[i].children[2].innerText,
@@ -174,7 +174,21 @@ async function getGameDataReport(
           gameNums: parseInt(eles[i].children[9].innerText),
           currency: eles[i].children[10].innerText,
         });
-      } else if (eles[i].children.length == 11) {
+
+        if (eles[i].children.length == 12) {
+        } else if (eles[i].children.length == 11) {
+          lst.push({
+            businessid: eles[i].children[0].innerText,
+            gamecode: eles[i].children[1].innerText,
+            totalWin: parseFloat(eles[i].children[3].innerText),
+            totalBet: parseFloat(eles[i].children[4].innerText),
+            gameNums: parseInt(eles[i].children[8].innerText),
+            currency: eles[i].children[9].innerText,
+          });
+        }
+      }
+    } else if (eles[1].children.length == 11) {
+      for (let i = 2; i < eles.length - 1; ++i) {
         lst.push({
           businessid: eles[i].children[0].innerText,
           gamecode: eles[i].children[1].innerText,
@@ -189,7 +203,7 @@ async function getGameDataReport(
     return lst;
   });
 
-  console.log('records - %j', lst);
+  // console.log('records - %j', lst);
 
   return lst;
 }

@@ -42,9 +42,7 @@ class WaitRightFrame {
    */
   async onRequest(req) {
     // const url = req.url();
-
     // console.log('WaitRightFrame.wait4URL:onRequest ' + url);
-
     // if (url.indexOf(this.url) >= 0) {
     // }
   }
@@ -53,58 +51,29 @@ class WaitRightFrame {
    * wait4URL
    * @param {string} url - url
    * @param {function} funcStart - async function funcStart()
+   * @param {number} timeOut - timeOut ms
+   * @return {bool} isDone - if isDone == false, then timeOut
    */
-  async wait4URL(url, funcStart) {
+  async wait4URL(url, funcStart, timeOut) {
     this.url = url;
     this.isDone = false;
 
     await funcStart();
 
+    let curms = 0;
     while (true) {
       await sleep(1000);
+      curms += 1000;
+
+      if (curms > timeOut) {
+        return false;
+      }
 
       if (this.isDone) {
-        return;
+        return true;
       }
     }
   }
 }
 
-// /**
-//  * attachDTUtils
-//  * @param {object} page - page
-//  */
-// async function attachDTUtils(page) {
-//   // await page.waitForFunction(() => {
-//   //   document.head !== null;
-//   // });
-
-//   await page.addScriptTag({path: './browser/dtutils.js'}).catch((err) => {
-//     console.log('attachDTUtils:addScriptTag', err);
-//     // isok = false;
-//   });
-
-//   await page
-//       .waitForFunction('typeof rightframeisdone === "bool"')
-//       .catch((err) => {
-//         console.log('attachDTUtils:waitForFunction', err);
-//       });
-
-//   console.log('attachDTUtils');
-// }
-
-// /**
-//  * waitFrameLoaded
-//  * @param {object} page - page
-//  */
-// async function waitFrameLoaded(page) {
-//   await page
-//       .waitForFunction('typeof rightframeisdone === "bool"')
-//       .catch((err) => {
-//         console.log('waitFrameLoaded', err);
-//       });
-// }
-
 exports.WaitRightFrame = WaitRightFrame;
-// exports.attachDTUtils = attachDTUtils;
-// exports.waitFrameLoaded = waitFrameLoaded;

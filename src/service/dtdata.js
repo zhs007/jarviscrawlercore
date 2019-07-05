@@ -23,8 +23,14 @@ function callGetDTData(browser, cfgfile, call, callback) {
       call.request.getEndtime()
   )
       .then((ret) => {
-        if (ret == undefined) {
+        if (ret == undefined || !ret.ret) {
           callback('no result', null);
+
+          return;
+        }
+
+        if (ret.error) {
+          callback(ret.error, null);
 
           return;
         }

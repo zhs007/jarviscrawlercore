@@ -50,13 +50,21 @@ async function getDTData(
     return {error: 'no result'};
   }
 
+  if (ret.error) {
+    return {error: ret.error};
+  }
+
+  if (!ret.ret) {
+    return {error: 'no result'};
+  }
+
   const reply = new messages.ReplyDTData();
 
   if (dtDataType == messages.DTDataType.DT_DT_TODAYGAMEDATA) {
-    reply.setTodaygamedata(ret);
+    reply.setTodaygamedata(ret.ret);
   } else if (dtDataType == messages.DTDataType.DT_DT_BUSINESSGAMEREPORT) {
-    for (let i = 0; i < ret.length; ++i) {
-      reply.addGamereports(newDTBusinessGameReport(ret[i]));
+    for (let i = 0; i < ret.ret.length; ++i) {
+      reply.addGamereports(newDTBusinessGameReport(ret.ret[i]));
     }
   }
 

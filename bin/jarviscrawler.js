@@ -311,7 +311,7 @@ program
 
       if (!options.gamecode) {
         console.log(
-            'command wrong, please type ' + 'jarviscrawler dtbkbot --help'
+            'command wrong, please type ' + 'jarviscrawler playngo --help'
         );
 
         return;

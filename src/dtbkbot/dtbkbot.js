@@ -27,6 +27,7 @@ const messages = require('../../proto/result_pb');
  * @param {string} playername - playername
  * @param {string} starttime - start time
  * @param {string} endtime - end time
+ * @return {object} result - {error: err, ret: ret}
  */
 async function dtbkbot(
     browser,
@@ -45,16 +46,18 @@ async function dtbkbot(
   const cfg = loadConfig(cfgfile);
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
-    console.log('config file error: ' + cfgerr);
+    const errstr = 'config file error: ' + cfgerr;
+    console.log(errstr);
 
-    return ret;
+    return {error: errstr};
   }
 
   const envcfg = getEnvConfig(cfg, envName);
   if (!envcfg) {
-    console.log('no envName ' + envName);
+    const errstr = 'no envName ' + envName;
+    console.log(errstr);
 
-    return ret;
+    return {error: errstr};
   }
 
   const page = await browser.newPage();
@@ -226,7 +229,7 @@ async function dtbkbot(
     await page.close();
   }
 
-  return ret;
+  return {ret: ret};
 }
 
 exports.dtbkbot = dtbkbot;

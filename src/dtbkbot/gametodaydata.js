@@ -1,6 +1,4 @@
-const {
-  newDTTodayGameData,
-} = require('../utils');
+const {newDTTodayGameData} = require('../utils');
 
 /**
  * onRightFrameLoaded GTDS
@@ -8,22 +6,24 @@ const {
  */
 async function onRightFrameLoadedGTDS(rightFrame) {
   // 等待页面加载
-  await rightFrame.waitForFunction(() => {
-    // console.log(typeof jarvisCrawlerCoreVer);
+  await rightFrame
+      .waitForFunction(() => {
+      // console.log(typeof jarvisCrawlerCoreVer);
 
-    if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      if (btncx) {
-        btncx.className = 'scbtn cx';
+        if (typeof jarvisCrawlerCoreVer === 'string') {
+          const btncx = getElementWithDefaultValue('.scbtn', '查询');
+          if (btncx) {
+            btncx.className = 'scbtn cx';
 
-        return true;
-      }
-    }
+            return true;
+          }
+        }
 
-    return false;
-  }).catch((err) => {
-    console.log('onRightFrameLoadedGTDS', err);
-  });
+        return false;
+      })
+      .catch((err) => {
+        console.log('onRightFrameLoadedGTDS', err);
+      });
 }
 
 /**
@@ -37,20 +37,22 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   await leftFrame.click('.title.jlxx');
 
   // 等待一级菜单打开
-  await leftFrame.waitForFunction(() => {
-    const jlxxmenu = getElement('.menuson.jlxx');
-    if (jlxxmenu) {
-    //   console.log(jlxxmenu.style[0]);
+  await leftFrame
+      .waitForFunction(() => {
+        const jlxxmenu = getElement('.menuson.jlxx');
+        if (jlxxmenu) {
+        //   console.log(jlxxmenu.style[0]);
 
-      if (jlxxmenu.style[0] === 'display') {
-        return true;
-      }
-    }
+          if (jlxxmenu.style[0] === 'display') {
+            return true;
+          }
+        }
 
-    return false;
-  }).catch((err) => {
-    console.log('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
-  });
+        return false;
+      })
+      .catch((err) => {
+        console.log('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
+      });
 
   // 点击二级菜单
   await leftFrame.click('.yxjl');
@@ -63,68 +65,76 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
   //   await rightFrame.goto(cfg.url + '/log/bets!findAll.html');
 
   // 等待页面加载
-  await rightFrame.waitForFunction(() => {
-    if (typeof jarvisCrawlerCoreVer === 'string') {
-      const placeul = getElement('.placeul');
+  await rightFrame
+      .waitForFunction(() => {
+        if (typeof jarvisCrawlerCoreVer === 'string') {
+          const placeul = getElement('.placeul');
 
-      //   console.log(placeul);
-      //   if (placeul) {
-      //     console.log(placeul.children.length);
+          //   console.log(placeul);
+          //   if (placeul) {
+          //     console.log(placeul.children.length);
 
-      //     if (placeul.children.length == 3) {
-      //       console.log(placeul.children[2].innerText);
-      //     }
-      //   }
+          //     if (placeul.children.length == 3) {
+          //       console.log(placeul.children[2].innerText);
+          //     }
+          //   }
 
-      if (placeul && placeul.children.length == 3 && placeul.children[2].innerText == '游戏记录') {
-        const btncx = getElementWithDefaultValue('.scbtn', '查询');
-        if (btncx) {
-          btncx.className = 'scbtn cx';
+          if (
+            placeul &&
+          placeul.children.length == 3 &&
+          placeul.children[2].innerText == '游戏记录'
+          ) {
+            const btncx = getElementWithDefaultValue('.scbtn', '查询');
+            if (btncx) {
+              btncx.className = 'scbtn cx';
 
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }).catch((err) => {
-    console.log('getGameTodayDataSummary:waitFor.yxjl', err);
-  });
-
-  await rightFrame.click('.scbtn.cx');
-
-  await rightFrame.waitFor(60*1000*3);
-
-  // 等待页面加载
-  await rightFrame.waitForFunction(() => {
-    if (typeof jarvisCrawlerCoreVer === 'string') {
-      const btncx = getElementWithDefaultValue('.scbtn', '查询');
-      //   console.log(btncx);
-
-      if (btncx) {
-        const paginList = getElement('.paginList');
-        // console.log(paginList);
-
-        if (paginList) {
-          const paginListI = paginList.getElementsByTagName('I');
-          //   console.log(paginListI.length);
-
-          if (paginListI.length > 0) {
-            // console.log(paginListI[0].innerText);
-
-            if (parseInt(paginListI[0].innerText) > 0) {
-              paginListI[0].className = 'blue gamenums';
               return true;
             }
           }
         }
-      }
-    }
 
-    return false;
-  }).catch((err) => {
-    console.log('getGameTodayDataSummary:waitFor.paginList', err);
-  });
+        return false;
+      })
+      .catch((err) => {
+        console.log('getGameTodayDataSummary:waitFor.yxjl', err);
+      });
+
+  await rightFrame.click('.scbtn.cx');
+
+  await rightFrame.waitFor(60 * 1000 * 3);
+
+  // 等待页面加载
+  await rightFrame
+      .waitForFunction(() => {
+        if (typeof jarvisCrawlerCoreVer === 'string') {
+          const btncx = getElementWithDefaultValue('.scbtn', '查询');
+          //   console.log(btncx);
+
+          if (btncx) {
+            const paginList = getElement('.paginList');
+            // console.log(paginList);
+
+            if (paginList) {
+              const paginListI = paginList.getElementsByTagName('I');
+              //   console.log(paginListI.length);
+
+              if (paginListI.length > 0) {
+              // console.log(paginListI[0].innerText);
+
+                if (parseInt(paginListI[0].innerText) > 0) {
+                  paginListI[0].className = 'blue gamenums';
+                  return true;
+                }
+              }
+            }
+          }
+        }
+
+        return false;
+      })
+      .catch((err) => {
+        console.log('getGameTodayDataSummary:waitFor.paginList', err);
+      });
 
   const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
     return parseInt(ele.innerText);

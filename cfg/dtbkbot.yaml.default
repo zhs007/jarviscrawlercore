@@ -1,3 +1,11 @@
-url: your url
-username: username
-password: password
+dtcfg:
+  - 
+    envname: envname1
+    url: url1
+    username: username1
+    password: password1
+  - 
+    envname: envname2
+    url: url2
+    username: username2
+    password: password2

@@ -228,14 +228,63 @@ message ReplyArticles {
     ArticleList articles = 1;
 }
 
+// DTDataType -
+enum DTDataType {
+    DT_DT_BUSINESSGAMEREPORT = 0;
+    DT_DT_TODAYGAMEDATA = 1;
+    DT_DT_GPKCHECKGAMERESULT = 2;
+}
+
+// DTGameResultErr -
+enum DTGameResultErr {
+    // no error
+    DTGRE_NOERR = 0;
+    // id.gamecode != gamecode
+    DTGRE_GAMECODE = 1;
+    // invalid lines
+    DTGRE_LINES = 2;
+    // moneyEnd != moneyStart + off
+    DTGRE_MONEYOFF = 3;
+    // off != win - bet
+    DTGRE_WINBETOFF = 4;
+    // invalid gamedata
+    DTGRE_GAMEDATA = 5;
+    // invalid gameresult bet
+    DTGRE_GAMERESULT_BET = 6;
+    // invalid gameresult win
+    DTGRE_GAMERESULT_WIN = 7;
+    // invalid gameresult sumwin
+    DTGRE_GAMERESULT_SUM_WIN = 8;
+    // invalid iscomplete
+    DTGRE_ISCOMPLETE = 9;
+    // invalid gamestate
+    DTGRE_GAMESTATE = 10;    
+    // invalid gameresult
+    DTGRE_GAMERESULT = 11;
+    // invalid gameresult lines
+    DTGRE_GAMERESULT_LINES = 12;
+    // invalid gameresult times
+    DTGRE_GAMERESULT_TIMES = 13;
+}
+
 // RequestDTData - request DT Data
 message RequestDTData {
     // mode
-    string mode = 1;
+    string mode = 1 [deprecated = true];
     // startTime
     string startTime = 2;
     // endTime
     string endTime = 3;
+    // dtDataType
+    DTDataType dtDataType = 4;
+    // environment name
+    string envName = 5;
+    // business id
+    string businessid = 6;
+    // game code
+    string gameCode = 7;
+    // player name
+    string playerName = 8;
 
     // token - You need to have a valid token in order to get back correctly
     string token = 100;    
@@ -267,12 +316,47 @@ message DTTodayGameData {
     int32 gameNums = 3;
 }
 
+// DTGPKGameResult -
+message DTGPKGameResult {
+    string ID = 1;
+    string businessID = 2;
+    string playerName = 3;
+    string gameCode = 4;
+    float win = 5;
+    float bet = 6;
+    float off = 7;
+    int32 lines = 8;
+    float moneyStart = 9;
+    float moneyEnd = 10;
+    string playerIP = 11;
+    string dataState = 12;
+    string gameTime = 13;
+    string clientType = 14;
+    string currency = 15;
+    bool isComplete = 16;
+    string giftFreeID = 17;
+    string gameData = 18;
+    string gameResult = 19;
+    bool hasSubGame = 20;
+
+    DTGameResultErr errCode = 200;
+}
+
+// DTGPKCheckGameResult - 
+message DTGPKCheckGameResult {
+    repeated DTGPKGameResult lst = 1;
+
+    int32 errNums = 10;
+}
+
 // ReplyDTData - reply DT Data
 message ReplyDTData {
     // gameReport
     repeated DTBusinessGameReport gameReports = 1;
     // todayGameData
     DTTodayGameData todayGameData = 2;
+    // checkGameResultGPK
+    DTGPKCheckGameResult checkGameResultGPK = 3;
 }
 
 // RequestCrunchBaseCompany - request a company infomation in crunchbase
@@ -284,6 +368,7 @@ message RequestCrunchBaseCompany {
 enum CrawlerType {
     CT_TRANSLATE2 = 0;
     CT_CB_COMPANY = 1;
+    CT_DTDATA = 2;
 }
 
 // RequestTranslate2 - request translate
@@ -312,6 +397,7 @@ message RequestCrawler {
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;
         RequestTranslate2 translate2 = 101;
+        RequestDTData dtdata = 102;
     }
 }
 
@@ -322,6 +408,7 @@ message ReplyCrawler {
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;
         TranslateResult translateResult = 101;
+        ReplyDTData dtdata = 102;
     }
 }
 

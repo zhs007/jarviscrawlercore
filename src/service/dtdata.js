@@ -1,9 +1,5 @@
 const messages = require('../../proto/result_pb');
-const {
-  dtbkbot,
-  MODE_GAMETODAYDATA,
-  MODE_GAMEDATAREPORT,
-} = require('../dtbkbot/dtbkbot');
+const {dtbkbot} = require('../dtbkbot/dtbkbot');
 const {newDTBusinessGameReport} = require('../utils');
 
 /**
@@ -18,19 +14,45 @@ function callGetDTData(browser, cfgfile, call, callback) {
       browser,
       cfgfile,
       false,
-      call.request.getMode(),
+      call.request.getEnvname(),
+      call.request.getDtdatatype(),
+      call.request.getBusinessid(),
+      call.request.getGamecode(),
+      call.request.getPlayername(),
       call.request.getStarttime(),
       call.request.getEndtime()
   )
       .then((ret) => {
+        if (ret == undefined || !ret.ret) {
+          callback('no result', null);
+
+          return;
+        }
+
+        if (ret.error) {
+          callback(ret.error, null);
+
+          return;
+        }
+
         const reply = new messages.ReplyDTData();
 
-        if (call.request.getMode() == MODE_GAMETODAYDATA) {
-          reply.setTodaygamedata(ret);
-        } else if (call.request.getMode() == MODE_GAMEDATAREPORT) {
-          for (let i = 0; i < ret.length; ++i) {
-            reply.addGamereports(newDTBusinessGameReport(ret[i]));
+        if (
+          call.request.getDtdatatype() == messages.DTDataType.DT_DT_TODAYGAMEDATA
+        ) {
+          reply.setTodaygamedata(ret.ret);
+        } else if (
+          call.request.getDtdatatype() ==
+        messages.DTDataType.DT_DT_BUSINESSGAMEREPORT
+        ) {
+          for (let i = 0; i < ret.ret.length; ++i) {
+            reply.addGamereports(newDTBusinessGameReport(ret.ret[i]));
           }
+        } else if (
+          call.request.getDtdatatype() ==
+        messages.DTDataType.DT_DT_GPKCHECKGAMERESULT
+        ) {
+          reply.setCheckgameresultgpk(ret.ret);
         }
 
         callback(null, reply);

@@ -32,7 +32,7 @@ async function confluencebot(cfgfile, headless) {
   await page.click('#loginButton');
 
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-    console.log('catch a err ', err);
+    console.log('confluencebot:waitForNavigation ', err);
   });
 
   await runActions(page, cfg);

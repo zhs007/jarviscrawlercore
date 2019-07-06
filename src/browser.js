@@ -10,6 +10,7 @@ async function startBrowser(headless) {
       headless: false,
       devtools: true,
       slowMo: 10,
+      defaultViewport: null,
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',

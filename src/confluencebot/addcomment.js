@@ -17,7 +17,7 @@ async function addComment(page, cfg, pageid, comment) {
   await page.type('.hidden.tinymce-editor', comment);
   await page.click('#rte-button-publish');
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-    console.log('catch a err ', err);
+    console.log('confluencebot.addComment:waitForNavigation ', err);
   });
 }
 

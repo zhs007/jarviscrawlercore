@@ -61,7 +61,7 @@ async function crunchbaseexec(program, version) {
 
         // await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          console.log('crunchbaseexec ', err);
 
           if (headless) {
             process.exit(-1);

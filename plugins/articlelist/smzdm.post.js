@@ -46,7 +46,7 @@ async function getArticles(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('iheima.main:getArticles.evaluate', err);
+    console.log('smzdm.post:getArticles.evaluate', err);
 
     errret = err;
   });

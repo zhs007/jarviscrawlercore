@@ -229,7 +229,7 @@ async function dtbkbot(
     await page.close();
   }
 
-  return {ret: ret};
+  return ret;
 }
 
 exports.dtbkbot = dtbkbot;

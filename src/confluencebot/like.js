@@ -13,7 +13,7 @@ async function likePage(page, cfg, pageid) {
   await page.waitForSelector('.like-button');
   await page.click('.like-button');
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-    console.log('catch a err ', err);
+    console.log('confluencebot.likePage:waitForNavigation ', err);
   });
 }
 

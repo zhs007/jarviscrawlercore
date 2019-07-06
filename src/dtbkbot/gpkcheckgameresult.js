@@ -1,4 +1,6 @@
-const {newDTTodayGameData} = require('../utils');
+const {newDTGPKCheckGameResult} = require('../utils');
+const {mgrDTGame} = require('./games/allgames');
+const messages = require('../../proto/result_pb');
 
 /**
  * wait4RightFrame
@@ -181,7 +183,7 @@ async function checkGPKGameResult(
         const gametime = ele.children[13].innerText;
         const clienttype = ele.children[15].innerText;
         const currency = ele.children[17].innerText;
-        const iscomplete = (ele.children[18].innerText == 'YES');
+        const iscomplete = ele.children[18].innerText == 'YES';
         const giftfreeid = ele.children[19].innerText;
 
         let gamedata = '';
@@ -203,7 +205,7 @@ async function checkGPKGameResult(
           subgame = true;
         }
 
-        arr.push({
+        const curgr = {
           id: id,
           businessid: businessid,
           playername: playername,
@@ -223,8 +225,14 @@ async function checkGPKGameResult(
           giftfreeid: giftfreeid,
           gamedata: gamedata,
           gameresult: gameresult,
-          subgame: subgame,
-        });
+          hassubgame: subgame,
+        };
+
+        if (ids.length == 2 && ids[0] != gamecode) {
+          curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
+        }
+
+        arr.push(curgr);
       }
     }
 
@@ -233,98 +241,23 @@ async function checkGPKGameResult(
     return arr;
   });
 
-  console.log(lst);
+  let errnums = 0;
+  for (let i = 0; i < lst.length; ++i) {
+    mgrDTGame.checkGameResult(lst[i]);
 
-  return {ret: lst};
-
-  // 等待页面加载
-  await rightFrame
-      .waitForFunction(() => {
-        if (typeof jarvisCrawlerCoreVer === 'string') {
-          const placeul = getElement('.placeul');
-
-          if (
-            placeul &&
-          placeul.children.length == 3 &&
-          placeul.children[2].innerText == 'GPK游戏记录'
-          ) {
-            const btncx = getElementWithDefaultValue('.scbtn', '查询');
-            if (btncx) {
-              btncx.className = 'scbtn cx';
-
-              return true;
-            }
-          }
-        }
-
-        return false;
-      })
-      .catch((err) => {
-        console.log('checkGPKGameResult:waitFor.yxjl', err);
-      });
-
-  await rightFrame.click('.scbtn.cx');
-
-  await rightFrame.waitFor(60 * 1000 * 3);
-
-  // 等待页面加载
-  await rightFrame
-      .waitForFunction(() => {
-        if (typeof jarvisCrawlerCoreVer === 'string') {
-          const btncx = getElementWithDefaultValue('.scbtn', '查询');
-          //   console.log(btncx);
-
-          if (btncx) {
-            const paginList = getElement('.paginList');
-            // console.log(paginList);
-
-            if (paginList) {
-              const paginListI = paginList.getElementsByTagName('I');
-              //   console.log(paginListI.length);
-
-              if (paginListI.length > 0) {
-              // console.log(paginListI[0].innerText);
-
-                if (parseInt(paginListI[0].innerText) > 0) {
-                  paginListI[0].className = 'blue gamenums';
-                  return true;
-                }
-              }
-            }
-          }
-        }
-
-        return false;
-      })
-      .catch((err) => {
-        console.log('checkGPKGameResult:waitFor.paginList', err);
-      });
-
-  const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
-    return parseInt(ele.innerText);
-  });
-
-  const {bet, win} = await rightFrame.$$eval('tr', (eles) => {
-    if (eles.length > 2) {
-      const curtr = eles[eles.length - 1];
-      if (curtr.children.length == 6) {
-        return {
-          bet: parseFloat(curtr.children[2].innerText.replace(/,/g, '')),
-          win: parseFloat(curtr.children[3].innerText.replace(/,/g, '')),
-        };
-      }
+    if (lst[i].errcode != messages.DTGameResultErr.DTGRE_NOERR) {
+      ++errnums;
     }
-  });
+  }
 
-  console.log('gamenums - ' + gamenums);
-  console.log('bet - ' + bet);
-  console.log('win - ' + win);
+  const ret = {
+    lst: lst,
+    errnums: errnums,
+  };
 
-  return newDTTodayGameData({
-    gameNums: gamenums,
-    totalBet: bet,
-    totalWin: win,
-  });
+  console.log(ret);
+
+  return {ret: newDTGPKCheckGameResult(ret)};
 }
 
 exports.onRightFrameLoadedGPKCGR = onRightFrameLoadedGPKCGR;

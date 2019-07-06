@@ -62,7 +62,7 @@ async function allUpdates(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('allUpdates.evaluate', err);
+    console.log('confluencebot.allUpdates.evaluate', err);
   });
 
   return {

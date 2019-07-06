@@ -76,4 +76,40 @@ class WaitRightFrame {
   }
 }
 
+/**
+ * isArrayNumberNM
+ * @param {array} arr - url
+ * @param {number} n - arr[n][m]
+ * @param {number} m - arr[n][m]
+ * @return {bool} isArrayNumberNM - arr === arr[n][m] && typeof arr[n][m] === 'number'
+ */
+function isArrayNumberNM(arr, n, m) {
+  if (!Array.isArray(arr)) {
+    return false;
+  }
+
+  if (arr.length != n) {
+    return false;
+  }
+
+  for (let i = 0; i < n; ++i) {
+    if (!Array.isArray(arr[i])) {
+      return false;
+    }
+
+    if (arr[i].length != m) {
+      return false;
+    }
+
+    for (let j = 0; j < m; ++j) {
+      if (typeof arr[i][j] !== 'number') {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 exports.WaitRightFrame = WaitRightFrame;
+exports.isArrayNumberNM = isArrayNumberNM;

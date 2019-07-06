@@ -40,14 +40,19 @@ function callGetDTData(browser, cfgfile, call, callback) {
         if (
           call.request.getDtdatatype() == messages.DTDataType.DT_DT_TODAYGAMEDATA
         ) {
-          reply.setTodaygamedata(ret);
+          reply.setTodaygamedata(ret.ret);
         } else if (
           call.request.getDtdatatype() ==
         messages.DTDataType.DT_DT_BUSINESSGAMEREPORT
         ) {
-          for (let i = 0; i < ret.length; ++i) {
-            reply.addGamereports(newDTBusinessGameReport(ret[i]));
+          for (let i = 0; i < ret.ret.length; ++i) {
+            reply.addGamereports(newDTBusinessGameReport(ret.ret[i]));
           }
+        } else if (
+          call.request.getDtdatatype() ==
+        messages.DTDataType.DT_DT_GPKCHECKGAMERESULT
+        ) {
+          reply.setCheckgameresultgpk(ret.ret);
         }
 
         callback(null, reply);

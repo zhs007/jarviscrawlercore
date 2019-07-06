@@ -352,6 +352,120 @@ function newDTTodayGameData(obj) {
 }
 
 /**
+ * new DTGPKGameResult with object
+ * @param {object} obj - DTGPKGameResult object
+ * @return {messages.DTGPKGameResult} result - DTGPKGameResult
+ */
+function newDTGPKGameResult(obj) {
+  const result = new messages.DTGPKGameResult();
+
+  if (obj.id) {
+    result.setId(obj.id);
+  }
+
+  if (obj.businessid) {
+    result.setBusinessid(obj.businessid);
+  }
+
+  if (obj.playername) {
+    result.setPlayername(obj.playername);
+  }
+
+  if (obj.gamecode) {
+    result.setGamecode(obj.gamecode);
+  }
+
+  if (typeof obj.win === 'number') {
+    result.setWin(obj.win);
+  }
+
+  if (typeof obj.bet === 'number') {
+    result.setBet(obj.bet);
+  }
+
+  if (typeof obj.off === 'number') {
+    result.setOff(obj.off);
+  }
+
+  if (typeof obj.lines === 'number') {
+    result.setLines(obj.lines);
+  }
+
+  if (typeof obj.moneystart === 'number') {
+    result.setMoneystart(obj.moneystart);
+  }
+
+  if (typeof obj.moneyend === 'number') {
+    result.setMoneyend(obj.moneyend);
+  }
+
+  if (obj.playerip) {
+    result.setPlayerip(obj.playerip);
+  }
+
+  if (obj.datastate) {
+    result.setDatastate(obj.datastate);
+  }
+
+  if (obj.gametime) {
+    result.setGametime(obj.gametime);
+  }
+
+  if (obj.clienttype) {
+    result.setClienttype(obj.clienttype);
+  }
+
+  if (obj.currency) {
+    result.setCurrency(obj.currency);
+  }
+
+  if (typeof obj.iscomplete === 'bool') {
+    result.setIscomplete(obj.iscomplete);
+  }
+
+  if (obj.giftfreeid) {
+    result.setGiftfreeid(obj.giftfreeid);
+  }
+
+  if (obj.gamedata) {
+    result.setGamedata(obj.gamedata);
+  }
+
+  if (obj.gameresult) {
+    result.setGameresult(obj.gameresult);
+  }
+
+  if (typeof obj.hassubgame === 'bool') {
+    result.setHassubgame(obj.hassubgame);
+  }
+
+  if (typeof obj.errcode === 'number') {
+    result.setErrcode(obj.errcode);
+  }
+
+  return result;
+}
+
+/**
+ * new DTGPKCheckGameResult with object
+ * @param {object} obj - DTGPKCheckGameResult object
+ * @return {messages.DTGPKCheckGameResult} result - DTGPKCheckGameResult
+ */
+function newDTGPKCheckGameResult(obj) {
+  const result = new messages.DTGPKCheckGameResult();
+
+  for (let i = 0; i < obj.lst.length; ++i) {
+    result.addLst(newDTGPKGameResult(obj.lst[i]), i);
+  }
+
+  if (obj.errnums) {
+    result.setErrnums(obj.errnums);
+  }
+
+  return result;
+}
+
+/**
  * new CrunchBaseOrganization with object
  * @param {object} obj - CrunchBaseOrganization object
  * @return {messages.CrunchBaseOrganization} result - CrunchBaseOrganization
@@ -710,6 +824,8 @@ exports.attachJQuery = attachJQuery;
 exports.attachJarvisCrawlerCore = attachJarvisCrawlerCore;
 exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
+exports.newDTGPKGameResult = newDTGPKGameResult;
+exports.newDTGPKCheckGameResult = newDTGPKCheckGameResult;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
 exports.newCrunchBaseInvestor = newCrunchBaseInvestor;

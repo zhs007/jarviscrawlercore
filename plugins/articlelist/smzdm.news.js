@@ -52,7 +52,7 @@ async function getArticles(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('iheima.main:getArticles.evaluate', err);
+    console.log('smzdm.news:getArticles.evaluate', err);
 
     errret = err;
   });

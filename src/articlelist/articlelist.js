@@ -45,7 +45,7 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
         waitUntil: 'domcontentloaded',
         timeout: 0,
       }).catch((err) => {
-    console.log('page.goto', url, err);
+    console.log('getArticleList:page.goto', url, err);
   });
 
   await attachJQuery(page);

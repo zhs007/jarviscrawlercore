@@ -39,7 +39,7 @@ async function getDTData(
       starttime,
       endtime
   ).catch((err) => {
-    errstr = err.toString();
+    errstr = 'dtbkbot ' + err.toString();
   });
 
   if (errstr) {
@@ -66,6 +66,8 @@ async function getDTData(
     for (let i = 0; i < ret.ret.length; ++i) {
       reply.addGamereports(newDTBusinessGameReport(ret.ret[i]));
     }
+  } else if (dtDataType == messages.DTDataType.DT_DT_GPKCHECKGAMERESULT) {
+    reply.setCheckgameresultgpk(ret.ret);
   }
 
   return {dtdata: reply};

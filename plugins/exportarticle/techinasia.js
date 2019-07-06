@@ -29,13 +29,9 @@ async function exportArticle(page) {
         return element.innerHTML;
       });
 
-  //   try {
   await page.setContent(dom).catch((err) => {
     console.log('techinasia.article.exportArticle', err);
   });
-  //   } catch (err) {
-  //     console.log('techinasia.article.exportArticle try', err);
-  //   }
 
   let errret = undefined;
   const ret = await page.evaluate(async () => {

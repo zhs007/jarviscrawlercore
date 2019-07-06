@@ -152,9 +152,90 @@ async function checkGPKGameResult(
 
   await wait4RightFrame(rightFrame);
 
-  console.log('haha1');
+  // console.log('haha1');
 
-  return {ret: undefined};
+  const lst = await rightFrame.$$eval('tr', (eles) => {
+    const arr = [];
+    for (let i = 1; i < eles.length - 1; ++i) {
+      if (eles[i].children.length == 22) {
+        const ele = eles[i];
+
+        let id = '';
+        const fullid = ele.children[0].innerText;
+        const ids = fullid.split('#');
+        if (ids.length == 2) {
+          id = ids[1];
+        }
+
+        const businessid = ele.children[1].innerText;
+        const playername = ele.children[2].innerText;
+        const gamecode = ele.children[3].innerText;
+        const win = parseFloat(ele.children[5].innerText);
+        const bet = parseFloat(ele.children[6].innerText);
+        const off = parseFloat(ele.children[7].innerText);
+        const lines = parseFloat(ele.children[8].innerText);
+        const moneystart = parseFloat(ele.children[9].innerText);
+        const moneyend = parseFloat(ele.children[10].innerText);
+        const playerip = ele.children[11].innerText;
+        const datastate = ele.children[12].innerText;
+        const gametime = ele.children[13].innerText;
+        const clienttype = ele.children[15].innerText;
+        const currency = ele.children[17].innerText;
+        const iscomplete = (ele.children[18].innerText == 'YES');
+        const giftfreeid = ele.children[19].innerText;
+
+        let gamedata = '';
+        const lstgamedataa = ele.children[14].getElementsByTagName('a');
+        if (lstgamedataa.length > 0) {
+          gamedata = lstgamedataa[0].title;
+        }
+
+        let gameresult = '';
+        const lstgameresulta = ele.children[20].getElementsByTagName('a');
+        if (lstgameresulta.length > 0) {
+          gameresult = lstgameresulta[0].title;
+        }
+
+        let subgame = false;
+        const lstinput = ele.children[21].getElementsByTagName('input');
+        if (lstinput.length > 0) {
+          lstinput[0].className = 'scbtn subgame' + id;
+          subgame = true;
+        }
+
+        arr.push({
+          id: id,
+          businessid: businessid,
+          playername: playername,
+          gamecode: gamecode,
+          win: win,
+          bet: bet,
+          off: off,
+          lines: lines,
+          moneystart: moneystart,
+          moneyend: moneyend,
+          playerip: playerip,
+          datastate: datastate,
+          gametime: gametime,
+          clienttype: clienttype,
+          currency: currency,
+          iscomplete: iscomplete,
+          giftfreeid: giftfreeid,
+          gamedata: gamedata,
+          gameresult: gameresult,
+          subgame: subgame,
+        });
+      }
+    }
+
+    console.log(arr);
+
+    return arr;
+  });
+
+  console.log(lst);
+
+  return {ret: lst};
 
   // 等待页面加载
   await rightFrame

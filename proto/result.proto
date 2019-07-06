@@ -235,6 +235,28 @@ enum DTDataType {
     DT_DT_GPKCHECKGAMERESULT = 2;
 }
 
+// DTGameResultErr -
+enum DTGameResultErr {
+    // id.gamecode != gamecode
+    DTGRE_GAMECODE = 0;
+    // invalid lines
+    DTGRE_LINES = 1;
+    // moneyEnd != moneyStart + off
+    DTGRE_MONEYOFF = 2;
+    // off != win - bet
+    DTGRE_WINBETOFF = 3;
+    // invalid gamedata
+    DTGRE_GAMEDATA = 4;
+    // invalid gameresult bet
+    DTGRE_GAMERESULT_BET = 5;
+    // invalid gameresult win
+    DTGRE_GAMERESULT_WIN = 6;
+    // invalid gameresult sumwin
+    DTGRE_GAMERESULT_SUM_WIN = 7;
+    // invalid iscomplete
+    DTGRE_ISCOMPLETE = 8;
+}
+
 // RequestDTData - request DT Data
 message RequestDTData {
     // mode
@@ -284,12 +306,47 @@ message DTTodayGameData {
     int32 gameNums = 3;
 }
 
+// DTGPKGameResult -
+message DTGPKGameResult {
+    string ID = 1;
+    string businessID = 2;
+    string playerName = 3;
+    string gameCode = 4;
+    float win = 5;
+    float bet = 6;
+    float off = 7;
+    int32 lines = 8;
+    float moneyStart = 9;
+    float moneyEnd = 10;
+    string playerIP = 11;
+    string dataState = 12;
+    string gameTime = 13;
+    string clientType = 14;
+    string currency = 15;
+    bool isComplete = 16;
+    string giftFreeID = 17;
+    string gameData = 18;
+    string gameResult = 19;
+    bool hasSubGame = 20;
+
+    DTGameResultErr errCode = 200;
+}
+
+// DTGPKCheckGameResult - 
+message DTGPKCheckGameResult {
+    repeated DTGPKGameResult lst = 1;
+
+    int32 errNums = 10;
+}
+
 // ReplyDTData - reply DT Data
 message ReplyDTData {
     // gameReport
     repeated DTBusinessGameReport gameReports = 1;
     // todayGameData
     DTTodayGameData todayGameData = 2;
+    // checkGameResultGPK
+    DTGPKCheckGameResult checkGameResultGPK = 3;
 }
 
 // RequestCrunchBaseCompany - request a company infomation in crunchbase

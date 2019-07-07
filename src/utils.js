@@ -810,6 +810,16 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
   }
 }
 
+/**
+ * hasChinese
+ * @param {string} str - string
+ * @return {bool} hasChinese - has Chinese
+ */
+function hasChinese(str) {
+  const pattern = new RegExp('[\u4E00-\u9FA5\u3000-\u303F]+');
+  return pattern.test(str);
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -837,3 +847,4 @@ exports.mouseClickEle = mouseClickEle;
 exports.mouseClickFrameEleEx = mouseClickFrameEleEx;
 exports.mouseHoldFrameEleEx = mouseHoldFrameEleEx;
 exports.sleep = sleep;
+exports.hasChinese = hasChinese;

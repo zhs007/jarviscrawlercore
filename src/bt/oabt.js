@@ -1,26 +1,44 @@
 /**
-   * oabt
-   * @param {object} browser - browser
-   * @param {object} page - page
-   * @param {string} url - oabt url
-   */
+ * oabt
+ * @param {object} browser - browser
+ * @param {object} page - page
+ * @param {string} url - oabt url
+ */
 async function oabt(browser, page, url) {
-  await page.evaluate(() => {
-    const jrxsg = getElementWithText('.toplevel', '今日限时购');
-    if (jrxsg) {
-      // 增加class，方便一次定位
-      // Increase class for easy positioning
-      jrxsg.className = 'toplevel jrxsg';
-      // 取消新窗口打开
-      // Cancel new window open
-      jrxsg.removeAttribute('target');
-    }
-  }).catch((err) => {
-    console.log('kaola.evaluate', err);
-  });
+  console.log('oabt');
 
-  await page.click('.toplevel.jrxsg');
+  const lst = await page.$$eval('li', (eles) => {
+    console.log(eles.length);
+
+    for (let i = 0; i < eles.length; ++i) {
+      let id = '';
+      let magnet = '';
+      let ed2k = '';
+
+      const attr = eles[i].attributes;
+      for (let j = 0; j < attr.length; ++j) {
+        if (attr[j].name == 'data-id') {
+          id = attr[j].value;
+        }
+
+        if (attr[j].name == 'data-magnet') {
+          magnet = attr[j].value;
+        }
+
+        if (attr[j].name == 'data-ed2k') {
+          ed2k = attr[j].value;
+        }
+      }
+
+      if (id) {
+        console.log(id + ' ' + magnet + ' ' + ed2k);
+      }
+
+      if (eles[i].children.length == 3) {
+        console.log(eles[i].children[1].innerText);
+      }
+    }
+  });
 }
 
 exports.oabt = oabt;
-

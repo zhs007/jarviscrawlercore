@@ -1,5 +1,11 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-07-09
+
+```
+node ./bin/jarviscrawler.js bt ./cfg/btcfg.yaml -n oabt
+```
+
 ### 2019-06-23
 
 关于爬虫，其实这次写这个项目，并不是希望把数据全拉下来（不现实也没啥必要）。  

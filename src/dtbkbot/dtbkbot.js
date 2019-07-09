@@ -94,13 +94,13 @@ async function dtbkbot(
   });
 
   // 处理frames
-  const topFrame = page.frames().find((frame) => {
+  const topFrame = await page.frames().find((frame) => {
     return frame.name() === 'topFrame';
   });
-  const leftFrame = page.frames().find((frame) => {
+  const leftFrame = await page.frames().find((frame) => {
     return frame.name() === 'leftFrame';
   });
-  const rightFrame = page.frames().find((frame) => {
+  const rightFrame = await page.frames().find((frame) => {
     return frame.name() === 'rightFrame';
   });
 

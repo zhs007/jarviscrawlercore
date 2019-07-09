@@ -6524,12 +6524,19 @@ proto.jarviscrawlercore.DTTodayGameData.prototype.setGamenums = function(value) 
  * @constructor
  */
 proto.jarviscrawlercore.DTGPKGameResult = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.DTGPKGameResult.repeatedFields_, null);
 };
 goog.inherits(proto.jarviscrawlercore.DTGPKGameResult, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
   proto.jarviscrawlercore.DTGPKGameResult.displayName = 'proto.jarviscrawlercore.DTGPKGameResult';
 }
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.DTGPKGameResult.repeatedFields_ = [100];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -6579,6 +6586,9 @@ proto.jarviscrawlercore.DTGPKGameResult.toObject = function(includeInstance, msg
     gamedata: jspb.Message.getFieldWithDefault(msg, 18, ""),
     gameresult: jspb.Message.getFieldWithDefault(msg, 19, ""),
     hassubgame: jspb.Message.getFieldWithDefault(msg, 20, false),
+    dtbaseid: jspb.Message.getFieldWithDefault(msg, 21, ""),
+    childrenList: jspb.Message.toObjectList(msg.getChildrenList(),
+    proto.jarviscrawlercore.DTGPKGameResult.toObject, includeInstance),
     errcode: jspb.Message.getFieldWithDefault(msg, 200, 0)
   };
 
@@ -6695,6 +6705,15 @@ proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader = function(m
     case 20:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setHassubgame(value);
+      break;
+    case 21:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDtbaseid(value);
+      break;
+    case 100:
+      var value = new proto.jarviscrawlercore.DTGPKGameResult;
+      reader.readMessage(value,proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader);
+      msg.addChildren(value);
       break;
     case 200:
       var value = /** @type {!proto.jarviscrawlercore.DTGameResultErr} */ (reader.readEnum());
@@ -6867,6 +6886,21 @@ proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter = function(messa
     writer.writeBool(
       20,
       f
+    );
+  }
+  f = message.getDtbaseid();
+  if (f.length > 0) {
+    writer.writeString(
+      21,
+      f
+    );
+  }
+  f = message.getChildrenList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      100,
+      f,
+      proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter
     );
   }
   f = message.getErrcode();
@@ -7180,6 +7214,52 @@ proto.jarviscrawlercore.DTGPKGameResult.prototype.getHassubgame = function() {
 /** @param {boolean} value */
 proto.jarviscrawlercore.DTGPKGameResult.prototype.setHassubgame = function(value) {
   jspb.Message.setProto3BooleanField(this, 20, value);
+};
+
+
+/**
+ * optional string dtbaseid = 21;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.getDtbaseid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.setDtbaseid = function(value) {
+  jspb.Message.setProto3StringField(this, 21, value);
+};
+
+
+/**
+ * repeated DTGPKGameResult children = 100;
+ * @return {!Array<!proto.jarviscrawlercore.DTGPKGameResult>}
+ */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.getChildrenList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.DTGPKGameResult>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DTGPKGameResult, 100));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.DTGPKGameResult>} value */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.setChildrenList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 100, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.DTGPKGameResult=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.DTGPKGameResult}
+ */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.addChildren = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 100, opt_value, proto.jarviscrawlercore.DTGPKGameResult, opt_index);
+};
+
+
+proto.jarviscrawlercore.DTGPKGameResult.prototype.clearChildrenList = function() {
+  this.setChildrenList([]);
 };
 
 
@@ -9195,7 +9275,9 @@ proto.jarviscrawlercore.DTGameResultErr = {
   DTGRE_GAMESTATE: 10,
   DTGRE_GAMERESULT: 11,
   DTGRE_GAMERESULT_LINES: 12,
-  DTGRE_GAMERESULT_TIMES: 13
+  DTGRE_GAMERESULT_TIMES: 13,
+  DTGRE_NOCHILDREN: 15,
+  DTGRE_CHILDREN_ERROR: 16
 };
 
 /**

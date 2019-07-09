@@ -111,7 +111,7 @@ async function dtbkbot(
   }
 
   if (leftFrame && rightFrame) {
-    const waitRightFrame = new WaitRightFrame(page, rightFrame);
+    const waitRightFrame = new WaitRightFrame(page);
 
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {

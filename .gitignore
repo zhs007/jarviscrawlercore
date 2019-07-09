@@ -64,5 +64,6 @@ cfg/dtconfluence.yaml
 cfg/service.yaml
 cfg/dt*bot.yaml
 cfg/crunchbase.yaml
+cfg/btcfg.yaml
 output
 output/*

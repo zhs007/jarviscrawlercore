@@ -75,8 +75,8 @@ startGetDTData(
     'dttest1',
     messages.DTDataType.DT_DT_GPKCHECKGAMERESULT,
     'NNTI_TEST_TEST1',
-    'restaurant',
-    'ZERO111',
-    '2019-07-04 00:00:00',
-    '2019-07-05 00:00:00'
+    'mysticalstones',
+    '',
+    '2019-07-09 00:00:00',
+    '2019-07-10 00:00:00'
 );

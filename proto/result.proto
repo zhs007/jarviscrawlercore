@@ -265,6 +265,10 @@ enum DTGameResultErr {
     DTGRE_GAMERESULT_LINES = 12;
     // invalid gameresult times
     DTGRE_GAMERESULT_TIMES = 13;
+    // no children
+    DTGRE_NOCHILDREN = 15;
+    // no children error
+    DTGRE_CHILDREN_ERROR = 16;
 }
 
 // RequestDTData - request DT Data
@@ -338,6 +342,9 @@ message DTGPKGameResult {
     string gameData = 18;
     string gameResult = 19;
     bool hasSubGame = 20;
+    string dtbaseid = 21;
+
+    repeated DTGPKGameResult children = 100;
 
     DTGameResultErr errCode = 200;
 }

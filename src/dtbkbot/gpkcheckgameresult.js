@@ -1,4 +1,4 @@
-const {newDTGPKCheckGameResult} = require('../utils');
+const {newDTGPKCheckGameResult, sleep} = require('../utils');
 const {mgrDTGame} = require('./games/allgames');
 const messages = require('../../proto/result_pb');
 
@@ -32,6 +32,120 @@ async function wait4RightFrame(rightFrame) {
  */
 async function onRightFrameLoadedGPKCGR(rightFrame) {
   await wait4RightFrame(rightFrame);
+}
+
+/**
+ * get sub game
+ * @param {object} page - page
+ * @param {object} rightFrame - rightFrame
+ * @param {WaitRightFrame} waitRightFrame - waitRightFrame
+ * @param {string} gamecode - gamecode
+ * @param {string} gameid - gameid
+ * @return {object} result - {error: error, ret: result}
+ */
+async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
+  await rightFrame.click('.scbtn.subgame' + gameid);
+
+  const isdone = await waitRightFrame.wait4URL(
+      '/log/gpkbets!showSubGame.html?dto.id=' + gamecode + '%23' + gameid,
+      async () => {
+        console.log('It\'s done.');
+      },
+      3 * 60 * 1000
+  );
+
+  const subgameframe = await page.frames().find((frame) => {
+    return frame.name() === 'layui-layer-iframe1';
+  });
+
+  if (subgameframe) {
+    const lst = await subgameframe.$$eval('tr', (eles) => {
+      const arr = [];
+      for (let i = 1; i < eles.length - 1; ++i) {
+        if (eles[i].children.length == 19) {
+          const ele = eles[i];
+
+          let id = '';
+          const fullid = ele.children[0].innerText;
+          const ids = fullid.split('#');
+          if (ids.length == 2) {
+            id = ids[1];
+          }
+
+          const dtbaseid = ele.children[2].innerText;
+
+          const win = parseFloat(ele.children[3].innerText);
+          const bet = parseFloat(ele.children[4].innerText);
+          const off = parseFloat(ele.children[5].innerText);
+          const lines = parseFloat(ele.children[6].innerText);
+          const moneystart = parseFloat(ele.children[7].innerText);
+          const moneyend = parseFloat(ele.children[8].innerText);
+
+          const playerip = ele.children[9].innerText;
+          const datastate = ele.children[10].innerText;
+          const gametime = ele.children[11].innerText;
+
+          const clienttype = ele.children[13].innerText;
+          const currency = ele.children[15].innerText;
+          const iscomplete = ele.children[16].innerText == 'YES';
+          const giftfreeid = ele.children[17].innerText;
+
+          let gamedata = '';
+          const lstgamedataa = ele.children[12].getElementsByTagName('a');
+          if (lstgamedataa.length > 0) {
+            gamedata = lstgamedataa[0].title;
+          }
+
+          let gameresult = '';
+          const lstgameresulta = ele.children[18].getElementsByTagName('a');
+          if (lstgameresulta.length > 0) {
+            gameresult = lstgameresulta[0].title;
+          }
+
+          const curgr = {
+            id: id,
+            gamecode: gamecode,
+            win: win,
+            bet: bet,
+            off: off,
+            lines: lines,
+            moneystart: moneystart,
+            moneyend: moneyend,
+            playerip: playerip,
+            datastate: datastate,
+            gametime: gametime,
+            clienttype: clienttype,
+            currency: currency,
+            iscomplete: iscomplete,
+            giftfreeid: giftfreeid,
+            gamedata: gamedata,
+            gameresult: gameresult,
+            dtbaseid: dtbaseid,
+          };
+
+          if (ids.length == 2 && ids[0] != gamecode) {
+            curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
+          }
+
+          arr.push(curgr);
+        }
+      }
+
+      console.log(arr);
+
+      return arr;
+    });
+
+    await rightFrame.click(
+        '.layui-layer-ico.layui-layer-close.layui-layer-close1'
+    );
+
+    await sleep(1000);
+
+    return {ret: lst};
+  }
+
+  return {err: 'no sub game.'};
 }
 
 /**
@@ -241,6 +355,22 @@ async function checkGPKGameResult(
     return arr;
   });
 
+  for (let i = 0; i < lst.length; ++i) {
+    if (lst[i].hassubgame) {
+      const cursubgames = await getSubGame(
+          page,
+          rightFrame,
+          waitRightFrame,
+          lst[i].gamecode,
+          lst[i].id
+      );
+
+      if (cursubgames.ret) {
+        lst[i].children = cursubgames.ret;
+      }
+    }
+  }
+
   let errnums = 0;
   for (let i = 0; i < lst.length; ++i) {
     mgrDTGame.checkGameResult(lst[i]);
@@ -255,7 +385,7 @@ async function checkGPKGameResult(
     errnums: errnums,
   };
 
-  console.log(ret);
+  // console.log(ret);
 
   return {ret: newDTGPKCheckGameResult(ret)};
 }

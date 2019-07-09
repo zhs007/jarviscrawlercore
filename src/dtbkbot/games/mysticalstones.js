@@ -2,11 +2,11 @@ const {mgrDTGame} = require('./mgr');
 const {isArrayNumberNM} = require('../utils');
 const messages = require('../../../proto/result_pb');
 
-const GAMECODE = 'restaurant';
-const LINES = 25;
+const GAMECODE = 'mysticalstones';
+const LINES = 30;
 const TIMES = 1;
-const GAMEWIDTH = 6;
-const GAMEHEIGHT = 5;
+const GAMEWIDTH = 5;
+const GAMEHEIGHT = 3;
 
 /**
  * checkGameResult
@@ -36,7 +36,7 @@ function checkGameResult(gameresult) {
         return messages.DTGameResultErr.DTGRE_GAMERESULT;
       }
 
-      if (gr.lines != LINES && gr.lines != 1) {
+      if (gr.lines != LINES) {
         return messages.DTGameResultErr.DTGRE_GAMERESULT_LINES;
       }
 

@@ -32,7 +32,32 @@ class DTGamesMgr {
       if (func) {
         gameresult.errcode = func(gameresult);
 
-        return gameresult.errcode;
+        if (gameresult.errcode != messages.DTGameResultErr.DTGRE_NOERR) {
+          return gameresult.errcode;
+        }
+
+        if (gameresult.hassubgame) {
+          if (!Array.isArray(gameresult.children)) {
+            gameresult.errcode = messages.DTGameResultErr.DTGRE_NOCHILDREN;
+
+            return messages.DTGameResultErr.DTGRE_NOCHILDREN;
+          }
+
+          let hassuberr = false;
+          for (let i = 0; i < gameresult.children.length; ++i) {
+            const suberr = this.checkGameResult(gameresult.children[i]);
+
+            if (suberr != messages.DTGameResultErr.DTGRE_NOERR) {
+              hassuberr = true;
+            }
+          }
+
+          if (hassuberr) {
+            gameresult.errcode = messages.DTGameResultErr.DTGRE_CHILDREN_ERROR;
+          }
+
+          return messages.DTGameResultErr.DTGRE_CHILDREN_ERROR;
+        }
       }
     }
 
@@ -55,15 +80,19 @@ class DTGamesMgr {
       }
 
       if (!gameresult.giftfreeid) {
-        if (gameresult.moneyend != gameresult.moneystart + gameresult.off) {
-          return messages.DTGameResultErr.DTGRE_MONEYOFF;
+        if (!gameresult.hassubgame) {
+          if (gameresult.moneyend != gameresult.moneystart + gameresult.off) {
+            return messages.DTGameResultErr.DTGRE_MONEYOFF;
+          }
         }
       } else {
-        if (
-          gameresult.moneyend !=
-          gameresult.moneystart + gameresult.off + gameresult.bet
-        ) {
-          return messages.DTGameResultErr.DTGRE_MONEYOFF;
+        if (!gameresult.hassubgame) {
+          if (
+            gameresult.moneyend !=
+            gameresult.moneystart + gameresult.off + gameresult.bet
+          ) {
+            return messages.DTGameResultErr.DTGRE_MONEYOFF;
+          }
         }
       }
 

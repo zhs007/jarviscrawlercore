@@ -443,6 +443,10 @@ function newDTGPKGameResult(obj) {
     result.setErrcode(obj.errcode);
   }
 
+  if (Array.isArray(obj.children)) {
+    result.addChildren(newDTGPKGameResult(obj.children[i]), i);
+  }
+
   return result;
 }
 

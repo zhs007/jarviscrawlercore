@@ -159,6 +159,30 @@ message CrunchBaseOrganization {
     repeated CrunchBaseEmployee pastEmployees = 501;
 }
 
+enum BTResFileType {
+    BTRFT_ED2K = 0;
+    BTRFT_MAGNET = 1;
+}
+
+// BT Resource file infomation
+message BTResFileInfo {
+    BTResFileType type = 1;
+    string url = 2;
+}
+
+// BT Resource infomation
+message BTResInfo {
+    // fullname
+    string fullname = 1;
+    // name - name.chs name.eng
+    map<string, string> name = 2;
+    // resource id
+    string resid = 3;
+
+    // lst
+    repeated BTResFileInfo lst = 10;
+}
+
 // RequestTranslate - request translate
 message RequestTranslate {
     // text - source text

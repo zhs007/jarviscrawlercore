@@ -50,10 +50,7 @@ function checkGameResult(gameresult) {
         }
       }
 
-      if (
-        !gameresult.hassubgame &&
-        gr.realwin != gameresult.win
-      ) {
+      if (!gameresult.hassubgame && gr.realwin != gameresult.win) {
         return messages.DTGameResultErr.DTGRE_GAMERESULT_WIN;
       }
 
@@ -73,4 +70,13 @@ function checkGameResult(gameresult) {
   return mgrDTGame._checkBaseGameResult(gameresult);
 }
 
-mgrDTGame.regGame(GAMECODE, checkGameResult);
+/**
+ * countTotalFGNums
+ * @param {object} gameresult - gameresult
+ * @return {number} fgnums - fg nums
+ */
+function countTotalFGNums(gameresult) {
+  return 0;
+}
+
+mgrDTGame.regGame(GAMECODE, checkGameResult, countTotalFGNums);

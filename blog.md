@@ -16,6 +16,12 @@
 node ./bin/jarviscrawler.js bt ./cfg/btcfg.yaml -n oabt
 ```
 
+豆瓣查找  
+
+```
+node ./bin/jarviscrawler.js douban search -s "蜘蛛 侠" -d true
+```
+
 ### 2019-06-23
 
 关于爬虫，其实这次写这个项目，并不是希望把数据全拉下来（不现实也没啥必要）。  

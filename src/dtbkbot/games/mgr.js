@@ -10,15 +10,18 @@ class DTGamesMgr {
    */
   constructor() {
     this.mapCheckGameResult = {};
+    this.mapCountTotalFGNums = {};
   }
 
   /**
    * regGame
    * @param {string} gamecode - gamecode
    * @param {function} funcCheckGameResult - function checkGameResult(gameresult) errcode
+   * @param {function} funcCountTotalFGNums - function countTotalFGNums(gameresult) int
    */
-  regGame(gamecode, funcCheckGameResult) {
+  regGame(gamecode, funcCheckGameResult, funcCountTotalFGNums) {
     this.mapCheckGameResult[gamecode] = funcCheckGameResult;
+    this.mapCountTotalFGNums[gamecode] = funcCountTotalFGNums;
   }
 
   /**
@@ -83,6 +86,23 @@ class DTGamesMgr {
     }
 
     return messages.DTGameResultErr.DTGRE_NOERR;
+  }
+
+  /**
+   * countTotalFGNums
+   * @param {object} gameresult - gameresult
+   * @return {number} fgnums - fgnums
+   */
+  countTotalFGNums(gameresult) {
+    if (gameresult && gameresult.gamecode) {
+      const func = this.funcCountTotalFGNums[gameresult.gamecode];
+
+      if (func) {
+        return func(gameresult);
+      }
+    }
+
+    return 0;
   }
 
   /**

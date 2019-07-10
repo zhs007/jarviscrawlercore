@@ -45,100 +45,130 @@ async function onRightFrameLoadedGPKCGR(rightFrame) {
  */
 async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
   await rightFrame.click('.scbtn.subgame' + gameid);
+  const url =
+    '/log/gpkbets!showSubGame.html?dto.id=' + gamecode + '%23' + gameid;
 
   const isdone = await waitRightFrame.wait4URL(
-      '/log/gpkbets!showSubGame.html?dto.id=' + gamecode + '%23' + gameid,
+      url,
       async () => {
-        console.log('It\'s done.');
+        console.log('It\'s done. ' + url);
       },
       3 * 60 * 1000
   );
 
   const subgameframe = await page.frames().find((frame) => {
-    return frame.name() === 'layui-layer-iframe1';
+    return frame.name().indexOf('layui-layer-iframe') === 0;
   });
 
+  console.log('subgameframe ' + subgameframe);
+
   if (subgameframe) {
-    const lst = await subgameframe.$$eval('tr', (eles) => {
-      const arr = [];
-      for (let i = 1; i < eles.length - 1; ++i) {
-        if (eles[i].children.length == 19) {
-          const ele = eles[i];
-
-          let id = '';
-          const fullid = ele.children[0].innerText;
-          const ids = fullid.split('#');
-          if (ids.length == 2) {
-            id = ids[1];
-          }
-
-          const dtbaseid = ele.children[2].innerText;
-
-          const win = parseFloat(ele.children[3].innerText);
-          const bet = parseFloat(ele.children[4].innerText);
-          const off = parseFloat(ele.children[5].innerText);
-          const lines = parseFloat(ele.children[6].innerText);
-          const moneystart = parseFloat(ele.children[7].innerText);
-          const moneyend = parseFloat(ele.children[8].innerText);
-
-          const playerip = ele.children[9].innerText;
-          const datastate = ele.children[10].innerText;
-          const gametime = ele.children[11].innerText;
-
-          const clienttype = ele.children[13].innerText;
-          const currency = ele.children[15].innerText;
-          const iscomplete = ele.children[16].innerText == 'YES';
-          const giftfreeid = ele.children[17].innerText;
-
-          let gamedata = '';
-          const lstgamedataa = ele.children[12].getElementsByTagName('a');
-          if (lstgamedataa.length > 0) {
-            gamedata = lstgamedataa[0].title;
-          }
-
-          let gameresult = '';
-          const lstgameresulta = ele.children[18].getElementsByTagName('a');
-          if (lstgameresulta.length > 0) {
-            gameresult = lstgameresulta[0].title;
-          }
-
-          const curgr = {
-            id: id,
-            gamecode: gamecode,
-            win: win,
-            bet: bet,
-            off: off,
-            lines: lines,
-            moneystart: moneystart,
-            moneyend: moneyend,
-            playerip: playerip,
-            datastate: datastate,
-            gametime: gametime,
-            clienttype: clienttype,
-            currency: currency,
-            iscomplete: iscomplete,
-            giftfreeid: giftfreeid,
-            gamedata: gamedata,
-            gameresult: gameresult,
-            dtbaseid: dtbaseid,
-          };
-
-          if (ids.length == 2 && ids[0] != gamecode) {
-            curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
-          }
-
-          arr.push(curgr);
+    await subgameframe.waitForFunction(() => {
+      const lst = document.getElementsByTagName('tr');
+      for (let i = 0; i < lst.length; ++i) {
+        if (lst[i].children.length == 5) {
+          return true;
         }
       }
 
-      console.log(arr);
-
-      return arr;
+      return false;
     });
 
-    await rightFrame.click(
-        '.layui-layer-ico.layui-layer-close.layui-layer-close1'
-    );
+    console.log('subgameframe:waitForFunction ok.');
+
+    const lst = await subgameframe
+        .$$eval(
+            'tr',
+            (eles, gamecode) => {
+              console.log(eles);
+              console.log(gamecode);
+
+              const arr = [];
+              for (let i = 1; i < eles.length - 1; ++i) {
+                if (eles[i].children.length == 19) {
+                  const ele = eles[i];
+
+                  let id = '';
+                  const fullid = ele.children[0].innerText;
+                  const ids = fullid.split('#');
+                  if (ids.length == 2) {
+                    id = ids[1];
+                  }
+
+                  const dtbaseid = ele.children[2].innerText;
+
+                  const win = parseFloat(ele.children[3].innerText);
+                  const bet = parseFloat(ele.children[4].innerText);
+                  const off = parseFloat(ele.children[5].innerText);
+                  const lines = parseFloat(ele.children[6].innerText);
+                  const moneystart = parseFloat(ele.children[7].innerText);
+                  const moneyend = parseFloat(ele.children[8].innerText);
+
+                  const playerip = ele.children[9].innerText;
+                  const datastate = ele.children[10].innerText;
+                  const gametime = ele.children[11].innerText;
+
+                  const clienttype = ele.children[13].innerText;
+                  const currency = ele.children[15].innerText;
+                  const iscomplete = ele.children[16].innerText == 'YES';
+                  const giftfreeid = ele.children[17].innerText;
+
+                  let gamedata = '';
+                  const lstgamedataa = ele.children[12].getElementsByTagName('a');
+                  if (lstgamedataa.length > 0) {
+                    gamedata = lstgamedataa[0].title;
+                  }
+
+                  let gameresult = '';
+                  const lstgameresulta = ele.children[18].getElementsByTagName('a');
+                  if (lstgameresulta.length > 0) {
+                    gameresult = lstgameresulta[0].title;
+                  }
+
+                  const curgr = {
+                    id: id,
+                    gamecode: gamecode,
+                    win: win,
+                    bet: bet,
+                    off: off,
+                    lines: lines,
+                    moneystart: moneystart,
+                    moneyend: moneyend,
+                    playerip: playerip,
+                    datastate: datastate,
+                    gametime: gametime,
+                    clienttype: clienttype,
+                    currency: currency,
+                    iscomplete: iscomplete,
+                    giftfreeid: giftfreeid,
+                    gamedata: gamedata,
+                    gameresult: gameresult,
+                    dtbaseid: dtbaseid,
+                  };
+
+                  if (ids.length == 2 && ids[0] != gamecode) {
+                    curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
+                  }
+
+                  arr.push(curgr);
+                }
+              }
+
+              console.log(arr);
+
+              return arr;
+            },
+            gamecode
+        )
+        .catch((err) => {
+          return {error: 'getSubGame:subgameframe ' + err};
+        });
+
+    await rightFrame
+        .click('.layui-layer-ico.layui-layer-close.layui-layer-close1')
+        .catch((err) => {
+          return {error: 'getSubGame:click ' + err};
+        });
 
     await sleep(1000);
 
@@ -366,6 +396,8 @@ async function checkGPKGameResult(
       );
 
       if (cursubgames.ret) {
+        console.log('getSubGame ' + cursubgames.ret.length);
+
         lst[i].children = cursubgames.ret;
       }
     }
@@ -377,6 +409,8 @@ async function checkGPKGameResult(
 
     if (lst[i].errcode != messages.DTGameResultErr.DTGRE_NOERR) {
       ++errnums;
+
+      console.log('I got a error! ' + lst[i].id + ' ' + lst[i].errcode);
     }
   }
 
@@ -385,7 +419,7 @@ async function checkGPKGameResult(
     errnums: errnums,
   };
 
-  // console.log(ret);
+  console.log(ret.errnums);
 
   return {ret: newDTGPKCheckGameResult(ret)};
 }

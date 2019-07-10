@@ -444,7 +444,9 @@ function newDTGPKGameResult(obj) {
   }
 
   if (Array.isArray(obj.children)) {
-    result.addChildren(newDTGPKGameResult(obj.children[i]), i);
+    for (let i = 0; i < obj.children.length; ++i) {
+      result.addChildren(newDTGPKGameResult(obj.children[i]), i);
+    }
   }
 
   return result;

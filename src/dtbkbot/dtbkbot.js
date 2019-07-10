@@ -65,6 +65,16 @@ async function dtbkbot(
     console.log('PAGE LOG:', msg.text());
   });
 
+  await page
+      .setViewport({
+        width: 1920,
+        height: 920,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        console.log('dtbkbot.setViewport', err);
+      });
+
   await page.goto(envcfg.url).catch((err) => {
     console.log('dtbkbot.goto', err);
   });

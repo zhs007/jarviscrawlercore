@@ -1,4 +1,5 @@
 const messages = require('../../../proto/result_pb');
+const {getGameID} = require('../utils');
 
 /**
  * DTGamesMgr class
@@ -18,6 +19,70 @@ class DTGamesMgr {
    */
   regGame(gamecode, funcCheckGameResult) {
     this.mapCheckGameResult[gamecode] = funcCheckGameResult;
+  }
+
+  /**
+   * hasSubGame
+   * @param {object} parentResult - parentResult
+   * @param {object} id - id
+   * @return {bool} hasSubGame - has sub game
+   */
+  hasSubGame(parentResult, id) {
+    for (let i = 0; i < parentResult.children.length; ++i) {
+      if (parentResult.children[i].id == id) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * checkSubGameDTGameID
+   * @param {object} parentResult - parentResult
+   * @param {object} subgameResult - subgameResult
+   * @return {DTGameResultErr} result - DTGameResultErr
+   */
+  checkSubGameDTGameID(parentResult, subgameResult) {
+    if (subgameResult.rootgame) {
+      return messages.DTGameResultErr.DTGRE_NOERR;
+    }
+
+    if (!subgameResult.dtbaseid) {
+      return messages.DTGameResultErr.DTGRE_NODTBASEID;
+    }
+
+    let dtbaseid = undefined;
+    try {
+      dtbaseid = JSON.parse(subgameResult.dtbaseid);
+    } catch (err) {
+      return messages.DTGameResultErr.DTGRE_DTBASEID_ERROR;
+    }
+
+    if (!dtbaseid.baseid) {
+      return messages.DTGameResultErr.DTGRE_DTBASEID_NOBASEID;
+    }
+
+    const baseid = getGameID(dtbaseid.baseid);
+    if (parentResult.id != baseid) {
+      return messages.DTGameResultErr.DTGRE_DTBASEID_BASEID_ERROR;
+    }
+
+    if (dtbaseid.free) {
+      const freeid = getGameID(dtbaseid.free);
+      if (!this.hasSubGame(parentResult, freeid)) {
+        return messages.DTGameResultErr.DTGRE_DTBASEID_FREE;
+      }
+    }
+
+    if (dtbaseid.respin) {
+      const respin = getGameID(dtbaseid.respin);
+      if (!this.hasSubGame(parentResult, respin)) {
+        return messages.DTGameResultErr.DTGRE_DTBASEID_RESPIN;
+      }
+    }
+
+    return messages.DTGameResultErr.DTGRE_NOERR;
   }
 
   /**
@@ -45,10 +110,20 @@ class DTGamesMgr {
 
           let hassuberr = false;
           for (let i = 0; i < gameresult.children.length; ++i) {
-            const suberr = this.checkGameResult(gameresult.children[i]);
+            let suberr = this.checkGameResult(gameresult.children[i]);
 
             if (suberr != messages.DTGameResultErr.DTGRE_NOERR) {
               hassuberr = true;
+            } else {
+              suberr = this.checkSubGameDTGameID(
+                  gameresult,
+                  gameresult.children[i]
+              );
+              if (suberr != messages.DTGameResultErr.DTGRE_NOERR) {
+                gameresult.children[i].errcode = suberr;
+
+                hassuberr = true;
+              }
             }
           }
 
@@ -96,13 +171,35 @@ class DTGamesMgr {
         }
       }
 
-      if (gameresult.iscomplete) {
-        if (gameresult.hassubgame) {
+      if (gameresult.rootgame) {
+        if (gameresult.iscomplete) {
           return messages.DTGameResultErr.DTGRE_ISCOMPLETE;
         }
+      } else if (gameresult.dtbaseid) {
       } else {
-        if (!gameresult.hassubgame) {
-          return messages.DTGameResultErr.DTGRE_ISCOMPLETE;
+        if (gameresult.iscomplete) {
+          if (gameresult.hassubgame) {
+            return messages.DTGameResultErr.DTGRE_ISCOMPLETE;
+          }
+        } else {
+          if (!gameresult.hassubgame) {
+            return messages.DTGameResultErr.DTGRE_ISCOMPLETE;
+          }
+
+          if (!Array.isArray(gameresult.children)) {
+            return messages.DTGameResultErr.DTGRE_NOCHILDREN;
+          }
+
+          let iscomplete = false;
+          for (let i = 0; i < gameresult.children.length; ++i) {
+            if (gameresult.children[i].iscomplete) {
+              iscomplete = true;
+            }
+          }
+
+          if (!iscomplete) {
+            return messages.DTGameResultErr.DTGRE_SUBGAME_NOTCOMPLETE;
+          }
         }
       }
     }

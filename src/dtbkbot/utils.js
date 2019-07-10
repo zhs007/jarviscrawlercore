@@ -111,5 +111,20 @@ function isArrayNumberNM(arr, n, m) {
   return true;
 }
 
+/**
+ * getGameID
+ * @param {string} dtgameid - dtgameid
+ * @return {string} id - id
+ */
+function getGameID(dtgameid) {
+  const arr = dtgameid.split('#');
+  if (arr.length == 2) {
+    return arr[1];
+  }
+
+  return dtgameid;
+}
+
 exports.WaitRightFrame = WaitRightFrame;
 exports.isArrayNumberNM = isArrayNumberNM;
+exports.getGameID = getGameID;

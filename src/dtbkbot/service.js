@@ -30,7 +30,7 @@ async function getDTData(
   const ret = await dtbkbot(
       browser,
       cfgfile,
-      false,
+      true,
       envName,
       dtDataType,
       businessid,

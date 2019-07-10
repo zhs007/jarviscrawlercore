@@ -443,6 +443,14 @@ function newDTGPKGameResult(obj) {
     result.setErrcode(obj.errcode);
   }
 
+  if (obj.dtbaseid) {
+    result.setDtbaseid(obj.dtbaseid);
+  }
+
+  if (typeof obj.rootgame === 'bool') {
+    result.setRootgame(obj.rootgame);
+  }
+
   if (Array.isArray(obj.children)) {
     for (let i = 0; i < obj.children.length; ++i) {
       result.addChildren(newDTGPKGameResult(obj.children[i]), i);
@@ -469,6 +477,26 @@ function newDTGPKCheckGameResult(obj) {
   }
 
   return result;
+}
+
+/**
+ * print DTGPKCheckGameResult
+ * @param {DTGPKCheckGameResult} result - DTGPKCheckGameResult
+ */
+function printDTGPKCheckGameResult(result) {
+  const lst = result.getLstList();
+  for (let i = 0; i < lst.length; ++i) {
+    if (lst[i].getErrcode() > 0) {
+      console.log(lst[i].getId() + ' ' + lst[i].getErrcode());
+    }
+
+    const children = lst[i].getChildrenList();
+    for (let j = 0; j < children.length; ++j) {
+      if (children[j].getErrcode() > 0) {
+        console.log(children[j].getId() + ' ' + children[j].getErrcode());
+      }
+    }
+  }
 }
 
 /**
@@ -842,6 +870,7 @@ exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
 exports.newDTGPKGameResult = newDTGPKGameResult;
 exports.newDTGPKCheckGameResult = newDTGPKCheckGameResult;
+exports.printDTGPKCheckGameResult = printDTGPKCheckGameResult;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
 exports.newCrunchBaseInvestor = newCrunchBaseInvestor;

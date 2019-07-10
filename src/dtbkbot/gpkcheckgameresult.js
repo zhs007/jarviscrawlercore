@@ -97,12 +97,12 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
 
                   const dtbaseid = ele.children[2].innerText;
 
-                  const win = parseFloat(ele.children[3].innerText);
-                  const bet = parseFloat(ele.children[4].innerText);
-                  const off = parseFloat(ele.children[5].innerText);
-                  const lines = parseFloat(ele.children[6].innerText);
-                  const moneystart = parseFloat(ele.children[7].innerText);
-                  const moneyend = parseFloat(ele.children[8].innerText);
+                  const win = Math.floor(parseFloat(ele.children[3].innerText) * 100);
+                  const bet = Math.floor(parseFloat(ele.children[4].innerText) * 100);
+                  const off = Math.floor(parseFloat(ele.children[5].innerText) * 100);
+                  const lines = Math.floor(parseFloat(ele.children[6].innerText));
+                  const moneystart = Math.floor(parseFloat(ele.children[7].innerText) * 100);
+                  const moneyend = Math.floor(parseFloat(ele.children[8].innerText) * 100);
 
                   const playerip = ele.children[9].innerText;
                   const datastate = ele.children[10].innerText;
@@ -145,6 +145,10 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
                     gameresult: gameresult,
                     dtbaseid: dtbaseid,
                   };
+
+                  if (dtbaseid == '') {
+                    curgr.rootgame = true;
+                  }
 
                   if (ids.length == 2 && ids[0] != gamecode) {
                     curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
@@ -316,12 +320,12 @@ async function checkGPKGameResult(
         const businessid = ele.children[1].innerText;
         const playername = ele.children[2].innerText;
         const gamecode = ele.children[3].innerText;
-        const win = parseFloat(ele.children[5].innerText);
-        const bet = parseFloat(ele.children[6].innerText);
-        const off = parseFloat(ele.children[7].innerText);
-        const lines = parseFloat(ele.children[8].innerText);
-        const moneystart = parseFloat(ele.children[9].innerText);
-        const moneyend = parseFloat(ele.children[10].innerText);
+        const win = Math.floor(parseFloat(ele.children[5].innerText) * 100);
+        const bet = Math.floor(parseFloat(ele.children[6].innerText) * 100);
+        const off = Math.floor(parseFloat(ele.children[7].innerText) * 100);
+        const lines = Math.floor(parseFloat(ele.children[8].innerText));
+        const moneystart = Math.floor(parseFloat(ele.children[9].innerText) * 100);
+        const moneyend = Math.floor(parseFloat(ele.children[10].innerText) * 100);
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
         const gametime = ele.children[13].innerText;

@@ -293,6 +293,20 @@ enum DTGameResultErr {
     DTGRE_NOCHILDREN = 15;
     // no children error
     DTGRE_CHILDREN_ERROR = 16;
+    // sub game not complete
+    DTGRE_SUBGAME_NOTCOMPLETE = 17;
+    // dtbaseid error
+    DTGRE_DTBASEID_ERROR = 18;
+    // no dtbaseid
+    DTGRE_NODTBASEID = 19;
+    // no dtbaseid baseid
+    DTGRE_DTBASEID_NOBASEID = 20;
+    // dtbaseid baseid error
+    DTGRE_DTBASEID_BASEID_ERROR = 21;        
+    // can not find dtbaseid free
+    DTGRE_DTBASEID_FREE = 22;
+    // can not find dtbaseid respin
+    DTGRE_DTBASEID_RESPIN = 23;
 }
 
 // RequestDTData - request DT Data
@@ -367,6 +381,7 @@ message DTGPKGameResult {
     string gameResult = 19;
     bool hasSubGame = 20;
     string dtbaseid = 21;
+    bool rootGame = 22;
 
     repeated DTGPKGameResult children = 100;
 

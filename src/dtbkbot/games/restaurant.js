@@ -44,11 +44,16 @@ function checkGameResult(gameresult) {
         return messages.DTGameResultErr.DTGRE_GAMERESULT_TIMES;
       }
 
-      if (gr.bet * LINES * TIMES != parseInt(gameresult.bet * 100)) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT_BET;
+      if (!gameresult.dtbaseid) {
+        if (gr.bet * LINES * TIMES != gameresult.bet) {
+          return messages.DTGameResultErr.DTGRE_GAMERESULT_BET;
+        }
       }
 
-      if (!gameresult.hassubgame && gr.realwin != parseInt(gameresult.win * 100)) {
+      if (
+        !gameresult.hassubgame &&
+        gr.realwin != gameresult.win
+      ) {
         return messages.DTGameResultErr.DTGRE_GAMERESULT_WIN;
       }
 

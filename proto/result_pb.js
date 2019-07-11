@@ -31,6 +31,7 @@ goog.exportSymbol('proto.jarviscrawlercore.DTDataType', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DTGPKCheckGameResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DTGPKGameResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DTGameResultErr', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.DTGameResultErrCode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DTTodayGameData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ExportArticleResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ImageInfo', null, global);
@@ -6115,6 +6116,202 @@ proto.jarviscrawlercore.ReplyArticles.prototype.hasArticles = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.DTGameResultErr = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.DTGameResultErr, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.DTGameResultErr.displayName = 'proto.jarviscrawlercore.DTGameResultErr';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.DTGameResultErr.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.DTGameResultErr} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.DTGameResultErr.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    errcode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    value0: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    value1: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.DTGameResultErr}
+ */
+proto.jarviscrawlercore.DTGameResultErr.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.DTGameResultErr;
+  return proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.DTGameResultErr} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.DTGameResultErr}
+ */
+proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.DTGameResultErrCode} */ (reader.readEnum());
+      msg.setErrcode(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setValue0(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setValue1(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.DTGameResultErr} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getErrcode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getValue0();
+  if (f !== 0) {
+    writer.writeInt64(
+      2,
+      f
+    );
+  }
+  f = message.getValue1();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional DTGameResultErrCode errcode = 1;
+ * @return {!proto.jarviscrawlercore.DTGameResultErrCode}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.getErrcode = function() {
+  return /** @type {!proto.jarviscrawlercore.DTGameResultErrCode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.DTGameResultErrCode} value */
+proto.jarviscrawlercore.DTGameResultErr.prototype.setErrcode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional int64 value0 = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.getValue0 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.DTGameResultErr.prototype.setValue0 = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int64 value1 = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.getValue1 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.DTGameResultErr.prototype.setValue1 = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestDTData = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -7013,7 +7210,7 @@ proto.jarviscrawlercore.DTGPKGameResult.toObject = function(includeInstance, msg
     rootgame: jspb.Message.getFieldWithDefault(msg, 22, false),
     childrenList: jspb.Message.toObjectList(msg.getChildrenList(),
     proto.jarviscrawlercore.DTGPKGameResult.toObject, includeInstance),
-    errcode: jspb.Message.getFieldWithDefault(msg, 200, 0)
+    err: (f = msg.getErr()) && proto.jarviscrawlercore.DTGameResultErr.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -7144,8 +7341,9 @@ proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader = function(m
       msg.addChildren(value);
       break;
     case 200:
-      var value = /** @type {!proto.jarviscrawlercore.DTGameResultErr} */ (reader.readEnum());
-      msg.setErrcode(value);
+      var value = new proto.jarviscrawlercore.DTGameResultErr;
+      reader.readMessage(value,proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader);
+      msg.setErr(value);
       break;
     default:
       reader.skipField();
@@ -7338,11 +7536,12 @@ proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter = function(messa
       proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter
     );
   }
-  f = message.getErrcode();
-  if (f !== 0.0) {
-    writer.writeEnum(
+  f = message.getErr();
+  if (f != null) {
+    writer.writeMessage(
       200,
-      f
+      f,
+      proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter
     );
   }
 };
@@ -7716,17 +7915,32 @@ proto.jarviscrawlercore.DTGPKGameResult.prototype.clearChildrenList = function()
 
 
 /**
- * optional DTGameResultErr errCode = 200;
- * @return {!proto.jarviscrawlercore.DTGameResultErr}
+ * optional DTGameResultErr err = 200;
+ * @return {?proto.jarviscrawlercore.DTGameResultErr}
  */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getErrcode = function() {
-  return /** @type {!proto.jarviscrawlercore.DTGameResultErr} */ (jspb.Message.getFieldWithDefault(this, 200, 0));
+proto.jarviscrawlercore.DTGPKGameResult.prototype.getErr = function() {
+  return /** @type{?proto.jarviscrawlercore.DTGameResultErr} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.DTGameResultErr, 200));
 };
 
 
-/** @param {!proto.jarviscrawlercore.DTGameResultErr} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setErrcode = function(value) {
-  jspb.Message.setProto3EnumField(this, 200, value);
+/** @param {?proto.jarviscrawlercore.DTGameResultErr|undefined} value */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.setErr = function(value) {
+  jspb.Message.setWrapperField(this, 200, value);
+};
+
+
+proto.jarviscrawlercore.DTGPKGameResult.prototype.clearErr = function() {
+  this.setErr(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.DTGPKGameResult.prototype.hasErr = function() {
+  return jspb.Message.getField(this, 200) != null;
 };
 
 
@@ -9721,7 +9935,7 @@ proto.jarviscrawlercore.DTDataType = {
 /**
  * @enum {number}
  */
-proto.jarviscrawlercore.DTGameResultErr = {
+proto.jarviscrawlercore.DTGameResultErrCode = {
   DTGRE_NOERR: 0,
   DTGRE_GAMECODE: 1,
   DTGRE_LINES: 2,
@@ -9744,7 +9958,8 @@ proto.jarviscrawlercore.DTGameResultErr = {
   DTGRE_DTBASEID_NOBASEID: 20,
   DTGRE_DTBASEID_BASEID_ERROR: 21,
   DTGRE_DTBASEID_FREE: 22,
-  DTGRE_DTBASEID_RESPIN: 23
+  DTGRE_DTBASEID_RESPIN: 23,
+  DTGRE_INVALID_FGNUMS: 24
 };
 
 /**

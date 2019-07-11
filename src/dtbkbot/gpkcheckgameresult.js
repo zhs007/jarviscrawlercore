@@ -1,4 +1,8 @@
-const {newDTGPKCheckGameResult, sleep} = require('../utils');
+const {
+  newDTGPKCheckGameResult,
+  newDTGameResultErr,
+  sleep,
+} = require('../utils');
 const {mgrDTGame} = require('./games/allgames');
 const messages = require('../../proto/result_pb');
 
@@ -97,12 +101,22 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
 
                   const dtbaseid = ele.children[2].innerText;
 
-                  const win = Math.floor(parseFloat(ele.children[3].innerText) * 100);
-                  const bet = Math.floor(parseFloat(ele.children[4].innerText) * 100);
-                  const off = Math.floor(parseFloat(ele.children[5].innerText) * 100);
+                  const win = Math.floor(
+                      parseFloat(ele.children[3].innerText) * 100
+                  );
+                  const bet = Math.floor(
+                      parseFloat(ele.children[4].innerText) * 100
+                  );
+                  const off = Math.floor(
+                      parseFloat(ele.children[5].innerText) * 100
+                  );
                   const lines = Math.floor(parseFloat(ele.children[6].innerText));
-                  const moneystart = Math.floor(parseFloat(ele.children[7].innerText) * 100);
-                  const moneyend = Math.floor(parseFloat(ele.children[8].innerText) * 100);
+                  const moneystart = Math.floor(
+                      parseFloat(ele.children[7].innerText) * 100
+                  );
+                  const moneyend = Math.floor(
+                      parseFloat(ele.children[8].innerText) * 100
+                  );
 
                   const playerip = ele.children[9].innerText;
                   const datastate = ele.children[10].innerText;
@@ -151,7 +165,9 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
                   }
 
                   if (ids.length == 2 && ids[0] != gamecode) {
-                    curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
+                    curgr.err = newDTGameResultErr(
+                        messages.DTGameResultErrCode.DTGRE_GAMECODE
+                    );
                   }
 
                   arr.push(curgr);
@@ -324,8 +340,12 @@ async function checkGPKGameResult(
         const bet = Math.floor(parseFloat(ele.children[6].innerText) * 100);
         const off = Math.floor(parseFloat(ele.children[7].innerText) * 100);
         const lines = Math.floor(parseFloat(ele.children[8].innerText));
-        const moneystart = Math.floor(parseFloat(ele.children[9].innerText) * 100);
-        const moneyend = Math.floor(parseFloat(ele.children[10].innerText) * 100);
+        const moneystart = Math.floor(
+            parseFloat(ele.children[9].innerText) * 100
+        );
+        const moneyend = Math.floor(
+            parseFloat(ele.children[10].innerText) * 100
+        );
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
         const gametime = ele.children[13].innerText;
@@ -377,7 +397,9 @@ async function checkGPKGameResult(
         };
 
         if (ids.length == 2 && ids[0] != gamecode) {
-          curgr.errcode = messages.DTGameResultErr.DTGRE_GAMECODE;
+          curgr.err = newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMECODE
+          );
         }
 
         arr.push(curgr);
@@ -411,10 +433,19 @@ async function checkGPKGameResult(
   for (let i = 0; i < lst.length; ++i) {
     mgrDTGame.checkGameResult(lst[i]);
 
-    if (lst[i].errcode != messages.DTGameResultErr.DTGRE_NOERR) {
+    if (lst[i].err) {
       ++errnums;
 
-      console.log('I got a error! ' + lst[i].id + ' ' + lst[i].errcode);
+      console.log(
+          'I got a error! ' +
+          lst[i].id +
+          ' ' +
+          lst[i].err.getErrcode() +
+          ' ' +
+          lst[i].err.getValue0() +
+          ' ' +
+          lst[i].err.getValue1()
+      );
     }
   }
 

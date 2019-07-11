@@ -1,6 +1,7 @@
 const {mgrDTGame} = require('./mgr');
 const {isArrayNumberNM} = require('../utils');
 const messages = require('../../../proto/result_pb');
+const {newDTGameResultErr} = require('../../utils');
 
 const GAMECODE = 'mysticalstones';
 const LINES = 30;
@@ -15,17 +16,21 @@ const GAMEHEIGHT = 3;
  */
 function checkGameResult(gameresult) {
   if (gameresult.lines != LINES) {
-    return messages.DTGameResultErr.DTGRE_LINES;
+    return newDTGameResultErr(
+        messages.DTGameResultErrCode.DTGRE_LINES,
+        gameresult.lines,
+        LINES
+    );
   }
 
   if (gameresult.gamedata) {
     try {
       const gamedata = JSON.parse(gameresult.gamedata);
       if (!isArrayNumberNM(gamedata, GAMEHEIGHT, GAMEWIDTH)) {
-        return messages.DTGameResultErr.DTGRE_GAMEDATA;
+        return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
       }
     } catch (err) {
-      return messages.DTGameResultErr.DTGRE_GAMEDATA;
+      return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
     }
   }
 
@@ -33,25 +38,43 @@ function checkGameResult(gameresult) {
     try {
       const gr = JSON.parse(gameresult.gameresult);
       if (!gr) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT;
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT
+        );
       }
 
       if (gr.lines != LINES) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT_LINES;
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT_LINES,
+            gr.lines,
+            LINES
+        );
       }
 
       if (gr.times != TIMES) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT_TIMES;
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT_TIMES,
+            gr.times,
+            TIMES
+        );
       }
 
       if (!gameresult.dtbaseid) {
         if (gr.bet * LINES * TIMES != gameresult.bet) {
-          return messages.DTGameResultErr.DTGRE_GAMERESULT_BET;
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMERESULT_BET,
+              gr.bet * LINES * TIMES,
+              gameresult.bet
+          );
         }
       }
 
       if (!gameresult.hassubgame && gr.realwin != gameresult.win) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT_WIN;
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT_WIN,
+            gr.realwin,
+            gameresult.win
+        );
       }
 
       let totalwin = 0;
@@ -60,10 +83,14 @@ function checkGameResult(gameresult) {
       }
 
       if (totalwin != gr.totalwin) {
-        return messages.DTGameResultErr.DTGRE_GAMERESULT_SUM_WIN;
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
+            totalwin,
+            gr.totalwin
+        );
       }
     } catch (err) {
-      return messages.DTGameResultErr.DTGRE_GAMERESULT;
+      return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMERESULT);
     }
   }
 

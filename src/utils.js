@@ -352,6 +352,51 @@ function newDTTodayGameData(obj) {
 }
 
 /**
+ * new newDTGameResultErr with object
+ * @param {DTGameResultErrCode} errcode - DTGameResultErrCode
+ * @param {number} value0 - int64 value
+ * @param {number} value1 - int64 value
+ * @return {messages.DTGameResultErr} result - DTGameResultErr
+ */
+function newDTGameResultErr(errcode, value0, value1) {
+  const result = new messages.DTGameResultErr();
+
+  result.setErrcode(errcode);
+
+  if (value0) {
+    result.setValue0(value0);
+  }
+
+  if (value1) {
+    result.setValue1(value1);
+  }
+
+  return result;
+}
+
+/**
+ * new printDTGameResultErr
+ * @param {string} str - string
+ * @param {DTGameResultErr} err - DTGameResultErr
+ */
+function printDTGameResultErr(str, err) {
+  if (err.getValue0() && err.getValue1()) {
+    console.log(
+        str +
+        ' [errcode: ' +
+        err.getErrcode() +
+        ' v0: ' +
+        err.getValue0() +
+        ' v1: ' +
+        err.getValue1() +
+        ' ]'
+    );
+  } else {
+    console.log(str + ' [errcode: ' + err.getErrcode() + ' ]');
+  }
+}
+
+/**
  * new DTGPKGameResult with object
  * @param {object} obj - DTGPKGameResult object
  * @return {messages.DTGPKGameResult} result - DTGPKGameResult
@@ -439,8 +484,8 @@ function newDTGPKGameResult(obj) {
     result.setHassubgame(obj.hassubgame);
   }
 
-  if (typeof obj.errcode === 'number') {
-    result.setErrcode(obj.errcode);
+  if (obj.err) {
+    result.setErr(obj.err);
   }
 
   if (obj.dtbaseid) {
@@ -486,14 +531,14 @@ function newDTGPKCheckGameResult(obj) {
 function printDTGPKCheckGameResult(result) {
   const lst = result.getLstList();
   for (let i = 0; i < lst.length; ++i) {
-    if (lst[i].getErrcode() > 0) {
-      console.log(lst[i].getId() + ' ' + lst[i].getErrcode());
+    if (lst[i].getErr()) {
+      printDTGameResultErr(lst[i].getId(), lst[i].getErr());
     }
 
     const children = lst[i].getChildrenList();
     for (let j = 0; j < children.length; ++j) {
-      if (children[j].getErrcode() > 0) {
-        console.log(children[j].getId() + ' ' + children[j].getErrcode());
+      if (children[j].getErr()) {
+        printDTGameResultErr(children[j].getId(), children[j].getErr());
       }
     }
   }
@@ -870,6 +915,7 @@ exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
 exports.newDTGPKGameResult = newDTGPKGameResult;
 exports.newDTGPKCheckGameResult = newDTGPKCheckGameResult;
+exports.newDTGameResultErr = newDTGameResultErr;
 exports.printDTGPKCheckGameResult = printDTGPKCheckGameResult;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;

@@ -54,7 +54,7 @@ function startGetDTData(
         }
 
         if (reply) {
-          console.log('dtdata:', reply.toObject(false));
+          console.log('dtdata:', JSON.stringify(reply.toObject(false)));
 
           if (reply.hasCheckgameresultgpk()) {
             printDTGPKCheckGameResult(reply.getCheckgameresultgpk());

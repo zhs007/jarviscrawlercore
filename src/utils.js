@@ -380,7 +380,7 @@ function newDTGameResultErr(errcode, value0, value1) {
  * @param {DTGameResultErr} err - DTGameResultErr
  */
 function printDTGameResultErr(str, err) {
-  if (err.getValue0() && err.getValue1()) {
+  if (err.getValue0() || err.getValue1()) {
     console.log(
         str +
         ' [ errcode: ' +

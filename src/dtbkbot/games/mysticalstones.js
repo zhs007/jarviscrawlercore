@@ -1,5 +1,5 @@
 const {mgrDTGame} = require('./mgr');
-const {isArrayNumberNM} = require('../utils');
+const {isArrayNumberNM, isMyRespin} = require('../utils');
 const messages = require('../../../proto/result_pb');
 const {newDTGameResultErr} = require('../../utils');
 
@@ -98,11 +98,67 @@ function checkGameResult(gameresult) {
 }
 
 /**
+ * countfgnums
+ * @param {Array} children - gameresult.children
+ * @param {string} baseid - baseid
+ * @param {bool} isroot - this is a root game
+ * @return {number} fgnums - fg nums
+ */
+function countfgnums(children, baseid, isroot) {
+  if (isroot) {
+    for (let i = 0; i < children.length; ++i) {
+      const curgr = children[i];
+      if (curgr.gameresult) {
+        try {
+          const gr = JSON.parse(curgr.gameresult);
+          if (gr) {
+            if (!gr.dtbaseid || isMyRespin(gr.dtbaseid, baseid)) {
+              if (gr.realfgnums > 0) {
+                return gr.realfgnums;
+              }
+            }
+          }
+        } catch (err) {
+          console.log(GAMECODE + '.countfgnums catch err ' + err);
+        }
+      }
+    }
+  } else {
+    for (let i = 0; i < children.length; ++i) {
+      const curgr = children[i];
+      if (curgr.gameresult) {
+        try {
+          const gr = JSON.parse(curgr.gameresult);
+          if (gr) {
+            if (gr.dtbaseid && !isMyRespin(gr.dtbaseid, baseid)) {
+              if (gr.fgnums > 0) {
+                return gr.fgnums;
+              }
+            }
+          }
+        } catch (err) {
+          console.log(GAMECODE + '.countfgnums catch err ' + err);
+        }
+      }
+    }
+  }
+
+  return 0;
+}
+
+/**
  * countTotalFGNums
  * @param {object} gameresult - gameresult
  * @return {number} fgnums - fg nums
  */
 function countTotalFGNums(gameresult) {
+  if (gameresult.children) {
+    const bgfgnums = countfgnums(gameresult.children, gameresult.id, true);
+    const fgnums = countfgnums(gameresult.children, gameresult.id, false);
+
+    return bgfgnums + fgnums;
+  }
+
   return 0;
 }
 

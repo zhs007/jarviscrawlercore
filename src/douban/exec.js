@@ -13,6 +13,7 @@ async function doubanexec(program, version) {
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-d, --debug [isdebug]', 'debug mode')
       .option('-s, --search [search]', 'search string')
+      .option('-t, --type [type]', 'type')
       .action(function(mode, options) {
         console.log('version is ', version);
 
@@ -35,7 +36,7 @@ async function doubanexec(program, version) {
         (async () => {
           const browser = await startBrowser(headless);
 
-          await search(browser, options.search, debugmode);
+          await search(browser, options.type, options.search, debugmode);
 
           if (!debugmode) {
             await browser.close();

@@ -19,7 +19,7 @@ node ./bin/jarviscrawler.js bt ./cfg/btcfg.yaml -n oabt
 豆瓣查找  
 
 ```
-node ./bin/jarviscrawler.js douban search -s "蜘蛛 侠" -d true
+node ./bin/jarviscrawler.js douban search -s "蜘蛛 侠" -d true -t movie
 ```
 
 ### 2019-06-23

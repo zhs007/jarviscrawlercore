@@ -1,4 +1,6 @@
 const {sleep} = require('../utils');
+const {WaitURLResponse} = require('../waiturlresponse');
+const {WaitDomContentLoaded} = require('../waitfordomcontentloaded');
 
 /**
  * douban search
@@ -10,30 +12,29 @@ const {sleep} = require('../utils');
  */
 async function search(browser, type, str, debugmode) {
   const page = await browser.newPage();
-  let isloaded = false;
-  page.on('domcontentloaded', async () => {
-    console.log('domcontentloaded');
 
-    isloaded = true;
-  });
+  const waitURL = new WaitURLResponse(page);
+  const waitdomloaded = new WaitDomContentLoaded(page);
 
-  if (type == 'movie') {
-    await page.goto('https://movie.douban.com/').catch((err) => {
-      console.log('douban.search.goto', err);
-    });
-  } else {
-    await page.goto('https://www.douban.com/').catch((err) => {
-      console.log('douban.search.goto', err);
-    });
-  }
-
-  while (true) {
-    if (isloaded) {
-      break;
+  await waitdomloaded.wait(async () => {
+    if (type == 'movie') {
+      await page.goto('https://movie.douban.com/').catch((err) => {
+        console.log('douban.search.goto', err);
+      });
+    } else {
+      await page.goto('https://www.douban.com/').catch((err) => {
+        console.log('douban.search.goto', err);
+      });
     }
+  }, 3 * 60 * 1000);
 
-    await sleep(1000);
-  }
+  // while (true) {
+  //   if (isloaded) {
+  //     break;
+  //   }
+
+  //   await sleep(1000);
+  // }
 
   await page.$eval('.inp', (ele) => {
     const inputSearch = ele.getElementsByTagName('input');
@@ -51,7 +52,29 @@ async function search(browser, type, str, debugmode) {
     }
   });
 
-  await page.click('.searchbtn');
+  await waitdomloaded.wait(async () => {
+    await page.click('.searchbtn');
+  }, 3 * 60 * 1000);
+
+  // waitURL.wait4URL(
+  //     'https://movie.douban.com/subject_search?search_text',
+  //     () => {},
+  //     3 * 60 * 1000
+  // );
+
+  const lst = await page.$$eval('img.cover', (eles) => {
+    const lst = [];
+    for (let i = 0; i < eles.length; ++i) {
+      const pe = eles[i].parentNode;
+      lst.push(pe.href);
+    }
+
+    console.log(lst);
+
+    return lst;
+  });
+
+  console.log(lst);
 
   if (!debugmode) {
     await page.close();

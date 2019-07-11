@@ -383,7 +383,7 @@ function printDTGameResultErr(str, err) {
   if (err.getValue0() && err.getValue1()) {
     console.log(
         str +
-        ' [errcode: ' +
+        ' [ errcode: ' +
         err.getErrcode() +
         ' v0: ' +
         err.getValue0() +
@@ -392,7 +392,7 @@ function printDTGameResultErr(str, err) {
         ' ]'
     );
   } else {
-    console.log(str + ' [errcode: ' + err.getErrcode() + ' ]');
+    console.log(str + ' [ errcode: ' + err.getErrcode() + ' ]');
   }
 }
 
@@ -899,6 +899,25 @@ function hasChinese(str) {
   return pattern.test(str);
 }
 
+/**
+ * findFrame
+ * @param {object} page - page
+ * @param {function} funcIsFrame - function funcIsFrame(frame) bool
+ * @return {object} frame - frame
+ */
+async function findFrame(page, funcIsFrame) {
+  while (true) {
+    const frame = await page.frames().find(funcIsFrame);
+    if (frame) {
+      return frame;
+    }
+
+    sleep(1000);
+  }
+
+  return undefined;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -929,3 +948,4 @@ exports.mouseClickFrameEleEx = mouseClickFrameEleEx;
 exports.mouseHoldFrameEleEx = mouseHoldFrameEleEx;
 exports.sleep = sleep;
 exports.hasChinese = hasChinese;
+exports.findFrame = findFrame;

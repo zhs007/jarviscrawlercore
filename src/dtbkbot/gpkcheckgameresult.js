@@ -2,6 +2,7 @@ const {
   newDTGPKCheckGameResult,
   newDTGameResultErr,
   sleep,
+  findFrame,
 } = require('../utils');
 const {mgrDTGame} = require('./games/allgames');
 const messages = require('../../proto/result_pb');
@@ -60,7 +61,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
       3 * 60 * 1000
   );
 
-  const subgameframe = await page.frames().find((frame) => {
+  const subgameframe = await findFrame(page, (frame) => {
     return frame.name().indexOf('layui-layer-iframe') === 0;
   });
 

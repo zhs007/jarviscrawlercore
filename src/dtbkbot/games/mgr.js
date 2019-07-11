@@ -49,7 +49,7 @@ class DTGamesMgr {
    */
   checkSubGameDTGameID(parentResult, subgameResult) {
     if (subgameResult.rootgame) {
-      return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_NOERR);
+      return undefined;
     }
 
     if (!subgameResult.dtbaseid) {
@@ -161,14 +161,14 @@ class DTGamesMgr {
           for (let i = 0; i < gameresult.children.length; ++i) {
             let suberr = this.checkGameResult(gameresult.children[i]);
 
-            if (!suberr) {
+            if (suberr) {
               hassuberr = true;
             } else {
               suberr = this.checkSubGameDTGameID(
                   gameresult,
                   gameresult.children[i]
               );
-              if (!suberr) {
+              if (suberr) {
                 gameresult.children[i].err = suberr;
 
                 hassuberr = true;

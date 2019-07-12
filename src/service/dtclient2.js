@@ -1,6 +1,7 @@
 const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
 const {requestCrawler} = require('./utils');
+const {printDTGPKCheckGameResult} = require('../utils');
 const grpc = require('grpc');
 
 const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
@@ -53,7 +54,11 @@ function startGetDTData(
         }
 
         if (reply) {
-          console.log('dtdata:', reply.toObject(false));
+          console.log('dtdata:', JSON.stringify(reply.toObject(false)));
+
+          if (reply.hasCheckgameresultgpk()) {
+            printDTGPKCheckGameResult(reply.getCheckgameresultgpk());
+          }
         }
       }
   );
@@ -75,8 +80,8 @@ startGetDTData(
     'dttest1',
     messages.DTDataType.DT_DT_GPKCHECKGAMERESULT,
     'NNTI_TEST_TEST1',
-    'restaurant',
-    'ZERO111',
-    '2019-07-04 00:00:00',
-    '2019-07-05 00:00:00'
+    'mysticalstones',
+    '',
+    '2019-07-09 00:00:00',
+    '2019-07-10 00:00:00'
 );

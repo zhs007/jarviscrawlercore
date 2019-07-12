@@ -65,6 +65,16 @@ async function dtbkbot(
     console.log('PAGE LOG:', msg.text());
   });
 
+  await page
+      .setViewport({
+        width: 1920,
+        height: 920,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        console.log('dtbkbot.setViewport', err);
+      });
+
   await page.goto(envcfg.url).catch((err) => {
     console.log('dtbkbot.goto', err);
   });
@@ -94,13 +104,13 @@ async function dtbkbot(
   });
 
   // 处理frames
-  const topFrame = page.frames().find((frame) => {
+  const topFrame = await page.frames().find((frame) => {
     return frame.name() === 'topFrame';
   });
-  const leftFrame = page.frames().find((frame) => {
+  const leftFrame = await page.frames().find((frame) => {
     return frame.name() === 'leftFrame';
   });
-  const rightFrame = page.frames().find((frame) => {
+  const rightFrame = await page.frames().find((frame) => {
     return frame.name() === 'rightFrame';
   });
 
@@ -111,7 +121,7 @@ async function dtbkbot(
   }
 
   if (leftFrame && rightFrame) {
-    const waitRightFrame = new WaitRightFrame(page, rightFrame);
+    const waitRightFrame = new WaitRightFrame(page);
 
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {

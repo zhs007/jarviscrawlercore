@@ -12,6 +12,8 @@ const {dtbkbotexec} = require('../src/dtbkbot/exec');
 const {serviceexec} = require('../src/service/exec');
 const {googletranslateexec} = require('../src/googletranslate/exec');
 const {crunchbaseexec} = require('../src/crunchbase/exec');
+const {btexec} = require('../src/bt/exec');
+const {doubanexec} = require('../src/douban/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -336,5 +338,7 @@ dtbkbotexec(program, VERSION);
 serviceexec(program, VERSION);
 googletranslateexec(program, VERSION);
 crunchbaseexec(program, VERSION);
+btexec(program, VERSION);
+doubanexec(program, VERSION);
 
 program.parse(process.argv);

@@ -111,5 +111,38 @@ function isArrayNumberNM(arr, n, m) {
   return true;
 }
 
+/**
+ * getGameID
+ * @param {string} dtgameid - dtgameid
+ * @return {string} id - id
+ */
+function getGameID(dtgameid) {
+  const arr = dtgameid.split('#');
+  if (arr.length == 2) {
+    return arr[1];
+  }
+
+  return dtgameid;
+}
+
+/**
+ * isMyRespin
+ * @param {object} dtbaseid - dtbaseid
+ * @param {string} baseid - baseid
+ * @return {bool} ismine - is mine respin
+ */
+function isMyRespin(dtbaseid, baseid) {
+  if (dtbaseid.respin) {
+    const respinid = getGameID(dtbaseid.respin);
+    if (respinid == baseid) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 exports.WaitRightFrame = WaitRightFrame;
 exports.isArrayNumberNM = isArrayNumberNM;
+exports.getGameID = getGameID;
+exports.isMyRespin = isMyRespin;

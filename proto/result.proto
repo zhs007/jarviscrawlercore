@@ -159,6 +159,30 @@ message CrunchBaseOrganization {
     repeated CrunchBaseEmployee pastEmployees = 501;
 }
 
+enum BTResFileType {
+    BTRFT_ED2K = 0;
+    BTRFT_MAGNET = 1;
+}
+
+// BT Resource file infomation
+message BTResFileInfo {
+    BTResFileType type = 1;
+    string url = 2;
+}
+
+// BT Resource infomation
+message BTResInfo {
+    // fullname
+    string fullname = 1;
+    // name - name.chs name.eng
+    map<string, string> name = 2;
+    // resource id
+    string resid = 3;
+
+    // lst
+    repeated BTResFileInfo lst = 10;
+}
+
 // RequestTranslate - request translate
 message RequestTranslate {
     // text - source text
@@ -235,8 +259,8 @@ enum DTDataType {
     DT_DT_GPKCHECKGAMERESULT = 2;
 }
 
-// DTGameResultErr -
-enum DTGameResultErr {
+// DTGameResultErrCode -
+enum DTGameResultErrCode {
     // no error
     DTGRE_NOERR = 0;
     // id.gamecode != gamecode
@@ -265,6 +289,36 @@ enum DTGameResultErr {
     DTGRE_GAMERESULT_LINES = 12;
     // invalid gameresult times
     DTGRE_GAMERESULT_TIMES = 13;
+    // no children
+    DTGRE_NOCHILDREN = 15;
+    // no children error
+    DTGRE_CHILDREN_ERROR = 16;
+    // sub game not complete
+    DTGRE_SUBGAME_NOTCOMPLETE = 17;
+    // dtbaseid error
+    DTGRE_DTBASEID_ERROR = 18;
+    // no dtbaseid
+    DTGRE_NODTBASEID = 19;
+    // no dtbaseid baseid
+    DTGRE_DTBASEID_NOBASEID = 20;
+    // dtbaseid baseid error
+    DTGRE_DTBASEID_BASEID_ERROR = 21;        
+    // can not find dtbaseid free
+    DTGRE_DTBASEID_FREE = 22;
+    // can not find dtbaseid respin
+    DTGRE_DTBASEID_RESPIN = 23;
+    // invalid fgnums
+    DTGRE_INVALID_FGNUMS = 24;
+}
+
+// DTGameResultErr - 
+message DTGameResultErr {
+    // errcode
+    DTGameResultErrCode errcode = 1;
+    // value0
+    int64 value0 = 2;
+    // value1
+    int64 value1 = 3;
 }
 
 // RequestDTData - request DT Data
@@ -338,8 +392,12 @@ message DTGPKGameResult {
     string gameData = 18;
     string gameResult = 19;
     bool hasSubGame = 20;
+    string dtbaseid = 21;
+    bool rootGame = 22;
 
-    DTGameResultErr errCode = 200;
+    repeated DTGPKGameResult children = 100;
+
+    DTGameResultErr err = 200;
 }
 
 // DTGPKCheckGameResult - 

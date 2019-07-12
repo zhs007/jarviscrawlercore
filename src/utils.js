@@ -352,6 +352,51 @@ function newDTTodayGameData(obj) {
 }
 
 /**
+ * new newDTGameResultErr with object
+ * @param {DTGameResultErrCode} errcode - DTGameResultErrCode
+ * @param {number} value0 - int64 value
+ * @param {number} value1 - int64 value
+ * @return {messages.DTGameResultErr} result - DTGameResultErr
+ */
+function newDTGameResultErr(errcode, value0, value1) {
+  const result = new messages.DTGameResultErr();
+
+  result.setErrcode(errcode);
+
+  if (value0) {
+    result.setValue0(value0);
+  }
+
+  if (value1) {
+    result.setValue1(value1);
+  }
+
+  return result;
+}
+
+/**
+ * new printDTGameResultErr
+ * @param {string} str - string
+ * @param {DTGameResultErr} err - DTGameResultErr
+ */
+function printDTGameResultErr(str, err) {
+  if (err.getValue0() || err.getValue1()) {
+    console.log(
+        str +
+        ' [ errcode: ' +
+        err.getErrcode() +
+        ' v0: ' +
+        err.getValue0() +
+        ' v1: ' +
+        err.getValue1() +
+        ' ]'
+    );
+  } else {
+    console.log(str + ' [ errcode: ' + err.getErrcode() + ' ]');
+  }
+}
+
+/**
  * new DTGPKGameResult with object
  * @param {object} obj - DTGPKGameResult object
  * @return {messages.DTGPKGameResult} result - DTGPKGameResult
@@ -439,8 +484,22 @@ function newDTGPKGameResult(obj) {
     result.setHassubgame(obj.hassubgame);
   }
 
-  if (typeof obj.errcode === 'number') {
-    result.setErrcode(obj.errcode);
+  if (obj.err) {
+    result.setErr(obj.err);
+  }
+
+  if (obj.dtbaseid) {
+    result.setDtbaseid(obj.dtbaseid);
+  }
+
+  if (typeof obj.rootgame === 'bool') {
+    result.setRootgame(obj.rootgame);
+  }
+
+  if (Array.isArray(obj.children)) {
+    for (let i = 0; i < obj.children.length; ++i) {
+      result.addChildren(newDTGPKGameResult(obj.children[i]), i);
+    }
   }
 
   return result;
@@ -463,6 +522,26 @@ function newDTGPKCheckGameResult(obj) {
   }
 
   return result;
+}
+
+/**
+ * print DTGPKCheckGameResult
+ * @param {DTGPKCheckGameResult} result - DTGPKCheckGameResult
+ */
+function printDTGPKCheckGameResult(result) {
+  const lst = result.getLstList();
+  for (let i = 0; i < lst.length; ++i) {
+    if (lst[i].getErr()) {
+      printDTGameResultErr(lst[i].getId(), lst[i].getErr());
+    }
+
+    const children = lst[i].getChildrenList();
+    for (let j = 0; j < children.length; ++j) {
+      if (children[j].getErr()) {
+        printDTGameResultErr(children[j].getId(), children[j].getErr());
+      }
+    }
+  }
 }
 
 /**
@@ -810,6 +889,35 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
   }
 }
 
+/**
+ * hasChinese
+ * @param {string} str - string
+ * @return {bool} hasChinese - has Chinese
+ */
+function hasChinese(str) {
+  const pattern = new RegExp('[\u4E00-\u9FA5\u3000-\u303F]+');
+  return pattern.test(str);
+}
+
+/**
+ * findFrame
+ * @param {object} page - page
+ * @param {function} funcIsFrame - function funcIsFrame(frame) bool
+ * @return {object} frame - frame
+ */
+async function findFrame(page, funcIsFrame) {
+  while (true) {
+    const frame = await page.frames().find(funcIsFrame);
+    if (frame) {
+      return frame;
+    }
+
+    sleep(1000);
+  }
+
+  return undefined;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -826,6 +934,8 @@ exports.newDTBusinessGameReport = newDTBusinessGameReport;
 exports.newDTTodayGameData = newDTTodayGameData;
 exports.newDTGPKGameResult = newDTGPKGameResult;
 exports.newDTGPKCheckGameResult = newDTGPKCheckGameResult;
+exports.newDTGameResultErr = newDTGameResultErr;
+exports.printDTGPKCheckGameResult = printDTGPKCheckGameResult;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
 exports.newCrunchBaseInvestor = newCrunchBaseInvestor;
@@ -837,3 +947,5 @@ exports.mouseClickEle = mouseClickEle;
 exports.mouseClickFrameEleEx = mouseClickFrameEleEx;
 exports.mouseHoldFrameEleEx = mouseHoldFrameEleEx;
 exports.sleep = sleep;
+exports.hasChinese = hasChinese;
+exports.findFrame = findFrame;

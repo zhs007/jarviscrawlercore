@@ -1,5 +1,27 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-07-09
+
+关于``puppeteer``，最近又有些感想：
+
+1. 自己通过``page``来侦听``domcontentloaded``这些事件会比``page.waitFor``要稳定一些，细节更可控，官方的``waitFor``实现应该是太简单了，所以导致某些复杂逻辑下经常会卡主。
+2. ``frame``的处理，我一般是等待该页面的``response``彻底完成，这个只能在``page``来处理。
+3. ``frame``内部的``reCAPTCHA``是可以处理对的，基本上可以通过``page``处理对，但切记，要确定彻底加载成功，这个步骤非常重要，我一般通过``response``和``domcontentloaded``来确定彻底加载成功，然后通过clientRect计算出点击位置或hold位置。
+4. ``page``的``viewport``在某些时候非常重要，如果element不可见，可能会导致后面的操作报错。
+5. ``click``操作其实会移动屏幕，当然只限于有滚动条的情况，如果页面写得不好，对``viewport``有要求，``click``是可能报错的，这时只能通过改变``viewport``避免bug。
+6. 安全稳定的操作，一定是逻辑严密的，不能所有事都依赖于sleep时间，而最后从逻辑层避免sleep。
+7. 业务逻辑上，一定要处理所有的异常状况，一些未考虑的异常保留足够的输出，并安全退出，为下一次做准备。
+
+```
+node ./bin/jarviscrawler.js bt ./cfg/btcfg.yaml -n oabt
+```
+
+豆瓣查找  
+
+```
+node ./bin/jarviscrawler.js douban search -s "蜘蛛 侠" -d true -t movie
+```
+
 ### 2019-06-23
 
 关于爬虫，其实这次写这个项目，并不是希望把数据全拉下来（不现实也没啥必要）。  

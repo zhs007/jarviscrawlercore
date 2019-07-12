@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.2.48",
+  "version": "0.2.49",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,8 @@
   "dependencies": {
     "adm-zip": "^0.4.13",
     "commander": "^2.20.0",
-    "google-protobuf": "^3.8.0",
-    "grpc": "^1.21.1",
+    "google-protobuf": "^3.9.0",
+    "grpc": "^1.22.2",
     "puppeteer": "^1.18.1",
     "yaml-js": "^0.2.3"
   },

@@ -80,8 +80,8 @@ startGetDTData(
     'dttest1',
     messages.DTDataType.DT_DT_GPKCHECKGAMERESULT,
     'NNTI_TEST_TEST1',
-    'mysticalstones',
+    'crystal',
     '',
-    '2019-07-09 00:00:00',
-    '2019-07-10 00:00:00'
+    '2019-07-23 00:00:00',
+    '2019-07-24 00:00:00'
 );

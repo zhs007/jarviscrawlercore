@@ -142,7 +142,25 @@ function isMyRespin(dtbaseid, baseid) {
   return false;
 }
 
+/**
+ * isMyJP
+ * @param {object} dtbaseid - dtbaseid
+ * @param {string} baseid - baseid
+ * @return {bool} ismine - is mine respin
+ */
+function isMyJP(dtbaseid, baseid) {
+  if (dtbaseid.respin) {
+    const respinid = getGameID(dtbaseid.jp);
+    if (respinid == baseid) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 exports.WaitRightFrame = WaitRightFrame;
 exports.isArrayNumberNM = isArrayNumberNM;
 exports.getGameID = getGameID;
 exports.isMyRespin = isMyRespin;
+exports.isMyJP = isMyJP;

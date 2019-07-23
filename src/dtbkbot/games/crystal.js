@@ -15,8 +15,9 @@ const GAMEHEIGHT = 7;
  * @return {DTGameResultErr} result - DTGameResultErr
  */
 function checkGameResult(gameresult) {
+  let dtbaseid = undefined;
+
   if (gameresult.dtbaseid) {
-    let dtbaseid = undefined;
     try {
       dtbaseid = JSON.parse(gameresult.dtbaseid);
     } catch (err) {
@@ -36,11 +37,13 @@ function checkGameResult(gameresult) {
   }
 
   if (gameresult.lines != LINES) {
-    return newDTGameResultErr(
-        messages.DTGameResultErrCode.DTGRE_LINES,
-        gameresult.lines,
-        LINES
-    );
+    if (!dtbaseid || !dtbaseid.jp) {
+      return newDTGameResultErr(
+          messages.DTGameResultErrCode.DTGRE_LINES,
+          gameresult.lines,
+          LINES
+      );
+    }
   }
 
   if (gameresult.gamedata) {

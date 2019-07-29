@@ -1,5 +1,5 @@
 const {mgrDTGame} = require('./mgr');
-const {isArrayNumberNM, isMyRespin, isMyJP} = require('../utils');
+const {isArrayNumberNM, isMyRespin} = require('../utils');
 const messages = require('../../../proto/result_pb');
 const {newDTGameResultErr} = require('../../utils');
 

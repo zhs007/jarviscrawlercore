@@ -103,12 +103,22 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
 
                   const dtbaseid = ele.children[2].innerText;
 
-                  const win = Math.round(parseFloat(ele.children[3].innerText) * 100);
-                  const bet = Math.round(parseFloat(ele.children[4].innerText) * 100);
-                  const off = Math.round(parseFloat(ele.children[5].innerText) * 100);
+                  const win = Math.round(
+                      parseFloat(ele.children[3].innerText) * 100
+                  );
+                  const bet = Math.round(
+                      parseFloat(ele.children[4].innerText) * 100
+                  );
+                  const off = Math.round(
+                      parseFloat(ele.children[5].innerText) * 100
+                  );
                   const lines = parseInt(ele.children[6].innerText);
-                  const moneystart = Math.round(parseFloat(ele.children[7].innerText) * 100);
-                  const moneyend = Math.round(parseFloat(ele.children[8].innerText) * 100);
+                  const moneystart = Math.round(
+                      parseFloat(ele.children[7].innerText) * 100
+                  );
+                  const moneyend = Math.round(
+                      parseFloat(ele.children[8].innerText) * 100
+                  );
 
                   const playerip = ele.children[9].innerText;
                   const datastate = ele.children[10].innerText;
@@ -345,8 +355,12 @@ async function checkGPKGameResult(
         const bet = Math.round(parseFloat(ele.children[6].innerText) * 100);
         const off = Math.round(parseFloat(ele.children[7].innerText) * 100);
         const lines = parseInt(ele.children[8].innerText);
-        const moneystart = Math.round(parseFloat(ele.children[9].innerText) * 100);
-        const moneyend = Math.round(parseFloat(ele.children[10].innerText) * 100);
+        const moneystart = Math.round(
+            parseFloat(ele.children[9].innerText) * 100
+        );
+        const moneyend = Math.round(
+            parseFloat(ele.children[10].innerText) * 100
+        );
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
         const gametime = ele.children[13].innerText;
@@ -421,8 +435,12 @@ async function checkGPKGameResult(
         const bet = Math.round(parseFloat(ele.children[6].innerText) * 100);
         const off = Math.round(parseFloat(ele.children[7].innerText) * 100);
         const lines = parseInt(ele.children[8].innerText);
-        const moneystart = Math.round(parseFloat(ele.children[9].innerText) * 100);
-        const moneyend = Math.round(parseFloat(ele.children[10].innerText) * 100);
+        const moneystart = Math.round(
+            parseFloat(ele.children[9].innerText) * 100
+        );
+        const moneyend = Math.round(
+            parseFloat(ele.children[10].innerText) * 100
+        );
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
         const gametime = ele.children[13].innerText;

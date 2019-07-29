@@ -47,13 +47,17 @@ function checkGameResult(gameresult) {
   }
 
   if (gameresult.gamedata) {
-    try {
-      const gamedata = JSON.parse(gameresult.gamedata);
-      if (!isArrayNumberNM(gamedata, GAMEHEIGHT, GAMEWIDTH)) {
+    if (!(dtbaseid && dtbaseid.jp)) {
+      try {
+        const gamedata = JSON.parse(gameresult.gamedata);
+        if (!isArrayNumberNM(gamedata, GAMEHEIGHT, GAMEWIDTH)) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMEDATA
+          );
+        }
+      } catch (err) {
         return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
       }
-    } catch (err) {
-      return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
     }
   }
 

@@ -159,8 +159,18 @@ function isMyJP(dtbaseid, baseid) {
   return false;
 }
 
+/**
+ * formatDTNumber
+ * @param {string} strnums - string number
+ * @return {number} number - int
+ */
+function formatDTNumber(strnums) {
+  return Math.round(parseFloat(strnums) * 100);
+}
+
 exports.WaitRightFrame = WaitRightFrame;
 exports.isArrayNumberNM = isArrayNumberNM;
 exports.getGameID = getGameID;
 exports.isMyRespin = isMyRespin;
 exports.isMyJP = isMyJP;
+exports.formatDTNumber = formatDTNumber;

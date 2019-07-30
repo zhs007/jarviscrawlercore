@@ -1,5 +1,9 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-07-23
+
+最近在日本，dtbkbot的测试用``service+dtclient2``。
+
 ### 2019-07-09
 
 关于``puppeteer``，最近又有些感想：

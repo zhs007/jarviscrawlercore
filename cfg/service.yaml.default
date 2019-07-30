@@ -5,5 +5,7 @@ headless: true
 
 # crunchbaseconfig: ./cfg/crunchbase.yaml
 
+slowMo: 10
+
 clientToken:
   - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3

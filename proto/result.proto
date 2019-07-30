@@ -309,6 +309,14 @@ enum DTGameResultErrCode {
     DTGRE_DTBASEID_RESPIN = 23;
     // invalid fgnums
     DTGRE_INVALID_FGNUMS = 24;
+    // icon404
+    DTGRE_ICON404 = 25;
+    // sub game repeated complete
+    DTGRE_SUBGAME_REPEATED_COMPLETE = 26;
+    // sub game invalid jp
+    DTGRE_SUBGAME_INVALID_JP = 27;
+    // invalid jp win
+    DTGRE_INVALID_JPWIN = 28;    
 }
 
 // DTGameResultErr - 
@@ -319,6 +327,8 @@ message DTGameResultErr {
     int64 value0 = 2;
     // value1
     int64 value1 = 3;
+    // strval0
+    string strval0 = 10;
 }
 
 // RequestDTData - request DT Data

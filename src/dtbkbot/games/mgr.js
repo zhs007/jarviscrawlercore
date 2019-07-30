@@ -287,16 +287,20 @@ class DTGamesMgr {
             );
           }
 
-          let iscomplete = false;
+          let complatenums = 0;
           for (let i = 0; i < gameresult.children.length; ++i) {
             if (gameresult.children[i].iscomplete) {
-              iscomplete = true;
+              ++complatenums;
             }
           }
 
-          if (!iscomplete) {
+          if (complatenums == 0) {
             return newDTGameResultErr(
                 messages.DTGameResultErrCode.DTGRE_SUBGAME_NOTCOMPLETE
+            );
+          } else if (complatenums > 1) {
+            return newDTGameResultErr(
+                messages.DTGameResultErrCode.DTGRE_SUBGAME_REPEATED_COMPLETE
             );
           }
         }

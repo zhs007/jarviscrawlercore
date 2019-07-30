@@ -6154,7 +6154,8 @@ proto.jarviscrawlercore.DTGameResultErr.toObject = function(includeInstance, msg
   var f, obj = {
     errcode: jspb.Message.getFieldWithDefault(msg, 1, 0),
     value0: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    value1: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    value1: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    strval0: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -6202,6 +6203,10 @@ proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader = function(m
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setValue1(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrval0(value);
       break;
     default:
       reader.skipField();
@@ -6253,6 +6258,13 @@ proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter = function(messa
       f
     );
   }
+  f = message.getStrval0();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
 };
 
 
@@ -6298,6 +6310,21 @@ proto.jarviscrawlercore.DTGameResultErr.prototype.getValue1 = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.DTGameResultErr.prototype.setValue1 = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional string strval0 = 10;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DTGameResultErr.prototype.getStrval0 = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DTGameResultErr.prototype.setStrval0 = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
 };
 
 
@@ -9959,7 +9986,11 @@ proto.jarviscrawlercore.DTGameResultErrCode = {
   DTGRE_DTBASEID_BASEID_ERROR: 21,
   DTGRE_DTBASEID_FREE: 22,
   DTGRE_DTBASEID_RESPIN: 23,
-  DTGRE_INVALID_FGNUMS: 24
+  DTGRE_INVALID_FGNUMS: 24,
+  DTGRE_ICON404: 25,
+  DTGRE_SUBGAME_REPEATED_COMPLETE: 26,
+  DTGRE_SUBGAME_INVALID_JP: 27,
+  DTGRE_INVALID_JPWIN: 28
 };
 
 /**

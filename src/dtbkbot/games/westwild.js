@@ -3,11 +3,11 @@ const {isArrayNumberNM, isMyRespin} = require('../utils');
 const messages = require('../../../proto/result_pb');
 const {newDTGameResultErr} = require('../../utils');
 
-const GAMECODE = 'crystal';
-const LINES = 1;
+const GAMECODE = 'westwild';
+const LINES = 25;
 const TIMES = 1;
-const GAMEWIDTH = 7;
-const GAMEHEIGHT = 7;
+const GAMEWIDTH = 5;
+const GAMEHEIGHT = 3;
 
 /**
  * checkGameResult
@@ -15,49 +15,22 @@ const GAMEHEIGHT = 7;
  * @return {DTGameResultErr} result - DTGameResultErr
  */
 function checkGameResult(gameresult) {
-  let dtbaseid = undefined;
-
-  if (gameresult.dtbaseid) {
-    try {
-      dtbaseid = JSON.parse(gameresult.dtbaseid);
-    } catch (err) {
-      return newDTGameResultErr(
-          messages.DTGameResultErrCode.DTGRE_DTBASEID_ERROR
-      );
-    }
-
-    if (dtbaseid.jp && gameresult.lines != 0) {
-      return newDTGameResultErr(
-          messages.DTGameResultErrCode.DTGRE_LINES,
-          gameresult.lines,
-          LINES
-      );
-    }
-    // if (!isMyJP(gr.dtbaseid, baseid))
-  }
-
   if (gameresult.lines != LINES) {
-    if (!dtbaseid || !dtbaseid.jp) {
-      return newDTGameResultErr(
-          messages.DTGameResultErrCode.DTGRE_LINES,
-          gameresult.lines,
-          LINES
-      );
-    }
+    return newDTGameResultErr(
+        messages.DTGameResultErrCode.DTGRE_LINES,
+        gameresult.lines,
+        LINES
+    );
   }
 
   if (gameresult.gamedata) {
-    if (!(dtbaseid && dtbaseid.jp)) {
-      try {
-        const gamedata = JSON.parse(gameresult.gamedata);
-        if (!isArrayNumberNM(gamedata, GAMEHEIGHT, GAMEWIDTH)) {
-          return newDTGameResultErr(
-              messages.DTGameResultErrCode.DTGRE_GAMEDATA
-          );
-        }
-      } catch (err) {
+    try {
+      const gamedata = JSON.parse(gameresult.gamedata);
+      if (!isArrayNumberNM(gamedata, GAMEHEIGHT, GAMEWIDTH)) {
         return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
       }
+    } catch (err) {
+      return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMEDATA);
     }
   }
 
@@ -71,13 +44,11 @@ function checkGameResult(gameresult) {
       }
 
       if (gr.lines != LINES) {
-        if (!dtbaseid || !dtbaseid.jp) {
-          return newDTGameResultErr(
-              messages.DTGameResultErrCode.DTGRE_GAMERESULT_LINES,
-              gr.lines,
-              LINES
-          );
-        }
+        return newDTGameResultErr(
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT_LINES,
+            gr.lines,
+            LINES
+        );
       }
 
       if (gr.times != TIMES) {

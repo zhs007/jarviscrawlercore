@@ -25,7 +25,7 @@ async function startService(cfgfile) {
     return;
   }
 
-  browser = await startBrowser(cfg.headless);
+  browser = await startBrowser(cfg.headless, cfg.slowMo);
   //   const page = await browser.newPage();
 
   const server = new grpc.Server();

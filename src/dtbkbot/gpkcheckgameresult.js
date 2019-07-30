@@ -8,6 +8,23 @@ const {
 const {mgrDTGame} = require('./games/allgames');
 const messages = require('../../proto/result_pb');
 
+let lsticon404 = [];
+
+/**
+ * onCheckGPKGameResult404
+ * @param {object} response - response
+ */
+async function onCheckGPKGameResult404(response) {
+  if (!response) {
+    return;
+  }
+
+  const status = response.status();
+  if (status == 404) {
+    lsticon404.push(response.url());
+  }
+}
+
 /**
  * wait4RightFrame
  * @param {object} rightFrame - rightFrame
@@ -61,6 +78,10 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
       },
       3 * 60 * 1000
   );
+
+  if (!isdone) {
+    return {error: 'wait4URL fail! ' + url};
+  }
 
   const subgameframe = await findFrame(page, (frame) => {
     return frame.name().indexOf('layui-layer-iframe') === 0;
@@ -224,6 +245,8 @@ async function checkGPKGameResult(
     starttime,
     endtime
 ) {
+  lsticon404 = [];
+
   // 打开一级菜单
   await leftFrame.click('.title.jlxx');
 
@@ -544,6 +567,26 @@ async function checkGPKGameResult(
     }
   }
 
+  for (let i = 0; i < lsticon404.length; ++i) {
+    ++errnums;
+
+    lst.push({
+      err: newDTGameResultErr(
+          messages.DTGameResultErrCode.DTGRE_ICON404,
+          undefined,
+          undefined,
+          lsticon404[i]
+      ),
+    });
+
+    console.log(
+        'I got a error! ' +
+        messages.DTGameResultErrCode.DTGRE_ICON404 +
+        ' ' +
+        lsticon404[i]
+    );
+  }
+
   const ret = {
     lst: lst,
     errnums: errnums,
@@ -556,3 +599,4 @@ async function checkGPKGameResult(
 
 exports.onRightFrameLoadedGPKCGR = onRightFrameLoadedGPKCGR;
 exports.checkGPKGameResult = checkGPKGameResult;
+exports.onCheckGPKGameResult404 = onCheckGPKGameResult404;

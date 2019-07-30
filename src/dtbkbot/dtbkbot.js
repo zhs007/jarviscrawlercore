@@ -10,6 +10,7 @@ const {
 const {
   onRightFrameLoadedGPKCGR,
   checkGPKGameResult,
+  onCheckGPKGameResult404,
 } = require('./gpkcheckgameresult');
 const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
 const {WaitRightFrame} = require('./utils');
@@ -63,6 +64,12 @@ async function dtbkbot(
   const page = await browser.newPage();
   page.on('console', (msg) => {
     console.log('PAGE LOG:', msg.text());
+  });
+
+  page.on('response', async (response) => {
+    if (dtDataType == messages.DTDataType.DT_DT_GPKCHECKGAMERESULT) {
+      await onCheckGPKGameResult404(response);
+    }
   });
 
   await page

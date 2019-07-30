@@ -356,9 +356,10 @@ function newDTTodayGameData(obj) {
  * @param {DTGameResultErrCode} errcode - DTGameResultErrCode
  * @param {number} value0 - int64 value
  * @param {number} value1 - int64 value
+ * @param {string} strval0 - string value
  * @return {messages.DTGameResultErr} result - DTGameResultErr
  */
-function newDTGameResultErr(errcode, value0, value1) {
+function newDTGameResultErr(errcode, value0, value1, strval0) {
   const result = new messages.DTGameResultErr();
 
   result.setErrcode(errcode);
@@ -371,6 +372,10 @@ function newDTGameResultErr(errcode, value0, value1) {
     result.setValue1(value1);
   }
 
+  if (strval0) {
+    result.setStrval0(strval0);
+  }
+
   return result;
 }
 
@@ -380,7 +385,7 @@ function newDTGameResultErr(errcode, value0, value1) {
  * @param {DTGameResultErr} err - DTGameResultErr
  */
 function printDTGameResultErr(str, err) {
-  if (err.getValue0() || err.getValue1()) {
+  if (err.getValue0() || err.getValue1() || err.getStrval0()) {
     console.log(
         str +
         ' [ errcode: ' +
@@ -389,6 +394,8 @@ function printDTGameResultErr(str, err) {
         err.getValue0() +
         ' v1: ' +
         err.getValue1() +
+        ' strv0: ' +
+        err.getStrval0() +
         ' ]'
     );
   } else {

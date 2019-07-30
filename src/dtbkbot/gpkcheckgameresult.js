@@ -107,8 +107,8 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
         .$$eval(
             'tr',
             (eles, gamecode) => {
-              console.log(eles);
-              console.log(gamecode);
+              // console.log(eles);
+              // console.log(gamecode);
 
               const arr = [];
               for (let i = 1; i < eles.length - 1; ++i) {

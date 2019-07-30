@@ -70,22 +70,51 @@ function checkGameResult(gameresult) {
         );
       }
 
-      if (gr.lines != LINES) {
-        if (!dtbaseid || !dtbaseid.jp) {
+      if (!dtbaseid || !dtbaseid.jp) {
+        if (gr.lines != LINES) {
           return newDTGameResultErr(
               messages.DTGameResultErrCode.DTGRE_GAMERESULT_LINES,
               gr.lines,
               LINES
           );
         }
-      }
 
-      if (gr.times != TIMES) {
-        return newDTGameResultErr(
-            messages.DTGameResultErrCode.DTGRE_GAMERESULT_TIMES,
-            gr.times,
-            TIMES
-        );
+        if (gr.times != TIMES) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMERESULT_TIMES,
+              gr.times,
+              TIMES
+          );
+        }
+
+        if (!gameresult.hassubgame && gr.realwin != gameresult.win) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMERESULT_WIN,
+              gr.realwin,
+              gameresult.win
+          );
+        }
+
+        let totalwin = 0;
+        for (let i = 0; i < gr.lst.length; ++i) {
+          totalwin += gr.lst[i].win;
+        }
+
+        if (totalwin != gr.totalwin) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
+              totalwin,
+              gr.totalwin
+          );
+        }
+      } else {
+        if (gr.data && gr.data.award != gameresult.win) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_INVALID_JPWIN,
+              gr.data.award,
+              gameresult.win
+          );
+        }
       }
 
       if (!gameresult.dtbaseid) {
@@ -97,29 +126,42 @@ function checkGameResult(gameresult) {
           );
         }
       }
-
-      if (!gameresult.hassubgame && gr.realwin != gameresult.win) {
-        return newDTGameResultErr(
-            messages.DTGameResultErrCode.DTGRE_GAMERESULT_WIN,
-            gr.realwin,
-            gameresult.win
-        );
-      }
-
-      let totalwin = 0;
-      for (let i = 0; i < gr.lst.length; ++i) {
-        totalwin += gr.lst[i].win;
-      }
-
-      if (totalwin != gr.totalwin) {
-        return newDTGameResultErr(
-            messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
-            totalwin,
-            gr.totalwin
-        );
-      }
     } catch (err) {
+      console.log('crystal.checkGameResult ' + err);
+
       return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMERESULT);
+    }
+  }
+
+  if (Array.isArray(gameresult.children)) {
+    let injackpotnums = 0;
+    let jackpotnums = 0;
+    for (let i = 0; i < gameresult.children.length; ++i) {
+      if (gameresult.children[i].dtbaseid) {
+        try {
+          const curdtid = JSON.parse(gameresult.children[i].dtbaseid);
+          if (curdtid && curdtid.jp) {
+            ++jackpotnums;
+          }
+        } catch (err) {}
+      }
+
+      if (gameresult.children[i].gameresult) {
+        try {
+          const gr = JSON.parse(gameresult.children[i].gameresult);
+          if (gr && gr.injackpot) {
+            ++injackpotnums;
+          }
+        } catch (err) {}
+      }
+    }
+
+    if (injackpotnums != jackpotnums) {
+      return newDTGameResultErr(
+          messages.DTGameResultErrCode.DTGRE_SUBGAME_INVALID_JP,
+          injackpotnums,
+          jackpotnums
+      );
     }
   }
 

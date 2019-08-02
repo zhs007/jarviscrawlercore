@@ -80,8 +80,8 @@ startGetDTData(
     'dttest1',
     messages.DTDataType.DT_DT_GPKCHECKGAMERESULT,
     'NNTI_TEST_TEST1',
-    'crystal',
+    'shokudo',
     '',
-    '2019-07-30 00:00:00',
-    '2019-07-31 00:00:00'
+    '2019-08-01 00:00:00',
+    '2019-08-03 00:00:00'
 );

@@ -77,17 +77,19 @@ function checkGameResult(gameresult) {
         );
       }
 
-      let totalwin = 0;
-      for (let i = 0; i < gr.lst.length; ++i) {
-        totalwin += gr.lst[i].win;
-      }
+      if (gr.respin != 1) {
+        let totalwin = 0;
+        for (let i = 0; i < gr.lst.length; ++i) {
+          totalwin += gr.lst[i].win;
+        }
 
-      if (totalwin != gr.totalwin) {
-        return newDTGameResultErr(
-            messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
-            totalwin,
-            gr.totalwin
-        );
+        if (totalwin != gr.totalwin) {
+          return newDTGameResultErr(
+              messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
+              totalwin,
+              gr.totalwin
+          );
+        }
       }
     } catch (err) {
       return newDTGameResultErr(messages.DTGameResultErrCode.DTGRE_GAMERESULT);

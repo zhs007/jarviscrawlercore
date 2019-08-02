@@ -7,5 +7,6 @@ require('./westwild');
 require('./circus');
 require('./shokudo');
 require('./watermargin');
+require('./hiphopman');
 
 exports.mgrDTGame = mgrDTGame;

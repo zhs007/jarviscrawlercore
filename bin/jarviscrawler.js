@@ -14,6 +14,7 @@ const {googletranslateexec} = require('../src/googletranslate/exec');
 const {crunchbaseexec} = require('../src/crunchbase/exec');
 const {btexec} = require('../src/bt/exec');
 const {doubanexec} = require('../src/douban/exec');
+const {execAnalysis} = require('../src/analysis/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -340,5 +341,7 @@ googletranslateexec(program, VERSION);
 crunchbaseexec(program, VERSION);
 btexec(program, VERSION);
 doubanexec(program, VERSION);
+
+execAnalysis(program, VERSION);
 
 program.parse(process.argv);

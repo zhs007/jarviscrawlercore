@@ -1,6 +1,7 @@
 const {callSearchInCrunchBase} = require('./plugins/crunchbase');
 const {callTranslate} = require('./plugins/translate');
 const {callGetDTData} = require('./plugins/dtdata');
+const {callAnalyzePage} = require('./plugins/analyzepage');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -42,6 +43,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getDtdata();
 
     callGetDTData(browser, cfg, call, param);
+  } else if (crawlertype == messages.CrawlerType.CT_ANALYZEPAGE) {
+    if (!call.request.hasAnalyzepage()) {
+      replyError(call, 'no analyzepage');
+
+      return;
+    }
+
+    const param = call.request.getAnalyzepage();
+
+    callAnalyzePage(browser, cfg, call, param);
   }
 }
 

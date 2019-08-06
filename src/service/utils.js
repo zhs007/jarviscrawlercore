@@ -62,6 +62,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setCbcompany(msg);
   } else if (crawlerType == messages.CrawlerType.CT_DTDATA) {
     req.setDtdata(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_ANALYZEPAGE) {
+    req.setAnalyzepage(msg);
   }
 
   let isend = false;

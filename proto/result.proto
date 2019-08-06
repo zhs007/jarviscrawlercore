@@ -464,6 +464,10 @@ message AnalyzePage {
     string url = 1;
     // delay = delay in seconds
     int32 delay = 2;
+    // viewportWidth - 
+    int32 viewportWidth = 3;
+    // viewportHeight - 
+    int32 viewportHeight = 4;
 }
 
 // AnalyzeScreenshotType - screenshot type

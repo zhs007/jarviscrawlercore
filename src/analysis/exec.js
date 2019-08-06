@@ -39,7 +39,7 @@ async function execAnalysis(program, version) {
 
           await analyzePage(browser, options.url, delay);
 
-        //   await browser.close();
+          await browser.close();
         })().catch((err) => {
           console.log('catch a err ', err);
 

@@ -25,6 +25,7 @@ function findReq(reqs, url) {
  */
 async function analyzePage(browser, url, delay) {
   const page = await browser.newPage();
+  await page.setCacheEnabled(false);
 
   const pagebt = Date.now();
   const lstErr = [];
@@ -83,7 +84,8 @@ async function analyzePage(browser, url, delay) {
   if (delay > 0) {
     await sleep(1000 * delay);
   }
-  //   await page.close();
+
+  await page.close();
 
   console.log('page time is ', pageet - pagebt);
 

@@ -136,6 +136,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_ANALYZEPAGE) {
+        if (!reply.getAnalyzepage()) {
+          cb('no analyzepage reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getAnalyzepage());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -174,6 +188,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_DTDATA) {
     reply.setDtdata(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_ANALYZEPAGE) {
+    reply.setAnalyzepage(val);
     reply.setCrawlertype(crawlerType);
   }
 }

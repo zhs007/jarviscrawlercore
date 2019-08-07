@@ -17,6 +17,21 @@ function findReq(reqs, url) {
 }
 
 /**
+ * isReqFinished - is request finished?
+ * @param {array} reqs - request list
+ * @return {bool} isfinished - is finished
+ */
+function isReqFinished(reqs) {
+  for (let i = 0; i < reqs.length; ++i) {
+    if (reqs[i].status == 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
  * analyze page
  * @param {object} browser - browser
  * @param {string} url - url
@@ -43,6 +58,13 @@ async function analyzePage(browser, url, delay) {
       url = 'local:imgdata-' + hashMD5(url);
     }
 
+    const oldreq = findReq(lstReq, url);
+    if (oldreq) {
+      return;
+    }
+
+    console.log('request - ', url);
+
     lstReq.push({
       url: url,
       st: Date.now(),
@@ -58,6 +80,8 @@ async function analyzePage(browser, url, delay) {
       url = 'local:imgdata-' + hashMD5(url);
     }
 
+    console.log('response - ', url);
+
     const req = findReq(lstReq, url);
     if (req) {
       req.status = res.status();
@@ -71,13 +95,43 @@ async function analyzePage(browser, url, delay) {
     }
   });
 
-  await page
-      .goto(url, {
-        waitUntil: 'networkidle2',
-      })
-      .catch((err) => {
-        console.log('analyzePage.goto', url, err);
-      });
+  let pagegotoerr = undefined;
+
+  await page.goto(url).catch((err) => {
+    console.log('analyzePage.goto', url, err);
+
+    pagegotoerr = err;
+  });
+  // await page
+  //     .goto(url, {
+  //       waitUntil: 'networkidle2',
+  //     })
+  //     .catch((err) => {
+  //       console.log('analyzePage.goto', url, err);
+
+  //       pagegotoerr = err;
+  //     });
+
+  if (pagegotoerr) {
+    return {error: pagegotoerr};
+  }
+
+  let isdone = false;
+  while (true) {
+    if (isReqFinished(lstReq)) {
+      if (isdone) {
+        break;
+      }
+
+      await sleep(3000);
+
+      isdone = true;
+    } else {
+      isdone = false;
+
+      await sleep(1000);
+    }
+  }
 
   const pageet = Date.now();
 
@@ -87,17 +141,39 @@ async function analyzePage(browser, url, delay) {
 
   await page.close();
 
-  console.log('page time is ', pageet - pagebt);
+  const ret = {
+    pageTime: pageet - pagebt,
+    pageBytes: 0,
+    errs: lstErr,
+  };
 
-  let curbytes = 0;
-  for (let i = 0; i < lstReq.length; ++i) {
-    curbytes += lstReq[i].buflen;
+  if (lstReq.length > 0) {
+    ret.reqs = [];
+
+    for (let i = 0; i < lstReq.length; ++i) {
+      ret.reqs.push({
+        url: lstReq[i].url,
+        downloadTime: lstReq[i].et - lstReq[i].bt,
+        status: lstReq[i].status,
+        buflen: lstReq[i].buflen,
+      });
+    }
   }
 
-  console.log('page bytes is ', curbytes);
+  console.log('page time is ', ret.pageTime);
+
+  for (let i = 0; i < lstReq.length; ++i) {
+    ret.pageBytes += lstReq[i].buflen;
+  }
+
+  console.log('page bytes is ', ret.pageBytes);
 
   console.log('err - ', JSON.stringify(lstErr));
   console.log('request - ', JSON.stringify(lstReq));
+
+  return {
+    ret: ret,
+  };
 }
 
 exports.analyzePage = analyzePage;

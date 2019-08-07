@@ -99,7 +99,7 @@ function analyzePage(servAddr, url, delay) {
         }
 
         if (reply) {
-          console.log('text:', reply);
+          console.log('reply:', JSON.stringify(reply.toObject()));
         }
       }
   );
@@ -114,4 +114,8 @@ function analyzePage(servAddr, url, delay) {
 
 // getCrunchBaseCompany('127.0.0.1:7051', 'slack');
 
-analyzePage('127.0.0.1:7051', 'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=', 10);
+analyzePage(
+    '127.0.0.1:7051',
+    'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=',
+    10
+);

@@ -685,6 +685,95 @@ function newCrunchBaseInvestor(obj) {
 }
 
 /**
+ * new ReplyAnalyzePage with object
+ * @param {object} obj - ReplyAnalyzePage object
+ * @return {messages.ReplyAnalyzePage} result - ReplyAnalyzePage
+ */
+function newReplyAnalyzePage(obj) {
+  const result = new messages.ReplyAnalyzePage();
+
+  if (obj.pageTime) {
+    result.setPagetime(obj.pageTime);
+  }
+
+  if (obj.pageBytes) {
+    result.setPagebytes(obj.pageBytes);
+  }
+
+  if (Array.isArray(obj.errs)) {
+    result.setErrsList(obj.errs);
+  }
+
+  if (Array.isArray(obj.reqs)) {
+    for (let i = 0; i < obj.reqs.length; ++i) {
+      result.addReqs(newAnalyzeReqInfo(obj.reqs[i]), i);
+    }
+  }
+
+  if (Array.isArray(obj.screenshots)) {
+    for (let i = 0; i < obj.screenshots.length; ++i) {
+      result.addScreenshots(newAnalyzeScreenshot(obj.screenshots[i]), i);
+    }
+  }
+
+  return result;
+}
+
+/**
+ * new AnalyzeReqInfo with object
+ * @param {object} obj - AnalyzeReqInfo object
+ * @return {messages.AnalyzeReqInfo} result - AnalyzeReqInfo
+ */
+function newAnalyzeReqInfo(obj) {
+  const result = new messages.AnalyzeReqInfo();
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.downloadTime) {
+    result.setDownloadtime(obj.downloadTime);
+  }
+
+  if (obj.bufBytes) {
+    result.setBufbytes(obj.bufBytes);
+  }
+
+  if (obj.status) {
+    result.setStatus(obj.status);
+  }
+
+  return result;
+}
+
+/**
+ * new AnalyzeScreenshot with object
+ * @param {object} obj - AnalyzeScreenshot object
+ * @return {messages.AnalyzeScreenshot} result - AnalyzeScreenshot
+ */
+function newAnalyzeScreenshot(obj) {
+  const result = new messages.AnalyzeScreenshot();
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.type) {
+    result.setType(obj.type);
+  }
+
+  if (obj.buf) {
+    result.setBuf(obj.buf);
+  }
+
+  if (obj.status) {
+    result.setStatus(obj.status);
+  }
+
+  return result;
+}
+
+/**
  * sleep
  * @param {number} ms - ms
  * @return {Promise} result -
@@ -946,6 +1035,7 @@ exports.printDTGPKCheckGameResult = printDTGPKCheckGameResult;
 exports.newCrunchBaseOrganization = newCrunchBaseOrganization;
 exports.newCrunchBaseFundingRound = newCrunchBaseFundingRound;
 exports.newCrunchBaseInvestor = newCrunchBaseInvestor;
+exports.newReplyAnalyzePage = newReplyAnalyzePage;
 exports.mouseMove = mouseMove;
 exports.mouseMoveToEle = mouseMoveToEle;
 exports.mouseMoveToEleEx = mouseMoveToEleEx;

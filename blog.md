@@ -1,5 +1,90 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-08-07
+
+``puppeteer``的``networkidle2``这一组感觉也不怎么靠谱，可以自己侦听 request 和 response 来处理，这样比较容易控制一些。
+
+``` js
+  page.on('request', (req) => {
+    let url = req.url();
+    if (url.indexOf('data:image') == 0) {
+      url = 'local:imgdata-' + hashMD5(url);
+    }
+
+    const oldreq = findReq(lstReq, url);
+    if (oldreq) {
+      return;
+    }
+
+    console.log('request - ', url);
+
+    lstReq.push({
+      url: url,
+      st: Date.now(),
+      et: -1,
+      status: 0,
+      buflen: 0,
+    });
+  });
+
+  page.on('response', async (res) => {
+    let url = res.url();
+    if (url.indexOf('data:image') == 0) {
+      url = 'local:imgdata-' + hashMD5(url);
+    }
+
+    console.log('response - ', url);
+
+    const req = findReq(lstReq, url);
+    if (req) {
+      const buf = await res.buffer();
+      req.buflen = buf.byteLength;
+
+      req.et = Date.now();
+      req.status = res.status();
+    } else {
+      console.log('no response', url);
+    }
+  });
+```
+
+还有几个简单的处理函数，在这里。
+
+``` js
+/**
+ * findReq - find a request
+ * @param {array} reqs - request list
+ * @param {string} url - url
+ * @return {object} req - request
+ */
+function findReq(reqs, url) {
+  for (let i = 0; i < reqs.length; ++i) {
+    if (reqs[i].url == url) {
+      return reqs[i];
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * isReqFinished - is request finished?
+ * @param {array} reqs - request list
+ * @return {bool} isfinished - is finished
+ */
+function isReqFinished(reqs) {
+  for (let i = 0; i < reqs.length; ++i) {
+    if (reqs[i].status == 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+```
+
+其实需要特殊考虑的主要就是多次的request请求，特殊处理一下就好。
+
 ### 2019-07-23
 
 最近在日本，dtbkbot的测试用``service+dtclient2``。

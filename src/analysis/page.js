@@ -84,12 +84,11 @@ async function analyzePage(browser, url, delay) {
 
     const req = findReq(lstReq, url);
     if (req) {
-      req.status = res.status();
-
       const buf = await res.buffer();
       req.buflen = buf.byteLength;
 
       req.et = Date.now();
+      req.status = res.status();
     } else {
       console.log('no response', url);
     }

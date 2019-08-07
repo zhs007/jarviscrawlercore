@@ -72,11 +72,50 @@ function getCrunchBaseCompany(servAddr, company) {
   );
 }
 
-startTranslate2(
-    '127.0.0.1:7051',
-    'en',
-    'zh-CN',
-    '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.'
-);
+/**
+ * analyzePage
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ * @param {string} delay - delay time in seconds
+ */
+function analyzePage(servAddr, url, delay) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
-getCrunchBaseCompany('127.0.0.1:7051', 'slack');
+  const request = new messages.AnalyzePage();
+  request.setUrl(url);
+  request.setDelay(delay);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ANALYZEPAGE,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+// startTranslate2(
+//     '127.0.0.1:7051',
+//     'en',
+//     'zh-CN',
+//     '@Peter Walker I am sure there is a problem with excel file, I need more time to check it.'
+// );
+
+// getCrunchBaseCompany('127.0.0.1:7051', 'slack');
+
+analyzePage(
+    '127.0.0.1:7051',
+    'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=',
+    10
+);

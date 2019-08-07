@@ -437,6 +437,7 @@ enum CrawlerType {
     CT_TRANSLATE2 = 0;
     CT_CB_COMPANY = 1;
     CT_DTDATA = 2;
+    CT_ANALYZEPAGE = 3;
 }
 
 // RequestTranslate2 - request translate
@@ -457,6 +458,64 @@ message TranslateResult {
     string text = 1;
 }
 
+// AnalyzePage - analyze page
+message AnalyzePage {
+    // url - url
+    string url = 1;
+    // delay = delay in seconds
+    int32 delay = 2;
+    // viewportWidth - 
+    int32 viewportWidth = 3;
+    // viewportHeight - 
+    int32 viewportHeight = 4;
+}
+
+// AnalyzeScreenshotType - screenshot type
+enum AnalyzeScreenshotType {
+    // AST_JPG - jpg
+    AST_JPG = 0;
+    // AST_PNG - png
+    AST_PNG = 1;
+}
+
+// AnalyzeScreenshot - screenshot
+message AnalyzeScreenshot {
+    // name - name
+    string name = 1;
+    // type - type
+    AnalyzeScreenshotType type = 2;
+    // buf - buffer
+    bytes buf = 3;
+}
+
+// AnalyzeImage - analyze request infomation
+message AnalyzeReqInfo {
+    // url - url
+    string url = 1;
+    // downloadTime - download time
+    int32 downloadTime = 2;
+    // bufBytes - buffer bytes
+    int32 bufBytes = 3;
+    // status - http status
+    int32 status = 4;
+}
+
+// ReplyAnalyzePage - reply analyze page
+message ReplyAnalyzePage {
+    // pageTime - page time
+    int32 pageTime = 1;
+    // pageBytes - page bytes
+    int32 pageBytes = 2;
+
+
+    // errs - error list
+    repeated string errs = 100;
+    // reqs - request list
+    repeated AnalyzeReqInfo reqs = 101;
+    // screenshots - screenshot list
+    repeated AnalyzeScreenshot screenshots = 102;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -466,6 +525,7 @@ message RequestCrawler {
         RequestCrunchBaseCompany cbCompany = 100;
         RequestTranslate2 translate2 = 101;
         RequestDTData dtdata = 102;
+        AnalyzePage analyzePage = 103;
     }
 }
 
@@ -477,6 +537,7 @@ message ReplyCrawler {
         CrunchBaseOrganization cbCompany = 100;
         TranslateResult translateResult = 101;
         ReplyDTData dtdata = 102;
+        ReplyAnalyzePage analyzePage = 103;
     }
 }
 

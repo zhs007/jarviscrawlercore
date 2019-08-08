@@ -1,4 +1,5 @@
 const {sleep, hashMD5} = require('../utils');
+const messages = require('../../proto/result_pb');
 
 /**
  * findReq - find a request
@@ -138,12 +139,24 @@ async function analyzePage(browser, url, delay) {
     await sleep(1000 * delay);
   }
 
+  const buf = await page.screenshot({
+    // path: './page001.png',
+    fullpage: true,
+  });
+
+  const screenshot = {
+    name: 'screenshot.png',
+    type: messages.AnalyzeScreenshotType.AST_PNG,
+    buf: buf,
+  };
+
   await page.close();
 
   const ret = {
     pageTime: pageet - pagebt,
     pageBytes: 0,
     errs: lstErr,
+    screenshots: [screenshot],
   };
 
   if (lstReq.length > 0) {

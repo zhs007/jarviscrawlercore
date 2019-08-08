@@ -1,6 +1,7 @@
 const messages = require('../../../proto/result_pb');
 const {analyzePage} = require('../../analysis/page');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
+const {newReplyAnalyzePage} = require('../../utils');
 
 /**
  * callAnalyzePage - analyze page
@@ -10,11 +11,7 @@ const {replyError, replyMsg, setReplyCrawler} = require('../utils');
  * @param {object} param - AnalyzePage
  */
 function callAnalyzePage(browser, cfg, call, param) {
-  analyzePage(
-      browser,
-      param.getUrl(),
-      param.getDelay()
-  )
+  analyzePage(browser, param.getUrl(), param.getDelay())
       .then((ret) => {
         if (ret.error) {
           replyError(call, ret.error, true);
@@ -26,8 +23,7 @@ function callAnalyzePage(browser, cfg, call, param) {
 
         const reply = new messages.ReplyCrawler();
 
-        const val = new messages.ReplyAnalyzePage();
-        // val.setText(ret.text);
+        const val = newReplyAnalyzePage(ret.ret);
 
         setReplyCrawler(reply, messages.CrawlerType.CT_ANALYZEPAGE, val);
 

@@ -2,6 +2,10 @@
 
 ### 2019-08-07
 
+``` sh
+npm publish https://github.com/zhs007/jarviscrawlercore/archive/v0.2.62.tar.gz
+```
+
 ``puppeteer``的``networkidle2``这一组感觉也不怎么靠谱，可以自己侦听 request 和 response 来处理，这样比较容易控制一些。
 
 ``` js

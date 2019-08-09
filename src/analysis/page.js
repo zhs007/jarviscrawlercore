@@ -64,7 +64,7 @@ async function analyzePage(browser, url, delay) {
       return;
     }
 
-    console.log('request - ', url);
+    // console.log('request - ', url);
 
     lstReq.push({
       url: url,
@@ -81,7 +81,7 @@ async function analyzePage(browser, url, delay) {
       url = 'local:imgdata-' + hashMD5(url);
     }
 
-    console.log('response - ', url);
+    // console.log('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
@@ -113,6 +113,8 @@ async function analyzePage(browser, url, delay) {
   //     });
 
   if (pagegotoerr) {
+    await page.close();
+
     return {error: pagegotoerr};
   }
 

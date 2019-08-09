@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const program = require('commander');
 const {startBrowser} = require('../src/browser');
 const {exportArticle} = require('../src/exportarticle/exportarticle');

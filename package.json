@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.2.62",
+  "version": "0.2.65",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/zhs007/jarviscrawlercore.git"
   },
+  "bin": {
+    "jarviscrawler": "./bin/jarviscrawler.js"
+  },  
   "keywords": [
     "crawler",
     "jarvis"

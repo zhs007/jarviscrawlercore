@@ -2,6 +2,8 @@
 
 ### 2019-08-07
 
+今天开始，npm的提交基于github上的release包了。
+
 ``` sh
 npm publish https://github.com/zhs007/jarviscrawlercore/archive/v0.2.62.tar.gz
 ```

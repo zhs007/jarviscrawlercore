@@ -167,9 +167,9 @@ async function analyzePage(browser, url, delay) {
     for (let i = 0; i < lstReq.length; ++i) {
       ret.reqs.push({
         url: lstReq[i].url,
-        downloadTime: lstReq[i].et - lstReq[i].bt,
+        downloadTime: lstReq[i].et - lstReq[i].st,
         status: lstReq[i].status,
-        buflen: lstReq[i].buflen,
+        bufBytes: lstReq[i].buflen,
       });
     }
   }

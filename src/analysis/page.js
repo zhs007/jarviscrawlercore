@@ -37,11 +37,16 @@ function isReqFinished(reqs) {
  * @param {object} browser - browser
  * @param {string} url - url
  * @param {number} delay - delay in seconds
+ * @param {object} viewport - {width, height, deviceScaleFactor,
+ *    isMobile, hasTouch, isLandscape}
  * @return {object} result - {error: err, ret: ret}
  */
-async function analyzePage(browser, url, delay) {
+async function analyzePage(browser, url, delay, viewport) {
   const page = await browser.newPage();
   await page.setCacheEnabled(false);
+  if (viewport) {
+    await page.setViewport(viewport);
+  }
 
   const pagebt = Date.now();
   const lstErr = [];

@@ -468,6 +468,12 @@ message AnalyzePage {
     int32 viewportWidth = 3;
     // viewportHeight - 
     int32 viewportHeight = 4;
+    // deviceScaleFactor - 
+    float deviceScaleFactor = 5;
+    // isMobile - 
+    bool isMobile = 6;
+    // isLandscape - 
+    bool isLandscape = 7;
 }
 
 // AnalyzeScreenshotType - screenshot type
@@ -498,6 +504,17 @@ message AnalyzeReqInfo {
     int32 bufBytes = 3;
     // status - http status
     int32 status = 4;
+    // startTime - start time
+    int64 startTime = 5;
+    // isGZip - is gzip
+    bool isGZip = 6;
+    // contentType - Content-Type
+    string contentType = 7;
+
+    // imgWidth - 
+    int32 imgWidth = 100;
+    // imgHeight - 
+    int32 imgHeight = 101;
 }
 
 // ReplyAnalyzePage - reply analyze page

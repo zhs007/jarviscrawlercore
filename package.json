@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.2.67",
+  "version": "0.2.68",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "bin": {
     "jarviscrawler": "./bin/jarviscrawler.js"
-  },  
+  },
   "keywords": [
     "crawler",
     "jarvis"
@@ -28,6 +28,7 @@
     "commander": "^2.20.0",
     "google-protobuf": "^3.9.0",
     "grpc": "^1.22.2",
+    "jimp": "^0.6.4",
     "puppeteer": "^1.19.0",
     "yaml-js": "^0.2.3"
   },

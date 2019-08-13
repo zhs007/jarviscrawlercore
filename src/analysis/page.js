@@ -1,5 +1,6 @@
 const {sleep, hashMD5} = require('../utils');
 const messages = require('../../proto/result_pb');
+const {getImageInfo} = require('../imgutils');
 
 /**
  * findReq - find a request
@@ -77,6 +78,10 @@ async function analyzePage(browser, url, delay, viewport) {
       et: -1,
       status: 0,
       buflen: 0,
+      contentType: '',
+      isGZip: false,
+      imgWidth: 0,
+      imgHeight: 0,
     });
   });
 
@@ -95,6 +100,27 @@ async function analyzePage(browser, url, delay, viewport) {
 
       req.et = Date.now();
       req.status = res.status();
+
+      const headers = res.headers();
+
+      if (headers['content-type']) {
+        req.contentType = headers['content-type'];
+      }
+
+      if (
+        headers['content-encoding'] &&
+        headers['content-encoding'].indexOf('gzip') >= 0
+      ) {
+        req.isGZip = true;
+      }
+
+      if (req.contentType.indexOf('image/') >= 0) {
+        const ir = getImageInfo(buf);
+        if (ir) {
+          req.imgWidth = ir.w;
+          req.imgHeight = ir.h;
+        }
+      }
     } else {
       console.log('no response', url);
     }
@@ -177,6 +203,11 @@ async function analyzePage(browser, url, delay, viewport) {
         downloadTime: lstReq[i].et - lstReq[i].st,
         status: lstReq[i].status,
         bufBytes: lstReq[i].buflen,
+        startTime: lstReq[i].st,
+        isGZip: lstReq[i].isGZip,
+        contentType: lstReq[i].contentType,
+        imgWidth: lstReq[i].imgWidth,
+        imgHeight: lstReq[i].imgHeight,
       });
     }
   }

@@ -8984,7 +8984,10 @@ proto.jarviscrawlercore.AnalyzePage.toObject = function(includeInstance, msg) {
     url: jspb.Message.getFieldWithDefault(msg, 1, ""),
     delay: jspb.Message.getFieldWithDefault(msg, 2, 0),
     viewportwidth: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    viewportheight: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    viewportheight: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    devicescalefactor: +jspb.Message.getFieldWithDefault(msg, 5, 0.0),
+    ismobile: jspb.Message.getFieldWithDefault(msg, 6, false),
+    islandscape: jspb.Message.getFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -9036,6 +9039,18 @@ proto.jarviscrawlercore.AnalyzePage.deserializeBinaryFromReader = function(msg, 
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setViewportheight(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setDevicescalefactor(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsmobile(value);
+      break;
+    case 7:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIslandscape(value);
       break;
     default:
       reader.skipField();
@@ -9091,6 +9106,27 @@ proto.jarviscrawlercore.AnalyzePage.serializeBinaryToWriter = function(message, 
   if (f !== 0) {
     writer.writeInt32(
       4,
+      f
+    );
+  }
+  f = message.getDevicescalefactor();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
+      f
+    );
+  }
+  f = message.getIsmobile();
+  if (f) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = message.getIslandscape();
+  if (f) {
+    writer.writeBool(
+      7,
       f
     );
   }
@@ -9154,6 +9190,55 @@ proto.jarviscrawlercore.AnalyzePage.prototype.getViewportheight = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.AnalyzePage.prototype.setViewportheight = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional float deviceScaleFactor = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getDevicescalefactor = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setDevicescalefactor = function(value) {
+  jspb.Message.setProto3FloatField(this, 5, value);
+};
+
+
+/**
+ * optional bool isMobile = 6;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getIsmobile = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setIsmobile = function(value) {
+  jspb.Message.setProto3BooleanField(this, 6, value);
+};
+
+
+/**
+ * optional bool isLandscape = 7;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getIslandscape = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setIslandscape = function(value) {
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -9427,7 +9512,12 @@ proto.jarviscrawlercore.AnalyzeReqInfo.toObject = function(includeInstance, msg)
     url: jspb.Message.getFieldWithDefault(msg, 1, ""),
     downloadtime: jspb.Message.getFieldWithDefault(msg, 2, 0),
     bufbytes: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    status: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    status: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    starttime: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    isgzip: jspb.Message.getFieldWithDefault(msg, 6, false),
+    contenttype: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    imgwidth: jspb.Message.getFieldWithDefault(msg, 100, 0),
+    imgheight: jspb.Message.getFieldWithDefault(msg, 101, 0)
   };
 
   if (includeInstance) {
@@ -9479,6 +9569,26 @@ proto.jarviscrawlercore.AnalyzeReqInfo.deserializeBinaryFromReader = function(ms
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setStatus(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setStarttime(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsgzip(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setContenttype(value);
+      break;
+    case 100:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setImgwidth(value);
+      break;
+    case 101:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setImgheight(value);
       break;
     default:
       reader.skipField();
@@ -9534,6 +9644,41 @@ proto.jarviscrawlercore.AnalyzeReqInfo.serializeBinaryToWriter = function(messag
   if (f !== 0) {
     writer.writeInt32(
       4,
+      f
+    );
+  }
+  f = message.getStarttime();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
+      f
+    );
+  }
+  f = message.getIsgzip();
+  if (f) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = message.getContenttype();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getImgwidth();
+  if (f !== 0) {
+    writer.writeInt32(
+      100,
+      f
+    );
+  }
+  f = message.getImgheight();
+  if (f !== 0) {
+    writer.writeInt32(
+      101,
       f
     );
   }
@@ -9597,6 +9742,83 @@ proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getStatus = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setStatus = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional int64 startTime = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getStarttime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setStarttime = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional bool isGZip = 6;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getIsgzip = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setIsgzip = function(value) {
+  jspb.Message.setProto3BooleanField(this, 6, value);
+};
+
+
+/**
+ * optional string contentType = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getContenttype = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setContenttype = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional int32 imgWidth = 100;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getImgwidth = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 100, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setImgwidth = function(value) {
+  jspb.Message.setProto3IntField(this, 100, value);
+};
+
+
+/**
+ * optional int32 imgHeight = 101;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getImgheight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 101, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setImgheight = function(value) {
+  jspb.Message.setProto3IntField(this, 101, value);
 };
 
 

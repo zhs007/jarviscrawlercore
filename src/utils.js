@@ -743,6 +743,26 @@ function newAnalyzeReqInfo(obj) {
     result.setStatus(obj.status);
   }
 
+  if (obj.startTime) {
+    result.setStarttime(obj.startTime);
+  }
+
+  if (obj.isGZip) {
+    result.setIsgzip(obj.isGZip);
+  }
+
+  if (obj.contentType) {
+    result.setContenttype(obj.contentType);
+  }
+
+  if (obj.imgWidth) {
+    result.setImgwidth(obj.imgWidth);
+  }
+
+  if (obj.imgHeight) {
+    result.setImgheight(obj.imgHeight);
+  }
+
   return result;
 }
 

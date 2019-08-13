@@ -144,11 +144,13 @@ async function analyzePage(browser, url, delay) {
   const buf = await page.screenshot({
     // path: './page001.png',
     fullpage: true,
+    type: 'jpeg',
+    quality: 60,
   });
 
   const screenshot = {
-    name: 'screenshot.png',
-    type: messages.AnalyzeScreenshotType.AST_PNG,
+    name: 'screenshot.jpg',
+    type: messages.AnalyzeScreenshotType.AST_JPG,
     buf: buf,
   };
 

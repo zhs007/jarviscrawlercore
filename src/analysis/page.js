@@ -115,7 +115,7 @@ async function analyzePage(browser, url, delay, viewport) {
       }
 
       if (req.contentType.indexOf('image/') >= 0) {
-        const ir = getImageInfo(buf);
+        const ir = await getImageInfo(buf);
         if (ir) {
           req.imgWidth = ir.w;
           req.imgHeight = ir.h;

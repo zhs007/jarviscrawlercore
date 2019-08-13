@@ -76,9 +76,11 @@ function getCrunchBaseCompany(servAddr, company) {
  * analyzePage
  * @param {string} servAddr - servAddr
  * @param {string} url - url
- * @param {string} delay - delay time in seconds
+ * @param {number} delay - delay time in seconds
+ * @param {number} w - viewport width
+ * @param {number} h - viewport height
  */
-function analyzePage(servAddr, url, delay) {
+function analyzePage(servAddr, url, delay, w, h) {
   const client = new services.JarvisCrawlerServiceClient(
       servAddr,
       grpc.credentials.createInsecure()
@@ -87,6 +89,8 @@ function analyzePage(servAddr, url, delay) {
   const request = new messages.AnalyzePage();
   request.setUrl(url);
   request.setDelay(delay);
+  request.setViewportwidth(w);
+  request.setViewportheight(h);
 
   requestCrawler(
       client,
@@ -117,5 +121,5 @@ function analyzePage(servAddr, url, delay) {
 analyzePage(
     '127.0.0.1:7051',
     'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=',
-    10
+    10, 1280, 800
 );

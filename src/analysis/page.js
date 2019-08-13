@@ -37,11 +37,16 @@ function isReqFinished(reqs) {
  * @param {object} browser - browser
  * @param {string} url - url
  * @param {number} delay - delay in seconds
+ * @param {object} viewport - {width, height, deviceScaleFactor,
+ *    isMobile, hasTouch, isLandscape}
  * @return {object} result - {error: err, ret: ret}
  */
-async function analyzePage(browser, url, delay) {
+async function analyzePage(browser, url, delay, viewport) {
   const page = await browser.newPage();
   await page.setCacheEnabled(false);
+  if (viewport) {
+    await page.setViewport(viewport);
+  }
 
   const pagebt = Date.now();
   const lstErr = [];
@@ -144,11 +149,13 @@ async function analyzePage(browser, url, delay) {
   const buf = await page.screenshot({
     // path: './page001.png',
     fullpage: true,
+    type: 'jpeg',
+    quality: 60,
   });
 
   const screenshot = {
-    name: 'screenshot.png',
-    type: messages.AnalyzeScreenshotType.AST_PNG,
+    name: 'screenshot.jpg',
+    type: messages.AnalyzeScreenshotType.AST_JPG,
     buf: buf,
   };
 

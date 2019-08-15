@@ -24,13 +24,29 @@ function findReq(reqs, url) {
  * @return {bool} isfinished - is finished
  */
 function isReqFinished(reqs) {
+  // const ct = Date.now();
+  // const endnums = 0;
+
   for (let i = 0; i < reqs.length; ++i) {
     if (reqs[i].status == 0) {
+      // if (!reqs[i].hasres) {
+      // if (ct - reqs[i].st >= 30000) {
+      //   reqs[i].status = 404;
+      //   reqs[i].et = ct;
+
+      //   ++endnums;
+
+      //   continue;
+      // }
+      // }
+
       return false;
+      // return {isfinished: false, endnums: endnums};
     }
   }
 
   return true;
+  // return {isfinished: true, endnums: endnums};
 }
 
 /**
@@ -52,6 +68,8 @@ async function analyzePage(browser, url, delay, viewport) {
   const pagebt = Date.now();
   const lstErr = [];
   const lstReq = [];
+  let waitend = false;
+  // let downloadNums = 0;
 
   page.on('error', (err) => {
     lstErr.push(err.toString());
@@ -60,6 +78,10 @@ async function analyzePage(browser, url, delay, viewport) {
   });
 
   page.on('request', (req) => {
+    if (waitend) {
+      return;
+    }
+
     let url = req.url();
     if (url.indexOf('data:image') == 0) {
       url = 'local:imgdata-' + hashMD5(url);
@@ -70,7 +92,7 @@ async function analyzePage(browser, url, delay, viewport) {
       return;
     }
 
-    // console.log('request - ', url);
+    console.log('request - ', url);
 
     lstReq.push({
       url: url,
@@ -82,26 +104,66 @@ async function analyzePage(browser, url, delay, viewport) {
       isGZip: false,
       imgWidth: 0,
       imgHeight: 0,
+      hasres: false,
     });
   });
 
+  page.on('requestfailed', async (req) => {
+    if (waitend) {
+      return;
+    }
+
+    let url = req.url();
+    if (url.indexOf('data:image') == 0) {
+      url = 'local:imgdata-' + hashMD5(url);
+    }
+
+    const curreq = findReq(lstReq, url);
+    if (curreq) {
+      if (curreq.status == 0) {
+        curreq.status = -1;
+        curreq.et = Date.now();
+      }
+    }
+
+    console.log('requestfailed - ', url);
+  });
+
   page.on('response', async (res) => {
+    if (waitend) {
+      return;
+    }
+    // ++downloadNums;
+
     let url = res.url();
     if (url.indexOf('data:image') == 0) {
       url = 'local:imgdata-' + hashMD5(url);
     }
 
-    // console.log('response - ', url);
+    console.log('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
+      req.hasres = true;
+
+      const headers = res.headers();
+
+      if (
+        headers['content-type'] &&
+        headers['content-type'].indexOf('video') == 0
+      ) {
+        req.et = Date.now();
+        req.status = res.status();
+
+        // --downloadNums;
+        return;
+      }
+
       const buf = await res.buffer();
       req.buflen = buf.byteLength;
 
       req.et = Date.now();
       req.status = res.status();
-
-      const headers = res.headers();
 
       if (headers['content-type']) {
         req.contentType = headers['content-type'];
@@ -124,11 +186,13 @@ async function analyzePage(browser, url, delay, viewport) {
     } else {
       console.log('no response', url);
     }
+
+    // --downloadNums;
   });
 
   let pagegotoerr = undefined;
 
-  await page.goto(url).catch((err) => {
+  await page.goto(url, {timeout: 60000}).catch((err) => {
     console.log('analyzePage.goto', url, err);
 
     pagegotoerr = err;
@@ -172,9 +236,35 @@ async function analyzePage(browser, url, delay, viewport) {
     await sleep(1000 * delay);
   }
 
-  const buf = await page.screenshot({
+  let buf = await page.screenshot({
     // path: './page001.png',
-    fullpage: true,
+    fullPage: true,
+    type: 'jpeg',
+    quality: 60,
+  });
+
+  isdone = false;
+  while (true) {
+    if (isReqFinished(lstReq)) {
+      if (isdone) {
+        break;
+      }
+
+      await sleep(3000);
+
+      isdone = true;
+    } else {
+      isdone = false;
+
+      await sleep(1000);
+    }
+  }
+
+  waitend = true;
+
+  buf = await page.screenshot({
+    // path: './page001.png',
+    fullPage: true,
     type: 'jpeg',
     quality: 60,
   });

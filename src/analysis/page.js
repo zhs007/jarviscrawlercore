@@ -24,9 +24,16 @@ function findReq(reqs, url) {
  * @return {bool} isfinished - is finished
  */
 function isReqFinished(reqs) {
+  const ct = Date.now();
+
   for (let i = 0; i < reqs.length; ++i) {
     if (reqs[i].status == 0) {
-      return false;
+      if (ct - reqs[i].st >= 30000) {
+        reqs[i].status = 404;
+        req.et = ct;
+      } else {
+        return false;
+      }
     }
   }
 
@@ -70,7 +77,7 @@ async function analyzePage(browser, url, delay, viewport) {
       return;
     }
 
-    // console.log('request - ', url);
+    console.log('request - ', url);
 
     lstReq.push({
       url: url,
@@ -91,17 +98,24 @@ async function analyzePage(browser, url, delay, viewport) {
       url = 'local:imgdata-' + hashMD5(url);
     }
 
-    // console.log('response - ', url);
+    console.log('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
+      req.status = res.status();
+
+      const headers = res.headers();
+
+      if (headers['content-type'] && headers['content-type'].indexOf('video') == 0) {
+        req.et = Date.now();
+
+        return;
+      }
+
       const buf = await res.buffer();
       req.buflen = buf.byteLength;
 
       req.et = Date.now();
-      req.status = res.status();
-
-      const headers = res.headers();
 
       if (headers['content-type']) {
         req.contentType = headers['content-type'];
@@ -128,7 +142,7 @@ async function analyzePage(browser, url, delay, viewport) {
 
   let pagegotoerr = undefined;
 
-  await page.goto(url).catch((err) => {
+  await page.goto(url, {timeout: 60000}).catch((err) => {
     console.log('analyzePage.goto', url, err);
 
     pagegotoerr = err;
@@ -174,7 +188,7 @@ async function analyzePage(browser, url, delay, viewport) {
 
   const buf = await page.screenshot({
     // path: './page001.png',
-    fullpage: true,
+    fullPage: true,
     type: 'jpeg',
     quality: 60,
   });

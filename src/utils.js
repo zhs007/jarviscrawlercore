@@ -700,7 +700,7 @@ function newReplyAnalyzePage(obj) {
     result.setPagebytes(obj.pageBytes);
   }
 
-  if (Array.isArray(obj.errs)) {
+  if (Array.isArray(obj.errs) && obj.errs.length > 0) {
     result.setErrsList(obj.errs);
   }
 

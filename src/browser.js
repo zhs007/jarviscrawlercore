@@ -15,6 +15,7 @@ async function startBrowser(headless, slowmo) {
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',
+        '--ignore-certificate-errors',
       ],
     });
   }
@@ -25,6 +26,7 @@ async function startBrowser(headless, slowmo) {
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
+      '--ignore-certificate-errors',
     ],
   });
 }

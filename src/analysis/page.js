@@ -1,6 +1,7 @@
 const {sleep, hashMD5} = require('../utils');
 const messages = require('../../proto/result_pb');
 const {getImageInfo} = require('../imgutils');
+const {IPMgr} = require('../ipmgr');
 
 /**
  * getURL - get url
@@ -75,6 +76,7 @@ function isReqFinished(reqs) {
  * @return {object} result - {error: err, ret: ret}
  */
 async function analyzePage(browser, url, viewport, options) {
+  const ipmgr = new IPMgr();
   let needscreenshots = false;
   let needlogs = false;
   let timeout = 3 * 60 * 1000;
@@ -342,7 +344,7 @@ async function analyzePage(browser, url, viewport, options) {
     ret.reqs = [];
 
     for (let i = 0; i < lstReq.length; ++i) {
-      ret.reqs.push({
+      const curreq = {
         url: lstReq[i].url,
         downloadTime: lstReq[i].et - lstReq[i].st,
         status: lstReq[i].status,
@@ -352,7 +354,11 @@ async function analyzePage(browser, url, viewport, options) {
         contentType: lstReq[i].contentType,
         imgWidth: lstReq[i].imgWidth,
         imgHeight: lstReq[i].imgHeight,
-      });
+      };
+
+      curreq.ipaddr = await ipmgr.getIP(lstReq[i].url);
+
+      ret.reqs.push(curreq);
     }
   }
 

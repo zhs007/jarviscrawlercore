@@ -474,6 +474,12 @@ message AnalyzePage {
     bool isMobile = 6;
     // isLandscape - 
     bool isLandscape = 7;
+    // needScreenshots - 
+    bool needScreenshots = 8;
+    // needLogs - 
+    bool needLogs = 9;
+    // timeout - timeout in secend
+    int32 timeout = 10;
 }
 
 // AnalyzeScreenshotType - screenshot type
@@ -510,6 +516,8 @@ message AnalyzeReqInfo {
     bool isGZip = 6;
     // contentType - Content-Type
     string contentType = 7;
+    // ipaddr - ip address
+    string ipaddr = 8;
 
     // imgWidth - 
     int32 imgWidth = 100;
@@ -531,6 +539,8 @@ message ReplyAnalyzePage {
     repeated AnalyzeReqInfo reqs = 101;
     // screenshots - screenshot list
     repeated AnalyzeScreenshot screenshots = 102;
+    // logs - console.log list
+    repeated string logs = 103;
 }
 
 // RequestCrawler - request crawler

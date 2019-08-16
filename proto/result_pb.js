@@ -8987,7 +8987,10 @@ proto.jarviscrawlercore.AnalyzePage.toObject = function(includeInstance, msg) {
     viewportheight: jspb.Message.getFieldWithDefault(msg, 4, 0),
     devicescalefactor: +jspb.Message.getFieldWithDefault(msg, 5, 0.0),
     ismobile: jspb.Message.getFieldWithDefault(msg, 6, false),
-    islandscape: jspb.Message.getFieldWithDefault(msg, 7, false)
+    islandscape: jspb.Message.getFieldWithDefault(msg, 7, false),
+    needscreenshots: jspb.Message.getFieldWithDefault(msg, 8, false),
+    needlogs: jspb.Message.getFieldWithDefault(msg, 9, false),
+    timeout: jspb.Message.getFieldWithDefault(msg, 10, 0)
   };
 
   if (includeInstance) {
@@ -9051,6 +9054,18 @@ proto.jarviscrawlercore.AnalyzePage.deserializeBinaryFromReader = function(msg, 
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIslandscape(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setNeedscreenshots(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setNeedlogs(value);
+      break;
+    case 10:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTimeout(value);
       break;
     default:
       reader.skipField();
@@ -9127,6 +9142,27 @@ proto.jarviscrawlercore.AnalyzePage.serializeBinaryToWriter = function(message, 
   if (f) {
     writer.writeBool(
       7,
+      f
+    );
+  }
+  f = message.getNeedscreenshots();
+  if (f) {
+    writer.writeBool(
+      8,
+      f
+    );
+  }
+  f = message.getNeedlogs();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
+    );
+  }
+  f = message.getTimeout();
+  if (f !== 0) {
+    writer.writeInt32(
+      10,
       f
     );
   }
@@ -9239,6 +9275,55 @@ proto.jarviscrawlercore.AnalyzePage.prototype.getIslandscape = function() {
 /** @param {boolean} value */
 proto.jarviscrawlercore.AnalyzePage.prototype.setIslandscape = function(value) {
   jspb.Message.setProto3BooleanField(this, 7, value);
+};
+
+
+/**
+ * optional bool needScreenshots = 8;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getNeedscreenshots = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setNeedscreenshots = function(value) {
+  jspb.Message.setProto3BooleanField(this, 8, value);
+};
+
+
+/**
+ * optional bool needLogs = 9;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getNeedlogs = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setNeedlogs = function(value) {
+  jspb.Message.setProto3BooleanField(this, 9, value);
+};
+
+
+/**
+ * optional int32 timeout = 10;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AnalyzePage.prototype.getTimeout = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AnalyzePage.prototype.setTimeout = function(value) {
+  jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
@@ -9516,6 +9601,7 @@ proto.jarviscrawlercore.AnalyzeReqInfo.toObject = function(includeInstance, msg)
     starttime: jspb.Message.getFieldWithDefault(msg, 5, 0),
     isgzip: jspb.Message.getFieldWithDefault(msg, 6, false),
     contenttype: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    ipaddr: jspb.Message.getFieldWithDefault(msg, 8, ""),
     imgwidth: jspb.Message.getFieldWithDefault(msg, 100, 0),
     imgheight: jspb.Message.getFieldWithDefault(msg, 101, 0)
   };
@@ -9581,6 +9667,10 @@ proto.jarviscrawlercore.AnalyzeReqInfo.deserializeBinaryFromReader = function(ms
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setContenttype(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIpaddr(value);
       break;
     case 100:
       var value = /** @type {number} */ (reader.readInt32());
@@ -9665,6 +9755,13 @@ proto.jarviscrawlercore.AnalyzeReqInfo.serializeBinaryToWriter = function(messag
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getIpaddr();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -9793,6 +9890,21 @@ proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setContenttype = function(value
 
 
 /**
+ * optional string ipaddr = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getIpaddr = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setIpaddr = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
  * optional int32 imgWidth = 100;
  * @return {number}
  */
@@ -9845,7 +9957,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.ReplyAnalyzePage.repeatedFields_ = [100,101,102];
+proto.jarviscrawlercore.ReplyAnalyzePage.repeatedFields_ = [100,101,102,103];
 
 
 
@@ -9882,7 +9994,8 @@ proto.jarviscrawlercore.ReplyAnalyzePage.toObject = function(includeInstance, ms
     reqsList: jspb.Message.toObjectList(msg.getReqsList(),
     proto.jarviscrawlercore.AnalyzeReqInfo.toObject, includeInstance),
     screenshotsList: jspb.Message.toObjectList(msg.getScreenshotsList(),
-    proto.jarviscrawlercore.AnalyzeScreenshot.toObject, includeInstance)
+    proto.jarviscrawlercore.AnalyzeScreenshot.toObject, includeInstance),
+    logsList: jspb.Message.getRepeatedField(msg, 103)
   };
 
   if (includeInstance) {
@@ -9940,6 +10053,10 @@ proto.jarviscrawlercore.ReplyAnalyzePage.deserializeBinaryFromReader = function(
       var value = new proto.jarviscrawlercore.AnalyzeScreenshot;
       reader.readMessage(value,proto.jarviscrawlercore.AnalyzeScreenshot.deserializeBinaryFromReader);
       msg.addScreenshots(value);
+      break;
+    case 103:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLogs(value);
       break;
     default:
       reader.skipField();
@@ -10005,6 +10122,13 @@ proto.jarviscrawlercore.ReplyAnalyzePage.serializeBinaryToWriter = function(mess
       102,
       f,
       proto.jarviscrawlercore.AnalyzeScreenshot.serializeBinaryToWriter
+    );
+  }
+  f = message.getLogsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      103,
+      f
     );
   }
 };
@@ -10128,6 +10252,35 @@ proto.jarviscrawlercore.ReplyAnalyzePage.prototype.addScreenshots = function(opt
 
 proto.jarviscrawlercore.ReplyAnalyzePage.prototype.clearScreenshotsList = function() {
   this.setScreenshotsList([]);
+};
+
+
+/**
+ * repeated string logs = 103;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.ReplyAnalyzePage.prototype.getLogsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 103));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.ReplyAnalyzePage.prototype.setLogsList = function(value) {
+  jspb.Message.setField(this, 103, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.ReplyAnalyzePage.prototype.addLogs = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 103, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.ReplyAnalyzePage.prototype.clearLogsList = function() {
+  this.setLogsList([]);
 };
 
 

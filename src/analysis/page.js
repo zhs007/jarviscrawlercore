@@ -3,6 +3,22 @@ const messages = require('../../proto/result_pb');
 const {getImageInfo} = require('../imgutils');
 
 /**
+ * getURL - get url
+ * @param {string} url - url
+ * @return {string} url - url
+ */
+function getURL(url) {
+  if (url.indexOf('data:') == 0) {
+    url = 'local:data-' + hashMD5(url);
+  } else {
+    const arr = url.split('?');
+    return arr[0];
+  }
+
+  return url;
+}
+
+/**
  * findReq - find a request
  * @param {array} reqs - request list
  * @param {string} url - url
@@ -53,12 +69,35 @@ function isReqFinished(reqs) {
  * analyze page
  * @param {object} browser - browser
  * @param {string} url - url
- * @param {number} delay - delay in seconds
  * @param {object} viewport - {width, height, deviceScaleFactor,
  *    isMobile, hasTouch, isLandscape}
+ * @param {object} options - {screenshots, logs, timeout, screenshotsDelay}
  * @return {object} result - {error: err, ret: ret}
  */
-async function analyzePage(browser, url, delay, viewport) {
+async function analyzePage(browser, url, viewport, options) {
+  let needscreenshots = false;
+  let needlogs = false;
+  let timeout = 3 * 60 * 1000;
+  let screenshotsDelay = 0;
+
+  if (options) {
+    if (options.screenshots) {
+      needscreenshots = true;
+    }
+
+    if (options.logs) {
+      needlogs = true;
+    }
+
+    if (options.timeout > 0) {
+      timeout = options.timeout * 1000;
+    }
+
+    if (options.screenshotsDelay > 0) {
+      screenshotsDelay = options.screenshotsDelay * 1000;
+    }
+  }
+
   const page = await browser.newPage();
   await page.setCacheEnabled(false);
   if (viewport) {
@@ -68,8 +107,20 @@ async function analyzePage(browser, url, delay, viewport) {
   const pagebt = Date.now();
   const lstErr = [];
   const lstReq = [];
+  const lstLogs = [];
+  const lstScreenshots = [];
   let waitend = false;
   // let downloadNums = 0;
+
+  page.on('console', (msg) => {
+    if (needlogs) {
+      lstLogs.push(msg.text());
+    }
+
+    if (msg.type() == 'error') {
+      lstErr.push(msg.text());
+    }
+  });
 
   page.on('error', (err) => {
     lstErr.push(err.toString());
@@ -82,17 +133,14 @@ async function analyzePage(browser, url, delay, viewport) {
       return;
     }
 
-    let url = req.url();
-    if (url.indexOf('data:image') == 0) {
-      url = 'local:imgdata-' + hashMD5(url);
-    }
+    const url = getURL(req.url());
 
     const oldreq = findReq(lstReq, url);
     if (oldreq) {
       return;
     }
 
-    console.log('request - ', url);
+    // console.log('request - ', url);
 
     lstReq.push({
       url: url,
@@ -113,10 +161,7 @@ async function analyzePage(browser, url, delay, viewport) {
       return;
     }
 
-    let url = req.url();
-    if (url.indexOf('data:image') == 0) {
-      url = 'local:imgdata-' + hashMD5(url);
-    }
+    const url = getURL(req.url());
 
     const curreq = findReq(lstReq, url);
     if (curreq) {
@@ -126,7 +171,7 @@ async function analyzePage(browser, url, delay, viewport) {
       }
     }
 
-    console.log('requestfailed - ', url);
+    // console.log('requestfailed - ', url);
   });
 
   page.on('response', async (res) => {
@@ -135,12 +180,9 @@ async function analyzePage(browser, url, delay, viewport) {
     }
     // ++downloadNums;
 
-    let url = res.url();
-    if (url.indexOf('data:image') == 0) {
-      url = 'local:imgdata-' + hashMD5(url);
-    }
+    const url = getURL(res.url());
 
-    console.log('response - ', url);
+    // console.log('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
@@ -213,8 +255,15 @@ async function analyzePage(browser, url, delay, viewport) {
     return {error: pagegotoerr};
   }
 
+  const startwaittime = Date.now();
   let isdone = false;
   while (true) {
+    if (Date.now() - startwaittime >= timeout) {
+      await page.close();
+
+      return {error: 'timeout'};
+    }
+
     if (isReqFinished(lstReq)) {
       if (isdone) {
         break;
@@ -232,48 +281,52 @@ async function analyzePage(browser, url, delay, viewport) {
 
   const pageet = Date.now();
 
-  if (delay > 0) {
-    await sleep(1000 * delay);
-  }
-
-  let buf = await page.screenshot({
-    // path: './page001.png',
-    fullPage: true,
-    type: 'jpeg',
-    quality: 60,
-  });
-
-  isdone = false;
-  while (true) {
-    if (isReqFinished(lstReq)) {
-      if (isdone) {
-        break;
-      }
-
-      await sleep(3000);
-
-      isdone = true;
-    } else {
-      isdone = false;
-
-      await sleep(1000);
+  if (needscreenshots) {
+    if (screenshotsDelay > 0) {
+      await sleep(screenshotsDelay);
     }
+
+    let buf = await page.screenshot({
+      // path: './page001.png',
+      fullPage: true,
+      type: 'jpeg',
+      quality: 60,
+    });
+
+    isdone = false;
+    while (true) {
+      if (isReqFinished(lstReq)) {
+        if (isdone) {
+          break;
+        }
+
+        await sleep(3000);
+
+        isdone = true;
+      } else {
+        isdone = false;
+
+        await sleep(1000);
+      }
+    }
+
+    waitend = true;
+
+    buf = await page.screenshot({
+      // path: './page001.png',
+      fullPage: true,
+      type: 'jpeg',
+      quality: 60,
+    });
+
+    const screenshot = {
+      name: 'screenshot.jpg',
+      type: messages.AnalyzeScreenshotType.AST_JPG,
+      buf: buf,
+    };
+
+    lstScreenshots.push(screenshot);
   }
-
-  waitend = true;
-
-  buf = await page.screenshot({
-    // path: './page001.png',
-    fullPage: true,
-    type: 'jpeg',
-    quality: 60,
-  });
-
-  const screenshot = {
-    name: 'screenshot.jpg',
-    type: messages.AnalyzeScreenshotType.AST_JPG,
-    buf: buf,
-  };
 
   await page.close();
 
@@ -281,7 +334,8 @@ async function analyzePage(browser, url, delay, viewport) {
     pageTime: pageet - pagebt,
     pageBytes: 0,
     errs: lstErr,
-    screenshots: [screenshot],
+    logs: lstLogs,
+    screenshots: lstScreenshots,
   };
 
   if (lstReq.length > 0) {

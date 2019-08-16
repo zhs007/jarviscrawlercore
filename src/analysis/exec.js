@@ -37,7 +37,9 @@ async function execAnalysis(program, version) {
         (async () => {
           const browser = await startBrowser(headless);
 
-          await analyzePage(browser, options.url, delay, undefined);
+          await analyzePage(browser, options.url, undefined, {
+            screenshotsDelay: delay,
+          });
 
           await browser.close();
         })().catch((err) => {

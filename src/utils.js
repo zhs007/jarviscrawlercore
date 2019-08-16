@@ -716,6 +716,10 @@ function newReplyAnalyzePage(obj) {
     }
   }
 
+  if (Array.isArray(obj.logs) && obj.logs.length > 0) {
+    result.setLogsList(obj.logs);
+  }
+
   return result;
 }
 
@@ -753,6 +757,10 @@ function newAnalyzeReqInfo(obj) {
 
   if (obj.contentType) {
     result.setContenttype(obj.contentType);
+  }
+
+  if (obj.ipaddr) {
+    result.setIpaddr(obj.ipaddr);
   }
 
   if (obj.imgWidth) {

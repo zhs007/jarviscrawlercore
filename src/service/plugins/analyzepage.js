@@ -11,10 +11,20 @@ const {newReplyAnalyzePage} = require('../../utils');
  * @param {object} param - AnalyzePage
  */
 function callAnalyzePage(browser, cfg, call, param) {
-  analyzePage(browser, param.getUrl(), param.getDelay(), {
-    width: param.getViewportwidth(),
-    height: param.getViewportheight(),
-  })
+  analyzePage(
+      browser,
+      param.getUrl(),
+      {
+        width: param.getViewportwidth(),
+        height: param.getViewportheight(),
+      },
+      {
+        screenshots: param.getNeedscreenshots(),
+        logs: param.getNeedlogs(),
+        timeout: param.getTimeout(),
+        screenshotsDelay: param.getDelay(),
+      }
+  )
       .then((ret) => {
         if (ret.error) {
           replyError(call, ret.error, true);

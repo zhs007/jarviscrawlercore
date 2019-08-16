@@ -35,32 +35,49 @@ class IPMgr {
   /**
    * getIP -
    * @param {string} url - url
-   * @return {string} ip - ip address
+   * @return {Promise<string>} ip - ip address
    */
-  async getIP(url) {
-    const curhostname = getHostName(url);
-    if (curhostname != '') {
-      if (this.maphostname[curhostname]) {
-        return this.maphostname[curhostname];
-      }
+  getIP(url) {
+    return new Promise((resolve, reject) => {
+      const curhostname = getHostName(url);
+      if (curhostname != '') {
+        if (this.maphostname[curhostname]) {
+          resolve(this.maphostname[curhostname]);
 
-      const dnsret = await dns.promises.lookup(curhostname);
-      if (dnsret) {
-        let ip = '';
-        for (let i = 0; i < dnsret.length; ++i) {
-          if (dnsret[i].family == 4) {
-            ip += dnsret[i].address;
-            ip += ';';
-          }
+          return;
         }
 
-        this.maphostname[curhostname] = ip;
+        try {
+          dns.lookup(curhostname, {all: true}, (err, addresses) => {
+            if (err) {
+              reject(err);
 
-        return ip;
+              return;
+            }
+
+            let ip = '';
+            for (let i = 0; i < addresses.length; ++i) {
+              if (addresses[i].family == 4) {
+                ip += addresses[i].address;
+                ip += ';';
+              }
+            }
+
+            this.maphostname[curhostname] = ip;
+
+            resolve(ip);
+          });
+        } catch (err) {
+          console.log('getIP ' + err);
+
+          reject(err);
+        }
+
+        return;
       }
-    }
 
-    return '';
+      resolve('');
+    });
   }
 };
 

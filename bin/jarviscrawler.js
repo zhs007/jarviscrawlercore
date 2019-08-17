@@ -18,6 +18,7 @@ const {btexec} = require('../src/bt/exec');
 const {doubanexec} = require('../src/douban/exec');
 const {execAnalysis} = require('../src/analysis/exec');
 const {execGeoIP} = require('../src/geoip/exec');
+const {execTinypng} = require('../src/tinypng/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -347,5 +348,6 @@ doubanexec(program, VERSION);
 
 execAnalysis(program, VERSION);
 execGeoIP(program, VERSION);
+execTinypng(program, VERSION);
 
 program.parse(process.argv);

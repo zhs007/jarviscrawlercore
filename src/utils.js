@@ -763,6 +763,10 @@ function newAnalyzeReqInfo(obj) {
     result.setIpaddr(obj.ipaddr);
   }
 
+  if (obj.remoteaddr) {
+    result.setRemoteaddr(obj.remoteaddr);
+  }
+
   if (obj.imgWidth) {
     result.setImgwidth(obj.imgWidth);
   }

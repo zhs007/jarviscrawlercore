@@ -9602,6 +9602,7 @@ proto.jarviscrawlercore.AnalyzeReqInfo.toObject = function(includeInstance, msg)
     isgzip: jspb.Message.getFieldWithDefault(msg, 6, false),
     contenttype: jspb.Message.getFieldWithDefault(msg, 7, ""),
     ipaddr: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    remoteaddr: jspb.Message.getFieldWithDefault(msg, 9, ""),
     imgwidth: jspb.Message.getFieldWithDefault(msg, 100, 0),
     imgheight: jspb.Message.getFieldWithDefault(msg, 101, 0)
   };
@@ -9671,6 +9672,10 @@ proto.jarviscrawlercore.AnalyzeReqInfo.deserializeBinaryFromReader = function(ms
     case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setIpaddr(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRemoteaddr(value);
       break;
     case 100:
       var value = /** @type {number} */ (reader.readInt32());
@@ -9762,6 +9767,13 @@ proto.jarviscrawlercore.AnalyzeReqInfo.serializeBinaryToWriter = function(messag
   if (f.length > 0) {
     writer.writeString(
       8,
+      f
+    );
+  }
+  f = message.getRemoteaddr();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
       f
     );
   }
@@ -9901,6 +9913,21 @@ proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getIpaddr = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setIpaddr = function(value) {
   jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string remoteaddr = 9;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.getRemoteaddr = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AnalyzeReqInfo.prototype.setRemoteaddr = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 

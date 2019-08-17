@@ -516,8 +516,10 @@ message AnalyzeReqInfo {
     bool isGZip = 6;
     // contentType - Content-Type
     string contentType = 7;
-    // ipaddr - ip address
+    // ipaddr - ip address, it's like 127.0.0.1;192.168.0.1;
     string ipaddr = 8;
+    // remoteaddr - remote address, it's like 127.0.0.1:443
+    string remoteaddr = 9;
 
     // imgWidth - 
     int32 imgWidth = 100;

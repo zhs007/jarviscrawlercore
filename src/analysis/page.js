@@ -227,6 +227,11 @@ async function analyzePage(browser, url, viewport, options) {
           req.imgHeight = ir.h;
         }
       }
+
+      const remoteaddr = res.remoteAddress();
+      if (remoteaddr) {
+        req.remoteaddr = remoteaddr.ip + ':' + remoteaddr.port;
+      }
     } else {
       console.log('no response', url);
     }

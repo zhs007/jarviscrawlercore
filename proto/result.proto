@@ -438,6 +438,7 @@ enum CrawlerType {
     CT_CB_COMPANY = 1;
     CT_DTDATA = 2;
     CT_ANALYZEPAGE = 3;
+    CT_GEOIP = 5;
 }
 
 // RequestTranslate2 - request translate
@@ -516,8 +517,10 @@ message AnalyzeReqInfo {
     bool isGZip = 6;
     // contentType - Content-Type
     string contentType = 7;
-    // ipaddr - ip address
+    // ipaddr - ip address, it's like 127.0.0.1;192.168.0.1;
     string ipaddr = 8;
+    // remoteaddr - remote address, it's like 127.0.0.1:443
+    string remoteaddr = 9;
 
     // imgWidth - 
     int32 imgWidth = 100;
@@ -543,6 +546,27 @@ message ReplyAnalyzePage {
     repeated string logs = 103;
 }
 
+// RequestGeoIP - request geoip
+message RequestGeoIP {
+    // ip - ip address
+    string ip = 1;
+    // platform - it's like ipvoid, default is ipvoid
+    string platform = 2;
+}
+
+// ReplyGeoIP - reply geoip
+message ReplyGeoIP {
+    float latitude = 1;
+    float longitude = 2;
+    string organization = 3;
+    string asn = 4;
+    string continent = 5;
+    string country = 6;
+    string region = 7;
+    string city = 8;
+    string hostname = 9;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -553,6 +577,7 @@ message RequestCrawler {
         RequestTranslate2 translate2 = 101;
         RequestDTData dtdata = 102;
         AnalyzePage analyzePage = 103;
+        RequestGeoIP geoip = 105;
     }
 }
 
@@ -565,6 +590,7 @@ message ReplyCrawler {
         TranslateResult translateResult = 101;
         ReplyDTData dtdata = 102;
         ReplyAnalyzePage analyzePage = 103;
+        ReplyGeoIP geoip = 105;
     }
 }
 

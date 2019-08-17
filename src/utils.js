@@ -724,6 +724,53 @@ function newReplyAnalyzePage(obj) {
 }
 
 /**
+ * new ReplyGeoIP with object
+ * @param {object} obj - ReplyGeoIP object
+ * @return {messages.ReplyGeoIP} result - ReplyGeoIP
+ */
+function newReplyGeoIP(obj) {
+  const result = new messages.ReplyGeoIP();
+
+  if (obj.latitude) {
+    result.setLatitude(obj.latitude);
+  }
+
+  if (obj.longitude) {
+    result.setLongitude(obj.longitude);
+  }
+
+  if (obj.organization) {
+    result.setOrganization(obj.organization);
+  }
+
+  if (obj.asn) {
+    result.setAsn(obj.asn);
+  }
+
+  if (obj.continent) {
+    result.setContinent(obj.continent);
+  }
+
+  if (obj.country) {
+    result.setCountry(obj.country);
+  }
+
+  if (obj.region) {
+    result.setRegion(obj.region);
+  }
+
+  if (obj.city) {
+    result.setCity(obj.city);
+  }
+
+  if (obj.hostname) {
+    result.setHostname(obj.hostname);
+  }
+
+  return result;
+}
+
+/**
  * new AnalyzeReqInfo with object
  * @param {object} obj - AnalyzeReqInfo object
  * @return {messages.AnalyzeReqInfo} result - AnalyzeReqInfo
@@ -1078,3 +1125,4 @@ exports.mouseHoldFrameEleEx = mouseHoldFrameEleEx;
 exports.sleep = sleep;
 exports.hasChinese = hasChinese;
 exports.findFrame = findFrame;
+exports.newReplyGeoIP = newReplyGeoIP;

@@ -47,12 +47,14 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyArticles', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawlerStream', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyDTData', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ReplyGeoIP', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticles', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestGeoIP', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TranslateResult', null, global);
@@ -10322,6 +10324,533 @@ proto.jarviscrawlercore.ReplyAnalyzePage.prototype.clearLogsList = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.RequestGeoIP = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestGeoIP, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestGeoIP.displayName = 'proto.jarviscrawlercore.RequestGeoIP';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestGeoIP.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestGeoIP.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestGeoIP} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestGeoIP.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    ip: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    platform: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestGeoIP}
+ */
+proto.jarviscrawlercore.RequestGeoIP.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestGeoIP;
+  return proto.jarviscrawlercore.RequestGeoIP.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestGeoIP} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestGeoIP}
+ */
+proto.jarviscrawlercore.RequestGeoIP.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIp(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPlatform(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestGeoIP.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestGeoIP.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestGeoIP} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestGeoIP.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getIp();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPlatform();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string ip = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestGeoIP.prototype.getIp = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestGeoIP.prototype.setIp = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string platform = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestGeoIP.prototype.getPlatform = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestGeoIP.prototype.setPlatform = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ReplyGeoIP = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.ReplyGeoIP, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ReplyGeoIP.displayName = 'proto.jarviscrawlercore.ReplyGeoIP';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ReplyGeoIP.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ReplyGeoIP} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyGeoIP.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    latitude: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    longitude: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    organization: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    asn: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    continent: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    country: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    region: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    city: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    hostname: jspb.Message.getFieldWithDefault(msg, 9, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ReplyGeoIP}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ReplyGeoIP;
+  return proto.jarviscrawlercore.ReplyGeoIP.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ReplyGeoIP} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ReplyGeoIP}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setLatitude(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setLongitude(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setOrganization(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAsn(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setContinent(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountry(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRegion(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCity(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHostname(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ReplyGeoIP.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ReplyGeoIP} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyGeoIP.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getLatitude();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      1,
+      f
+    );
+  }
+  f = message.getLongitude();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      2,
+      f
+    );
+  }
+  f = message.getOrganization();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getAsn();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getContinent();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getCountry();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getRegion();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getCity();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getHostname();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional float latitude = 1;
+ * @return {number}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getLatitude = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setLatitude = function(value) {
+  jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional float longitude = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getLongitude = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setLongitude = function(value) {
+  jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * optional string organization = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getOrganization = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setOrganization = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string asn = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getAsn = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setAsn = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string continent = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getContinent = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setContinent = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string country = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getCountry = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setCountry = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string region = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getRegion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setRegion = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string city = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getCity = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setCity = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string hostname = 9;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.getHostname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyGeoIP.prototype.setHostname = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestCrawler = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.RequestCrawler.oneofGroups_);
 };
@@ -10337,7 +10866,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105]];
 
 /**
  * @enum {number}
@@ -10347,7 +10876,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   CBCOMPANY: 100,
   TRANSLATE2: 101,
   DTDATA: 102,
-  ANALYZEPAGE: 103
+  ANALYZEPAGE: 103,
+  GEOIP: 105
 };
 
 /**
@@ -10391,7 +10921,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f),
     translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.RequestDTData.toObject(includeInstance, f),
-    analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.AnalyzePage.toObject(includeInstance, f)
+    analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.AnalyzePage.toObject(includeInstance, f),
+    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.RequestGeoIP.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -10455,6 +10986,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.AnalyzePage;
       reader.readMessage(value,proto.jarviscrawlercore.AnalyzePage.deserializeBinaryFromReader);
       msg.setAnalyzepage(value);
+      break;
+    case 105:
+      var value = new proto.jarviscrawlercore.RequestGeoIP;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestGeoIP.deserializeBinaryFromReader);
+      msg.setGeoip(value);
       break;
     default:
       reader.skipField();
@@ -10529,6 +11065,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       103,
       f,
       proto.jarviscrawlercore.AnalyzePage.serializeBinaryToWriter
+    );
+  }
+  f = message.getGeoip();
+  if (f != null) {
+    writer.writeMessage(
+      105,
+      f,
+      proto.jarviscrawlercore.RequestGeoIP.serializeBinaryToWriter
     );
   }
 };
@@ -10684,6 +11228,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasAnalyzepage = function() {
 };
 
 
+/**
+ * optional RequestGeoIP geoip = 105;
+ * @return {?proto.jarviscrawlercore.RequestGeoIP}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getGeoip = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestGeoIP} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestGeoIP, 105));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestGeoIP|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setGeoip = function(value) {
+  jspb.Message.setOneofWrapperField(this, 105, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearGeoip = function() {
+  this.setGeoip(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasGeoip = function() {
+  return jspb.Message.getField(this, 105) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -10710,7 +11284,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105]];
 
 /**
  * @enum {number}
@@ -10720,7 +11294,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   CBCOMPANY: 100,
   TRANSLATERESULT: 101,
   DTDATA: 102,
-  ANALYZEPAGE: 103
+  ANALYZEPAGE: 103,
+  GEOIP: 105
 };
 
 /**
@@ -10763,7 +11338,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.ReplyDTData.toObject(includeInstance, f),
-    analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.ReplyAnalyzePage.toObject(includeInstance, f)
+    analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.ReplyAnalyzePage.toObject(includeInstance, f),
+    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.ReplyGeoIP.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -10823,6 +11399,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.ReplyAnalyzePage;
       reader.readMessage(value,proto.jarviscrawlercore.ReplyAnalyzePage.deserializeBinaryFromReader);
       msg.setAnalyzepage(value);
+      break;
+    case 105:
+      var value = new proto.jarviscrawlercore.ReplyGeoIP;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyGeoIP.deserializeBinaryFromReader);
+      msg.setGeoip(value);
       break;
     default:
       reader.skipField();
@@ -10890,6 +11471,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       103,
       f,
       proto.jarviscrawlercore.ReplyAnalyzePage.serializeBinaryToWriter
+    );
+  }
+  f = message.getGeoip();
+  if (f != null) {
+    writer.writeMessage(
+      105,
+      f,
+      proto.jarviscrawlercore.ReplyGeoIP.serializeBinaryToWriter
     );
   }
 };
@@ -11027,6 +11616,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearAnalyzepage = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasAnalyzepage = function() {
   return jspb.Message.getField(this, 103) != null;
+};
+
+
+/**
+ * optional ReplyGeoIP geoip = 105;
+ * @return {?proto.jarviscrawlercore.ReplyGeoIP}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getGeoip = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyGeoIP} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyGeoIP, 105));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyGeoIP|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setGeoip = function(value) {
+  jspb.Message.setOneofWrapperField(this, 105, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearGeoip = function() {
+  this.setGeoip(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasGeoip = function() {
+  return jspb.Message.getField(this, 105) != null;
 };
 
 
@@ -11472,7 +12091,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_TRANSLATE2: 0,
   CT_CB_COMPANY: 1,
   CT_DTDATA: 2,
-  CT_ANALYZEPAGE: 3
+  CT_ANALYZEPAGE: 3,
+  CT_GEOIP: 5
 };
 
 /**

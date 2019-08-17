@@ -15,13 +15,21 @@ function isEmptyValue(str) {
   return false;
 }
 
-const OBJTITLE = ['organization', 'asn', 'continent', 'country', 'region', 'city', 'hostname'];
+const OBJTITLE = [
+  'organization',
+  'asn',
+  'continent',
+  'country',
+  'region',
+  'city',
+  'hostname',
+];
 
 /**
  * ipvoidgeoip - geoip with ipvoid
  * @param {object} browser - browser
  * @param {string} ipaddr - ipaddr
- * @return {object} ret - {latitude, longitude, organization, asn, continent, country, region, city, hostname}
+ * @return {object} ret - {error, latitude, longitude, organization, asn, continent, country, region, city, hostname}
  */
 async function ipvoidgeoip(browser, ipaddr) {
   let awaiterr = undefined;
@@ -34,7 +42,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.goto', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   await page.waitForSelector('#ipAddr').catch((err) => {
@@ -44,7 +52,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector input', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   await page.waitForSelector('.btn.btn-primary').catch((err) => {
@@ -54,7 +62,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector btn', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   await page.type('#ipAddr', ipaddr).catch((err) => {
@@ -64,7 +72,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.type', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   await page.click('.btn.btn-primary').catch((err) => {
@@ -74,7 +82,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.click', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   await page.waitForSelector('.form-control.textarea').catch((err) => {
@@ -84,7 +92,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector result', awaiterr);
 
-    return undefined;
+    return {error: awaiterr};
   }
 
   const retstr = await page.$eval('.form-control.textarea', (ele) => {

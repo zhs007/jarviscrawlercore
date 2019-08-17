@@ -2,6 +2,7 @@ const {callSearchInCrunchBase} = require('./plugins/crunchbase');
 const {callTranslate} = require('./plugins/translate');
 const {callGetDTData} = require('./plugins/dtdata');
 const {callAnalyzePage} = require('./plugins/analyzepage');
+const {callGeoIP} = require('./plugins/geoip');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -53,6 +54,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getAnalyzepage();
 
     callAnalyzePage(browser, cfg, call, param);
+  } else if (crawlertype == messages.CrawlerType.CT_GEOIP) {
+    if (!call.request.hasGeoip()) {
+      replyError(call, 'no geoip');
+
+      return;
+    }
+
+    const param = call.request.getGeoip();
+
+    callGeoIP(browser, cfg, call, param);
   }
 }
 

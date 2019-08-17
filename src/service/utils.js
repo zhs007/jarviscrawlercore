@@ -95,6 +95,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setDtdata(msg);
   } else if (crawlerType == messages.CrawlerType.CT_ANALYZEPAGE) {
     req.setAnalyzepage(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_GEOIP) {
+    req.setGeoip(msg);
   }
 
   let isend = false;
@@ -181,6 +183,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_GEOIP) {
+        if (!reply.getGeoip()) {
+          cb('no geoip reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getGeoip());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -222,6 +238,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_ANALYZEPAGE) {
     reply.setAnalyzepage(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_GEOIP) {
+    reply.setGeoip(val);
     reply.setCrawlertype(crawlerType);
   }
 }

@@ -109,6 +109,37 @@ function analyzePage(servAddr, url, delay, w, h) {
   );
 }
 
+/**
+ * geoip
+ * @param {string} servAddr - servAddr
+ * @param {string} ip - ip
+ */
+function geoip(servAddr, ip) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestGeoIP();
+  request.setIp(ip);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_GEOIP,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -118,8 +149,10 @@ function analyzePage(servAddr, url, delay, w, h) {
 
 // getCrunchBaseCompany('127.0.0.1:7051', 'slack');
 
-analyzePage(
-    '127.0.0.1:7051',
-    'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=',
-    10, 1280, 800
-);
+// analyzePage(
+//     '127.0.0.1:7051',
+//     'http://47.90.46.159:8090/game.html?gameCode=nightclub&language=zh_CN&isCheat=true&slotKey=',
+//     10, 1280, 800
+// );
+
+geoip('127.0.0.1:7051', '60.250.112.36');

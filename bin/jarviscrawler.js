@@ -17,6 +17,7 @@ const {crunchbaseexec} = require('../src/crunchbase/exec');
 const {btexec} = require('../src/bt/exec');
 const {doubanexec} = require('../src/douban/exec');
 const {execAnalysis} = require('../src/analysis/exec');
+const {execGeoIP} = require('../src/geoip/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -345,5 +346,6 @@ btexec(program, VERSION);
 doubanexec(program, VERSION);
 
 execAnalysis(program, VERSION);
+execGeoIP(program, VERSION);
 
 program.parse(process.argv);

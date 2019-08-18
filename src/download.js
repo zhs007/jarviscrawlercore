@@ -39,6 +39,12 @@ async function download(page, url, timeout) {
     isnewpage = true;
   }
 
+  if (typeof timeout != 'number' || timeout <= 0) {
+    timeout = 3 * 60 * 1000;
+  } else {
+    timeout = timeout * 1000;
+  }
+
   const baseurl = getBaseURL(url);
   if (baseurl == '') {
     return {error: 'url fail!'};

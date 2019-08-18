@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {tinypng} = require('./tinypng');
+const fs = require('fs');
 
 /**
  * execTinypng
@@ -10,6 +11,7 @@ async function execTinypng(program, version) {
   program
       .command('tinypng [filename]')
       .description('tinypng')
+      .option('-o, --output [outputfile]', 'output file')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(filename, options) {
         console.log('version is ', version);
@@ -31,8 +33,17 @@ async function execTinypng(program, version) {
           const browser = await startBrowser(headless);
 
           const ret = await tinypng(browser, filename);
+          if (ret) {
+            if (ret.error) {
+              console.log('error - ', ret.error);
+            } else if (ret.lstbuf && options.output) {
+              for (let i = 0; i < ret.lstbuf; ++i) {
+                fs.writeFileSync(options.output, ret.lstbuf[i]);
+              }
+            }
+          }
 
-          console.log(JSON.stringify(ret));
+          // console.log(JSON.stringify(ret));
 
           await browser.close();
         })().catch((err) => {

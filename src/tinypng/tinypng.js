@@ -1,16 +1,20 @@
+const {download} = require('../download');
+
 /**
  * tinypng - tinypng
  * @param {object} browser - browser
  * @param {string} fn - filename
- * @return {object} ret - {error, latitude, longitude, organization, asn, continent, country, region, city, hostname}
+ * @return {object} ret - {error, lstbuf}
  */
 async function tinypng(browser, fn) {
   let awaiterr = undefined;
   const page = await browser.newPage();
-  await page.goto('https://tinypng.com/').catch((err) => {
-    awaiterr = err;
-    // console.log('ipvoidgeoip.goto', err);
-  });
+  await page
+      .goto('https://tinypng.com/', {waitUntil: 'domcontentloaded'})
+      .catch((err) => {
+        awaiterr = err;
+      // console.log('ipvoidgeoip.goto', err);
+      });
 
   if (awaiterr) {
     console.log('tinypng.goto', awaiterr);
@@ -65,12 +69,35 @@ async function tinypng(browser, fn) {
       lst.push(curf);
     }
 
-    console.log(lst);
+    // console.log(JSON.stringify(lst));
+
+    if (lst.length > 0) {
+      const lstbuf = [];
+
+      for (let i = 0; i < lst.length; ++i) {
+        const cr = download(page, lst[i], -1);
+        if (!cr) {
+          return {error: 'download fail!'};
+        }
+
+        if (cr.error) {
+          return {error: cr.error};
+        }
+
+        if (cr.buf) {
+          lstbuf.push(cr.buf);
+        }
+      }
+
+      await page.close();
+
+      return {lstbuf: lstbuf};
+    }
   }
 
   await page.close();
 
-  return {};
+  return {error: 'no data'};
 }
 
 exports.tinypng = tinypng;

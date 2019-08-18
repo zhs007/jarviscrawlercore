@@ -37,7 +37,7 @@ async function execTinypng(program, version) {
             if (ret.error) {
               console.log('error - ', ret.error);
             } else if (ret.lstbuf && options.output) {
-              for (let i = 0; i < ret.lstbuf; ++i) {
+              for (let i = 0; i < ret.lstbuf.length; ++i) {
                 fs.writeFileSync(options.output, ret.lstbuf[i]);
               }
             }

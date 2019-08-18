@@ -1,16 +1,16 @@
-const {download} = require('../download');
+const {download} = require('../request');
 
 /**
  * tinypng - tinypng
  * @param {object} browser - browser
  * @param {string} fn - filename
- * @return {object} ret - {error, lstbuf}
+ * @return {object} ret - {error}
  */
 async function tinypng(browser, fn) {
   let awaiterr = undefined;
   const page = await browser.newPage();
   await page
-      .goto('https://tinypng.com/', {waitUntil: 'domcontentloaded'})
+      .goto('https://tinypng.com/')
       .catch((err) => {
         awaiterr = err;
       // console.log('ipvoidgeoip.goto', err);
@@ -75,7 +75,7 @@ async function tinypng(browser, fn) {
       const lstbuf = [];
 
       for (let i = 0; i < lst.length; ++i) {
-        const cr = download(page, lst[i], -1);
+        const cr = await download(lst[i], -1);
         if (!cr) {
           return {error: 'download fail!'};
         }

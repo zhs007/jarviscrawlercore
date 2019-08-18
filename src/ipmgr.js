@@ -50,7 +50,9 @@ class IPMgr {
         try {
           dns.lookup(curhostname, {all: true}, (err, addresses) => {
             if (err) {
-              reject(err);
+              console.log('getIP.dns.lookup ' + curhostname + ' ' + err);
+
+              resolve('');
 
               return;
             }
@@ -70,7 +72,7 @@ class IPMgr {
         } catch (err) {
           console.log('getIP ' + err);
 
-          reject(err);
+          resolve('');
         }
 
         return;

@@ -12,6 +12,7 @@ function getURL(url) {
   if (url.indexOf('data:') == 0) {
     url = 'local:data-' + hashMD5(url);
   } else {
+    // const urlinfo = new URL(url);
     const arr = url.split('?');
     return arr[0];
   }
@@ -142,7 +143,7 @@ async function analyzePage(browser, url, viewport, options) {
       return;
     }
 
-    // console.log('request - ', url);
+    console.log('request - ', url);
 
     lstReq.push({
       url: url,
@@ -173,7 +174,7 @@ async function analyzePage(browser, url, viewport, options) {
       }
     }
 
-    // console.log('requestfailed - ', url);
+    console.log('requestfailed - ', url);
   });
 
   page.on('response', async (res) => {
@@ -184,7 +185,7 @@ async function analyzePage(browser, url, viewport, options) {
 
     const url = getURL(res.url());
 
-    // console.log('response - ', url);
+    console.log('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
@@ -196,6 +197,14 @@ async function analyzePage(browser, url, viewport, options) {
         headers['content-type'] &&
         headers['content-type'].indexOf('video') == 0
       ) {
+        req.et = Date.now();
+        req.status = res.status();
+
+        // --downloadNums;
+        return;
+      }
+
+      if (res.status() == 302) {
         req.et = Date.now();
         req.status = res.status();
 

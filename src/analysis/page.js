@@ -250,7 +250,7 @@ async function analyzePage(browser, url, viewport, options) {
 
   let pagegotoerr = undefined;
 
-  await page.goto(url, {timeout: 60000}).catch((err) => {
+  await page.goto(url, {timeout: timeout}).catch((err) => {
     console.log('analyzePage.goto', url, err);
 
     pagegotoerr = err;

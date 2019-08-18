@@ -1,11 +1,12 @@
 const Jimp = require('jimp');
+const sharp = require('sharp');
 
 /**
- * getImageInfo - get image infomation
+ * jimpGetImageInfo - get image infomation
  * @param {buffer} buf - output file
  * @return {object} obj - {w, h}
  */
-async function getImageInfo(buf) {
+async function jimpGetImageInfo(buf) {
   try {
     const img = await Jimp.read(buf);
     if (img) {
@@ -15,6 +16,33 @@ async function getImageInfo(buf) {
   }
 
   return undefined;
+}
+
+/**
+ * sharpGetImageInfo - get image infomation
+ * @param {buffer} buf - output file
+ * @return {object} obj - {w, h}
+ */
+async function sharpGetImageInfo(buf) {
+  try {
+    const img = await sharp(buf);
+    if (img) {
+      const metadata = await img.metadata();
+      return {w: metadata.width, h: metadata.height};
+    }
+  } catch (err) {
+  }
+
+  return undefined;
+}
+
+/**
+ * getImageInfo - get image infomation
+ * @param {buffer} buf - output file
+ * @return {object} obj - {w, h}
+ */
+async function getImageInfo(buf) {
+  return sharpGetImageInfo(buf);
 }
 
 exports.getImageInfo = getImageInfo;

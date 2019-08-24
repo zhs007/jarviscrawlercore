@@ -42,7 +42,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.goto', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.waitForSelector('#ipAddr').catch((err) => {
@@ -52,7 +54,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector input', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.waitForSelector('.btn.btn-primary').catch((err) => {
@@ -62,7 +66,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector btn', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.type('#ipAddr', ipaddr).catch((err) => {
@@ -72,7 +78,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.type', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.click('.btn.btn-primary').catch((err) => {
@@ -82,7 +90,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.click', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.waitForSelector('.form-control.textarea').catch((err) => {
@@ -92,7 +102,9 @@ async function ipvoidgeoip(browser, ipaddr) {
   if (awaiterr) {
     console.log('ipvoidgeoip.waitForSelector result', awaiterr);
 
-    return {error: awaiterr};
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   const retstr = await page.$eval('.form-control.textarea', (ele) => {

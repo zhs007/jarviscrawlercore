@@ -148,7 +148,9 @@ async function ipvoidgeoip(browser, ipaddr) {
           }
         }
 
-        if (t == 'latitude\\longitude') {
+        if (t == 'continent' || t == 'country') {
+          v = v.split('(', -1)[0];
+        } else if (t == 'latitude\\longitude') {
           const asixarr = v.split('/');
           if (asixarr.length == 2) {
             ret.latitude = parseFloat(asixarr[0].trim());

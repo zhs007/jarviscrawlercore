@@ -84,7 +84,7 @@ async function techinasiaJob(browser, jobid) {
           }
         }
 
-        const lstb = getElementsByClassName('b');
+        const lstb = ele.getElementsByClassName('b');
         if (lstb && lstb.length == 4) {
           ret.jobFunction = lstb[0].innerText;
           ret.jobType = lstb[1].innerText;
@@ -117,9 +117,9 @@ async function techinasiaJob(browser, jobid) {
 
       const lstspan = eles[1].getElementsByTagName('span');
       if (lstspan && lstspan.length > 0) {
-        ret.requiredSkills = [];
+        ret1.requiredSkills = [];
         for (let i = 0; i < lstspan.length; ++i) {
-          ret.requiredSkills.push(lstspan[i].innerText);
+          ret1.requiredSkills.push(lstspan[i].innerText);
         }
       }
 
@@ -127,7 +127,11 @@ async function techinasiaJob(browser, jobid) {
       if (lstdiv2 && lstdiv2.length > 0) {
         ret1.culture = lstdiv2[0].innerHTML;
       }
+
+      return ret1;
     }
+
+    return undefined;
   }) .catch((err) => {
     awaiterr = err;
   });
@@ -140,9 +144,11 @@ async function techinasiaJob(browser, jobid) {
     return {error: awaiterr.toString()};
   }
 
-  ret.description = ret1.description;
-  ret.requiredSkills = ret1.requiredSkills;
-  ret.culture = ret1.culture;
+  if (ret1) {
+    ret.description = ret1.description;
+    ret.requiredSkills = ret1.requiredSkills;
+    ret.culture = ret1.culture;
+  }
 
   await page.close();
 

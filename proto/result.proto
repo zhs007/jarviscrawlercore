@@ -567,6 +567,17 @@ message ReplyGeoIP {
     string hostname = 9;
 }
 
+// TechInAsiaCompany - TechInAsia Company
+message TechInAsiaCompany {
+    string name = 1;
+    string avatar = 2;
+    repeated string location = 3;
+    repeated string categories = 4;
+    int32 employees = 5;
+    string introduction = 6;
+    repeated string links = 7;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;

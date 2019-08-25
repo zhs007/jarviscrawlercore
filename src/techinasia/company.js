@@ -26,7 +26,7 @@ async function techinasiaCompany(browser, company) {
   });
 
   if (awaiterr) {
-    console.log('techinasiaCompany.waitForSelector input', awaiterr);
+    console.log('techinasiaCompany.waitForSelector .top-container', awaiterr);
 
     await page.close();
 
@@ -91,7 +91,17 @@ async function techinasiaCompany(browser, company) {
     }
 
     return ret;
+  }).catch((err) => {
+    awaiterr = err;
   });
+
+  if (awaiterr) {
+    console.log('techinasiaCompany.eval input', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
 
   await page.close();
 

@@ -900,9 +900,9 @@ function newReplyTechInAsia(mode, obj) {
   result.setMode(mode);
 
   if (mode == messages.TechInAsiaMode.TIAM_JOB) {
-    reply.setJob(newTechInAsiaJob(obj));
+    result.setJob(newTechInAsiaJob(obj));
   } else if (mode == messages.TechInAsiaMode.TIAM_COMPANY) {
-    reply.setCompany(newTechInAsiaCompany(obj));
+    result.setCompany(newTechInAsiaCompany(obj));
   }
 
   return result;

@@ -140,6 +140,70 @@ function geoip(servAddr, ip) {
   );
 }
 
+/**
+ * techinasiaCompany
+ * @param {string} servAddr - servAddr
+ * @param {string} companycode - companycode
+ */
+function techinasiaCompany(servAddr, companycode) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestTechInAsia();
+  request.setMode(messages.TechInAsiaMode.TIAM_COMPANY);
+  request.setCompanycode(companycode);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * techinasiaJob
+ * @param {string} servAddr - servAddr
+ * @param {string} jobcode - jobcode
+ */
+function techinasiaJob(servAddr, jobcode) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestTechInAsia();
+  request.setMode(messages.TechInAsiaMode.TIAM_JOB);
+  request.setJobcode(jobcode);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -155,4 +219,7 @@ function geoip(servAddr, ip) {
 //     10, 1280, 800
 // );
 
-geoip('127.0.0.1:7051', '60.250.112.36');
+// geoip('127.0.0.1:7051', '60.250.112.36');
+
+// techinasiaCompany('127.0.0.1:7051', 'niki-dot-ai');
+techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');

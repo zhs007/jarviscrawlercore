@@ -2,7 +2,7 @@ const messages = require('../../../proto/result_pb');
 const {techinasiaCompany} = require('../../techinasia/company');
 const {techinasiaJob} = require('../../techinasia/job');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
-const {newReplyGeoIP} = require('../../utils');
+const {newReplyTechInAsia} = require('../../utils');
 
 /**
  * callTechInAsia - techinasia
@@ -25,7 +25,7 @@ function callTechInAsia(browser, cfg, call, param) {
 
           const val = newReplyTechInAsia(
               messages.TechInAsiaMode.TIAM_COMPANY,
-              ret
+              ret.ret
           );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_TECHINASIA, val);
@@ -46,7 +46,7 @@ function callTechInAsia(browser, cfg, call, param) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyTechInAsia(messages.TechInAsiaMode.TIAM_JOB, ret);
+          const val = newReplyTechInAsia(messages.TechInAsiaMode.TIAM_JOB, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_TECHINASIA, val);
 

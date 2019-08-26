@@ -48,6 +48,7 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawlerStream', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ReplyTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticles', null, global);
@@ -55,8 +56,12 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaCompany', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaJob', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TranslateResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.YCCompanies', null, global);
 
@@ -10851,6 +10856,1393 @@ proto.jarviscrawlercore.ReplyGeoIP.prototype.setHostname = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.TechInAsiaCompany = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TechInAsiaCompany.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TechInAsiaCompany, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TechInAsiaCompany.displayName = 'proto.jarviscrawlercore.TechInAsiaCompany';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.repeatedFields_ = [3,4,7];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TechInAsiaCompany.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TechInAsiaCompany} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    avatar: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    locationList: jspb.Message.getRepeatedField(msg, 3),
+    categoriesList: jspb.Message.getRepeatedField(msg, 4),
+    employees: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    introduction: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    linksList: jspb.Message.getRepeatedField(msg, 7)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TechInAsiaCompany}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TechInAsiaCompany;
+  return proto.jarviscrawlercore.TechInAsiaCompany.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TechInAsiaCompany} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TechInAsiaCompany}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAvatar(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLocation(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addCategories(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setEmployees(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIntroduction(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLinks(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TechInAsiaCompany.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TechInAsiaCompany} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getAvatar();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getLocationList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      3,
+      f
+    );
+  }
+  f = message.getCategoriesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
+    );
+  }
+  f = message.getEmployees();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = message.getIntroduction();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getLinksList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string name = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string avatar = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getAvatar = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setAvatar = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated string location = 3;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getLocationList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setLocationList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.addLocation = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.clearLocationList = function() {
+  this.setLocationList([]);
+};
+
+
+/**
+ * repeated string categories = 4;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getCategoriesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setCategoriesList = function(value) {
+  jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.addCategories = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.clearCategoriesList = function() {
+  this.setCategoriesList([]);
+};
+
+
+/**
+ * optional int32 employees = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getEmployees = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setEmployees = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string introduction = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getIntroduction = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setIntroduction = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * repeated string links = 7;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getLinksList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setLinksList = function(value) {
+  jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.addLinks = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.clearLinksList = function() {
+  this.setLinksList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.TechInAsiaJob = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TechInAsiaJob.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TechInAsiaJob, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TechInAsiaJob.displayName = 'proto.jarviscrawlercore.TechInAsiaJob';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TechInAsiaJob.repeatedFields_ = [3,14];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TechInAsiaJob.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TechInAsiaJob} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJob.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    companyname: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    locationList: jspb.Message.getRepeatedField(msg, 3),
+    minsalary: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    maxsalary: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    currency: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    createtime: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    updatetime: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    jobfunction: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    jobtype: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    experience: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    vacancies: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    description: jspb.Message.getFieldWithDefault(msg, 13, ""),
+    requiredskillsList: jspb.Message.getRepeatedField(msg, 14),
+    culture: jspb.Message.getFieldWithDefault(msg, 15, ""),
+    companycode: jspb.Message.getFieldWithDefault(msg, 16, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJob}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TechInAsiaJob;
+  return proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJob} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJob}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCompanyname(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLocation(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMinsalary(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setMaxsalary(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCurrency(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setCreatetime(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setUpdatetime(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJobfunction(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJobtype(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setExperience(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setVacancies(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 14:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addRequiredskills(value);
+      break;
+    case 15:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCulture(value);
+      break;
+    case 16:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCompanycode(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJob} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getCompanyname();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getLocationList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      3,
+      f
+    );
+  }
+  f = message.getMinsalary();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getMaxsalary();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
+      f
+    );
+  }
+  f = message.getCurrency();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getCreatetime();
+  if (f !== 0) {
+    writer.writeInt64(
+      7,
+      f
+    );
+  }
+  f = message.getUpdatetime();
+  if (f !== 0) {
+    writer.writeInt64(
+      8,
+      f
+    );
+  }
+  f = message.getJobfunction();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+  f = message.getJobtype();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
+  f = message.getExperience();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getVacancies();
+  if (f !== 0) {
+    writer.writeInt32(
+      12,
+      f
+    );
+  }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
+      f
+    );
+  }
+  f = message.getRequiredskillsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      14,
+      f
+    );
+  }
+  f = message.getCulture();
+  if (f.length > 0) {
+    writer.writeString(
+      15,
+      f
+    );
+  }
+  f = message.getCompanycode();
+  if (f.length > 0) {
+    writer.writeString(
+      16,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string companyName = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getCompanyname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setCompanyname = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string title = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated string location = 3;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getLocationList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setLocationList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.addLocation = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJob.prototype.clearLocationList = function() {
+  this.setLocationList([]);
+};
+
+
+/**
+ * optional int32 minSalary = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getMinsalary = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setMinsalary = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional int32 maxSalary = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getMaxsalary = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setMaxsalary = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string currency = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getCurrency = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setCurrency = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional int64 createTime = 7;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getCreatetime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setCreatetime = function(value) {
+  jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional int64 updateTime = 8;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getUpdatetime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setUpdatetime = function(value) {
+  jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional string jobFunction = 9;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getJobfunction = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setJobfunction = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional string jobType = 10;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getJobtype = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setJobtype = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional string experience = 11;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getExperience = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setExperience = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional int32 vacancies = 12;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getVacancies = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setVacancies = function(value) {
+  jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional string description = 13;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setDescription = function(value) {
+  jspb.Message.setProto3StringField(this, 13, value);
+};
+
+
+/**
+ * repeated string requiredSkills = 14;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getRequiredskillsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 14));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setRequiredskillsList = function(value) {
+  jspb.Message.setField(this, 14, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.addRequiredskills = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 14, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJob.prototype.clearRequiredskillsList = function() {
+  this.setRequiredskillsList([]);
+};
+
+
+/**
+ * optional string culture = 15;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getCulture = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setCulture = function(value) {
+  jspb.Message.setProto3StringField(this, 15, value);
+};
+
+
+/**
+ * optional string companyCode = 16;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getCompanycode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setCompanycode = function(value) {
+  jspb.Message.setProto3StringField(this, 16, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.RequestTechInAsia = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestTechInAsia, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestTechInAsia.displayName = 'proto.jarviscrawlercore.RequestTechInAsia';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestTechInAsia.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestTechInAsia} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestTechInAsia.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    companycode: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    jobcode: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestTechInAsia}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestTechInAsia;
+  return proto.jarviscrawlercore.RequestTechInAsia.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestTechInAsia} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestTechInAsia}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCompanycode(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJobcode(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestTechInAsia.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestTechInAsia} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestTechInAsia.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getCompanycode();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getJobcode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional TechInAsiaMode mode = 1;
+ * @return {!proto.jarviscrawlercore.TechInAsiaMode}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.TechInAsiaMode} value */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional string companyCode = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.getCompanycode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.setCompanycode = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string jobCode = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.getJobcode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.setJobcode = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ReplyTechInAsia = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_);
+};
+goog.inherits(proto.jarviscrawlercore.ReplyTechInAsia, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ReplyTechInAsia.displayName = 'proto.jarviscrawlercore.ReplyTechInAsia';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101]];
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.ReplyCase = {
+  REPLY_NOT_SET: 0,
+  COMPANY: 100,
+  JOB: 101
+};
+
+/**
+ * @return {proto.jarviscrawlercore.ReplyTechInAsia.ReplyCase}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getReplyCase = function() {
+  return /** @type {proto.jarviscrawlercore.ReplyTechInAsia.ReplyCase} */(jspb.Message.computeOneofCase(this, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ReplyTechInAsia.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ReplyTechInAsia} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    company: (f = msg.getCompany()) && proto.jarviscrawlercore.TechInAsiaCompany.toObject(includeInstance, f),
+    job: (f = msg.getJob()) && proto.jarviscrawlercore.TechInAsiaJob.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ReplyTechInAsia}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ReplyTechInAsia;
+  return proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ReplyTechInAsia} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ReplyTechInAsia}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 100:
+      var value = new proto.jarviscrawlercore.TechInAsiaCompany;
+      reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaCompany.deserializeBinaryFromReader);
+      msg.setCompany(value);
+      break;
+    case 101:
+      var value = new proto.jarviscrawlercore.TechInAsiaJob;
+      reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader);
+      msg.setJob(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ReplyTechInAsia.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ReplyTechInAsia} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getCompany();
+  if (f != null) {
+    writer.writeMessage(
+      100,
+      f,
+      proto.jarviscrawlercore.TechInAsiaCompany.serializeBinaryToWriter
+    );
+  }
+  f = message.getJob();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional TechInAsiaMode mode = 1;
+ * @return {!proto.jarviscrawlercore.TechInAsiaMode}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.TechInAsiaMode} value */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional TechInAsiaCompany company = 100;
+ * @return {?proto.jarviscrawlercore.TechInAsiaCompany}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getCompany = function() {
+  return /** @type{?proto.jarviscrawlercore.TechInAsiaCompany} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TechInAsiaCompany, 100));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TechInAsiaCompany|undefined} value */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.setCompany = function(value) {
+  jspb.Message.setOneofWrapperField(this, 100, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearCompany = function() {
+  this.setCompany(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasCompany = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional TechInAsiaJob job = 101;
+ * @return {?proto.jarviscrawlercore.TechInAsiaJob}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getJob = function() {
+  return /** @type{?proto.jarviscrawlercore.TechInAsiaJob} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TechInAsiaJob, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TechInAsiaJob|undefined} value */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.setJob = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearJob = function() {
+  this.setJob(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasJob = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestCrawler = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.RequestCrawler.oneofGroups_);
 };
@@ -10866,7 +12258,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106]];
 
 /**
  * @enum {number}
@@ -10877,7 +12269,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   TRANSLATE2: 101,
   DTDATA: 102,
   ANALYZEPAGE: 103,
-  GEOIP: 105
+  GEOIP: 105,
+  TECHINASIA: 106
 };
 
 /**
@@ -10922,7 +12315,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.RequestDTData.toObject(includeInstance, f),
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.AnalyzePage.toObject(includeInstance, f),
-    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.RequestGeoIP.toObject(includeInstance, f)
+    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.RequestGeoIP.toObject(includeInstance, f),
+    techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.RequestTechInAsia.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -10991,6 +12385,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.RequestGeoIP;
       reader.readMessage(value,proto.jarviscrawlercore.RequestGeoIP.deserializeBinaryFromReader);
       msg.setGeoip(value);
+      break;
+    case 106:
+      var value = new proto.jarviscrawlercore.RequestTechInAsia;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestTechInAsia.deserializeBinaryFromReader);
+      msg.setTechinasia(value);
       break;
     default:
       reader.skipField();
@@ -11073,6 +12472,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       105,
       f,
       proto.jarviscrawlercore.RequestGeoIP.serializeBinaryToWriter
+    );
+  }
+  f = message.getTechinasia();
+  if (f != null) {
+    writer.writeMessage(
+      106,
+      f,
+      proto.jarviscrawlercore.RequestTechInAsia.serializeBinaryToWriter
     );
   }
 };
@@ -11258,6 +12665,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasGeoip = function() {
 };
 
 
+/**
+ * optional RequestTechInAsia techinasia = 106;
+ * @return {?proto.jarviscrawlercore.RequestTechInAsia}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getTechinasia = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestTechInAsia} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestTechInAsia, 106));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestTechInAsia|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setTechinasia = function(value) {
+  jspb.Message.setOneofWrapperField(this, 106, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearTechinasia = function() {
+  this.setTechinasia(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasTechinasia = function() {
+  return jspb.Message.getField(this, 106) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -11284,7 +12721,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106]];
 
 /**
  * @enum {number}
@@ -11295,7 +12732,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   TRANSLATERESULT: 101,
   DTDATA: 102,
   ANALYZEPAGE: 103,
-  GEOIP: 105
+  GEOIP: 105,
+  TECHINASIA: 106
 };
 
 /**
@@ -11339,7 +12777,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.ReplyDTData.toObject(includeInstance, f),
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.ReplyAnalyzePage.toObject(includeInstance, f),
-    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.ReplyGeoIP.toObject(includeInstance, f)
+    geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.ReplyGeoIP.toObject(includeInstance, f),
+    techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.ReplyTechInAsia.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -11404,6 +12843,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.ReplyGeoIP;
       reader.readMessage(value,proto.jarviscrawlercore.ReplyGeoIP.deserializeBinaryFromReader);
       msg.setGeoip(value);
+      break;
+    case 106:
+      var value = new proto.jarviscrawlercore.ReplyTechInAsia;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinaryFromReader);
+      msg.setTechinasia(value);
       break;
     default:
       reader.skipField();
@@ -11479,6 +12923,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       105,
       f,
       proto.jarviscrawlercore.ReplyGeoIP.serializeBinaryToWriter
+    );
+  }
+  f = message.getTechinasia();
+  if (f != null) {
+    writer.writeMessage(
+      106,
+      f,
+      proto.jarviscrawlercore.ReplyTechInAsia.serializeBinaryToWriter
     );
   }
 };
@@ -11646,6 +13098,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearGeoip = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasGeoip = function() {
   return jspb.Message.getField(this, 105) != null;
+};
+
+
+/**
+ * optional ReplyTechInAsia techinasia = 106;
+ * @return {?proto.jarviscrawlercore.ReplyTechInAsia}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getTechinasia = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyTechInAsia} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyTechInAsia, 106));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyTechInAsia|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setTechinasia = function(value) {
+  jspb.Message.setOneofWrapperField(this, 106, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearTechinasia = function() {
+  this.setTechinasia(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasTechinasia = function() {
+  return jspb.Message.getField(this, 106) != null;
 };
 
 
@@ -12092,7 +13574,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_CB_COMPANY: 1,
   CT_DTDATA: 2,
   CT_ANALYZEPAGE: 3,
-  CT_GEOIP: 5
+  CT_GEOIP: 5,
+  CT_TECHINASIA: 6
 };
 
 /**
@@ -12101,6 +13584,14 @@ proto.jarviscrawlercore.CrawlerType = {
 proto.jarviscrawlercore.AnalyzeScreenshotType = {
   AST_JPG: 0,
   AST_PNG: 1
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.TechInAsiaMode = {
+  TIAM_COMPANY: 0,
+  TIAM_JOB: 1
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

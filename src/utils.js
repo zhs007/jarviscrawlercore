@@ -771,6 +771,144 @@ function newReplyGeoIP(obj) {
 }
 
 /**
+ * new TechInAsiaCompany with object
+ * @param {object} obj - TechInAsiaCompany object
+ * @return {messages.TechInAsiaCompany} result - TechInAsiaCompany
+ */
+function newTechInAsiaCompany(obj) {
+  const result = new messages.TechInAsiaCompany();
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.avatar) {
+    result.setAvatar(obj.avatar);
+  }
+
+  if (obj.organization) {
+    result.setOrganization(obj.organization);
+  }
+
+  if (Array.isArray(obj.location) && obj.location.length > 0) {
+    result.setLocationList(obj.location);
+  }
+
+  if (Array.isArray(obj.categories) && obj.categories.length > 0) {
+    result.setCategoriesList(obj.categories);
+  }
+
+  if (obj.employees) {
+    result.setEmployees(obj.employees);
+  }
+
+  if (obj.introduction) {
+    result.setIntroduction(obj.introduction);
+  }
+
+  if (Array.isArray(obj.links) && obj.links.length > 0) {
+    result.setLinksList(obj.links);
+  }
+
+  return result;
+}
+
+/**
+ * new TechInAsiaJob with object
+ * @param {object} obj - TechInAsiaJob object
+ * @return {messages.TechInAsiaJob} result - TechInAsiaJob
+ */
+function newTechInAsiaJob(obj) {
+  const result = new messages.TechInAsiaJob();
+
+  if (obj.companyName) {
+    result.setCompanyname(obj.companyName);
+  }
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (Array.isArray(obj.location) && obj.location.length > 0) {
+    result.setLocationList(obj.location);
+  }
+
+  if (obj.minSalary) {
+    result.setMinsalary(obj.minSalary);
+  }
+
+  if (obj.maxSalary) {
+    result.setMaxsalary(obj.maxSalary);
+  }
+
+  if (obj.currency) {
+    result.setCurrency(obj.currency);
+  }
+
+  if (obj.createTime) {
+    result.setCreatetime(obj.createTime);
+  }
+
+  if (obj.updateTime) {
+    result.setUpdatetime(obj.updateTime);
+  }
+
+  if (obj.jobFunction) {
+    result.setJobfunction(obj.jobFunction);
+  }
+
+  if (obj.jobType) {
+    result.setJobtype(obj.jobType);
+  }
+
+  if (obj.experience) {
+    result.setExperience(obj.experience);
+  }
+
+  if (obj.vacancies) {
+    result.setVacancies(obj.vacancies);
+  }
+
+  if (obj.description) {
+    result.setDescription(obj.description);
+  }
+
+  if (Array.isArray(obj.requiredSkills) && obj.requiredSkills.length > 0) {
+    result.setRequiredskillsList(obj.requiredSkills);
+  }
+
+  if (obj.culture) {
+    result.setCulture(obj.culture);
+  }
+
+  if (obj.companyCode) {
+    result.setCompanycode(obj.companyCode);
+  }
+
+  return result;
+}
+
+/**
+ * new ReplyTechInAsia with object
+ * @param {number} mode - messages.TechInAsiaMode
+ * @param {object} obj - TechInAsiaJob or TechInAsiaCompany object
+ * @return {messages.ReplyTechInAsia} result - ReplyTechInAsia
+ */
+function newReplyTechInAsia(mode, obj) {
+  const result = new messages.ReplyTechInAsia();
+
+  result.setMode(mode);
+
+  if (mode == messages.TechInAsiaMode.TIAM_JOB) {
+    result.setJob(newTechInAsiaJob(obj));
+  } else if (mode == messages.TechInAsiaMode.TIAM_COMPANY) {
+    result.setCompany(newTechInAsiaCompany(obj));
+  }
+
+  return result;
+}
+
+/**
  * new AnalyzeReqInfo with object
  * @param {object} obj - AnalyzeReqInfo object
  * @return {messages.AnalyzeReqInfo} result - AnalyzeReqInfo
@@ -1126,3 +1264,4 @@ exports.sleep = sleep;
 exports.hasChinese = hasChinese;
 exports.findFrame = findFrame;
 exports.newReplyGeoIP = newReplyGeoIP;
+exports.newReplyTechInAsia = newReplyTechInAsia;

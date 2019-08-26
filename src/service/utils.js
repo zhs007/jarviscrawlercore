@@ -97,6 +97,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setAnalyzepage(msg);
   } else if (crawlerType == messages.CrawlerType.CT_GEOIP) {
     req.setGeoip(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_TECHINASIA) {
+    req.setTechinasia(msg);
   }
 
   let isend = false;
@@ -197,6 +199,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_TECHINASIA) {
+        if (!reply.getTechinasia()) {
+          cb('no techinasia reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getTechinasia());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -241,6 +257,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_GEOIP) {
     reply.setGeoip(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_TECHINASIA) {
+    reply.setTechinasia(val);
     reply.setCrawlertype(crawlerType);
   }
 }

@@ -439,6 +439,7 @@ enum CrawlerType {
     CT_DTDATA = 2;
     CT_ANALYZEPAGE = 3;
     CT_GEOIP = 5;
+    CT_TECHINASIA = 6;
 }
 
 // RequestTranslate2 - request translate
@@ -598,6 +599,30 @@ message TechInAsiaJob {
     string companyCode = 16;
 }
 
+enum TechInAsiaMode {
+    // TIAM_COMPANY - company
+    TIAM_COMPANY = 0;
+    // TIAM_JOB - job
+    TIAM_JOB = 1;
+}
+
+// RequestTechInAsia - request techinasia
+message RequestTechInAsia {
+    TechInAsiaMode mode = 1;
+    string companyCode = 2;
+    string jobCode = 3;
+}
+
+// ReplyTechInAsia - reply techinasia
+message ReplyTechInAsia {
+    TechInAsiaMode mode = 1;
+
+    oneof reply {
+        TechInAsiaCompany company = 100;
+        TechInAsiaJob job = 101;
+    }    
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -609,6 +634,7 @@ message RequestCrawler {
         RequestDTData dtdata = 102;
         AnalyzePage analyzePage = 103;
         RequestGeoIP geoip = 105;
+        RequestTechInAsia techinasia = 106;
     }
 }
 
@@ -622,6 +648,7 @@ message ReplyCrawler {
         ReplyDTData dtdata = 102;
         ReplyAnalyzePage analyzePage = 103;
         ReplyGeoIP geoip = 105;
+        ReplyTechInAsia techinasia = 106;
     }
 }
 

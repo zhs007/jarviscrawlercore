@@ -3,6 +3,7 @@ const {callTranslate} = require('./plugins/translate');
 const {callGetDTData} = require('./plugins/dtdata');
 const {callAnalyzePage} = require('./plugins/analyzepage');
 const {callGeoIP} = require('./plugins/geoip');
+const {callTechInAsia} = require('./plugins/techinasia');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -64,6 +65,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getGeoip();
 
     callGeoIP(browser, cfg, call, param);
+  } else if (crawlertype == messages.CrawlerType.CT_TECHINASIA) {
+    if (!call.request.hasTechinasia()) {
+      replyError(call, 'no techinasia');
+
+      return;
+    }
+
+    const param = call.request.getTechinasia();
+
+    callTechInAsia(browser, cfg, call, param);
   }
 }
 

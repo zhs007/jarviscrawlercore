@@ -2,7 +2,7 @@
  * techinasiaCompany - techinasia company
  * @param {object} browser - browser
  * @param {string} company - company
- * @return {object} ret - {error, obj}
+ * @return {object} ret - {error, ret}
  */
 async function techinasiaCompany(browser, company) {
   let awaiterr = undefined;

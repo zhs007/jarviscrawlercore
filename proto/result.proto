@@ -597,6 +597,13 @@ message TechInAsiaJob {
     repeated string requiredSkills = 14;
     string culture = 15;
     string companyCode = 16;
+    string jobCode = 17;
+    repeated string subType = 18;
+}
+
+// TechInAsiaJobList - TechInAsia JobList
+message TechInAsiaJobList {
+    repeated TechInAsiaJob jobs = 1;
 }
 
 enum TechInAsiaMode {
@@ -604,6 +611,8 @@ enum TechInAsiaMode {
     TIAM_COMPANY = 0;
     // TIAM_JOB - job
     TIAM_JOB = 1;
+    // TIAM_JOBLIST - job list
+    TIAM_JOBLIST = 2;    
 }
 
 // RequestTechInAsia - request techinasia
@@ -611,6 +620,7 @@ message RequestTechInAsia {
     TechInAsiaMode mode = 1;
     string companyCode = 2;
     string jobCode = 3;
+    int32 jobNums = 4;
 }
 
 // ReplyTechInAsia - reply techinasia

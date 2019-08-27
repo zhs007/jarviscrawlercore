@@ -2,7 +2,7 @@
  * techinasiaJob - techinasia jobs
  * @param {object} browser - browser
  * @param {string} jobid - jobid
- * @return {object} ret - {error, obj}
+ * @return {object} ret - {error, ret}
  */
 async function techinasiaJob(browser, jobid) {
   let awaiterr = undefined;

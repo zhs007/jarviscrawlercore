@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {techinasiaCompany} = require('./company');
 const {techinasiaJob} = require('./job');
+const {techinasiaJobs} = require('./jobs');
 
 /**
  * execTechInAsia
@@ -13,6 +14,7 @@ async function execTechInAsia(program, version) {
       .description('techinasia')
       .option('-c, --company [company]', 'company code')
       .option('-j, --job [job]', 'job code')
+      .option('-n, --jobnums [jobnums]', 'job nums')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
         console.log('version is ', version);
@@ -43,6 +45,14 @@ async function execTechInAsia(program, version) {
           return;
         }
 
+        if (mode == 'jobs' && !options.jobnums) {
+          console.log(
+              'command wrong, please type ' + 'jarviscrawler techinasia --help'
+          );
+
+          return;
+        }
+
         const headless = options.headless === 'true';
         console.log('headless - ', headless);
 
@@ -54,6 +64,9 @@ async function execTechInAsia(program, version) {
             console.log(JSON.stringify(ret));
           } else if (mode == 'job') {
             const ret = await techinasiaJob(browser, options.job);
+            console.log(JSON.stringify(ret));
+          } else if (mode == 'jobs') {
+            const ret = await techinasiaJobs(browser, options.jobnums);
             console.log(JSON.stringify(ret));
           }
 

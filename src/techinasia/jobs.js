@@ -53,7 +53,10 @@ async function resetPage(page) {
         await sleep(1000);
       }
 
-      await page.waitForSelector('.infinite-scroll').catch((err) => {
+      // await page.waitForSelector('.infinite-scroll').catch((err) => {
+      //   awaiterr = err;
+      // });
+      await page.waitForSelector('article').catch((err) => {
         awaiterr = err;
       });
       if (awaiterr) {
@@ -101,9 +104,51 @@ async function techinasiaJobs(browser, jobnums) {
     return {error: awaiterr.toString()};
   }
 
+  const ret = await page.$$eval('article', (eles) => {
+    console.log(eles);
+
+    const ret = [];
+
+    for (let i = 0; i < eles.length; ++i) {
+      const curjob = {};
+
+      const lsttitle = eles[i].getElementsByClassName('title');
+      if (lsttitle && lsttitle.length > 0) {
+        const lsta = lsttitle[0].getElementsByTagName('a');
+        if (lsta && lsta.length > 0) {
+          const lstarr = lsta[0].href.split('/', -1);
+          curjob.jobCode = lstarr[lstarr.length - 1];
+        }
+      }
+
+      const lstli = eles[i].getElementsByTagName('li');
+      if (lstli && lstli.length == 3) {
+        curjob.subType = [];
+
+        const lstsubtype = lstli[1].innerText.split(',', -1);
+        for (let j = 0; j < lstsubtype.length; ++j) {
+          curjob.subType.push(lstsubtype[j].trim());
+        }
+      }
+
+      ret.push(curjob);
+    }
+
+    return ret;
+  }).catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    console.log('techinasiaJobs.eval article', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   await page.close();
 
-  return {};
+  return {ret: ret};
 }
 
 exports.techinasiaJobs = techinasiaJobs;

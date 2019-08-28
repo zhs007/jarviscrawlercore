@@ -1,5 +1,5 @@
-const {sleep} = require('../utils');
 const {WaitFrameNavigated} = require('../waitframenavigated');
+const {WaitAllResponse} = require('../waitallresponse');
 
 /**
  * resetPage - reset jobs page
@@ -92,6 +92,7 @@ async function resetPage(page) {
 async function techinasiaJobs(browser, jobnums) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+  const waitAllResponse = new WaitAllResponse(page);
   await page.goto('https://www.techinasia.com/jobs/search').catch((err) => {
     awaiterr = err;
   });
@@ -111,6 +112,19 @@ async function techinasiaJobs(browser, jobnums) {
     await page.close();
 
     return {error: awaiterr.toString()};
+  }
+
+  while (true) {
+    await waitAllResponse.waitDone(3 * 60 * 1000);
+    const lstarticle = await page.$$('article');
+    if (lstarticle.length > 0) {
+      if (lstarticle.length >= jobnums) {
+        break;
+      }
+
+      waitAllResponse.reset();
+      await lstarticle[lstarticle.length - 1].hover();
+    }
   }
 
   const ret = await page

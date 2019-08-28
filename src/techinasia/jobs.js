@@ -114,13 +114,25 @@ async function techinasiaJobs(browser, jobnums) {
     return {error: awaiterr.toString()};
   }
 
+  let lastjobnums = 0;
+  const starttime = Date.now();
+
   while (true) {
     await waitAllResponse.waitDone(3 * 60 * 1000);
     const lstarticle = await page.$$('article');
-    if (lstarticle.length > 0) {
+    if (lstarticle.length >= 0) {
       if (lstarticle.length >= jobnums) {
         break;
       }
+
+      if (
+        lastjobnums == lstarticle.length &&
+        Date.now() - starttime >= 3 * 60 * 1000
+      ) {
+        break;
+      }
+
+      lastjobnums = lstarticle.length;
 
       waitAllResponse.reset();
       await lstarticle[lstarticle.length - 1].hover();

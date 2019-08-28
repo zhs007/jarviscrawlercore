@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const {WaitFrameNavigated} = require('../waitframenavigated');
 
 /**
  * resetPage - reset jobs page
@@ -7,19 +8,25 @@ const {sleep} = require('../utils');
  */
 async function resetPage(page) {
   try {
-    let urlchanged = false;
     const mainframe = await page.mainFrame();
-    const onframenavigated = (frame) => {
-      if (mainframe == frame) {
-        const url = frame.url();
+    const waitreset = new WaitFrameNavigated(page, mainframe, async (frame) => {
+      const url = frame.url();
 
-        if (url == 'https://www.techinasia.com/jobs/search') {
-          urlchanged = true;
-        }
-      }
-    };
+      return url == 'https://www.techinasia.com/jobs/search';
+    });
+    // let urlchanged = false;
+    // const mainframe = await page.mainFrame();
+    // const onframenavigated = (frame) => {
+    //   if (mainframe == frame) {
+    //     const url = frame.url();
 
-    page.on('framenavigated', onframenavigated);
+    //     if (url == 'https://www.techinasia.com/jobs/search') {
+    //       urlchanged = true;
+    //     }
+    //   }
+    // };
+
+    // page.on('framenavigated', onframenavigated);
 
     let awaiterr = undefined;
     await page.waitForSelector('.wrapper').catch((err) => {
@@ -45,13 +52,14 @@ async function resetPage(page) {
         return awaiterr;
       }
 
-      while (true) {
-        if (urlchanged) {
-          break;
-        }
+      await waitreset.waitDone(3 * 60 * 1000);
+      // while (true) {
+      //   if (urlchanged) {
+      //     break;
+      //   }
 
-        await sleep(1000);
-      }
+      //   await sleep(1000);
+      // }
 
       // await page.waitForSelector('.infinite-scroll').catch((err) => {
       //   awaiterr = err;
@@ -64,7 +72,8 @@ async function resetPage(page) {
       }
     }
 
-    page.removeListener('framenavigated', onframenavigated);
+    waitreset.release();
+    // page.removeListener('framenavigated', onframenavigated);
 
     return awaiterr;
   } catch (err) {
@@ -104,40 +113,42 @@ async function techinasiaJobs(browser, jobnums) {
     return {error: awaiterr.toString()};
   }
 
-  const ret = await page.$$eval('article', (eles) => {
-    console.log(eles);
+  const ret = await page
+      .$$eval('article', (eles) => {
+        console.log(eles);
 
-    const ret = [];
+        const ret = [];
 
-    for (let i = 0; i < eles.length; ++i) {
-      const curjob = {};
+        for (let i = 0; i < eles.length; ++i) {
+          const curjob = {};
 
-      const lsttitle = eles[i].getElementsByClassName('title');
-      if (lsttitle && lsttitle.length > 0) {
-        const lsta = lsttitle[0].getElementsByTagName('a');
-        if (lsta && lsta.length > 0) {
-          const lstarr = lsta[0].href.split('/', -1);
-          curjob.jobCode = lstarr[lstarr.length - 1];
+          const lsttitle = eles[i].getElementsByClassName('title');
+          if (lsttitle && lsttitle.length > 0) {
+            const lsta = lsttitle[0].getElementsByTagName('a');
+            if (lsta && lsta.length > 0) {
+              const lstarr = lsta[0].href.split('/', -1);
+              curjob.jobCode = lstarr[lstarr.length - 1];
+            }
+          }
+
+          const lstli = eles[i].getElementsByTagName('li');
+          if (lstli && lstli.length == 3) {
+            curjob.subType = [];
+
+            const lstsubtype = lstli[1].innerText.split(',', -1);
+            for (let j = 0; j < lstsubtype.length; ++j) {
+              curjob.subType.push(lstsubtype[j].trim());
+            }
+          }
+
+          ret.push(curjob);
         }
-      }
 
-      const lstli = eles[i].getElementsByTagName('li');
-      if (lstli && lstli.length == 3) {
-        curjob.subType = [];
-
-        const lstsubtype = lstli[1].innerText.split(',', -1);
-        for (let j = 0; j < lstsubtype.length; ++j) {
-          curjob.subType.push(lstsubtype[j].trim());
-        }
-      }
-
-      ret.push(curjob);
-    }
-
-    return ret;
-  }).catch((err) => {
-    awaiterr = err;
-  });
+        return ret;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
   if (awaiterr) {
     console.log('techinasiaJobs.eval article', awaiterr);
 

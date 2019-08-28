@@ -885,6 +885,27 @@ function newTechInAsiaJob(obj) {
     result.setCompanycode(obj.companyCode);
   }
 
+  if (Array.isArray(obj.subType) && obj.subType.length > 0) {
+    result.setSubtypeList(obj.subType);
+  }
+
+  return result;
+}
+
+/**
+ * new TechInAsiaJobList with object
+ * @param {object} obj - TechInAsiaJobList object
+ * @return {messages.TechInAsiaJobList} result - TechInAsiaJobList
+ */
+function newTechInAsiaJobList(obj) {
+  const result = new messages.TechInAsiaJobList();
+
+  if (Array.isArray(obj.jobs) && obj.jobs.length > 0) {
+    for (let i = 0; i < 0; ++i) {
+      result.addJobs(newTechInAsiaJob(obj.jobs[i], i));
+    }
+  }
+
   return result;
 }
 
@@ -903,6 +924,8 @@ function newReplyTechInAsia(mode, obj) {
     result.setJob(newTechInAsiaJob(obj));
   } else if (mode == messages.TechInAsiaMode.TIAM_COMPANY) {
     result.setCompany(newTechInAsiaCompany(obj));
+  } else if (mode == messages.TechInAsiaMode.TIAM_JOBS) {
+    result.setJobs(newTechInAsiaJobList(obj));
   }
 
   return result;

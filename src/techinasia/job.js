@@ -2,14 +2,19 @@
  * techinasiaJob - techinasia jobs
  * @param {object} browser - browser
  * @param {string} jobid - jobid
+ * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function techinasiaJob(browser, jobid) {
+async function techinasiaJob(browser, jobid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
-  await page.goto('https://www.techinasia.com/jobs/' + jobid).catch((err) => {
-    awaiterr = err;
-  });
+  await page
+      .goto('https://www.techinasia.com/jobs/' + jobid, {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
     console.log('techinasiaJob.goto', awaiterr);
@@ -106,35 +111,37 @@ async function techinasiaJob(browser, jobid) {
     return {error: awaiterr.toString()};
   }
 
-  const ret1 = await page.$$eval('section', (eles) => {
-    if (eles.length >= 3) {
-      const ret1 = {};
+  const ret1 = await page
+      .$$eval('section', (eles) => {
+        if (eles.length >= 3) {
+          const ret1 = {};
 
-      const lstdiv0 = eles[0].getElementsByTagName('div');
-      if (lstdiv0 && lstdiv0.length > 0) {
-        ret1.description = lstdiv0[0].innerHTML;
-      }
+          const lstdiv0 = eles[0].getElementsByTagName('div');
+          if (lstdiv0 && lstdiv0.length > 0) {
+            ret1.description = lstdiv0[0].innerHTML;
+          }
 
-      const lstspan = eles[1].getElementsByTagName('span');
-      if (lstspan && lstspan.length > 0) {
-        ret1.requiredSkills = [];
-        for (let i = 0; i < lstspan.length; ++i) {
-          ret1.requiredSkills.push(lstspan[i].innerText);
+          const lstspan = eles[1].getElementsByTagName('span');
+          if (lstspan && lstspan.length > 0) {
+            ret1.requiredSkills = [];
+            for (let i = 0; i < lstspan.length; ++i) {
+              ret1.requiredSkills.push(lstspan[i].innerText);
+            }
+          }
+
+          const lstdiv2 = eles[2].getElementsByTagName('div');
+          if (lstdiv2 && lstdiv2.length > 0) {
+            ret1.culture = lstdiv2[0].innerHTML;
+          }
+
+          return ret1;
         }
-      }
 
-      const lstdiv2 = eles[2].getElementsByTagName('div');
-      if (lstdiv2 && lstdiv2.length > 0) {
-        ret1.culture = lstdiv2[0].innerHTML;
-      }
-
-      return ret1;
-    }
-
-    return undefined;
-  }) .catch((err) => {
-    awaiterr = err;
-  });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
     console.log('techinasiaJob.eval section', awaiterr);

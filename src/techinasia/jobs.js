@@ -87,15 +87,20 @@ async function resetPage(page) {
  * techinasiaJobs - techinasia jobs
  * @param {object} browser - browser
  * @param {number} jobnums - job nums
+ * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function techinasiaJobs(browser, jobnums) {
+async function techinasiaJobs(browser, jobnums, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
   const waitAllResponse = new WaitAllResponse(page);
-  await page.goto('https://www.techinasia.com/jobs/search').catch((err) => {
-    awaiterr = err;
-  });
+  await page
+      .goto('https://www.techinasia.com/jobs/search', {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
     console.log('techinasiaJobs.goto', awaiterr);
@@ -185,7 +190,7 @@ async function techinasiaJobs(browser, jobnums) {
 
   await page.close();
 
-  return {ret: ret};
+  return {ret: {jobs: ret}};
 }
 
 exports.techinasiaJobs = techinasiaJobs;

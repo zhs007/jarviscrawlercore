@@ -12266,7 +12266,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101]];
+proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101,102]];
 
 /**
  * @enum {number}
@@ -12274,7 +12274,8 @@ proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101]];
 proto.jarviscrawlercore.ReplyTechInAsia.ReplyCase = {
   REPLY_NOT_SET: 0,
   COMPANY: 100,
-  JOB: 101
+  JOB: 101,
+  JOBS: 102
 };
 
 /**
@@ -12315,7 +12316,8 @@ proto.jarviscrawlercore.ReplyTechInAsia.toObject = function(includeInstance, msg
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
     company: (f = msg.getCompany()) && proto.jarviscrawlercore.TechInAsiaCompany.toObject(includeInstance, f),
-    job: (f = msg.getJob()) && proto.jarviscrawlercore.TechInAsiaJob.toObject(includeInstance, f)
+    job: (f = msg.getJob()) && proto.jarviscrawlercore.TechInAsiaJob.toObject(includeInstance, f),
+    jobs: (f = msg.getJobs()) && proto.jarviscrawlercore.TechInAsiaJobList.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -12365,6 +12367,11 @@ proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinaryFromReader = function(m
       var value = new proto.jarviscrawlercore.TechInAsiaJob;
       reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader);
       msg.setJob(value);
+      break;
+    case 102:
+      var value = new proto.jarviscrawlercore.TechInAsiaJobList;
+      reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJobList.deserializeBinaryFromReader);
+      msg.setJobs(value);
       break;
     default:
       reader.skipField();
@@ -12416,6 +12423,14 @@ proto.jarviscrawlercore.ReplyTechInAsia.serializeBinaryToWriter = function(messa
       101,
       f,
       proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter
+    );
+  }
+  f = message.getJobs();
+  if (f != null) {
+    writer.writeMessage(
+      102,
+      f,
+      proto.jarviscrawlercore.TechInAsiaJobList.serializeBinaryToWriter
     );
   }
 };
@@ -12493,6 +12508,36 @@ proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearJob = function() {
  */
 proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasJob = function() {
   return jspb.Message.getField(this, 101) != null;
+};
+
+
+/**
+ * optional TechInAsiaJobList jobs = 102;
+ * @return {?proto.jarviscrawlercore.TechInAsiaJobList}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getJobs = function() {
+  return /** @type{?proto.jarviscrawlercore.TechInAsiaJobList} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TechInAsiaJobList, 102));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TechInAsiaJobList|undefined} value */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.setJobs = function(value) {
+  jspb.Message.setOneofWrapperField(this, 102, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearJobs = function() {
+  this.setJobs(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasJobs = function() {
+  return jspb.Message.getField(this, 102) != null;
 };
 
 
@@ -12575,6 +12620,7 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
   var f, obj = {
     token: jspb.Message.getFieldWithDefault(msg, 1, ""),
     crawlertype: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    timeout: jspb.Message.getFieldWithDefault(msg, 3, 0),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f),
     translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.RequestDTData.toObject(includeInstance, f),
@@ -12624,6 +12670,10 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
     case 2:
       var value = /** @type {!proto.jarviscrawlercore.CrawlerType} */ (reader.readEnum());
       msg.setCrawlertype(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTimeout(value);
       break;
     case 100:
       var value = new proto.jarviscrawlercore.RequestCrunchBaseCompany;
@@ -12695,6 +12745,13 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
   if (f !== 0.0) {
     writer.writeEnum(
       2,
+      f
+    );
+  }
+  f = message.getTimeout();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
       f
     );
   }
@@ -12776,6 +12833,21 @@ proto.jarviscrawlercore.RequestCrawler.prototype.getCrawlertype = function() {
 /** @param {!proto.jarviscrawlercore.CrawlerType} value */
 proto.jarviscrawlercore.RequestCrawler.prototype.setCrawlertype = function(value) {
   jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional int32 timeout = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getTimeout = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setTimeout = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 

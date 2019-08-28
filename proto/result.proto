@@ -630,6 +630,7 @@ message ReplyTechInAsia {
     oneof reply {
         TechInAsiaCompany company = 100;
         TechInAsiaJob job = 101;
+        TechInAsiaJobList jobs = 102;
     }    
 }
 
@@ -637,6 +638,7 @@ message ReplyTechInAsia {
 message RequestCrawler {
     string token = 1;
     CrawlerType crawlerType = 2;
+    int32 timeout = 3;
 
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;

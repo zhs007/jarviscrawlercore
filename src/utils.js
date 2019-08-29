@@ -885,6 +885,10 @@ function newTechInAsiaJob(obj) {
     result.setCompanycode(obj.companyCode);
   }
 
+  if (obj.jobCode) {
+    result.setJobcode(obj.jobCode);
+  }
+
   if (Array.isArray(obj.subType) && obj.subType.length > 0) {
     result.setSubtypeList(obj.subType);
   }

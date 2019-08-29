@@ -577,6 +577,7 @@ message TechInAsiaCompany {
     int32 employees = 5;
     string introduction = 6;
     repeated string links = 7;
+    string companyCode = 8;
 }
 
 // TechInAsiaJob - TechInAsia Job
@@ -597,6 +598,13 @@ message TechInAsiaJob {
     repeated string requiredSkills = 14;
     string culture = 15;
     string companyCode = 16;
+    string jobCode = 17;
+    repeated string subType = 18;
+}
+
+// TechInAsiaJobList - TechInAsia JobList
+message TechInAsiaJobList {
+    repeated TechInAsiaJob jobs = 1;
 }
 
 enum TechInAsiaMode {
@@ -604,6 +612,8 @@ enum TechInAsiaMode {
     TIAM_COMPANY = 0;
     // TIAM_JOB - job
     TIAM_JOB = 1;
+    // TIAM_JOBLIST - job list
+    TIAM_JOBLIST = 2;    
 }
 
 // RequestTechInAsia - request techinasia
@@ -611,6 +621,7 @@ message RequestTechInAsia {
     TechInAsiaMode mode = 1;
     string companyCode = 2;
     string jobCode = 3;
+    int32 jobNums = 4;
 }
 
 // ReplyTechInAsia - reply techinasia
@@ -620,6 +631,7 @@ message ReplyTechInAsia {
     oneof reply {
         TechInAsiaCompany company = 100;
         TechInAsiaJob job = 101;
+        TechInAsiaJobList jobs = 102;
     }    
 }
 
@@ -627,6 +639,7 @@ message ReplyTechInAsia {
 message RequestCrawler {
     string token = 1;
     CrawlerType crawlerType = 2;
+    int32 timeout = 3;
 
     oneof crawlerParam {
         RequestCrunchBaseCompany cbCompany = 100;

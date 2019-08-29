@@ -14,7 +14,6 @@ function getBaseURL(url) {
   return '';
 }
 
-
 /**
  * download - download a file
  * @param {object} page - if page is null, it's will new a page, and then close it
@@ -128,4 +127,3 @@ async function download(page, url, timeout) {
 }
 
 exports.download = download;
-

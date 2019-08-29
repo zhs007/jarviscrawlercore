@@ -74,7 +74,7 @@ function callRequestCrawler(browser, cfg, call) {
 
     const param = call.request.getTechinasia();
 
-    callTechInAsia(browser, cfg, call, param);
+    callTechInAsia(browser, cfg, call, param, call.request);
   }
 }
 

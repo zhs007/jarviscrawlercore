@@ -10906,7 +10906,8 @@ proto.jarviscrawlercore.TechInAsiaCompany.toObject = function(includeInstance, m
     categoriesList: jspb.Message.getRepeatedField(msg, 4),
     employees: jspb.Message.getFieldWithDefault(msg, 5, 0),
     introduction: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    linksList: jspb.Message.getRepeatedField(msg, 7)
+    linksList: jspb.Message.getRepeatedField(msg, 7),
+    companycode: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -10970,6 +10971,10 @@ proto.jarviscrawlercore.TechInAsiaCompany.deserializeBinaryFromReader = function
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.addLinks(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCompanycode(value);
       break;
     default:
       reader.skipField();
@@ -11046,6 +11051,13 @@ proto.jarviscrawlercore.TechInAsiaCompany.serializeBinaryToWriter = function(mes
   if (f.length > 0) {
     writer.writeRepeatedString(
       7,
+      f
+    );
+  }
+  f = message.getCompanycode();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -11196,6 +11208,21 @@ proto.jarviscrawlercore.TechInAsiaCompany.prototype.addLinks = function(value, o
 
 proto.jarviscrawlercore.TechInAsiaCompany.prototype.clearLinksList = function() {
   this.setLinksList([]);
+};
+
+
+/**
+ * optional string companyCode = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.getCompanycode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaCompany.prototype.setCompanycode = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

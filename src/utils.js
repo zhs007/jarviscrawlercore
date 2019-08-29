@@ -810,6 +810,10 @@ function newTechInAsiaCompany(obj) {
     result.setLinksList(obj.links);
   }
 
+  if (obj.companyCode) {
+    result.setCompanycode(obj.companyCode);
+  }
+
   return result;
 }
 

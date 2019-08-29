@@ -110,6 +110,10 @@ async function techinasiaCompany(browser, company, timeout) {
 
   await page.close();
 
+  if (ret) {
+    ret.companyCode = company;
+  }
+
   return {ret: ret};
 }
 

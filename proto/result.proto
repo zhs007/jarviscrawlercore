@@ -577,6 +577,7 @@ message TechInAsiaCompany {
     int32 employees = 5;
     string introduction = 6;
     repeated string links = 7;
+    string companyCode = 8;
 }
 
 // TechInAsiaJob - TechInAsia Job

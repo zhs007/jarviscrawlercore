@@ -13,10 +13,17 @@ class WaitAllResponse {
     this.isDone = false;
     this.lstReq = [];
 
-    this.onrequest = (req) => {
+    this.onrequest = async (req) => {
       if (this.isDone) {
         return;
       }
+
+      // const rt = req.resourceType();
+      // if (rt == 'image' || rt == 'media' || rt == 'font') {
+      //   await req.abort();
+
+      //   return;
+      // }
 
       const url = this.getURL(req.url());
 
@@ -66,7 +73,7 @@ class WaitAllResponse {
           return;
         }
 
-        if (res.status() == 302) {
+        if (!res.ok()) {
           req.status = res.status();
 
           return;

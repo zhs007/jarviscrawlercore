@@ -65,7 +65,7 @@ function callTechInAsia(browser, cfg, call, param, request) {
         .catch((err) => {
           replyError(call, err.toString(), true);
         });
-  } else if (param.getMode() == messages.TechInAsiaMode.TIAM_JOBS) {
+  } else if (param.getMode() == messages.TechInAsiaMode.TIAM_JOBLIST) {
     techinasiaJobs(browser, param.getJobnums(), timeout)
         .then((ret) => {
           if (ret.error) {
@@ -77,7 +77,7 @@ function callTechInAsia(browser, cfg, call, param, request) {
           const reply = new messages.ReplyCrawler();
 
           const val = newReplyTechInAsia(
-              messages.TechInAsiaMode.TIAM_JOBS,
+              messages.TechInAsiaMode.TIAM_JOBLIST,
               ret.ret
           );
 

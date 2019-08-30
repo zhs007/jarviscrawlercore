@@ -8,6 +8,18 @@
 async function techinasiaCompany(browser, company, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+  // await page.setRequestInterception(true);
+  // page.on('request', async (req) => {
+  //   const rt = req.resourceType();
+  //   if (rt == 'image' || rt == 'media' || rt == 'font') {
+  //     await req.abort();
+
+  //     return;
+  //   }
+
+  //   await req.continue();
+  // });
+
   await page
       .goto('https://www.techinasia.com/companies/' + company, {
         timeout: timeout,

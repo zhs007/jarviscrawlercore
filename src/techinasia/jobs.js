@@ -93,6 +93,18 @@ async function resetPage(page) {
 async function techinasiaJobs(browser, jobnums, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+  // await page.setRequestInterception(true);
+  // page.on('request', async (req) => {
+  //   const rt = req.resourceType();
+  //   if (rt == 'image' || rt == 'media' || rt == 'font') {
+  //     await req.abort();
+
+  //     return;
+  //   }
+
+  //   await req.continue();
+  // });
+
   const waitAllResponse = new WaitAllResponse(page);
   await page
       .goto('https://www.techinasia.com/jobs/search', {

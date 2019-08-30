@@ -909,7 +909,7 @@ function newTechInAsiaJobList(obj) {
   const result = new messages.TechInAsiaJobList();
 
   if (Array.isArray(obj.jobs) && obj.jobs.length > 0) {
-    for (let i = 0; i < 0; ++i) {
+    for (let i = 0; i < obj.jobs.length; ++i) {
       result.addJobs(newTechInAsiaJob(obj.jobs[i], i));
     }
   }
@@ -932,7 +932,7 @@ function newReplyTechInAsia(mode, obj) {
     result.setJob(newTechInAsiaJob(obj));
   } else if (mode == messages.TechInAsiaMode.TIAM_COMPANY) {
     result.setCompany(newTechInAsiaCompany(obj));
-  } else if (mode == messages.TechInAsiaMode.TIAM_JOBS) {
+  } else if (mode == messages.TechInAsiaMode.TIAM_JOBLIST) {
     result.setJobs(newTechInAsiaJobList(obj));
   }
 

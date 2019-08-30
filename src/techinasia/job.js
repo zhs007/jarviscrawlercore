@@ -8,6 +8,18 @@
 async function techinasiaJob(browser, jobid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+  // await page.setRequestInterception(true);
+  // page.on('request', async (req) => {
+  //   const rt = req.resourceType();
+  //   if (rt == 'image' || rt == 'media' || rt == 'font') {
+  //     await req.abort();
+
+  //     return;
+  //   }
+
+  //   await req.continue();
+  // });
+
   await page
       .goto('https://www.techinasia.com/jobs/' + jobid, {
         timeout: timeout,
@@ -77,14 +89,14 @@ async function techinasiaJob(browser, jobid, timeout) {
           const lstctreate = lsthc[0].getElementsByClassName('dates__created');
           if (lstctreate && lstctreate.length > 0) {
             if (lstctreate[0].childNodes.length == 2) {
-              ret.createTime = Date.parse(lstctreate[0].childNodes[1].innerText);
+              ret.createTime = Date.parse(lstctreate[0].childNodes[1].nodeValue);
             }
           }
 
           const lstupdate = lsthc[0].getElementsByClassName('dates__updated');
           if (lstupdate && lstupdate.length > 0) {
             if (lstupdate[0].childNodes.length == 2) {
-              ret.updateTime = Date.parse(lstupdate[0].childNodes[1].innerText);
+              ret.updateTime = Date.parse(lstupdate[0].childNodes[1].nodeValue);
             }
           }
         }

@@ -12632,7 +12632,8 @@ proto.jarviscrawlercore.SteepAndCheapProduct.toObject = function(includeInstance
     url: jspb.Message.getFieldWithDefault(msg, 7, ""),
     reviews: jspb.Message.getFieldWithDefault(msg, 8, 0),
     ratingvalue: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
-    currency: jspb.Message.getFieldWithDefault(msg, 10, "")
+    currency: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    isnew: jspb.Message.getFieldWithDefault(msg, 11, false)
   };
 
   if (includeInstance) {
@@ -12708,6 +12709,10 @@ proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader = funct
     case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.setCurrency(value);
+      break;
+    case 11:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsnew(value);
       break;
     default:
       reader.skipField();
@@ -12805,6 +12810,13 @@ proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter = function(
   if (f.length > 0) {
     writer.writeString(
       10,
+      f
+    );
+  }
+  f = message.getIsnew();
+  if (f) {
+    writer.writeBool(
+      11,
       f
     );
   }
@@ -12972,6 +12984,23 @@ proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getCurrency = function() 
 /** @param {string} value */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setCurrency = function(value) {
   jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional bool isNew = 11;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getIsnew = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 11, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setIsnew = function(value) {
+  jspb.Message.setProto3BooleanField(this, 11, value);
 };
 
 

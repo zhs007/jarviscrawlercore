@@ -58,6 +58,11 @@ async function steepandcheapProducts(browser, url, timeout) {
           const curret = {currency: 'USD'};
           const curele = eles[i];
 
+          const isnew = curele.getElementsByClassName('pli-new-icon');
+          if (isnew.length > 0) {
+            curret.isNew = true;
+          }
+
           const stocklevel = curele.getElementsByClassName('pli-stock-level');
           if (stocklevel.length > 0) {
             const stocklevelarr = stocklevel[0].innerText.trim().split(' ', -1);

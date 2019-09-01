@@ -647,6 +647,7 @@ message SteepAndCheapProduct {
     int32 reviews = 8;
     float ratingValue = 9;
     string currency = 10;
+    bool isNew = 11;
 }
 
 // RequestCrawler - request crawler

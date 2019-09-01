@@ -635,6 +635,19 @@ message ReplyTechInAsia {
     }    
 }
 
+// SteepAndCheapProduct - Steep&Cheap product
+message SteepAndCheapProduct {
+    string brandName = 1;
+    string skid = 2;
+    repeated string productName = 3;
+    int32 stockLevel = 4;
+    float price = 5;
+    float curPrice = 6;
+    string url = 7;
+    int32 reviews = 8;
+    float ratingValue = 9;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;

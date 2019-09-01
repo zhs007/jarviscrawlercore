@@ -20,6 +20,7 @@ const {execAnalysis} = require('../src/analysis/exec');
 const {execGeoIP} = require('../src/geoip/exec');
 const {execTinypng} = require('../src/tinypng/exec');
 const {execTechInAsia} = require('../src/techinasia/exec');
+const {execSteepAndCheap} = require('../src/steepandcheap/exec');
 const fs = require('fs');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
@@ -351,5 +352,6 @@ execAnalysis(program, VERSION);
 execGeoIP(program, VERSION);
 execTinypng(program, VERSION);
 execTechInAsia(program, VERSION);
+execSteepAndCheap(program, VERSION);
 
 program.parse(process.argv);

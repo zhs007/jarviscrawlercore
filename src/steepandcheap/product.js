@@ -154,7 +154,11 @@ async function steepandcheapProduct(browser, url, timeout) {
         if (eles.length > 0) {
           const imgs = eles[0].getElementsByTagName('img');
           for (let i = 0; i < imgs.length; ++i) {
-            lst.push(imgs[i].src);
+            if (imgs[i].src) {
+              lst.push(imgs[i].src);
+            } else {
+              lst.push(imgs[i].dataset.src);
+            }
           }
         }
 
@@ -231,8 +235,203 @@ async function steepandcheapProduct(browser, url, timeout) {
     }
   }
 
+  const techret = await page
+      .$$eval('.tech-specs-section', (eles) => {
+        if (eles.length > 0) {
+          const lsttd = eles[0].getElementsByClassName('td');
+          const techret = {};
+
+          for (let i = 0; i < lsttd.length / 2; ++i) {
+            if (lsttd[i * 2].innerText == 'Material:') {
+              techret.material = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Fit:') {
+              techret.fit = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Style:') {
+              techret.style = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'UPF Rating:') {
+              techret.ratingUPF = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Claimed Weight:') {
+              techret.strWeight = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Recommended Use:') {
+              techret.recommendedUse = lsttd[i * 2 + 1].innerText.split(',', -1);
+            } else if (lsttd[i * 2].innerText == 'Manufacturer Warranty:') {
+              techret.manufacturerWarranty = lsttd[i * 2 + 1].innerText;
+            }
+          }
+
+          return techret;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .buybox__colors-item', awaiterr);
+    console.log('steepandcheapProduct.$$eval .tech-specs-section', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (techret) {
+    for (const k in techret) {
+      if (Object.prototype.hasOwnProperty.call(techret, k)) {
+        ret[k] = techret[k];
+      }
+    }
+  }
+
+  ret.information = await page
+      .$$eval('.product-information', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerHTML;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.$$eval .product-information', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.sizeChart = await page
+      .$$eval('.size-info', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerHTML;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.$$eval .size-info', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.lstReview = await page
+      .$$eval('article.review', (eles) => {
+        const lst = [];
+        for (let i = 0; i < eles.length; ++i) {
+          const curele = eles[i];
+          const curreview = {};
+
+          const lsttitle = curele.getElementsByClassName('user-content__title');
+          if (lsttitle.length > 0) {
+            curreview.title = lsttitle[0].innerText;
+          }
+
+          const lstrating = curele.getElementsByClassName(
+              'user-content__rating-stars'
+          );
+          if (lstrating.length > 0) {
+            try {
+              const arr = lstrating[0].classList[0].toString().split('-', -1);
+              curreview.rating = parseFloat(arr[arr.length - 1]);
+            } catch (err) {
+              console.log(
+                  'user-content__rating-stars className error. ' +
+                lstrating[0].className
+              );
+            }
+          }
+
+          const lstdetails = curele.getElementsByClassName(
+              'product-review-details'
+          );
+          if (lstdetails.length > 0) {
+            const lstspan = lstdetails[0].getElementsByTagName('span');
+            for (let j = 0; j < lstspan.length / 2; ++j) {
+              if (lstspan[j * 2].innerText.trim() == 'Familiarity:') {
+                curreview.familiarity = lstspan[j * 2 + 1].innerText.trim();
+              } else if (lstspan[j * 2].innerText.trim() == 'Fit:') {
+                curreview.fit = lstspan[j * 2 + 1].innerText.trim();
+              } else if (lstspan[j * 2].innerText.trim() == 'Size Bought:') {
+                curreview.sizeBought = lstspan[j * 2 + 1].innerText.trim();
+              }
+            }
+          }
+
+          const lstimg = curele.getElementsByClassName('user-content__image');
+          if (lstimg.length > 0) {
+            const imgs = [];
+            for (let j = 0; j < lstimg.length; ++j) {
+              if (lstimg.src) {
+                imgs.push(lstimg.src);
+              } else {
+                imgs.push(lstimg.dataset.src);
+              }
+            }
+
+            curreview.imgs = imgs;
+          }
+
+          const lstdesc = curele.getElementsByClassName('description');
+          if (lstdesc.length > 0) {
+            curreview.description = lstdesc[0].innerText;
+          }
+
+          const lstuser = curele.getElementsByClassName('user-card');
+          if (lstuser.length > 0) {
+            curreview.user = {};
+
+            const lstphoto = lstuser[0].getElementsByClassName(
+                'user-card__photo'
+            );
+            if (lstphoto.length > 0) {
+              if (lstphoto[0].src) {
+                curreview.user.photo = lstphoto[0].src;
+              } else {
+                curreview.user.photo = lstphoto[0].dataset.src;
+              }
+            }
+
+            const lstname = lstuser[0].getElementsByClassName('user-card__name');
+            if (lstname.length > 0) {
+              curreview.user.name = lstname[0].innerText;
+            }
+
+            const lstheight = lstuser[0].getElementsByClassName(
+                'user-card__height-value'
+            );
+            if (lstheight.length > 0) {
+              curreview.user.height = lstheight[0].innerText;
+            }
+
+            const lstweight = lstuser[0].getElementsByClassName(
+                'user-card__weight-value'
+            );
+            if (lstweight.length > 0) {
+              curreview.user.weight = lstweight[0].innerText;
+            }
+          }
+
+          lst.push(curreview);
+        }
+
+        return lst;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.$$eval article.review', awaiterr);
 
     await page.close();
 

@@ -12631,7 +12631,8 @@ proto.jarviscrawlercore.SteepAndCheapProduct.toObject = function(includeInstance
     curprice: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
     url: jspb.Message.getFieldWithDefault(msg, 7, ""),
     reviews: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    ratingvalue: +jspb.Message.getFieldWithDefault(msg, 9, 0.0)
+    ratingvalue: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
+    currency: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -12703,6 +12704,10 @@ proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader = funct
     case 9:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setRatingvalue(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCurrency(value);
       break;
     default:
       reader.skipField();
@@ -12793,6 +12798,13 @@ proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter = function(
   if (f !== 0.0) {
     writer.writeFloat(
       9,
+      f
+    );
+  }
+  f = message.getCurrency();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -12945,6 +12957,21 @@ proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getRatingvalue = function
 /** @param {number} value */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setRatingvalue = function(value) {
   jspb.Message.setProto3FloatField(this, 9, value);
+};
+
+
+/**
+ * optional string currency = 10;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getCurrency = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setCurrency = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
 };
 
 

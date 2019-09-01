@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {steepandcheapProducts} = require('./products');
+const {steepandcheapProduct} = require('./product');
 
 /**
  * execSteepAndCheap
@@ -34,6 +35,14 @@ async function execSteepAndCheap(program, version) {
           return;
         }
 
+        if (mode == 'product' && !options.url) {
+          console.log(
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+          );
+
+          return;
+        }
+
         let timeout = 3 * 60 * 1000;
         if (typeof options.timeout == 'number') {
           timeout = options.timeout;
@@ -51,6 +60,9 @@ async function execSteepAndCheap(program, version) {
                 options.url,
                 timeout
             );
+            console.log(JSON.stringify(ret));
+          } else if (mode == 'product') {
+            const ret = await steepandcheapProduct(browser, options.url, timeout);
             console.log(JSON.stringify(ret));
           }
 

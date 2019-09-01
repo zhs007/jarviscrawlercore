@@ -635,10 +635,17 @@ message ReplyTechInAsia {
     }    
 }
 
+// SteepAndCheapColorSize - Steep&Cheap color size
+message SteepAndCheapColorSize {
+    string color = 1;
+    repeated string size = 2;
+    repeated bool sizeValid = 3;
+}
+
 // SteepAndCheapProduct - Steep&Cheap product
 message SteepAndCheapProduct {
     string brandName = 1;
-    string skid = 2;
+    string skuid = 2;
     repeated string productName = 3;
     int32 stockLevel = 4;
     float price = 5;
@@ -648,6 +655,9 @@ message SteepAndCheapProduct {
     float ratingValue = 9;
     string currency = 10;
     bool isNew = 11;
+    repeated string category = 12;
+    repeated string imgs = 13;
+    repeated SteepAndCheapColorSize color = 14;
 }
 
 // RequestCrawler - request crawler

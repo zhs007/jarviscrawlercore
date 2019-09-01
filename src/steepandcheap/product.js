@@ -83,6 +83,25 @@ async function getSizeList(page) {
 async function steepandcheapProduct(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await page
+      .setViewport({
+        width: 1280,
+        height: 600,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.setViewport', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();

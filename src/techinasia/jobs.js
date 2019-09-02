@@ -93,6 +93,24 @@ async function resetPage(page) {
 async function techinasiaJobs(browser, jobnums, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await page
+      .setViewport({
+        width: 1280,
+        height: 600,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('techinasiaJobs.setViewport', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();
@@ -142,10 +160,7 @@ async function techinasiaJobs(browser, jobnums, timeout) {
         break;
       }
 
-      if (
-        lastjobnums == lstarticle.length &&
-        Date.now() - starttime >= 3 * 60 * 1000
-      ) {
+      if (lastjobnums == lstarticle.length && Date.now() - starttime >= 3 * 60 * 1000) {
         break;
       }
 

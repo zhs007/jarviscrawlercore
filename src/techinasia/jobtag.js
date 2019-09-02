@@ -40,7 +40,10 @@ async function getTag(page, ele, timeout) {
   const ret = {};
   const innerText = await ele.getProperty('innerText');
   if (innerText) {
-    ret.tag = await innerText.jsonValue().trim();
+    ret.tag = await innerText.jsonValue();
+    if (ret.tag) {
+      ret.tag = ret.tag.toString().trim();
+    }
   }
 
   await ele.click().catch((err) => {

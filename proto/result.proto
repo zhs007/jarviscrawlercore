@@ -624,7 +624,9 @@ enum TechInAsiaMode {
     // TIAM_JOB - job
     TIAM_JOB = 1;
     // TIAM_JOBLIST - job list
-    TIAM_JOBLIST = 2;    
+    TIAM_JOBLIST = 2;
+    // TIAM_JOBTAG - job tag
+    TIAM_JOBTAG = 3;
 }
 
 // RequestTechInAsia - request techinasia
@@ -633,6 +635,8 @@ message RequestTechInAsia {
     string companyCode = 2;
     string jobCode = 3;
     int32 jobNums = 4;
+    string jobTag = 5;
+    string jobSubTag = 6;
 }
 
 // ReplyTechInAsia - reply techinasia
@@ -643,6 +647,7 @@ message ReplyTechInAsia {
         TechInAsiaCompany company = 100;
         TechInAsiaJob job = 101;
         TechInAsiaJobList jobs = 102;
+        TechInAsiaJobTagList tags = 103;
     }    
 }
 

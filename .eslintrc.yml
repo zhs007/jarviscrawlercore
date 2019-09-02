@@ -9,4 +9,6 @@ globals:
 parserOptions:
   ecmaVersion: 2018
 rules: 
-  code: 120
+  max-len: 
+  - 2
+  - {code: 120}

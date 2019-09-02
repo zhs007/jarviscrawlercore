@@ -1,4 +1,4 @@
-const { sleep } = require("../utils");
+const {sleep} = require('../utils');
 
 /**
  * validImageSrc - //a.b.c/d.jpg => https://a.b.c/d.jpg
@@ -6,8 +6,8 @@ const { sleep } = require("../utils");
  * @return {string} str - valid source
  */
 function validImageSrc(src) {
-  if (src.indexOf("//") == 0) {
-    return "https:" + src;
+  if (src.indexOf('//') == 0) {
+    return 'https:' + src;
   }
 
   return src;
@@ -21,19 +21,19 @@ function validImageSrc(src) {
 async function getColorName(page) {
   let awaiterr;
   const name = await page
-    .$$eval(".buybox__title-color-name", eles => {
-      if (eles.length > 0) {
-        return eles[0].innerText;
-      }
+      .$$eval('.buybox__title-color-name', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
 
-      return "";
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return '';
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    return "";
+    return '';
   }
 
   return name;
@@ -47,37 +47,37 @@ async function getColorName(page) {
 async function getSizeList(page) {
   let awaiterr;
   const obj = await page
-    .$$eval(".buybox__size-item", eles => {
-      if (eles.length > 0) {
-        const size = [];
-        const sizeValid = [];
+      .$$eval('.buybox__size-item', (eles) => {
+        if (eles.length > 0) {
+          const size = [];
+          const sizeValid = [];
 
-        for (let i = 0; i < eles.length; ++i) {
-          size.push(eles[i].innerText);
-          if (eles[i].children.length == 1) {
-            sizeValid.push(true);
-          } else {
-            const arr = eles[i].getElementsByClassName("buybox__cross-line");
-            if (arr.length > 0) {
-              if (arr[0].style.display == "none") {
-                sizeValid.push(true);
-              } else {
-                sizeValid.push(false);
-              }
-            } else {
+          for (let i = 0; i < eles.length; ++i) {
+            size.push(eles[i].innerText);
+            if (eles[i].children.length == 1) {
               sizeValid.push(true);
+            } else {
+              const arr = eles[i].getElementsByClassName('buybox__cross-line');
+              if (arr.length > 0) {
+                if (arr[0].style.display == 'none') {
+                  sizeValid.push(true);
+                } else {
+                  sizeValid.push(false);
+                }
+              } else {
+                sizeValid.push(true);
+              }
             }
           }
+
+          return {size: size, sizeValid: sizeValid};
         }
 
-        return { size: size, sizeValid: sizeValid };
-      }
-
-      return undefined;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
     return undefined;
@@ -93,7 +93,7 @@ async function getSizeList(page) {
 async function closeDialog(page) {
   let awaiterr;
 
-  const lstdialog = await page.$$(".ui-dialog").catch(err => {
+  const lstdialog = await page.$$('.ui-dialog').catch((err) => {
     awaiterr = err;
   });
 
@@ -102,7 +102,7 @@ async function closeDialog(page) {
   }
 
   if (lstdialog.length > 0) {
-    let btns = await lstdialog[0].$$("button").catch(err => {
+    const btns = await lstdialog[0].$$('button').catch((err) => {
       awaiterr = err;
     });
 
@@ -111,7 +111,7 @@ async function closeDialog(page) {
     }
 
     if (btns.length > 0) {
-      await btns[0].click().catch(err => {
+      await btns[0].click().catch((err) => {
         awaiterr = err;
       });
 
@@ -134,21 +134,21 @@ async function steepandcheapProduct(browser, url, timeout) {
   const page = await browser.newPage();
 
   await page
-    .setViewport({
-      width: 1280,
-      height: 600,
-      deviceScaleFactor: 1
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+      .setViewport({
+        width: 1280,
+        height: 600,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.setViewport", awaiterr);
+    console.log('steepandcheapProduct.setViewport', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   // await page.setRequestInterception(true);
@@ -164,31 +164,31 @@ async function steepandcheapProduct(browser, url, timeout) {
   // });
 
   await page
-    .goto("https://www.steepandcheap.com/" + url, {
-      timeout: timeout
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+      .goto('https://www.steepandcheap.com/' + url, {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.goto", awaiterr);
+    console.log('steepandcheapProduct.goto', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
-  await page.waitForSelector(".the-wall").catch(err => {
+  await page.waitForSelector('.the-wall').catch((err) => {
     awaiterr = err;
   });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.waitForSelector .the-wall", awaiterr);
+    console.log('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   await closeDialog(page);
@@ -196,57 +196,57 @@ async function steepandcheapProduct(browser, url, timeout) {
   const ret = {};
 
   ret.category = await page
-    .$$eval(".crumb", eles => {
-      const lst = [];
+      .$$eval('.crumb', (eles) => {
+        const lst = [];
 
-      for (let i = 0; i < eles.length; ++i) {
-        lst.push(eles[i].innerText);
-      }
+        for (let i = 0; i < eles.length; ++i) {
+          lst.push(eles[i].innerText);
+        }
 
-      return lst;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return lst;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .crumb", awaiterr);
+    console.log('steepandcheapProduct.$$eval .crumb', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   ret.imgs = await page
-    .$$eval(".ui-mediacarousel__list", eles => {
-      const lst = [];
+      .$$eval('.ui-mediacarousel__list', (eles) => {
+        const lst = [];
 
-      if (eles.length > 0) {
-        const imgs = eles[0].getElementsByTagName("img");
-        for (let i = 0; i < imgs.length; ++i) {
-          if (imgs[i].src) {
-            lst.push(imgs[i].src);
-          } else {
-            lst.push(imgs[i].dataset.src);
+        if (eles.length > 0) {
+          const imgs = eles[0].getElementsByTagName('img');
+          for (let i = 0; i < imgs.length; ++i) {
+            if (imgs[i].src) {
+              lst.push(imgs[i].src);
+            } else {
+              lst.push(imgs[i].dataset.src);
+            }
           }
         }
-      }
 
-      return lst;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return lst;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
     console.log(
-      "steepandcheapProduct.$$eval .ui-mediacarousel__list",
-      awaiterr
+        'steepandcheapProduct.$$eval .ui-mediacarousel__list',
+        awaiterr
     );
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   if (ret.imgs) {
@@ -256,27 +256,27 @@ async function steepandcheapProduct(browser, url, timeout) {
   }
 
   ret.skuid = await page
-    .$$eval(".sku-id", eles => {
-      if (eles.length > 0) {
-        return eles[0].innerText;
-      }
+      .$$eval('.sku-id', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
 
-      return undefined;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .sku-id", awaiterr);
+    console.log('steepandcheapProduct.$$eval .sku-id', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
-  let lastname = "";
-  const lstcolor = await page.$$(".buybox__color-item").catch(err => {
+  let lastname = '';
+  const lstcolor = await page.$$('.buybox__color-item').catch((err) => {
     awaiterr = err;
   });
   if (lstcolor.length > 0) {
@@ -299,16 +299,16 @@ async function steepandcheapProduct(browser, url, timeout) {
           break;
         }
 
-        let curt = Date.now();
+        const curt = Date.now();
         if (curt > starttime + timeout) {
           await page.close();
 
-          return { error: "steepandcheapProduct.getColor timeout" };
+          return {error: 'steepandcheapProduct.getColor timeout'};
         }
       }
 
       const curcolor = {
-        color: lastname
+        color: lastname,
       };
 
       const curret = await getSizeList(page);
@@ -322,87 +322,87 @@ async function steepandcheapProduct(browser, url, timeout) {
   }
 
   await page
-    .waitForSelector(".product", {
-      timeout: timeout
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+      .waitForSelector('.product', {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.waitForSelector .product", awaiterr);
+    console.log('steepandcheapProduct.waitForSelector .product', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   ret.linkProducts = await page
-    .$$eval(".product", eles => {
-      if (eles.length > 0) {
-        let lst = [];
+      .$$eval('.product', (eles) => {
+        if (eles.length > 0) {
+          const lst = [];
 
-        for (let i = 0; i < eles.length; ++i) {
-          let lsta = eles[i].getElementsByTagName("a");
-          if (lsta.length > 0) {
-            lst.push(lsta[0].href);
+          for (let i = 0; i < eles.length; ++i) {
+            const lsta = eles[i].getElementsByTagName('a');
+            if (lsta.length > 0) {
+              lst.push(lsta[0].href);
+            }
           }
-        }
 
-        return lst;
-      }
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+          return lst;
+        }
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .product", awaiterr);
+    console.log('steepandcheapProduct.$$eval .product', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   const techret = await page
-    .$$eval(".tech-specs-section", eles => {
-      if (eles.length > 0) {
-        const lsttd = eles[0].getElementsByClassName("td");
-        const techret = {};
+      .$$eval('.tech-specs-section', (eles) => {
+        if (eles.length > 0) {
+          const lsttd = eles[0].getElementsByClassName('td');
+          const techret = {};
 
-        for (let i = 0; i < lsttd.length / 2; ++i) {
-          if (lsttd[i * 2].innerText == "Material:") {
-            techret.material = lsttd[i * 2 + 1].innerText;
-          } else if (lsttd[i * 2].innerText == "Fit:") {
-            techret.fit = lsttd[i * 2 + 1].innerText;
-          } else if (lsttd[i * 2].innerText == "Style:") {
-            techret.style = lsttd[i * 2 + 1].innerText;
-          } else if (lsttd[i * 2].innerText == "UPF Rating:") {
-            techret.ratingUPF = lsttd[i * 2 + 1].innerText;
-          } else if (lsttd[i * 2].innerText == "Claimed Weight:") {
-            techret.strWeight = lsttd[i * 2 + 1].innerText;
-          } else if (lsttd[i * 2].innerText == "Recommended Use:") {
-            techret.recommendedUse = lsttd[i * 2 + 1].innerText.split(",", -1);
-          } else if (lsttd[i * 2].innerText == "Manufacturer Warranty:") {
-            techret.manufacturerWarranty = lsttd[i * 2 + 1].innerText;
+          for (let i = 0; i < lsttd.length / 2; ++i) {
+            if (lsttd[i * 2].innerText == 'Material:') {
+              techret.material = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Fit:') {
+              techret.fit = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Style:') {
+              techret.style = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'UPF Rating:') {
+              techret.ratingUPF = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Claimed Weight:') {
+              techret.strWeight = lsttd[i * 2 + 1].innerText;
+            } else if (lsttd[i * 2].innerText == 'Recommended Use:') {
+              techret.recommendedUse = lsttd[i * 2 + 1].innerText.split(',', -1);
+            } else if (lsttd[i * 2].innerText == 'Manufacturer Warranty:') {
+              techret.manufacturerWarranty = lsttd[i * 2 + 1].innerText;
+            }
           }
+
+          return techret;
         }
 
-        return techret;
-      }
-
-      return undefined;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .tech-specs-section", awaiterr);
+    console.log('steepandcheapProduct.$$eval .tech-specs-section', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   if (techret) {
@@ -414,208 +414,208 @@ async function steepandcheapProduct(browser, url, timeout) {
   }
 
   ret.information = await page
-    .$$eval(".product-information", eles => {
-      if (eles.length > 0) {
-        return eles[0].innerHTML;
-      }
+      .$$eval('.product-information', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerHTML;
+        }
 
-      return undefined;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .product-information", awaiterr);
+    console.log('steepandcheapProduct.$$eval .product-information', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   ret.sizeChart = await page
-    .$$eval(".size-info", eles => {
-      if (eles.length > 0) {
-        return eles[0].innerHTML;
-      }
+      .$$eval('.size-info', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerHTML;
+        }
 
-      return undefined;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .size-info", awaiterr);
+    console.log('steepandcheapProduct.$$eval .size-info', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   const reviewCount = await page
-    .$$eval(".review-count", eles => {
-      if (eles.length > 0) {
-        try {
-          return parseInt(eles[0].innerText);
-        } catch (err) {
-          return 0;
+      .$$eval('.review-count', (eles) => {
+        if (eles.length > 0) {
+          try {
+            return parseInt(eles[0].innerText);
+          } catch (err) {
+            return 0;
+          }
         }
-      }
 
-      return 0;
-    })
-    .catch(err => {
-      awaiterr = err;
-    });
+        return 0;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   if (awaiterr) {
-    console.log("steepandcheapProduct.$$eval .review-count", awaiterr);
+    console.log('steepandcheapProduct.$$eval .review-count', awaiterr);
 
     await page.close();
 
-    return { error: awaiterr.toString() };
+    return {error: awaiterr.toString()};
   }
 
   if (reviewCount > 0) {
     await page
-      .waitForSelector("article.review", {
-        timeout: timeout
-      })
-      .catch(err => {
-        awaiterr = err;
-      });
+        .waitForSelector('article.review', {
+          timeout: timeout,
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
 
     if (awaiterr) {
       console.log(
-        "steepandcheapProduct.waitForSelector article.review",
-        awaiterr
+          'steepandcheapProduct.waitForSelector article.review',
+          awaiterr
       );
 
       await page.close();
 
-      return { error: awaiterr.toString() };
+      return {error: awaiterr.toString()};
     }
 
     ret.lstReview = await page
-      .$$eval("article.review", eles => {
-        const lst = [];
-        for (let i = 0; i < eles.length; ++i) {
-          const curele = eles[i];
-          const curreview = {};
+        .$$eval('article.review', (eles) => {
+          const lst = [];
+          for (let i = 0; i < eles.length; ++i) {
+            const curele = eles[i];
+            const curreview = {};
 
-          const lsttitle = curele.getElementsByClassName("user-content__title");
-          if (lsttitle.length > 0) {
-            curreview.title = lsttitle[0].innerText;
-          }
+            const lsttitle = curele.getElementsByClassName('user-content__title');
+            if (lsttitle.length > 0) {
+              curreview.title = lsttitle[0].innerText;
+            }
 
-          const lstrating = curele.getElementsByClassName(
-            "user-content__rating-stars"
-          );
-          if (lstrating.length > 0) {
-            try {
-              const arr = lstrating[0].classList[0].toString().split("-", -1);
-              curreview.rating = parseFloat(arr[arr.length - 1]);
-            } catch (err) {
-              console.log(
-                "user-content__rating-stars className error. " +
+            const lstrating = curele.getElementsByClassName(
+                'user-content__rating-stars'
+            );
+            if (lstrating.length > 0) {
+              try {
+                const arr = lstrating[0].classList[0].toString().split('-', -1);
+                curreview.rating = parseFloat(arr[arr.length - 1]);
+              } catch (err) {
+                console.log(
+                    'user-content__rating-stars className error. ' +
                   lstrating[0].className
+                );
+              }
+            }
+
+            const lstdetails = curele.getElementsByClassName(
+                'product-review-details'
+            );
+            if (lstdetails.length > 0) {
+              const lstspan = lstdetails[0].getElementsByTagName('span');
+              for (let j = 0; j < lstspan.length / 2; ++j) {
+                if (lstspan[j * 2].innerText.trim() == 'Familiarity:') {
+                  curreview.familiarity = lstspan[j * 2 + 1].innerText.trim();
+                } else if (lstspan[j * 2].innerText.trim() == 'Fit:') {
+                  curreview.fit = lstspan[j * 2 + 1].innerText.trim();
+                } else if (lstspan[j * 2].innerText.trim() == 'Size Bought:') {
+                  curreview.sizeBought = lstspan[j * 2 + 1].innerText.trim();
+                }
+              }
+            }
+
+            const lstimg = curele.getElementsByClassName('user-content__image');
+            if (lstimg.length > 0) {
+              const imgs = [];
+              for (let j = 0; j < lstimg.length; ++j) {
+                if (lstimg[j].src) {
+                  imgs.push(lstimg[j].src);
+                } else {
+                  imgs.push(lstimg[j].dataset.src);
+                }
+              }
+
+              curreview.imgs = imgs;
+            }
+
+            const lstdesc = curele.getElementsByClassName('description');
+            if (lstdesc.length > 0) {
+              curreview.description = lstdesc[0].innerText;
+            }
+
+            const lstuser = curele.getElementsByClassName('user-card');
+            if (lstuser.length > 0) {
+              curreview.user = {};
+
+              const lstphoto = lstuser[0].getElementsByClassName(
+                  'user-card__photo'
               );
-            }
-          }
-
-          const lstdetails = curele.getElementsByClassName(
-            "product-review-details"
-          );
-          if (lstdetails.length > 0) {
-            const lstspan = lstdetails[0].getElementsByTagName("span");
-            for (let j = 0; j < lstspan.length / 2; ++j) {
-              if (lstspan[j * 2].innerText.trim() == "Familiarity:") {
-                curreview.familiarity = lstspan[j * 2 + 1].innerText.trim();
-              } else if (lstspan[j * 2].innerText.trim() == "Fit:") {
-                curreview.fit = lstspan[j * 2 + 1].innerText.trim();
-              } else if (lstspan[j * 2].innerText.trim() == "Size Bought:") {
-                curreview.sizeBought = lstspan[j * 2 + 1].innerText.trim();
+              if (lstphoto.length > 0) {
+                if (lstphoto[0].src) {
+                  curreview.user.photo = lstphoto[0].src;
+                } else {
+                  curreview.user.photo = lstphoto[0].dataset.src;
+                }
               }
-            }
-          }
 
-          const lstimg = curele.getElementsByClassName("user-content__image");
-          if (lstimg.length > 0) {
-            const imgs = [];
-            for (let j = 0; j < lstimg.length; ++j) {
-              if (lstimg[j].src) {
-                imgs.push(lstimg[j].src);
-              } else {
-                imgs.push(lstimg[j].dataset.src);
+              const lstname = lstuser[0].getElementsByClassName(
+                  'user-card__name'
+              );
+              if (lstname.length > 0) {
+                curreview.user.name = lstname[0].innerText;
               }
-            }
 
-            curreview.imgs = imgs;
-          }
+              const lstheight = lstuser[0].getElementsByClassName(
+                  'user-card__height-value'
+              );
+              if (lstheight.length > 0) {
+                curreview.user.height = lstheight[0].innerText;
+              }
 
-          const lstdesc = curele.getElementsByClassName("description");
-          if (lstdesc.length > 0) {
-            curreview.description = lstdesc[0].innerText;
-          }
-
-          const lstuser = curele.getElementsByClassName("user-card");
-          if (lstuser.length > 0) {
-            curreview.user = {};
-
-            const lstphoto = lstuser[0].getElementsByClassName(
-              "user-card__photo"
-            );
-            if (lstphoto.length > 0) {
-              if (lstphoto[0].src) {
-                curreview.user.photo = lstphoto[0].src;
-              } else {
-                curreview.user.photo = lstphoto[0].dataset.src;
+              const lstweight = lstuser[0].getElementsByClassName(
+                  'user-card__weight-value'
+              );
+              if (lstweight.length > 0) {
+                curreview.user.weight = lstweight[0].innerText;
               }
             }
 
-            const lstname = lstuser[0].getElementsByClassName(
-              "user-card__name"
-            );
-            if (lstname.length > 0) {
-              curreview.user.name = lstname[0].innerText;
-            }
-
-            const lstheight = lstuser[0].getElementsByClassName(
-              "user-card__height-value"
-            );
-            if (lstheight.length > 0) {
-              curreview.user.height = lstheight[0].innerText;
-            }
-
-            const lstweight = lstuser[0].getElementsByClassName(
-              "user-card__weight-value"
-            );
-            if (lstweight.length > 0) {
-              curreview.user.weight = lstweight[0].innerText;
-            }
+            lst.push(curreview);
           }
 
-          lst.push(curreview);
-        }
-
-        return lst;
-      })
-      .catch(err => {
-        awaiterr = err;
-      });
+          return lst;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
 
     if (awaiterr) {
-      console.log("steepandcheapProduct.$$eval article.review", awaiterr);
+      console.log('steepandcheapProduct.$$eval article.review', awaiterr);
 
       await page.close();
 
-      return { error: awaiterr.toString() };
+      return {error: awaiterr.toString()};
     }
 
     if (ret.lstReview) {
       for (let i = 0; i < ret.lstReview.length; ++i) {
-        let curreview = ret.lstReview[i];
+        const curreview = ret.lstReview[i];
         if (Array.isArray(curreview.imgs)) {
           for (let j = 0; j < curreview.imgs.length; ++j) {
             curreview.imgs[j] = validImageSrc(curreview.imgs[j]);
@@ -631,7 +631,7 @@ async function steepandcheapProduct(browser, url, timeout) {
 
   await page.close();
 
-  return { ret: ret };
+  return {ret: ret};
 }
 
 exports.steepandcheapProduct = steepandcheapProduct;

@@ -2,6 +2,7 @@ const {startBrowser} = require('../browser');
 const {techinasiaCompany} = require('./company');
 const {techinasiaJob} = require('./job');
 const {techinasiaJobs} = require('./jobs');
+const {techinasiaJobTag} = require('./jobtag');
 
 /**
  * execTechInAsia
@@ -21,9 +22,7 @@ async function execTechInAsia(program, version) {
         console.log('version is ', version);
 
         if (!mode) {
-          console.log(
-              'command wrong, please type ' + 'jarviscrawler techinasia --help'
-          );
+          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
@@ -31,25 +30,19 @@ async function execTechInAsia(program, version) {
         console.log('mode - ', mode);
 
         if (mode == 'compnay' && !options.company) {
-          console.log(
-              'command wrong, please type ' + 'jarviscrawler techinasia --help'
-          );
+          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
 
         if (mode == 'job' && !options.job) {
-          console.log(
-              'command wrong, please type ' + 'jarviscrawler techinasia --help'
-          );
+          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
 
         if (mode == 'jobs' && !options.jobnums) {
-          console.log(
-              'command wrong, please type ' + 'jarviscrawler techinasia --help'
-          );
+          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
@@ -73,6 +66,9 @@ async function execTechInAsia(program, version) {
             console.log(JSON.stringify(ret));
           } else if (mode == 'jobs') {
             const ret = await techinasiaJobs(browser, options.jobnums, timeout);
+            console.log(JSON.stringify(ret));
+          } else if (mode == 'jobtag') {
+            const ret = await techinasiaJobTag(browser, timeout);
             console.log(JSON.stringify(ret));
           }
 

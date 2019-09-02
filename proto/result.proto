@@ -602,6 +602,17 @@ message TechInAsiaJob {
     repeated string subType = 18;
 }
 
+// TechInAsiaJobTag - TechInAsia Job tag
+message TechInAsiaJobTag {
+    string tagType = 1;
+    repeated string subType = 2;
+}
+
+// TechInAsiaJobTagList - TechInAsia Job tag list
+message TechInAsiaJobTagList {
+    repeated TechInAsiaJobTag tags = 1;
+}
+
 // TechInAsiaJobList - TechInAsia JobList
 message TechInAsiaJobList {
     repeated TechInAsiaJob jobs = 1;

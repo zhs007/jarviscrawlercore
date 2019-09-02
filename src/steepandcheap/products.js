@@ -87,9 +87,7 @@ async function steepandcheapProducts(browser, url, timeout) {
             curret.productName = titlename[0].innerText.split('-', -1);
           }
 
-          const lowprice = curele.getElementsByClassName(
-              'ui-pl-pricing-low-price'
-          );
+          const lowprice = curele.getElementsByClassName('ui-pl-pricing-low-price');
           if (lowprice.length > 0) {
             const lowpricearr = lowprice[0].innerText.split('$', -1);
             if (lowpricearr.length != 2) {
@@ -103,9 +101,7 @@ async function steepandcheapProducts(browser, url, timeout) {
             }
           }
 
-          const highprice = curele.getElementsByClassName(
-              'ui-pl-pricing-high-price'
-          );
+          const highprice = curele.getElementsByClassName('ui-pl-pricing-high-price');
           if (highprice.length > 0) {
             const highpricearr = highprice[0].innerText.split('$', -1);
             if (highpricearr.length != 2) {

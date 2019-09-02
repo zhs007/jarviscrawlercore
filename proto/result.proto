@@ -691,6 +691,7 @@ message SteepAndCheapProduct {
     string infomation = 24;
     string sizeChart = 25;
     repeated SteepAndCheapReview lstReview = 26;
+    repeated string linkProducts = 27;
 }
 
 // RequestCrawler - request crawler

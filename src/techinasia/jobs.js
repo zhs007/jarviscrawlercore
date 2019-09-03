@@ -84,13 +84,177 @@ async function resetPage(page) {
 }
 
 /**
+ * getMainTagElement - get main tag element
+ * @param {object} page - page
+ * @param {string} maintag - main tag
+ * @return {object} ele - element
+ */
+async function getMainTagElement(page, maintag) {
+  try {
+    let awaiterr;
+
+    const lstclickable = await page.$$('.clickable').catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      console.log('getMainTagElement.$$ ' + awaiterr);
+      return undefined;
+    }
+
+    for (let i = 0; i < lstclickable.length; ++i) {
+      const innerText = await lstclickable[i].getProperty('innerText');
+      if (innerText) {
+        let curit = await innerText.jsonValue();
+        if (curit) {
+          curit = curit.toString().trim();
+          curit = curit.toLowerCase();
+
+          if (curit == maintag) {
+            return lstclickable[i];
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log('getMainTagElement ' + err);
+    return undefined;
+  }
+
+  return undefined;
+}
+
+/**
+ * getSubTagElement - get sub tag element
+ * @param {object} page - page
+ * @param {string} subtag - sub tag
+ * @return {object} ele - element
+ */
+async function getSubTagElement(page, subtag) {
+  try {
+    let awaiterr;
+
+    const lstdropdown = await page.$$('.dropdown').catch((err) => {
+      awaiterr = err;
+    });
+
+    if (awaiterr) {
+      console.log('getSubTagElement ' + awaiterr);
+      return undefined;
+    }
+
+    if (lstdropdown.length > 0) {
+      const lsta = await lstdropdown[0].$$('a');
+      if (lsta.length > 0) {
+        for (let i = 0; i < lsta.length; ++i) {
+          const innerText = await lsta[i].getProperty('innerText');
+          if (innerText) {
+            let curit = await innerText.jsonValue();
+            if (curit) {
+              curit = curit.toString().trim();
+              curit = curit.toLowerCase();
+
+              const arr = curit.split('\n', -1);
+
+              if (arr[0] == subtag) {
+                return lsta[i];
+              }
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.log('getSubTagElement ' + err);
+    return undefined;
+  }
+
+  return undefined;
+}
+
+/**
+ * selectTag - select tag
+ * @param {object} page - page
+ * @param {string} maintag - main tag
+ * @param {string} subtag - sub tag
+ * @param {number} timeout - timeout
+ * @return {error} err - error
+ */
+async function selectTag(page, maintag, subtag, timeout) {
+  if (!maintag || !subtag) {
+    return undefined;
+  }
+
+  try {
+    let awaiterr;
+    maintag = maintag.toLowerCase();
+    subtag = subtag.toLowerCase();
+
+    const mainframe = await page.mainFrame();
+    const waitreset = new WaitFrameNavigated(page, mainframe, async (frame) => {
+      const url = frame.url();
+
+      return url.indexOf('https://www.techinasia.com/jobs/search') == 0;
+    });
+
+    const mtele = await getMainTagElement(page, maintag);
+    if (mtele) {
+      await mtele.click().catch((err) => {
+        awaiterr = err;
+      });
+
+      if (awaiterr) {
+        return awaiterr;
+      }
+
+      await page
+          .waitForSelector('.dropdown', {
+            timeout: timeout,
+          })
+          .catch((err) => {
+            awaiterr = err;
+          });
+
+      if (awaiterr) {
+        return awaiterr;
+      }
+
+      const stele = await getSubTagElement(page, subtag);
+      if (stele) {
+        await stele.click().catch((err) => {
+          awaiterr = err;
+        });
+
+        if (awaiterr) {
+          return awaiterr;
+        }
+
+        const isdone = await waitreset.waitDone(timeout);
+        if (!isdone) {
+          return 'selectTag.waitreset.waitDone timeout';
+        }
+
+        waitreset.release();
+      }
+    }
+
+    return undefined;
+  } catch (err) {
+    return err;
+  }
+
+  return undefined;
+}
+
+/**
  * techinasiaJobs - techinasia jobs
  * @param {object} browser - browser
  * @param {number} jobnums - job nums
+ * @param {string} maintag - main tag
+ * @param {string} subtag - sub tag
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function techinasiaJobs(browser, jobnums, timeout) {
+async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -143,6 +307,15 @@ async function techinasiaJobs(browser, jobnums, timeout) {
   awaiterr = await resetPage(page);
   if (awaiterr) {
     console.log('techinasiaJobs.resetPage', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await selectTag(page, maintag, subtag, timeout);
+  if (awaiterr) {
+    console.log('techinasiaJobs.selectTag', awaiterr);
 
     await page.close();
 

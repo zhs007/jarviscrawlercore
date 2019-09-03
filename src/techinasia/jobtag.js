@@ -1,4 +1,4 @@
-// const {sleep} = require('../utils');
+const {sleep} = require('../utils');
 
 /**
  * getMainClassName - get main class name
@@ -94,18 +94,39 @@ async function getTag(page, ele, timeout) {
   }
 
   await page
-      .waitForSelector('.dropdown', {
-        timeout: timeout,
-      })
+      .waitForFunction(
+          () => {
+            const lstdropdown = document.getElementsByClassName('dropdown');
+            if (lstdropdown.length > 0) {
+              const lsta = lstdropdown[0].getElementsByTagName('a');
+              if (lsta.length > 1) {
+                return true;
+              }
+            }
+
+            return false;
+          },
+          {timeout: timeout}
+      )
       .catch((err) => {
         awaiterr = err;
       });
+
+  // await page
+  //     .waitForSelector('.dropdown', {
+  //       timeout: timeout,
+  //     })
+  //     .catch((err) => {
+  //       awaiterr = err;
+  //     });
 
   if (awaiterr) {
     console.log('getTag.waitForSelector ' + awaiterr);
 
     return undefined;
   }
+
+  await sleep(3 * 1000);
 
   const lstsub = await page
       .$$eval('.dropdown', (eles) => {

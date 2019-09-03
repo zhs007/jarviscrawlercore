@@ -602,6 +602,17 @@ message TechInAsiaJob {
     repeated string subType = 18;
 }
 
+// TechInAsiaJobTag - TechInAsia Job tag
+message TechInAsiaJobTag {
+    string tag = 1;
+    repeated string subTags = 2;
+}
+
+// TechInAsiaJobTagList - TechInAsia Job tag list
+message TechInAsiaJobTagList {
+    repeated TechInAsiaJobTag tags = 1;
+}
+
 // TechInAsiaJobList - TechInAsia JobList
 message TechInAsiaJobList {
     repeated TechInAsiaJob jobs = 1;
@@ -613,7 +624,9 @@ enum TechInAsiaMode {
     // TIAM_JOB - job
     TIAM_JOB = 1;
     // TIAM_JOBLIST - job list
-    TIAM_JOBLIST = 2;    
+    TIAM_JOBLIST = 2;
+    // TIAM_JOBTAG - job tag
+    TIAM_JOBTAG = 3;
 }
 
 // RequestTechInAsia - request techinasia
@@ -622,6 +635,8 @@ message RequestTechInAsia {
     string companyCode = 2;
     string jobCode = 3;
     int32 jobNums = 4;
+    string jobTag = 5;
+    string jobSubTag = 6;
 }
 
 // ReplyTechInAsia - reply techinasia
@@ -632,7 +647,67 @@ message ReplyTechInAsia {
         TechInAsiaCompany company = 100;
         TechInAsiaJob job = 101;
         TechInAsiaJobList jobs = 102;
+        TechInAsiaJobTagList tags = 103;
     }    
+}
+
+// SteepAndCheapColorSize - Steep&Cheap color size
+message SteepAndCheapColorSize {
+    string color = 1;
+    repeated string size = 2;
+    repeated bool sizeValid = 3;
+}
+
+// SteepAndCheapUser - Steep&Cheap user
+message SteepAndCheapUser {
+    string name = 1;
+    string photo = 2;
+    string height = 3;
+    string weight = 4;
+}
+
+// SteepAndCheapReview - Steep&Cheap review
+message SteepAndCheapReview {
+    string title = 1;
+    int64 createTime = 2;
+    int32 rating = 3;
+    string familiarity = 4;
+    string fit = 5;
+    string sizeBought = 6;
+    repeated string imgs = 7;
+    string description = 8;
+    SteepAndCheapUser user = 9;
+}
+
+// SteepAndCheapProduct - Steep&Cheap product
+message SteepAndCheapProduct {
+    string brandName = 1;
+    string skuid = 2;
+    repeated string productName = 3;
+    int32 stockLevel = 4;
+    float price = 5;
+    float curPrice = 6;
+    string url = 7;
+    int32 reviews = 8;
+    float ratingValue = 9;
+    string currency = 10;
+    bool isNew = 11;
+    repeated string category = 12;
+    repeated string imgs = 13;
+    repeated SteepAndCheapColorSize color = 14;
+    string material = 15;
+    string fit = 16;
+    string style = 17;
+    string ratingUPF = 18;
+    float claimedWeight = 19;
+    string weightUnit = 20;
+    repeated string recommendedUse = 21;
+    string manufacturerWarranty = 22;
+    string strWeight = 23;
+    string infomation = 24;
+    string sizeChart = 25;
+    repeated SteepAndCheapReview lstReview = 26;
+    repeated string linkProducts = 27;
 }
 
 // RequestCrawler - request crawler

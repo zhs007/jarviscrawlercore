@@ -204,6 +204,38 @@ function techinasiaJob(servAddr, jobcode) {
   );
 }
 
+/**
+ * techinasiaJobTags
+ * @param {string} servAddr - servAddr
+ * @param {string} maintag - main tag
+ */
+function techinasiaJobTags(servAddr, maintag) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestTechInAsia();
+  request.setMode(messages.TechInAsiaMode.TIAM_JOBTAG);
+  request.setJobtag(maintag);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          console.log('err:', err);
+        }
+
+        if (reply) {
+          console.log('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -222,4 +254,5 @@ function techinasiaJob(servAddr, jobcode) {
 // geoip('127.0.0.1:7051', '60.250.112.36');
 
 // techinasiaCompany('127.0.0.1:7051', 'niki-dot-ai');
-techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');
+// techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');
+techinasiaJobTags('127.0.0.1:7051', 'TYPE');

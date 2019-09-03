@@ -258,12 +258,10 @@ async function attachJQuery(page) {
     // let isok = true;
 
     // do {
-    await page
-        .addScriptTag({path: './browser/jquery3.3.1.min.js'})
-        .catch((err) => {
-          console.log('attachJQuery:addScriptTag', err);
-        // isok = false;
-        });
+    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'}).catch((err) => {
+      console.log('attachJQuery:addScriptTag', err);
+      // isok = false;
+    });
     // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
@@ -286,11 +284,9 @@ async function attachJarvisCrawlerCore(page) {
     // isok = false;
   });
 
-  await page
-      .waitForFunction('typeof jarvisCrawlerCoreVer === "string"')
-      .catch((err) => {
-        console.log('attachJQuery:waitForFunction', err);
-      });
+  await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
+    console.log('attachJQuery:waitForFunction', err);
+  });
 }
 
 /**
@@ -621,10 +617,7 @@ function newCrunchBaseOrganization(obj) {
 
   if (Array.isArray(obj.fundingrounds)) {
     for (let i = 0; i < obj.fundingrounds.length; ++i) {
-      result.addFundingrounds(
-          newCrunchBaseFundingRound(obj.fundingrounds[i]),
-          i
-      );
+      result.addFundingrounds(newCrunchBaseFundingRound(obj.fundingrounds[i]), i);
     }
     // result.setFoundersList(obj.fundingrounds);
   }
@@ -918,6 +911,42 @@ function newTechInAsiaJobList(obj) {
 }
 
 /**
+ * new TechInAsiaJobTag with object
+ * @param {object} obj - TechInAsiaJobTag object
+ * @return {messages.TechInAsiaJobTag} result - TechInAsiaJobTag
+ */
+function newTechInAsiaJobTag(obj) {
+  const result = new messages.TechInAsiaJobTag();
+
+  if (obj.tag) {
+    result.setTag(obj.tag);
+  }
+
+  if (Array.isArray(obj.subTags) && obj.subTags.length > 0) {
+    result.setSubtagsList(obj.subTags);
+  }
+
+  return result;
+}
+
+/**
+ * new TechInAsiaJobTagList with object
+ * @param {object} obj - TechInAsiaJobTagList object
+ * @return {messages.TechInAsiaJobTagList} result - TechInAsiaJobTagList
+ */
+function newTechInAsiaJobTagList(obj) {
+  const result = new messages.TechInAsiaJobTagList();
+
+  if (Array.isArray(obj.tags) && obj.tags.length > 0) {
+    for (let i = 0; i < obj.tags.length; ++i) {
+      result.addTags(newTechInAsiaJobTag(obj.tags[i], i));
+    }
+  }
+
+  return result;
+}
+
+/**
  * new ReplyTechInAsia with object
  * @param {number} mode - messages.TechInAsiaMode
  * @param {object} obj - TechInAsiaJob or TechInAsiaCompany object
@@ -934,6 +963,8 @@ function newReplyTechInAsia(mode, obj) {
     result.setCompany(newTechInAsiaCompany(obj));
   } else if (mode == messages.TechInAsiaMode.TIAM_JOBLIST) {
     result.setJobs(newTechInAsiaJobList(obj));
+  } else if (mode == messages.TechInAsiaMode.TIAM_JOBTAG) {
+    result.setTags(newTechInAsiaJobTagList(obj));
   }
 
   return result;
@@ -1072,10 +1103,7 @@ async function mouseMoveToEle(page, selector) {
   if (ele) {
     const bbox = await ele.boundingBox();
     console.log(bbox);
-    await page.mouse.move(
-        Math.floor(bbox.x + bbox.width / 2),
-        Math.floor(bbox.y + bbox.height / 2)
-    );
+    await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
   }
 }
 
@@ -1094,10 +1122,7 @@ async function mouseMoveToEleEx(page, selector, isThis) {
     if (await isThis(eles[i])) {
       const bbox = await eles[i].boundingBox();
       console.log(bbox);
-      await page.mouse.move(
-          Math.floor(bbox.x + bbox.width / 2),
-          Math.floor(bbox.y + bbox.height / 2)
-      );
+      await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
 
       return;
     }
@@ -1125,10 +1150,7 @@ async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(
-              Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
-          );
+          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
 
           return;
         }
@@ -1150,10 +1172,7 @@ async function mouseClickEle(page, selector) {
   if (ele) {
     const bbox = await ele.boundingBox();
     console.log(bbox);
-    await page.mouse.move(
-        Math.floor(bbox.x + bbox.width / 2),
-        Math.floor(bbox.y + bbox.height / 2)
-    );
+    await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
     await page.mouse.down();
     await page.mouse.up();
   }
@@ -1180,10 +1199,7 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(
-              Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
-          );
+          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
           await page.mouse.down();
           await page.mouse.up();
 
@@ -1218,10 +1234,7 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(
-              Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
-          );
+          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
           await page.mouse.down();
           await sleep(timeHold);
           await page.mouse.up();

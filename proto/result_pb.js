@@ -59,9 +59,15 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestGeoIP', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapColorSize', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapProduct', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapReview', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapUser', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaJob', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaJobList', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaJobTag', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaJobTagList', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TechInAsiaMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TranslateResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.YCCompanies', null, global);
@@ -11887,6 +11893,364 @@ proto.jarviscrawlercore.TechInAsiaJob.prototype.clearSubtypeList = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.TechInAsiaJobTag = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TechInAsiaJobTag.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TechInAsiaJobTag, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TechInAsiaJobTag.displayName = 'proto.jarviscrawlercore.TechInAsiaJobTag';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TechInAsiaJobTag.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTag} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    subtagsList: jspb.Message.getRepeatedField(msg, 2)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJobTag}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TechInAsiaJobTag;
+  return proto.jarviscrawlercore.TechInAsiaJobTag.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTag} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJobTag}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTag(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addSubtags(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TechInAsiaJobTag.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTag} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTag();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSubtagsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string tag = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getTag = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setTag = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * repeated string subTags = 2;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getSubtagsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setSubtagsList = function(value) {
+  jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.addSubtags = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.clearSubtagsList = function() {
+  this.setSubtagsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TechInAsiaJobTagList.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TechInAsiaJobTagList, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TechInAsiaJobTagList.displayName = 'proto.jarviscrawlercore.TechInAsiaJobTagList';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TechInAsiaJobTagList.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTagList} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    tagsList: jspb.Message.toObjectList(msg.getTagsList(),
+    proto.jarviscrawlercore.TechInAsiaJobTag.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJobTagList}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TechInAsiaJobTagList;
+  return proto.jarviscrawlercore.TechInAsiaJobTagList.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTagList} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TechInAsiaJobTagList}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.jarviscrawlercore.TechInAsiaJobTag;
+      reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJobTag.deserializeBinaryFromReader);
+      msg.addTags(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TechInAsiaJobTagList.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTagList} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTagsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.jarviscrawlercore.TechInAsiaJobTag.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated TechInAsiaJobTag tags = 1;
+ * @return {!Array<!proto.jarviscrawlercore.TechInAsiaJobTag>}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.getTagsList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.TechInAsiaJobTag>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.TechInAsiaJobTag, 1));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.TechInAsiaJobTag>} value */
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.setTagsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.TechInAsiaJobTag=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.TechInAsiaJobTag}
+ */
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.addTags = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.jarviscrawlercore.TechInAsiaJobTag, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJobTagList.prototype.clearTagsList = function() {
+  this.setTagsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.TechInAsiaJobList = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TechInAsiaJobList.repeatedFields_, null);
 };
@@ -12094,7 +12458,9 @@ proto.jarviscrawlercore.RequestTechInAsia.toObject = function(includeInstance, m
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
     companycode: jspb.Message.getFieldWithDefault(msg, 2, ""),
     jobcode: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    jobnums: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    jobnums: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    jobtag: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    jobsubtag: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -12146,6 +12512,14 @@ proto.jarviscrawlercore.RequestTechInAsia.deserializeBinaryFromReader = function
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setJobnums(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJobtag(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setJobsubtag(value);
       break;
     default:
       reader.skipField();
@@ -12201,6 +12575,20 @@ proto.jarviscrawlercore.RequestTechInAsia.serializeBinaryToWriter = function(mes
   if (f !== 0) {
     writer.writeInt32(
       4,
+      f
+    );
+  }
+  f = message.getJobtag();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getJobsubtag();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -12267,6 +12655,36 @@ proto.jarviscrawlercore.RequestTechInAsia.prototype.setJobnums = function(value)
 };
 
 
+/**
+ * optional string jobTag = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.getJobtag = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.setJobtag = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string jobSubTag = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.getJobsubtag = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTechInAsia.prototype.setJobsubtag = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -12293,7 +12711,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101,102]];
+proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_ = [[100,101,102,103]];
 
 /**
  * @enum {number}
@@ -12302,7 +12720,8 @@ proto.jarviscrawlercore.ReplyTechInAsia.ReplyCase = {
   REPLY_NOT_SET: 0,
   COMPANY: 100,
   JOB: 101,
-  JOBS: 102
+  JOBS: 102,
+  TAGS: 103
 };
 
 /**
@@ -12344,7 +12763,8 @@ proto.jarviscrawlercore.ReplyTechInAsia.toObject = function(includeInstance, msg
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
     company: (f = msg.getCompany()) && proto.jarviscrawlercore.TechInAsiaCompany.toObject(includeInstance, f),
     job: (f = msg.getJob()) && proto.jarviscrawlercore.TechInAsiaJob.toObject(includeInstance, f),
-    jobs: (f = msg.getJobs()) && proto.jarviscrawlercore.TechInAsiaJobList.toObject(includeInstance, f)
+    jobs: (f = msg.getJobs()) && proto.jarviscrawlercore.TechInAsiaJobList.toObject(includeInstance, f),
+    tags: (f = msg.getTags()) && proto.jarviscrawlercore.TechInAsiaJobTagList.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -12399,6 +12819,11 @@ proto.jarviscrawlercore.ReplyTechInAsia.deserializeBinaryFromReader = function(m
       var value = new proto.jarviscrawlercore.TechInAsiaJobList;
       reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJobList.deserializeBinaryFromReader);
       msg.setJobs(value);
+      break;
+    case 103:
+      var value = new proto.jarviscrawlercore.TechInAsiaJobTagList;
+      reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJobTagList.deserializeBinaryFromReader);
+      msg.setTags(value);
       break;
     default:
       reader.skipField();
@@ -12458,6 +12883,14 @@ proto.jarviscrawlercore.ReplyTechInAsia.serializeBinaryToWriter = function(messa
       102,
       f,
       proto.jarviscrawlercore.TechInAsiaJobList.serializeBinaryToWriter
+    );
+  }
+  f = message.getTags();
+  if (f != null) {
+    writer.writeMessage(
+      103,
+      f,
+      proto.jarviscrawlercore.TechInAsiaJobTagList.serializeBinaryToWriter
     );
   }
 };
@@ -12565,6 +12998,1849 @@ proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearJobs = function() {
  */
 proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasJobs = function() {
   return jspb.Message.getField(this, 102) != null;
+};
+
+
+/**
+ * optional TechInAsiaJobTagList tags = 103;
+ * @return {?proto.jarviscrawlercore.TechInAsiaJobTagList}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.getTags = function() {
+  return /** @type{?proto.jarviscrawlercore.TechInAsiaJobTagList} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TechInAsiaJobTagList, 103));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TechInAsiaJobTagList|undefined} value */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.setTags = function(value) {
+  jspb.Message.setOneofWrapperField(this, 103, proto.jarviscrawlercore.ReplyTechInAsia.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.clearTags = function() {
+  this.setTags(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasTags = function() {
+  return jspb.Message.getField(this, 103) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.SteepAndCheapColorSize.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.SteepAndCheapColorSize, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.SteepAndCheapColorSize.displayName = 'proto.jarviscrawlercore.SteepAndCheapColorSize';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.repeatedFields_ = [2,3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.SteepAndCheapColorSize.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSize} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    color: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    sizeList: jspb.Message.getRepeatedField(msg, 2),
+    sizevalidList: jspb.Message.getRepeatedField(msg, 3)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSize}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.SteepAndCheapColorSize;
+  return proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSize} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSize}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setColor(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addSize(value);
+      break;
+    case 3:
+      var value = /** @type {!Array<boolean>} */ (reader.readPackedBool());
+      msg.setSizevalidList(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.SteepAndCheapColorSize.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSize} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getColor();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSizeList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      2,
+      f
+    );
+  }
+  f = message.getSizevalidList();
+  if (f.length > 0) {
+    writer.writePackedBool(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string color = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.getColor = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.setColor = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * repeated string size = 2;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.getSizeList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.setSizeList = function(value) {
+  jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.addSize = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.clearSizeList = function() {
+  this.setSizeList([]);
+};
+
+
+/**
+ * repeated bool sizeValid = 3;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {!Array<boolean>}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.getSizevalidList = function() {
+  return /** @type {!Array<boolean>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<boolean>} value */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.setSizevalidList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {boolean} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.addSizevalid = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.clearSizevalidList = function() {
+  this.setSizevalidList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.SteepAndCheapUser = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.SteepAndCheapUser, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.SteepAndCheapUser.displayName = 'proto.jarviscrawlercore.SteepAndCheapUser';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.SteepAndCheapUser.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.SteepAndCheapUser} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    photo: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    height: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    weight: jspb.Message.getFieldWithDefault(msg, 4, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapUser}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.SteepAndCheapUser;
+  return proto.jarviscrawlercore.SteepAndCheapUser.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapUser} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapUser}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPhoto(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHeight(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setWeight(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.SteepAndCheapUser.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapUser} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPhoto();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getHeight();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getWeight();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string name = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string photo = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.getPhoto = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.setPhoto = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string height = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.getHeight = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.setHeight = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string weight = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.getWeight = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapUser.prototype.setWeight = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.SteepAndCheapReview = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.SteepAndCheapReview.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.SteepAndCheapReview, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.SteepAndCheapReview.displayName = 'proto.jarviscrawlercore.SteepAndCheapReview';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.repeatedFields_ = [7];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.SteepAndCheapReview.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.SteepAndCheapReview} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    title: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    createtime: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    rating: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    familiarity: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    fit: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    sizebought: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    imgsList: jspb.Message.getRepeatedField(msg, 7),
+    description: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    user: (f = msg.getUser()) && proto.jarviscrawlercore.SteepAndCheapUser.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapReview}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.SteepAndCheapReview;
+  return proto.jarviscrawlercore.SteepAndCheapReview.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapReview} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapReview}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setCreatetime(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRating(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFamiliarity(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFit(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSizebought(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addImgs(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDescription(value);
+      break;
+    case 9:
+      var value = new proto.jarviscrawlercore.SteepAndCheapUser;
+      reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapUser.deserializeBinaryFromReader);
+      msg.setUser(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.SteepAndCheapReview.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapReview} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getCreatetime();
+  if (f !== 0) {
+    writer.writeInt64(
+      2,
+      f
+    );
+  }
+  f = message.getRating();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+  f = message.getFamiliarity();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getFit();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getSizebought();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getImgsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      7,
+      f
+    );
+  }
+  f = message.getDescription();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getUser();
+  if (f != null) {
+    writer.writeMessage(
+      9,
+      f,
+      proto.jarviscrawlercore.SteepAndCheapUser.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string title = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional int64 createTime = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getCreatetime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setCreatetime = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int32 rating = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getRating = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setRating = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional string familiarity = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getFamiliarity = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setFamiliarity = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string fit = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getFit = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setFit = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string sizeBought = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getSizebought = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setSizebought = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * repeated string imgs = 7;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getImgsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setImgsList = function(value) {
+  jspb.Message.setField(this, 7, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.addImgs = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.clearImgsList = function() {
+  this.setImgsList([]);
+};
+
+
+/**
+ * optional string description = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getDescription = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setDescription = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional SteepAndCheapUser user = 9;
+ * @return {?proto.jarviscrawlercore.SteepAndCheapUser}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.getUser = function() {
+  return /** @type{?proto.jarviscrawlercore.SteepAndCheapUser} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.SteepAndCheapUser, 9));
+};
+
+
+/** @param {?proto.jarviscrawlercore.SteepAndCheapUser|undefined} value */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.setUser = function(value) {
+  jspb.Message.setWrapperField(this, 9, value);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.clearUser = function() {
+  this.setUser(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.SteepAndCheapReview.prototype.hasUser = function() {
+  return jspb.Message.getField(this, 9) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.SteepAndCheapProduct.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.SteepAndCheapProduct, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.SteepAndCheapProduct.displayName = 'proto.jarviscrawlercore.SteepAndCheapProduct';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.repeatedFields_ = [3,12,13,14,21,26,27];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.SteepAndCheapProduct.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.SteepAndCheapProduct} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    brandname: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    skuid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    productnameList: jspb.Message.getRepeatedField(msg, 3),
+    stocklevel: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    price: +jspb.Message.getFieldWithDefault(msg, 5, 0.0),
+    curprice: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
+    url: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    reviews: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    ratingvalue: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
+    currency: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    isnew: jspb.Message.getFieldWithDefault(msg, 11, false),
+    categoryList: jspb.Message.getRepeatedField(msg, 12),
+    imgsList: jspb.Message.getRepeatedField(msg, 13),
+    colorList: jspb.Message.toObjectList(msg.getColorList(),
+    proto.jarviscrawlercore.SteepAndCheapColorSize.toObject, includeInstance),
+    material: jspb.Message.getFieldWithDefault(msg, 15, ""),
+    fit: jspb.Message.getFieldWithDefault(msg, 16, ""),
+    style: jspb.Message.getFieldWithDefault(msg, 17, ""),
+    ratingupf: jspb.Message.getFieldWithDefault(msg, 18, ""),
+    claimedweight: +jspb.Message.getFieldWithDefault(msg, 19, 0.0),
+    weightunit: jspb.Message.getFieldWithDefault(msg, 20, ""),
+    recommendeduseList: jspb.Message.getRepeatedField(msg, 21),
+    manufacturerwarranty: jspb.Message.getFieldWithDefault(msg, 22, ""),
+    strweight: jspb.Message.getFieldWithDefault(msg, 23, ""),
+    infomation: jspb.Message.getFieldWithDefault(msg, 24, ""),
+    sizechart: jspb.Message.getFieldWithDefault(msg, 25, ""),
+    lstreviewList: jspb.Message.toObjectList(msg.getLstreviewList(),
+    proto.jarviscrawlercore.SteepAndCheapReview.toObject, includeInstance),
+    linkproductsList: jspb.Message.getRepeatedField(msg, 27)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapProduct}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.SteepAndCheapProduct;
+  return proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapProduct} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapProduct}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBrandname(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSkuid(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addProductname(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setStocklevel(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setCurprice(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setReviews(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setRatingvalue(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCurrency(value);
+      break;
+    case 11:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsnew(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addCategory(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addImgs(value);
+      break;
+    case 14:
+      var value = new proto.jarviscrawlercore.SteepAndCheapColorSize;
+      reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinaryFromReader);
+      msg.addColor(value);
+      break;
+    case 15:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setMaterial(value);
+      break;
+    case 16:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFit(value);
+      break;
+    case 17:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStyle(value);
+      break;
+    case 18:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRatingupf(value);
+      break;
+    case 19:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setClaimedweight(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setWeightunit(value);
+      break;
+    case 21:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addRecommendeduse(value);
+      break;
+    case 22:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setManufacturerwarranty(value);
+      break;
+    case 23:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrweight(value);
+      break;
+    case 24:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setInfomation(value);
+      break;
+    case 25:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSizechart(value);
+      break;
+    case 26:
+      var value = new proto.jarviscrawlercore.SteepAndCheapReview;
+      reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapReview.deserializeBinaryFromReader);
+      msg.addLstreview(value);
+      break;
+    case 27:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLinkproducts(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapProduct} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getBrandname();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSkuid();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getProductnameList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      3,
+      f
+    );
+  }
+  f = message.getStocklevel();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
+      f
+    );
+  }
+  f = message.getCurprice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      6,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getReviews();
+  if (f !== 0) {
+    writer.writeInt32(
+      8,
+      f
+    );
+  }
+  f = message.getRatingvalue();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      9,
+      f
+    );
+  }
+  f = message.getCurrency();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
+      f
+    );
+  }
+  f = message.getIsnew();
+  if (f) {
+    writer.writeBool(
+      11,
+      f
+    );
+  }
+  f = message.getCategoryList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      12,
+      f
+    );
+  }
+  f = message.getImgsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      13,
+      f
+    );
+  }
+  f = message.getColorList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      14,
+      f,
+      proto.jarviscrawlercore.SteepAndCheapColorSize.serializeBinaryToWriter
+    );
+  }
+  f = message.getMaterial();
+  if (f.length > 0) {
+    writer.writeString(
+      15,
+      f
+    );
+  }
+  f = message.getFit();
+  if (f.length > 0) {
+    writer.writeString(
+      16,
+      f
+    );
+  }
+  f = message.getStyle();
+  if (f.length > 0) {
+    writer.writeString(
+      17,
+      f
+    );
+  }
+  f = message.getRatingupf();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
+      f
+    );
+  }
+  f = message.getClaimedweight();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      19,
+      f
+    );
+  }
+  f = message.getWeightunit();
+  if (f.length > 0) {
+    writer.writeString(
+      20,
+      f
+    );
+  }
+  f = message.getRecommendeduseList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      21,
+      f
+    );
+  }
+  f = message.getManufacturerwarranty();
+  if (f.length > 0) {
+    writer.writeString(
+      22,
+      f
+    );
+  }
+  f = message.getStrweight();
+  if (f.length > 0) {
+    writer.writeString(
+      23,
+      f
+    );
+  }
+  f = message.getInfomation();
+  if (f.length > 0) {
+    writer.writeString(
+      24,
+      f
+    );
+  }
+  f = message.getSizechart();
+  if (f.length > 0) {
+    writer.writeString(
+      25,
+      f
+    );
+  }
+  f = message.getLstreviewList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      26,
+      f,
+      proto.jarviscrawlercore.SteepAndCheapReview.serializeBinaryToWriter
+    );
+  }
+  f = message.getLinkproductsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      27,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string brandName = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getBrandname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setBrandname = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string skuid = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getSkuid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setSkuid = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated string productName = 3;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getProductnameList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setProductnameList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addProductname = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearProductnameList = function() {
+  this.setProductnameList([]);
+};
+
+
+/**
+ * optional int32 stockLevel = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getStocklevel = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setStocklevel = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional float price = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 5, value);
+};
+
+
+/**
+ * optional float curPrice = 6;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getCurprice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 6, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setCurprice = function(value) {
+  jspb.Message.setProto3FloatField(this, 6, value);
+};
+
+
+/**
+ * optional string url = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional int32 reviews = 8;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getReviews = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setReviews = function(value) {
+  jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * optional float ratingValue = 9;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getRatingvalue = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 9, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setRatingvalue = function(value) {
+  jspb.Message.setProto3FloatField(this, 9, value);
+};
+
+
+/**
+ * optional string currency = 10;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getCurrency = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setCurrency = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
+};
+
+
+/**
+ * optional bool isNew = 11;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getIsnew = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 11, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setIsnew = function(value) {
+  jspb.Message.setProto3BooleanField(this, 11, value);
+};
+
+
+/**
+ * repeated string category = 12;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getCategoryList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 12));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setCategoryList = function(value) {
+  jspb.Message.setField(this, 12, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addCategory = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 12, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearCategoryList = function() {
+  this.setCategoryList([]);
+};
+
+
+/**
+ * repeated string imgs = 13;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getImgsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 13));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setImgsList = function(value) {
+  jspb.Message.setField(this, 13, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addImgs = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 13, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearImgsList = function() {
+  this.setImgsList([]);
+};
+
+
+/**
+ * repeated SteepAndCheapColorSize color = 14;
+ * @return {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getColorList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.SteepAndCheapColorSize, 14));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setColorList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 14, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSize=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSize}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addColor = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 14, opt_value, proto.jarviscrawlercore.SteepAndCheapColorSize, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearColorList = function() {
+  this.setColorList([]);
+};
+
+
+/**
+ * optional string material = 15;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getMaterial = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setMaterial = function(value) {
+  jspb.Message.setProto3StringField(this, 15, value);
+};
+
+
+/**
+ * optional string fit = 16;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getFit = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setFit = function(value) {
+  jspb.Message.setProto3StringField(this, 16, value);
+};
+
+
+/**
+ * optional string style = 17;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getStyle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setStyle = function(value) {
+  jspb.Message.setProto3StringField(this, 17, value);
+};
+
+
+/**
+ * optional string ratingUPF = 18;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getRatingupf = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setRatingupf = function(value) {
+  jspb.Message.setProto3StringField(this, 18, value);
+};
+
+
+/**
+ * optional float claimedWeight = 19;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getClaimedweight = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 19, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setClaimedweight = function(value) {
+  jspb.Message.setProto3FloatField(this, 19, value);
+};
+
+
+/**
+ * optional string weightUnit = 20;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getWeightunit = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 20, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setWeightunit = function(value) {
+  jspb.Message.setProto3StringField(this, 20, value);
+};
+
+
+/**
+ * repeated string recommendedUse = 21;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getRecommendeduseList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 21));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setRecommendeduseList = function(value) {
+  jspb.Message.setField(this, 21, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addRecommendeduse = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 21, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearRecommendeduseList = function() {
+  this.setRecommendeduseList([]);
+};
+
+
+/**
+ * optional string manufacturerWarranty = 22;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getManufacturerwarranty = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 22, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setManufacturerwarranty = function(value) {
+  jspb.Message.setProto3StringField(this, 22, value);
+};
+
+
+/**
+ * optional string strWeight = 23;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getStrweight = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 23, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setStrweight = function(value) {
+  jspb.Message.setProto3StringField(this, 23, value);
+};
+
+
+/**
+ * optional string infomation = 24;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getInfomation = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 24, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setInfomation = function(value) {
+  jspb.Message.setProto3StringField(this, 24, value);
+};
+
+
+/**
+ * optional string sizeChart = 25;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getSizechart = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 25, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setSizechart = function(value) {
+  jspb.Message.setProto3StringField(this, 25, value);
+};
+
+
+/**
+ * repeated SteepAndCheapReview lstReview = 26;
+ * @return {!Array<!proto.jarviscrawlercore.SteepAndCheapReview>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getLstreviewList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.SteepAndCheapReview>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.SteepAndCheapReview, 26));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.SteepAndCheapReview>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setLstreviewList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 26, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.SteepAndCheapReview=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.SteepAndCheapReview}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addLstreview = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 26, opt_value, proto.jarviscrawlercore.SteepAndCheapReview, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearLstreviewList = function() {
+  this.setLstreviewList([]);
+};
+
+
+/**
+ * repeated string linkProducts = 27;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getLinkproductsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 27));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setLinkproductsList = function(value) {
+  jspb.Message.setField(this, 27, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addLinkproducts = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 27, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearLinkproductsList = function() {
+  this.setLinkproductsList([]);
 };
 
 
@@ -13955,7 +16231,8 @@ proto.jarviscrawlercore.AnalyzeScreenshotType = {
 proto.jarviscrawlercore.TechInAsiaMode = {
   TIAM_COMPANY: 0,
   TIAM_JOB: 1,
-  TIAM_JOBLIST: 2
+  TIAM_JOBLIST: 2,
+  TIAM_JOBTAG: 3
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

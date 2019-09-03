@@ -604,8 +604,8 @@ message TechInAsiaJob {
 
 // TechInAsiaJobTag - TechInAsia Job tag
 message TechInAsiaJobTag {
-    string tagType = 1;
-    repeated string subType = 2;
+    string tag = 1;
+    repeated string subTags = 2;
 }
 
 // TechInAsiaJobTagList - TechInAsia Job tag list

@@ -11936,8 +11936,8 @@ proto.jarviscrawlercore.TechInAsiaJobTag.prototype.toObject = function(opt_inclu
  */
 proto.jarviscrawlercore.TechInAsiaJobTag.toObject = function(includeInstance, msg) {
   var f, obj = {
-    tagtype: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    subtypeList: jspb.Message.getRepeatedField(msg, 2)
+    tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    subtagsList: jspb.Message.getRepeatedField(msg, 2)
   };
 
   if (includeInstance) {
@@ -11976,11 +11976,11 @@ proto.jarviscrawlercore.TechInAsiaJobTag.deserializeBinaryFromReader = function(
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTagtype(value);
+      msg.setTag(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.addSubtype(value);
+      msg.addSubtags(value);
       break;
     default:
       reader.skipField();
@@ -12011,14 +12011,14 @@ proto.jarviscrawlercore.TechInAsiaJobTag.prototype.serializeBinary = function() 
  */
 proto.jarviscrawlercore.TechInAsiaJobTag.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getTagtype();
+  f = message.getTag();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
-  f = message.getSubtypeList();
+  f = message.getSubtagsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       2,
@@ -12029,31 +12029,31 @@ proto.jarviscrawlercore.TechInAsiaJobTag.serializeBinaryToWriter = function(mess
 
 
 /**
- * optional string tagType = 1;
+ * optional string tag = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getTagtype = function() {
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getTag = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setTagtype = function(value) {
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setTag = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * repeated string subType = 2;
+ * repeated string subTags = 2;
  * @return {!Array<string>}
  */
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getSubtypeList = function() {
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.getSubtagsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /** @param {!Array<string>} value */
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setSubtypeList = function(value) {
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setSubtagsList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
@@ -12062,13 +12062,13 @@ proto.jarviscrawlercore.TechInAsiaJobTag.prototype.setSubtypeList = function(val
  * @param {string} value
  * @param {number=} opt_index
  */
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.addSubtype = function(value, opt_index) {
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.addSubtags = function(value, opt_index) {
   jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 
-proto.jarviscrawlercore.TechInAsiaJobTag.prototype.clearSubtypeList = function() {
-  this.setSubtypeList([]);
+proto.jarviscrawlercore.TechInAsiaJobTag.prototype.clearSubtagsList = function() {
+  this.setSubtagsList([]);
 };
 
 

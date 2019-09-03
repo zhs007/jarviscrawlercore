@@ -281,7 +281,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
         const curtag = {};
         curtag.tag = await getMainTag(lstclickable[i]);
         if (curtag.tag.toLowerCase() == maintag.toLowerCase()) {
-          curtag.tags = await getTag(page, lstclickable[i], timeout);
+          curtag.subTags = await getTag(page, lstclickable[i], timeout);
           ret.tags.push(curtag);
         }
       }
@@ -289,7 +289,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
 
     await page.close();
 
-    return ret;
+    return {ret: ret};
   }
 
   await page.close();

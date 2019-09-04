@@ -119,12 +119,18 @@ class WaitAllResponse {
 
   /**
    * reset
-   * @param {object} frame - frame, it's like page.mainFrame()
-   * @param {function} isNavigated - async function isNavigated(frame) bool
    */
   reset() {
     this.lstReq = [];
     this.isDone = false;
+  }
+
+  /**
+   * hasNewRequest
+   * @return {bool} hasNew - has new request
+   */
+  hasNewRequest() {
+    return this.lstReq.length > 0;
   }
 
   /**

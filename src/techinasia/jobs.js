@@ -257,22 +257,31 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
 
   let lastjobnums = 0;
   const starttime = Date.now();
+  let lastresettime = Date.now();
 
   while (true) {
-    await waitAllResponse.waitDone(3 * 60 * 1000);
+    await waitAllResponse.waitDone(timeout);
     const lstarticle = await page.$$('article');
     if (lstarticle.length >= 0) {
+      if (!waitAllResponse.hasNewRequest()) {
+        if (Date.now() - lastresettime >= 5 * 1000) {
+          break;
+        }
+      }
+
       if (lstarticle.length >= jobnums) {
         break;
       }
 
-      if (lastjobnums == lstarticle.length && Date.now() - starttime >= 3 * 60 * 1000) {
+      if (lastjobnums == lstarticle.length && Date.now() - starttime >= timeout) {
         break;
       }
 
       lastjobnums = lstarticle.length;
 
       waitAllResponse.reset();
+      lastresettime = Date.now();
+
       await lstarticle[lstarticle.length - 1].hover();
     }
   }

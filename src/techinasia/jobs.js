@@ -1,5 +1,6 @@
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {WaitAllResponse} = require('../waitallresponse');
+const {sleep} = require('../utils');
 
 /**
  * resetPage - reset jobs page
@@ -207,9 +208,20 @@ async function selectTag(page, maintag, subtag, timeout) {
       }
 
       await page
-          .waitForSelector('.dropdown', {
-            timeout: timeout,
-          })
+          .waitForFunction(
+              () => {
+                const lstdropdown = document.getElementsByClassName('dropdown');
+                if (lstdropdown.length > 0) {
+                  const lsta = lstdropdown[0].getElementsByTagName('a');
+                  if (lsta.length > 1) {
+                    return true;
+                  }
+                }
+
+                return false;
+              },
+              {timeout: timeout}
+          )
           .catch((err) => {
             awaiterr = err;
           });
@@ -217,6 +229,8 @@ async function selectTag(page, maintag, subtag, timeout) {
       if (awaiterr) {
         return awaiterr;
       }
+
+      await sleep(3 * 1000);
 
       const stele = await getSubTagElement(page, subtag);
       if (stele) {

@@ -289,6 +289,8 @@ async function techinasiaJobTag(browser, maintag, timeout) {
           }
 
           ret.tags.push(curtag);
+
+          break;
         }
       }
     }

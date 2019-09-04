@@ -258,6 +258,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
   let lastjobnums = 0;
   const starttime = Date.now();
   let lastresettime = Date.now();
+  let lastnums = 0;
 
   while (true) {
     await waitAllResponse.waitDone(timeout);
@@ -280,7 +281,10 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
       lastjobnums = lstarticle.length;
 
       waitAllResponse.reset();
-      lastresettime = Date.now();
+      if (lastnums != lstarticle.length) {
+        lastresettime = Date.now();
+        lastnums = lstarticle.length;
+      }
 
       await lstarticle[lstarticle.length - 1].hover();
     }

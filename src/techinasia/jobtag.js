@@ -282,6 +282,12 @@ async function techinasiaJobTag(browser, maintag, timeout) {
         curtag.tag = await getMainTag(lstclickable[i]);
         if (curtag.tag.toLowerCase() == maintag.toLowerCase()) {
           curtag.subTags = await getTag(page, lstclickable[i], timeout);
+          if (!curtag.subTags) {
+            await page.close();
+
+            return {error: 'getTag error'};
+          }
+
           ret.tags.push(curtag);
         }
       }

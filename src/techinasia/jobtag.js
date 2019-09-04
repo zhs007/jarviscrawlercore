@@ -100,7 +100,7 @@ async function getTag(page, ele, timeout) {
             const lstdropdown = document.getElementsByClassName('dropdown');
             if (lstdropdown.length > 0) {
               const lsta = lstdropdown[0].getElementsByTagName('a');
-              if (lsta.length > 1) {
+              if (lsta.length > 0) {
                 return true;
               }
             }

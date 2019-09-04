@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const {resetPage} = require('./utils');
 
 /**
  * getMainClassName - get main class name
@@ -249,6 +250,15 @@ async function techinasiaJobTag(browser, maintag, timeout) {
 
   if (awaiterr) {
     console.log('techinasiaJobsType.goto', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await resetPage(page);
+  if (awaiterr) {
+    console.log('techinasiaJobsType.resetPage', awaiterr);
 
     await page.close();
 

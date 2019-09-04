@@ -64,10 +64,7 @@ class WaitAllResponse {
       if (req) {
         const headers = res.headers();
 
-        if (
-          headers['content-type'] &&
-          headers['content-type'].indexOf('video') == 0
-        ) {
+        if (headers['content-type'] && headers['content-type'].indexOf('video') == 0) {
           req.status = res.status();
 
           return;
@@ -79,7 +76,9 @@ class WaitAllResponse {
           return;
         }
 
-        await res.buffer();
+        await res.buffer().catch((err) => {
+          console.log('WaitAllResponse.buffer ' + err);
+        });
         req.status = res.status();
       }
     };

@@ -1,13 +1,102 @@
+const {WaitFrameNavigated} = require('../waitframenavigated');
+const {closeDialog} = require('./utils');
+const {sleep} = require('../utils');
+
+/**
+ * chgPage - change to page
+ * @param {object} page - page
+ * @param {number} pageid - pageid, is like 1, 2, 3
+ * @param {string} baseurl - baseurl
+ * @param {number} timeout - timeout in microseconds
+ * @return {error} err - error
+ */
+async function chgPage(page, pageid, baseurl, timeout) {
+  if (pageid > 1) {
+    await sleep(3 * 1000);
+
+    let awaiterr;
+
+    await page.waitForSelector('.page-link', {timeout: timeout}).catch((err) => {
+      awaiterr = err;
+    });
+
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    const mainframe = await page.mainFrame();
+    const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
+      const url = frame.url();
+
+      return url.indexOf(baseurl) == 0;
+    });
+
+    const lstpages = await page.$$('.page-link').catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    if (pageid > lstpages.length + 1) {
+      return new Error('chgPage invalid pageid');
+    }
+
+    await lstpages[pageid - 2].hover().catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    await lstpages[pageid - 2].click().catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    const isok = await waitchgpage.waitDone(timeout);
+    if (!isok) {
+      return new Error('chgPage.waitDone timeout');
+    }
+
+    waitchgpage.release();
+  }
+
+  return undefined;
+}
+
 /**
  * steepandcheapProducts - steepandcheap products
  * @param {object} browser - browser
  * @param {string} url - url
+ * @param {number} pageid - pageid, is like 1, 2, 3
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function steepandcheapProducts(browser, url, timeout) {
+async function steepandcheapProducts(browser, url, pageid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await page
+      .setViewport({
+        width: 1280,
+        height: 600,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProducts.setViewport', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();
@@ -20,6 +109,10 @@ async function steepandcheapProducts(browser, url, timeout) {
   //   await req.continue();
   // });
 
+  // if (pageid > 1) {
+  //   url += '&page=' + (pageid - 1).toString();
+  // }
+
   await page
       .goto('https://www.steepandcheap.com/' + url, {
         timeout: timeout,
@@ -30,6 +123,24 @@ async function steepandcheapProducts(browser, url, timeout) {
 
   if (awaiterr) {
     console.log('steepandcheapProducts.goto', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await closeDialog(page);
+  if (awaiterr) {
+    console.log('steepandcheapProducts.chgPage ', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await chgPage(page, pageid, 'https://www.steepandcheap.com/' + url, timeout);
+  if (awaiterr) {
+    console.log('steepandcheapProducts.chgPage ', awaiterr);
 
     await page.close();
 

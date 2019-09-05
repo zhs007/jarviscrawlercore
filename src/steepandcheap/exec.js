@@ -12,6 +12,7 @@ async function execSteepAndCheap(program, version) {
       .command('steepandcheap [mode]')
       .description('steepandcheap')
       .option('-u, --url [url]', 'url')
+      .option('-p, --page [page]', 'pageid')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
@@ -42,6 +43,13 @@ async function execSteepAndCheap(program, version) {
           timeout = options.timeout;
         }
 
+        let page = 0;
+        if (options.page) {
+          try {
+            page = parseInt(options.page);
+          } catch (err) {}
+        }
+
         const headless = options.headless === 'true';
         console.log('headless - ', headless);
 
@@ -49,7 +57,7 @@ async function execSteepAndCheap(program, version) {
           const browser = await startBrowser(headless);
 
           if (mode == 'products') {
-            const ret = await steepandcheapProducts(browser, options.url, timeout);
+            const ret = await steepandcheapProducts(browser, options.url, page, timeout);
             console.log(JSON.stringify(ret));
           } else if (mode == 'product') {
             const ret = await steepandcheapProduct(browser, options.url, timeout);

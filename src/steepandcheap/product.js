@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const {closeDialog} = require('./utils');
 
 /**
  * validImageSrc - //a.b.c/d.jpg => https://a.b.c/d.jpg
@@ -86,41 +87,41 @@ async function getSizeList(page) {
   return obj;
 }
 
-/**
- * closeDialog - close dialog
- * @param {object} page - page
- */
-async function closeDialog(page) {
-  let awaiterr;
+// /**
+//  * closeDialog - close dialog
+//  * @param {object} page - page
+//  */
+// async function closeDialog(page) {
+//   let awaiterr;
 
-  const lstdialog = await page.$$('.ui-dialog').catch((err) => {
-    awaiterr = err;
-  });
+//   const lstdialog = await page.$$('.ui-dialog').catch((err) => {
+//     awaiterr = err;
+//   });
 
-  if (awaiterr) {
-    return;
-  }
+//   if (awaiterr) {
+//     return;
+//   }
 
-  if (lstdialog.length > 0) {
-    const btns = await lstdialog[0].$$('button').catch((err) => {
-      awaiterr = err;
-    });
+//   if (lstdialog.length > 0) {
+//     const btns = await lstdialog[0].$$('button').catch((err) => {
+//       awaiterr = err;
+//     });
 
-    if (awaiterr) {
-      return;
-    }
+//     if (awaiterr) {
+//       return;
+//     }
 
-    if (btns.length > 0) {
-      await btns[0].click().catch((err) => {
-        awaiterr = err;
-      });
+//     if (btns.length > 0) {
+//       await btns[0].click().catch((err) => {
+//         awaiterr = err;
+//       });
 
-      if (awaiterr) {
-        return;
-      }
-    }
-  }
-}
+//       if (awaiterr) {
+//         return;
+//       }
+//     }
+//   }
+// }
 
 /**
  * steepandcheapProduct - steepandcheap product

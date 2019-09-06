@@ -290,7 +290,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
 
   await page.close();
 
-  return {maxPage: ret1.maxPage, products: ret};
+  return {ret: {maxPage: ret1.maxPage, products: ret}};
 }
 
 exports.steepandcheapProducts = steepandcheapProducts;

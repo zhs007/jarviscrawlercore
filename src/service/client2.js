@@ -14,31 +14,22 @@ const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
  * @param {string} text - text
  */
 function startTranslate2(servAddr, srclang, destlang, text) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestTranslate2();
   request.setText(text);
   request.setSrclang(srclang);
   request.setDestlang(destlang);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_TRANSLATE2,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TRANSLATE2, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('text:', reply.getText());
-        }
-      }
-  );
+    if (reply) {
+      console.log('text:', reply.getText());
+    }
+  });
 }
 
 /**
@@ -47,29 +38,20 @@ function startTranslate2(servAddr, srclang, destlang, text) {
  * @param {string} company - company code
  */
 function getCrunchBaseCompany(servAddr, company) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestCrunchBaseCompany();
   request.setSearch(company);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_CB_COMPANY,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_CB_COMPANY, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('text:', reply);
-        }
-      }
-  );
+    if (reply) {
+      console.log('text:', reply);
+    }
+  });
 }
 
 /**
@@ -81,10 +63,7 @@ function getCrunchBaseCompany(servAddr, company) {
  * @param {number} h - viewport height
  */
 function analyzePage(servAddr, url, delay, w, h) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.AnalyzePage();
   request.setUrl(url);
@@ -92,21 +71,15 @@ function analyzePage(servAddr, url, delay, w, h) {
   request.setViewportwidth(w);
   request.setViewportheight(h);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_ANALYZEPAGE,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_ANALYZEPAGE, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('reply:', JSON.stringify(reply.toObject()));
-        }
-      }
-  );
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
 }
 
 /**
@@ -115,29 +88,20 @@ function analyzePage(servAddr, url, delay, w, h) {
  * @param {string} ip - ip
  */
 function geoip(servAddr, ip) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestGeoIP();
   request.setIp(ip);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_GEOIP,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_GEOIP, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('reply:', JSON.stringify(reply.toObject()));
-        }
-      }
-  );
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
 }
 
 /**
@@ -146,30 +110,21 @@ function geoip(servAddr, ip) {
  * @param {string} companycode - companycode
  */
 function techinasiaCompany(servAddr, companycode) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_COMPANY);
   request.setCompanycode(companycode);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_TECHINASIA,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('reply:', JSON.stringify(reply.toObject()));
-        }
-      }
-  );
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
 }
 
 /**
@@ -178,30 +133,21 @@ function techinasiaCompany(servAddr, companycode) {
  * @param {string} jobcode - jobcode
  */
 function techinasiaJob(servAddr, jobcode) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_JOB);
   request.setJobcode(jobcode);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_TECHINASIA,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('reply:', JSON.stringify(reply.toObject()));
-        }
-      }
-  );
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
 }
 
 /**
@@ -210,30 +156,69 @@ function techinasiaJob(servAddr, jobcode) {
  * @param {string} maintag - main tag
  */
 function techinasiaJobTags(servAddr, maintag) {
-  const client = new services.JarvisCrawlerServiceClient(
-      servAddr,
-      grpc.credentials.createInsecure()
-  );
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_JOBTAG);
   request.setJobtag(maintag);
 
-  requestCrawler(
-      client,
-      TOKEN,
-      messages.CrawlerType.CT_TECHINASIA,
-      request,
-      (err, reply) => {
-        if (err) {
-          console.log('err:', err);
-        }
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
 
-        if (reply) {
-          console.log('reply:', JSON.stringify(reply.toObject()));
-        }
-      }
-  );
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
+/**
+ * steepandcheapProducts
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ * @param {string} page - page
+ */
+function steepandcheapProducts(servAddr, url, page) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestSteepAndCheap();
+  request.setMode(messages.SteepAndCheapMode.SACM_PRODUCTS);
+  request.setUrl(url);
+  request.setPage(page);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_STEEPANDCHEAP, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
+/**
+ * steepandcheapProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function steepandcheapProduct(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestSteepAndCheap();
+  request.setMode(messages.SteepAndCheapMode.SACM_PRODUCT);
+  request.setUrl(url);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_STEEPANDCHEAP, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
 }
 
 // startTranslate2(
@@ -255,4 +240,6 @@ function techinasiaJobTags(servAddr, maintag) {
 
 // techinasiaCompany('127.0.0.1:7051', 'niki-dot-ai');
 // techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');
-techinasiaJobTags('127.0.0.1:7051', 'TYPE');
+// techinasiaJobTags('127.0.0.1:7051', 'TYPE');
+// steepandcheapProducts('127.0.0.1:7051', 'rc/arcteryx-on-sale', 0);
+steepandcheapProduct('127.0.0.1:7051', 'arc-teryx-rho-lt-zip-neck-top-womens?skid=ARC3698-HARCOR-XL&ti=UExQIFJ1bGUgQmFzZWQ6QXJjJ3Rlcnl4IE9uIFNhbGU6MzoxOg==');

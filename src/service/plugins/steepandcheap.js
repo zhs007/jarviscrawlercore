@@ -2,7 +2,7 @@ const messages = require('../../../proto/result_pb');
 const {steepandcheapProducts} = require('../../steepandcheap/products');
 const {steepandcheapProduct} = require('../../steepandcheap/product');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
-const {newReplyTechInAsia} = require('../../utils');
+const {newReplySteepAndCheap} = require('../../utils');
 
 /**
  * callSteepAndCheap - steepandcheap
@@ -19,7 +19,7 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
   }
 
   if (param.getMode() == messages.SteepAndCheapMode.SACM_PRODUCTS) {
-    steepandcheapProducts(browser, param.getCompanycode(), timeout)
+    steepandcheapProducts(browser, param.getUrl(), param.getPage(), timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -29,7 +29,7 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyTechInAsia(messages.SteepAndCheapMode.SACM_PRODUCTS, ret.ret);
+          const val = newReplySteepAndCheap(messages.SteepAndCheapMode.SACM_PRODUCTS, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
 
@@ -39,7 +39,7 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
           replyError(call, err.toString(), true);
         });
   } else if (param.getMode() == messages.SteepAndCheapMode.SACM_PRODUCT) {
-    steepandcheapProduct(browser, param.getJobcode(), timeout)
+    steepandcheapProduct(browser, param.getUrl(), timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -49,7 +49,7 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyTechInAsia(messages.SteepAndCheapMode.SACM_PRODUCT, ret.ret);
+          const val = newReplySteepAndCheap(messages.SteepAndCheapMode.SACM_PRODUCT, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
 

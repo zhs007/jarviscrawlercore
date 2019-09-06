@@ -15352,7 +15352,7 @@ proto.jarviscrawlercore.ReplySteepAndCheap.deserializeBinaryFromReader = functio
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (reader.readEnum());
+      var value = /** @type {!proto.jarviscrawlercore.SteepAndCheapMode} */ (reader.readEnum());
       msg.setMode(value);
       break;
     case 100:
@@ -15421,15 +15421,15 @@ proto.jarviscrawlercore.ReplySteepAndCheap.serializeBinaryToWriter = function(me
 
 
 /**
- * optional TechInAsiaMode mode = 1;
- * @return {!proto.jarviscrawlercore.TechInAsiaMode}
+ * optional SteepAndCheapMode mode = 1;
+ * @return {!proto.jarviscrawlercore.SteepAndCheapMode}
  */
 proto.jarviscrawlercore.ReplySteepAndCheap.prototype.getMode = function() {
-  return /** @type {!proto.jarviscrawlercore.TechInAsiaMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+  return /** @type {!proto.jarviscrawlercore.SteepAndCheapMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {!proto.jarviscrawlercore.TechInAsiaMode} value */
+/** @param {!proto.jarviscrawlercore.SteepAndCheapMode} value */
 proto.jarviscrawlercore.ReplySteepAndCheap.prototype.setMode = function(value) {
   jspb.Message.setProto3EnumField(this, 1, value);
 };

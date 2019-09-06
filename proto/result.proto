@@ -734,7 +734,7 @@ message RequestSteepAndCheap {
 
 // ReplySteepAndCheap - reply steep&cheap
 message ReplySteepAndCheap {
-    TechInAsiaMode mode = 1;
+    SteepAndCheapMode mode = 1;
 
     oneof reply {
         SteepAndCheapProducts products = 100;

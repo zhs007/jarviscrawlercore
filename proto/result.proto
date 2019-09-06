@@ -727,14 +727,14 @@ enum SteepAndCheapMode {
 
 // RequestSteepAndCheap - request steep&cheap
 message RequestSteepAndCheap {
-    TechInAsiaMode mode = 1;
+    SteepAndCheapMode mode = 1;
     string url = 2;
     int32 page = 3;
 }
 
 // ReplySteepAndCheap - reply steep&cheap
 message ReplySteepAndCheap {
-    TechInAsiaMode mode = 1;
+    SteepAndCheapMode mode = 1;
 
     oneof reply {
         SteepAndCheapProducts products = 100;

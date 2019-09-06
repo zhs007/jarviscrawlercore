@@ -440,6 +440,7 @@ enum CrawlerType {
     CT_ANALYZEPAGE = 3;
     CT_GEOIP = 5;
     CT_TECHINASIA = 6;
+    CT_STEEPANDCHEAP = 7;
 }
 
 // RequestTranslate2 - request translate
@@ -710,6 +711,37 @@ message SteepAndCheapProduct {
     repeated string linkProducts = 27;
 }
 
+// SteepAndCheapProducts - Steep&Cheap products
+message SteepAndCheapProducts {
+    int32 maxPage = 1;
+    repeated SteepAndCheapProduct products = 2;
+}
+
+// SteepAndCheapMode - steep&cheap mode
+enum SteepAndCheapMode {
+    // SACM_PRODUCTS - products
+    SACM_PRODUCTS = 0;
+    // SACM_PRODUCT - product
+    SACM_PRODUCT = 1;
+}
+
+// RequestSteepAndCheap - request steep&cheap
+message RequestSteepAndCheap {
+    TechInAsiaMode mode = 1;
+    string url = 2;
+    int32 page = 3;
+}
+
+// ReplySteepAndCheap - reply steep&cheap
+message ReplySteepAndCheap {
+    TechInAsiaMode mode = 1;
+
+    oneof reply {
+        SteepAndCheapProducts products = 100;
+        SteepAndCheapProduct product = 101;
+    }    
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -723,6 +755,7 @@ message RequestCrawler {
         AnalyzePage analyzePage = 103;
         RequestGeoIP geoip = 105;
         RequestTechInAsia techinasia = 106;
+        RequestSteepAndCheap steepandcheap = 107;
     }
 }
 
@@ -737,6 +770,7 @@ message ReplyCrawler {
         ReplyAnalyzePage analyzePage = 103;
         ReplyGeoIP geoip = 105;
         ReplyTechInAsia techinasia = 106;
+        ReplySteepAndCheap steepandcheap = 107;
     }
 }
 

@@ -1,4 +1,6 @@
 const {sleep} = require('../utils');
+const {closeDialog} = require('./utils');
+const {WaitAllResponse} = require('../waitallresponse');
 
 /**
  * validImageSrc - //a.b.c/d.jpg => https://a.b.c/d.jpg
@@ -87,39 +89,154 @@ async function getSizeList(page) {
 }
 
 /**
- * closeDialog - close dialog
+ * loadMoreReviews - load more reviews
  * @param {object} page - page
+ * @param {object} waitAllResponse - WaitAllResponse
+ * @param {number} reviewCount - review nums
+ * @param {number} timeout - timeout in microseconds
+ * @return {error} err - error
  */
-async function closeDialog(page) {
+async function loadMoreReviews(page, waitAllResponse, reviewCount, timeout) {
   let awaiterr;
+  const lstreviews = await page.$$('article.review').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
 
-  const lstdialog = await page.$$('.ui-dialog').catch((err) => {
+  if (lstreviews.length >= reviewCount) {
+    return undefined;
+  }
+
+  while (true) {
+    await sleep(3 * 1000);
+
+    const lstloadmores = await page.$$('.btn.js-load-more-btn').catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    if (lstloadmores.length > 0) {
+      const canclick = await page
+          .$$eval('.btn.js-load-more-btn', (eles) => {
+            if (eles.length > 0) {
+              if (eles[0].style.display != 'none') {
+                return true;
+              }
+            }
+
+            return false;
+          })
+          .catch((err) => {
+            awaiterr = err;
+          });
+      if (awaiterr) {
+        return awaiterr;
+      }
+
+      if (canclick) {
+        await lstloadmores[0].hover().catch((err) => {
+          awaiterr = err;
+        });
+        if (awaiterr) {
+          return awaiterr;
+        }
+
+        await sleep(3 * 1000);
+
+        await lstloadmores[0].click().catch((err) => {
+          awaiterr = err;
+        });
+        if (awaiterr) {
+          return awaiterr;
+        }
+      } else {
+        break;
+      }
+
+      const isok = await waitAllResponse.waitDone(timeout);
+      if (!isok) {
+        return new Error('loadMoreReviews.waitDone timeout.');
+      }
+
+      waitAllResponse.reset();
+    } else {
+      break;
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * getAllReviews - get all reviews
+ * @param {object} page - page
+ * @param {object} waitAllResponse - WaitAllResponse
+ * @param {number} reviewCount - review nums
+ * @param {number} timeout - timeout in microseconds
+ * @return {error} err - error
+ */
+async function getAllReviews(page, waitAllResponse, reviewCount, timeout) {
+  let awaiterr;
+  await page.waitForSelector('a.pdp__tab-item.js-tabnavigation-tab', {timeout: timeout}).catch((err) => {
     awaiterr = err;
   });
 
   if (awaiterr) {
-    return;
+    return awaiterr;
   }
 
-  if (lstdialog.length > 0) {
-    const btns = await lstdialog[0].$$('button').catch((err) => {
+  const lsttabs = await page.$$('a.pdp__tab-item.js-tabnavigation-tab').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
+
+  for (let i = 0; i < lsttabs.length; ++i) {
+    let innerText = await lsttabs[i].getProperty('innerText').catch((err) => {
       awaiterr = err;
     });
-
     if (awaiterr) {
-      return;
+      return awaiterr;
     }
 
-    if (btns.length > 0) {
-      await btns[0].click().catch((err) => {
+    innerText = await innerText.jsonValue().catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+    innerText = innerText.toString();
+
+    if (innerText.trim().toLowerCase() == 'reviews') {
+      await lsttabs[i].hover().catch((err) => {
         awaiterr = err;
       });
-
       if (awaiterr) {
-        return;
+        return awaiterr;
       }
+
+      await lsttabs[i].click().catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
+
+      awaiterr = await loadMoreReviews(page, waitAllResponse, reviewCount, timeout);
+      if (awaiterr) {
+        return awaiterr;
+      }
+
+      return undefined;
     }
   }
+
+  return undefined;
 }
 
 /**
@@ -163,6 +280,7 @@ async function steepandcheapProduct(browser, url, timeout) {
   //   await req.continue();
   // });
 
+  const waitAllResponse = new WaitAllResponse(page);
   await page
       .goto('https://www.steepandcheap.com/' + url, {
         timeout: timeout,
@@ -239,10 +357,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log(
-        'steepandcheapProduct.$$eval .ui-mediacarousel__list',
-        awaiterr
-    );
+    console.log('steepandcheapProduct.$$eval .ui-mediacarousel__list', awaiterr);
 
     await page.close();
 
@@ -478,6 +593,15 @@ async function steepandcheapProduct(browser, url, timeout) {
   }
 
   if (reviewCount > 0) {
+    awaiterr = await getAllReviews(page, waitAllResponse, reviewCount, timeout);
+    if (awaiterr) {
+      console.log('steepandcheapProduct.getAllReviews ', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
     await page
         .waitForSelector('article.review', {
           timeout: timeout,
@@ -487,10 +611,7 @@ async function steepandcheapProduct(browser, url, timeout) {
         });
 
     if (awaiterr) {
-      console.log(
-          'steepandcheapProduct.waitForSelector article.review',
-          awaiterr
-      );
+      console.log('steepandcheapProduct.waitForSelector article.review', awaiterr);
 
       await page.close();
 
@@ -509,24 +630,17 @@ async function steepandcheapProduct(browser, url, timeout) {
               curreview.title = lsttitle[0].innerText;
             }
 
-            const lstrating = curele.getElementsByClassName(
-                'user-content__rating-stars'
-            );
+            const lstrating = curele.getElementsByClassName('user-content__rating-stars');
             if (lstrating.length > 0) {
               try {
                 const arr = lstrating[0].classList[0].toString().split('-', -1);
                 curreview.rating = parseFloat(arr[arr.length - 1]);
               } catch (err) {
-                console.log(
-                    'user-content__rating-stars className error. ' +
-                  lstrating[0].className
-                );
+                console.log('user-content__rating-stars className error. ' + lstrating[0].className);
               }
             }
 
-            const lstdetails = curele.getElementsByClassName(
-                'product-review-details'
-            );
+            const lstdetails = curele.getElementsByClassName('product-review-details');
             if (lstdetails.length > 0) {
               const lstspan = lstdetails[0].getElementsByTagName('span');
               for (let j = 0; j < lstspan.length / 2; ++j) {
@@ -563,9 +677,7 @@ async function steepandcheapProduct(browser, url, timeout) {
             if (lstuser.length > 0) {
               curreview.user = {};
 
-              const lstphoto = lstuser[0].getElementsByClassName(
-                  'user-card__photo'
-              );
+              const lstphoto = lstuser[0].getElementsByClassName('user-card__photo');
               if (lstphoto.length > 0) {
                 if (lstphoto[0].src) {
                   curreview.user.photo = lstphoto[0].src;
@@ -574,23 +686,17 @@ async function steepandcheapProduct(browser, url, timeout) {
                 }
               }
 
-              const lstname = lstuser[0].getElementsByClassName(
-                  'user-card__name'
-              );
+              const lstname = lstuser[0].getElementsByClassName('user-card__name');
               if (lstname.length > 0) {
                 curreview.user.name = lstname[0].innerText;
               }
 
-              const lstheight = lstuser[0].getElementsByClassName(
-                  'user-card__height-value'
-              );
+              const lstheight = lstuser[0].getElementsByClassName('user-card__height-value');
               if (lstheight.length > 0) {
                 curreview.user.height = lstheight[0].innerText;
               }
 
-              const lstweight = lstuser[0].getElementsByClassName(
-                  'user-card__weight-value'
-              );
+              const lstweight = lstuser[0].getElementsByClassName('user-card__weight-value');
               if (lstweight.length > 0) {
                 curreview.user.weight = lstweight[0].innerText;
               }

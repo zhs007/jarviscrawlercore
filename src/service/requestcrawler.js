@@ -4,6 +4,7 @@ const {callGetDTData} = require('./plugins/dtdata');
 const {callAnalyzePage} = require('./plugins/analyzepage');
 const {callGeoIP} = require('./plugins/geoip');
 const {callTechInAsia} = require('./plugins/techinasia');
+const {callSteepAndCheap} = require('./plugins/steepandcheap');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -75,6 +76,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getTechinasia();
 
     callTechInAsia(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_STEEPANDCHEAP) {
+    if (!call.request.hasSteepandcheap()) {
+      replyError(call, 'no steepcheap');
+
+      return;
+    }
+
+    const param = call.request.getSteepandcheap();
+
+    callSteepAndCheap(browser, cfg, call, param, call.request);
   }
 }
 

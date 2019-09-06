@@ -39,7 +39,7 @@ async function resetPage(page) {
     if (wrapper) {
       const lsta = await wrapper.$$('a');
       if (lsta.length == 1) {
-        page.removeListener('framenavigated', onframenavigated);
+        // page.removeListener('framenavigated', onframenavigated);
 
         return undefined;
       }

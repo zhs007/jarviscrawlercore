@@ -727,38 +727,38 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.waitForSelector .product', awaiterr);
+    console.log('steepandcheapProduct.waitForSelector .product ' + url + ' error ', awaiterr);
 
-    await page.close();
+    // await page.close();
 
-    return {error: awaiterr.toString()};
-  }
+    // return {error: awaiterr.toString()};
+  } else {
+    ret.linkProducts = await page
+        .$$eval('.product', (eles) => {
+          if (eles.length > 0) {
+            const lst = [];
 
-  ret.linkProducts = await page
-      .$$eval('.product', (eles) => {
-        if (eles.length > 0) {
-          const lst = [];
-
-          for (let i = 0; i < eles.length; ++i) {
-            const lsta = eles[i].getElementsByTagName('a');
-            if (lsta.length > 0) {
-              lst.push(lsta[0].href);
+            for (let i = 0; i < eles.length; ++i) {
+              const lsta = eles[i].getElementsByTagName('a');
+              if (lsta.length > 0) {
+                lst.push(lsta[0].href);
+              }
             }
+
+            return lst;
           }
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
 
-          return lst;
-        }
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
+    if (awaiterr) {
+      console.log('steepandcheapProduct.$$eval .product', awaiterr);
 
-  if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .product', awaiterr);
+      await page.close();
 
-    await page.close();
-
-    return {error: awaiterr.toString()};
+      return {error: awaiterr.toString()};
+    }
   }
 
   await page.close();

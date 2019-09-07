@@ -3,6 +3,21 @@ const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
 
 /**
+ * parseURL - parse URL
+ * @param {string} url - url
+ * @return {string} url - url
+ */
+function parseURL(url) {
+  const url1 = url.split('.com/');
+  if (url1.length > 1) {
+    const url2 = url1[1].split('&ti=');
+    return url2[0];
+  }
+
+  return url;
+}
+
+/**
  * chgPage - change to page
  * @param {object} page - page
  * @param {number} pageid - pageid, is like 1, 2, 3
@@ -289,6 +304,10 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   }
 
   await page.close();
+
+  for (let i = 0; i < ret.length; ++i) {
+    ret[i].url = parseURL(ret[i].url);
+  }
 
   return {ret: {maxPage: ret1.maxPage, products: ret}};
 }

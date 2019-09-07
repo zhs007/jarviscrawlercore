@@ -18,14 +18,53 @@ function parseURL(url) {
 }
 
 /**
+ * getFirstProductURL - get first product url
+ * @param {object} page - page
+ * @param {number} timeout - timeout in microseconds
+ * @return {string} url - url
+ */
+async function getFirstProductURL(page) {
+  let awaiterr;
+  const ret = await page
+      .$$eval('.plp-products-wrap', (eles) => {
+        console.log(eles);
+
+        if (eles.length > 0) {
+          eles = eles[0].getElementsByClassName('product');
+
+          if (eles.length > 0) {
+            const link = eles[0].getElementsByTagName('a');
+            if (link.length > 0) {
+              return link[0].href;
+            }
+          }
+        }
+
+        return '';
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('getFirstProductURL.$$eval .plp-products-wrap', awaiterr);
+
+    return '';
+  }
+
+  return ret;
+}
+
+/**
  * chgPage - change to page
  * @param {object} page - page
  * @param {number} pageid - pageid, is like 1, 2, 3
  * @param {string} baseurl - baseurl
+ * @param {string} firsturl - firsturl
  * @param {number} timeout - timeout in microseconds
  * @return {error} err - error
  */
-async function chgPage(page, pageid, baseurl, timeout) {
+async function chgPage(page, pageid, baseurl, firsturl, timeout) {
   if (pageid > 1) {
     await sleep(3 * 1000);
 
@@ -77,6 +116,21 @@ async function chgPage(page, pageid, baseurl, timeout) {
     }
 
     waitchgpage.release();
+
+    let curms = 0;
+    while (true) {
+      const cururl = await getFirstProductURL(page);
+      if (cururl != '' && cururl != firsturl) {
+        break;
+      }
+
+      await sleep(1000);
+      curms += 1000;
+
+      if (curms > timeout) {
+        break;
+      }
+    }
   }
 
   return undefined;
@@ -153,7 +207,9 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  awaiterr = await chgPage(page, pageid, 'https://www.steepandcheap.com/' + url, timeout);
+  const firsturl = await getFirstProductURL(page);
+
+  awaiterr = await chgPage(page, pageid, 'https://www.steepandcheap.com/' + url, firsturl, timeout);
   if (awaiterr) {
     console.log('steepandcheapProducts.chgPage ', awaiterr);
 

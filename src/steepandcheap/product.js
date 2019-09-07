@@ -436,11 +436,11 @@ async function steepandcheapProduct(browser, url, timeout) {
     }
   }
 
-  const lsttabs = await page.$$('a.pdp__tab-item.js-tabnavigation-tab').catch((err) => {
+  const lsttabs = await page.$$('.pdp__recommendations').catch((err) => {
     awaiterr = err;
   });
   if (awaiterr) {
-    console.log('steepandcheapProduct.lsttabs', awaiterr);
+    console.log('steepandcheapProduct.pdp__recommendations', awaiterr);
 
     await page.close();
 
@@ -452,7 +452,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       awaiterr = err;
     });
     if (awaiterr) {
-      console.log('steepandcheapProduct.lsttabs.hover', awaiterr);
+      console.log('steepandcheapProduct.pdp__recommendations.hover', awaiterr);
 
       await page.close();
 
@@ -460,49 +460,6 @@ async function steepandcheapProduct(browser, url, timeout) {
     }
 
     await sleep(1000);
-  }
-
-  await page
-      .waitForSelector('.product', {
-        timeout: timeout,
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
-
-  if (awaiterr) {
-    console.log('steepandcheapProduct.waitForSelector .product', awaiterr);
-
-    await page.close();
-
-    return {error: awaiterr.toString()};
-  }
-
-  ret.linkProducts = await page
-      .$$eval('.product', (eles) => {
-        if (eles.length > 0) {
-          const lst = [];
-
-          for (let i = 0; i < eles.length; ++i) {
-            const lsta = eles[i].getElementsByTagName('a');
-            if (lsta.length > 0) {
-              lst.push(lsta[0].href);
-            }
-          }
-
-          return lst;
-        }
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
-
-  if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .product', awaiterr);
-
-    await page.close();
-
-    return {error: awaiterr.toString()};
   }
 
   const techret = await page
@@ -759,6 +716,49 @@ async function steepandcheapProduct(browser, url, timeout) {
         }
       }
     }
+  }
+
+  await page
+      .waitForSelector('.product', {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.waitForSelector .product', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.linkProducts = await page
+      .$$eval('.product', (eles) => {
+        if (eles.length > 0) {
+          const lst = [];
+
+          for (let i = 0; i < eles.length; ++i) {
+            const lsta = eles[i].getElementsByTagName('a');
+            if (lsta.length > 0) {
+              lst.push(lsta[0].href);
+            }
+          }
+
+          return lst;
+        }
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('steepandcheapProduct.$$eval .product', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.close();

@@ -436,11 +436,11 @@ async function steepandcheapProduct(browser, url, timeout) {
     }
   }
 
-  const lsttabs = await page.$$('a.pdp__tab-item.js-tabnavigation-tab').catch((err) => {
+  const lsttabs = await page.$$('.pdp__recommendations').catch((err) => {
     awaiterr = err;
   });
   if (awaiterr) {
-    console.log('steepandcheapProduct.lsttabs', awaiterr);
+    console.log('steepandcheapProduct.pdp__recommendations', awaiterr);
 
     await page.close();
 
@@ -452,7 +452,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       awaiterr = err;
     });
     if (awaiterr) {
-      console.log('steepandcheapProduct.lsttabs.hover', awaiterr);
+      console.log('steepandcheapProduct.pdp__recommendations.hover', awaiterr);
 
       await page.close();
 

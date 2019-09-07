@@ -436,6 +436,32 @@ async function steepandcheapProduct(browser, url, timeout) {
     }
   }
 
+  const lsttabs = await page.$$('a.pdp__tab-item.js-tabnavigation-tab').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    console.log('steepandcheapProduct.lsttabs', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (lsttabs.length > 0) {
+    await lsttabs[0].hover().catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      console.log('steepandcheapProduct.lsttabs.hover', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    await sleep(1000);
+  }
+
   await page
       .waitForSelector('.product', {
         timeout: timeout,

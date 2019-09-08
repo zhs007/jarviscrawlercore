@@ -742,6 +742,44 @@ message ReplySteepAndCheap {
     }    
 }
 
+// JRJFundSize - jrj fund size
+message JRJFundSize {
+    float size = 1;
+    int64 time = 2;
+}
+
+// JRJFundManager - jrj fund manager
+message JRJFundManager {
+    string name = 1;
+    int64 startTime = 2;
+    int64 endTime = 3;
+}
+
+// JRJFundValue - jrj fund value
+message JRJFundValue {
+    string code = 1;
+    repeated float value = 2;
+    repeated float totalValue = 3;
+    repeated int32 iValue = 4;
+    repeated int32 iTotalValue = 5;
+}
+
+// JRJFund - jrj fund
+message JRJFund {
+    string code = 1;
+    string name = 2;
+    repeated string tags = 3;
+    int64 createTime = 4;
+    repeated JRJFundSize size = 5;
+    string company = 6;
+    repeated JRJFundManager managers = 7;
+}
+
+// JRJFunds - jrj funds
+message JRJFunds {
+    repeated string codes = 1;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;

@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {jrjFunds} = require('./funds');
 const {jrjFund} = require('./fund');
+const {jrjFundValue} = require('./fundvalue');
 
 /**
  * execJRJ
@@ -12,6 +13,7 @@ async function execJRJ(program, version) {
       .command('jrj [mode]')
       .description('jrj')
       .option('-c, --code [code]', 'fund code')
+      .option('-y, --year [year]', 'year')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
@@ -36,6 +38,12 @@ async function execJRJ(program, version) {
           return;
         }
 
+        if (mode == 'fundvalue' && (!options.code || !options.year)) {
+          console.log('command wrong, please type ' + 'jarviscrawler jrj --help');
+
+          return;
+        }
+
         const headless = options.headless === 'true';
         console.log('headless - ', headless);
 
@@ -47,6 +55,9 @@ async function execJRJ(program, version) {
             console.log(JSON.stringify(ret));
           } else if (mode == 'fund') {
             const ret = await jrjFund(browser, options.code, timeout);
+            console.log(JSON.stringify(ret));
+          } else if (mode == 'fundvalue') {
+            const ret = await jrjFundValue(browser, options.code, options.year, timeout);
             console.log(JSON.stringify(ret));
           }
 

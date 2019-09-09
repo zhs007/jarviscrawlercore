@@ -86,7 +86,24 @@ async function jrjFundValue(browser, code, date, timeout) {
     vm.createContext(sandbox);
     vm.runInContext(strcode, sandbox);
 
-    return {ret: sandbox.obj.fundHistoryNetValue};
+    const ret = {code: code, date: [], iValue: [], iTotalValue: []};
+
+    const netValue = sandbox.obj.fundHistoryNetValue;
+    for (let i = 0; i < netValue.length; ++i) {
+      try {
+        const uval = Math.floor(parseFloat(netValue[i].unit_net) * 10000);
+        const aval = Math.floor(parseFloat(netValue[i].accum_net) * 10000);
+        const cd = netValue[i].enddate;
+
+        ret.date.push(cd);
+        ret.iValue.push(uval);
+        ret.iTotalValue.push(aval);
+      } catch (err) {
+
+      }
+    }
+
+    return {ret: ret};
   }
 
   return {error: 'jrjFundValue no js code'};

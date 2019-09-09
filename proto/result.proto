@@ -769,7 +769,7 @@ message JRJFundValue {
     repeated float totalValue = 3;
     repeated int32 iValue = 4;
     repeated int32 iTotalValue = 5;
-    repeated string data = 6;
+    repeated string date = 6;
 }
 
 // JRJFund - jrj fund

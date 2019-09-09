@@ -16091,7 +16091,7 @@ proto.jarviscrawlercore.JRJFundValue.toObject = function(includeInstance, msg) {
     totalvalueList: jspb.Message.getRepeatedFloatingPointField(msg, 3),
     ivalueList: jspb.Message.getRepeatedField(msg, 4),
     itotalvalueList: jspb.Message.getRepeatedField(msg, 5),
-    dataList: jspb.Message.getRepeatedField(msg, 6)
+    dateList: jspb.Message.getRepeatedField(msg, 6)
   };
 
   if (includeInstance) {
@@ -16150,7 +16150,7 @@ proto.jarviscrawlercore.JRJFundValue.deserializeBinaryFromReader = function(msg,
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.addData(value);
+      msg.addDate(value);
       break;
     default:
       reader.skipField();
@@ -16216,7 +16216,7 @@ proto.jarviscrawlercore.JRJFundValue.serializeBinaryToWriter = function(message,
       f
     );
   }
-  f = message.getDataList();
+  f = message.getDateList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       6,
@@ -16358,16 +16358,16 @@ proto.jarviscrawlercore.JRJFundValue.prototype.clearItotalvalueList = function()
 
 
 /**
- * repeated string data = 6;
+ * repeated string date = 6;
  * @return {!Array<string>}
  */
-proto.jarviscrawlercore.JRJFundValue.prototype.getDataList = function() {
+proto.jarviscrawlercore.JRJFundValue.prototype.getDateList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
 };
 
 
 /** @param {!Array<string>} value */
-proto.jarviscrawlercore.JRJFundValue.prototype.setDataList = function(value) {
+proto.jarviscrawlercore.JRJFundValue.prototype.setDateList = function(value) {
   jspb.Message.setField(this, 6, value || []);
 };
 
@@ -16376,13 +16376,13 @@ proto.jarviscrawlercore.JRJFundValue.prototype.setDataList = function(value) {
  * @param {string} value
  * @param {number=} opt_index
  */
-proto.jarviscrawlercore.JRJFundValue.prototype.addData = function(value, opt_index) {
+proto.jarviscrawlercore.JRJFundValue.prototype.addDate = function(value, opt_index) {
   jspb.Message.addToRepeatedField(this, 6, value, opt_index);
 };
 
 
-proto.jarviscrawlercore.JRJFundValue.prototype.clearDataList = function() {
-  this.setDataList([]);
+proto.jarviscrawlercore.JRJFundValue.prototype.clearDateList = function() {
+  this.setDateList([]);
 };
 
 

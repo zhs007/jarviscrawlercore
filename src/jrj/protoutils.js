@@ -43,8 +43,8 @@ function newJRJFundValue(obj) {
     result.setItotalvalueList(obj.iTotalValue);
   }
 
-  if (Array.isArray(obj.data) && obj.data.length > 0) {
-    result.setDataList(obj.data);
+  if (Array.isArray(obj.date) && obj.date.length > 0) {
+    result.setDateList(obj.date);
   }
 
   return result;

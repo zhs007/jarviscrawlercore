@@ -221,6 +221,98 @@ function steepandcheapProduct(servAddr, url) {
   });
 }
 
+/**
+ * jrjFunds
+ * @param {string} servAddr - servAddr
+ */
+function jrjFunds(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestJRJ();
+  request.setMode(messages.JRJMode.JRJM_FUNDS);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
+/**
+ * jrjFund
+ * @param {string} servAddr - servAddr
+ * @param {string} code - code
+ */
+function jrjFund(servAddr, code) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestJRJ();
+  request.setMode(messages.JRJMode.JRJM_FUND);
+  request.setFundcode(code);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
+/**
+ * jrjFundManager
+ * @param {string} servAddr - servAddr
+ * @param {string} code - code
+ */
+function jrjFundManager(servAddr, code) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestJRJ();
+  request.setMode(messages.JRJMode.JRJM_FUNDMANAGER);
+  request.setFundcode(code);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
+/**
+ * jrjFundValue
+ * @param {string} servAddr - servAddr
+ * @param {string} code - code
+ * @param {string} year - year
+ */
+function jrjFundValue(servAddr, code, year) {
+  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+
+  const request = new messages.RequestJRJ();
+  request.setMode(messages.JRJMode.JRJM_FUNDVALUE);
+  request.setFundcode(code);
+  request.setYear(year);
+
+  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
+    if (err) {
+      console.log('err:', err);
+    }
+
+    if (reply) {
+      console.log('reply:', JSON.stringify(reply.toObject()));
+    }
+  });
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -242,4 +334,9 @@ function steepandcheapProduct(servAddr, url) {
 // techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');
 // techinasiaJobTags('127.0.0.1:7051', 'TYPE');
 // steepandcheapProducts('127.0.0.1:7051', 'rc/arcteryx-on-sale', 0);
-steepandcheapProduct('127.0.0.1:7051', 'arc-teryx-rho-lt-zip-neck-top-womens?skid=ARC3698-HARCOR-XL&ti=UExQIFJ1bGUgQmFzZWQ6QXJjJ3Rlcnl4IE9uIFNhbGU6MzoxOg==');
+// steepandcheapProduct('127.0.0.1:7051', 'arc-teryx-rho-lt-zip-neck-top-womens?skid=ARC3698-HARCOR-XL&ti=UExQIFJ1bGUgQmFzZWQ6QXJjJ3Rlcnl4IE9uIFNhbGU6MzoxOg==');
+
+// jrjFunds('127.0.0.1:7051');
+// jrjFund('127.0.0.1:7051', '110011');
+// jrjFundManager('127.0.0.1:7051', '110011');
+jrjFundValue('127.0.0.1:7051', '110011', '2019');

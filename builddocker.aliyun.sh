@@ -1,1 +1,1 @@
-docker build -t jarviscrawlercore ./Dockerfile.aliyun
+docker build -t jarviscrawlercore -f ./Dockerfile.aliyun .

@@ -441,6 +441,7 @@ enum CrawlerType {
     CT_GEOIP = 5;
     CT_TECHINASIA = 6;
     CT_STEEPANDCHEAP = 7;
+    CT_JRJ = 8;
 }
 
 // RequestTranslate2 - request translate
@@ -768,6 +769,7 @@ message JRJFundValue {
     repeated float totalValue = 3;
     repeated int32 iValue = 4;
     repeated int32 iTotalValue = 5;
+    repeated string data = 6;
 }
 
 // JRJFund - jrj fund
@@ -784,6 +786,36 @@ message JRJFund {
 // JRJFunds - jrj funds
 message JRJFunds {
     repeated string codes = 1;
+}
+
+// JRJMode - jrj mode
+enum JRJMode {
+    // JRJM_FUNDS - funds
+    JRJM_FUNDS = 0;
+    // JRJM_FUND - fund
+    JRJM_FUND = 1;
+    // JRJM_FUNDVALUE - fund value
+    JRJM_FUNDVALUE = 2;
+    // JRJM_FUNDMANAGER - fund manager
+    JRJM_FUNDMANAGER = 3;
+}
+
+// RequestJRJ - request jrj
+message RequestJRJ {
+    JRJMode mode = 1;
+    string fundcode = 2;
+    string year = 3;
+}
+
+// ReplySteepAndCheap - reply steep&cheap
+message ReplyJRJ {
+    JRJMode mode = 1;
+
+    oneof reply {
+        JRJFunds funds = 100;
+        JRJFund fund = 101;
+        JRJFundValue fundValue = 102;
+    }    
 }
 
 // RequestCrawler - request crawler

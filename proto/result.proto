@@ -715,6 +715,7 @@ message SteepAndCheapProduct {
 message SteepAndCheapProducts {
     int32 maxPage = 1;
     repeated SteepAndCheapProduct products = 2;
+    string name = 3;
 }
 
 // SteepAndCheapMode - steep&cheap mode
@@ -740,6 +741,49 @@ message ReplySteepAndCheap {
         SteepAndCheapProducts products = 100;
         SteepAndCheapProduct product = 101;
     }    
+}
+
+// JRJFundSize - jrj fund size
+message JRJFundSize {
+    float size = 1;
+    int64 time = 2;
+}
+
+// JRJFundManager - jrj fund manager
+message JRJFundManager {
+    string name = 1;
+    int64 startTime = 2;
+    int64 endTime = 3;
+    int64 birthYear = 4;
+    bool sex = 5;
+    string education = 6;
+    string country = 7;
+    string resume = 8;
+}
+
+// JRJFundValue - jrj fund value
+message JRJFundValue {
+    string code = 1;
+    repeated float value = 2;
+    repeated float totalValue = 3;
+    repeated int32 iValue = 4;
+    repeated int32 iTotalValue = 5;
+}
+
+// JRJFund - jrj fund
+message JRJFund {
+    string code = 1;
+    string name = 2;
+    repeated string tags = 3;
+    int64 createTime = 4;
+    repeated JRJFundSize size = 5;
+    string company = 6;
+    repeated JRJFundManager managers = 7;
+}
+
+// JRJFunds - jrj funds
+message JRJFunds {
+    repeated string codes = 1;
 }
 
 // RequestCrawler - request crawler

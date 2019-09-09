@@ -46,3 +46,5 @@ async function getImageInfo(buf) {
 }
 
 exports.getImageInfo = getImageInfo;
+exports.jimpGetImageInfo = jimpGetImageInfo;
+exports.sharpGetImageInfo = sharpGetImageInfo;

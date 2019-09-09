@@ -14909,7 +14909,8 @@ proto.jarviscrawlercore.SteepAndCheapProducts.toObject = function(includeInstanc
   var f, obj = {
     maxpage: jspb.Message.getFieldWithDefault(msg, 1, 0),
     productsList: jspb.Message.toObjectList(msg.getProductsList(),
-    proto.jarviscrawlercore.SteepAndCheapProduct.toObject, includeInstance)
+    proto.jarviscrawlercore.SteepAndCheapProduct.toObject, includeInstance),
+    name: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -14955,6 +14956,10 @@ proto.jarviscrawlercore.SteepAndCheapProducts.deserializeBinaryFromReader = func
       reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader);
       msg.addProducts(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -14997,6 +15002,13 @@ proto.jarviscrawlercore.SteepAndCheapProducts.serializeBinaryToWriter = function
       2,
       f,
       proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
 };
@@ -15045,6 +15057,21 @@ proto.jarviscrawlercore.SteepAndCheapProducts.prototype.addProducts = function(o
 
 proto.jarviscrawlercore.SteepAndCheapProducts.prototype.clearProductsList = function() {
   this.setProductsList([]);
+};
+
+
+/**
+ * optional string name = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

@@ -715,6 +715,7 @@ message SteepAndCheapProduct {
 message SteepAndCheapProducts {
     int32 maxPage = 1;
     repeated SteepAndCheapProduct products = 2;
+    string name = 3;
 }
 
 // SteepAndCheapMode - steep&cheap mode

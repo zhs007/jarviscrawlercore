@@ -5,6 +5,7 @@ const {callAnalyzePage} = require('./plugins/analyzepage');
 const {callGeoIP} = require('./plugins/geoip');
 const {callTechInAsia} = require('./plugins/techinasia');
 const {callSteepAndCheap} = require('./plugins/steepandcheap');
+const {callJRJ} = require('./plugins/jrj');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -86,6 +87,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getSteepandcheap();
 
     callSteepAndCheap(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_JRJ) {
+    if (!call.request.hasJrj()) {
+      replyError(call, 'no jrj');
+
+      return;
+    }
+
+    const param = call.request.getJrj();
+
+    callJRJ(browser, cfg, call, param, call.request);
   }
 }
 

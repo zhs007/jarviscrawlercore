@@ -832,6 +832,7 @@ message RequestCrawler {
         RequestGeoIP geoip = 105;
         RequestTechInAsia techinasia = 106;
         RequestSteepAndCheap steepandcheap = 107;
+        RequestJRJ jrj = 108;
     }
 }
 
@@ -847,6 +848,7 @@ message ReplyCrawler {
         ReplyGeoIP geoip = 105;
         ReplyTechInAsia techinasia = 106;
         ReplySteepAndCheap steepandcheap = 107;
+        ReplyJRJ jrj = 108;
     }
 }
 

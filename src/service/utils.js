@@ -101,6 +101,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setTechinasia(msg);
   } else if (crawlerType == messages.CrawlerType.CT_STEEPANDCHEAP) {
     req.setSteepandcheap(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_JRJ) {
+    req.setJrj(msg);
   }
 
   let isend = false;
@@ -229,6 +231,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_JRJ) {
+        if (!reply.getJrj()) {
+          cb('no jrj reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getJrj());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -279,6 +295,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_STEEPANDCHEAP) {
     reply.setSteepandcheap(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_JRJ) {
+    reply.setJrj(val);
     reply.setCrawlertype(crawlerType);
   }
 }

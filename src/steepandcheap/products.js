@@ -1,7 +1,7 @@
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
-const {getElementPropertyString} = require('../eleutils');
+// const {getElementPropertyString} = require('../eleutils');
 /**
  * parseURL - parse URL
  * @param {string} url - url

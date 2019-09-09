@@ -15718,7 +15718,12 @@ proto.jarviscrawlercore.JRJFundManager.toObject = function(includeInstance, msg)
   var f, obj = {
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     starttime: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    endtime: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    endtime: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    birthyear: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    sex: jspb.Message.getFieldWithDefault(msg, 5, false),
+    education: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    country: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    resume: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -15766,6 +15771,26 @@ proto.jarviscrawlercore.JRJFundManager.deserializeBinaryFromReader = function(ms
     case 3:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setEndtime(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setBirthyear(value);
+      break;
+    case 5:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSex(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEducation(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCountry(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setResume(value);
       break;
     default:
       reader.skipField();
@@ -15817,6 +15842,41 @@ proto.jarviscrawlercore.JRJFundManager.serializeBinaryToWriter = function(messag
       f
     );
   }
+  f = message.getBirthyear();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+  f = message.getSex();
+  if (f) {
+    writer.writeBool(
+      5,
+      f
+    );
+  }
+  f = message.getEducation();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getCountry();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getResume();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
 };
 
 
@@ -15862,6 +15922,83 @@ proto.jarviscrawlercore.JRJFundManager.prototype.getEndtime = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.JRJFundManager.prototype.setEndtime = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional int64 birthYear = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JRJFundManager.prototype.getBirthyear = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JRJFundManager.prototype.setBirthyear = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional bool sex = 5;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JRJFundManager.prototype.getSex = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.JRJFundManager.prototype.setSex = function(value) {
+  jspb.Message.setProto3BooleanField(this, 5, value);
+};
+
+
+/**
+ * optional string education = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JRJFundManager.prototype.getEducation = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JRJFundManager.prototype.setEducation = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string country = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JRJFundManager.prototype.getCountry = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JRJFundManager.prototype.setCountry = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string resume = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JRJFundManager.prototype.getResume = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JRJFundManager.prototype.setResume = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

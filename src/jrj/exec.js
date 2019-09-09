@@ -2,6 +2,7 @@ const {startBrowser} = require('../browser');
 const {jrjFunds} = require('./funds');
 const {jrjFund} = require('./fund');
 const {jrjFundValue} = require('./fundvalue');
+const {jrjFundManager} = require('./fundmanager');
 
 /**
  * execJRJ
@@ -38,6 +39,12 @@ async function execJRJ(program, version) {
           return;
         }
 
+        if (mode == 'fundmanager' && !options.code) {
+          console.log('command wrong, please type ' + 'jarviscrawler jrj --help');
+
+          return;
+        }
+
         if (mode == 'fundvalue' && (!options.code || !options.year)) {
           console.log('command wrong, please type ' + 'jarviscrawler jrj --help');
 
@@ -58,6 +65,9 @@ async function execJRJ(program, version) {
             console.log(JSON.stringify(ret));
           } else if (mode == 'fundvalue') {
             const ret = await jrjFundValue(browser, options.code, options.year, timeout);
+            console.log(JSON.stringify(ret));
+          } else if (mode == 'fundmanager') {
+            const ret = await jrjFundManager(browser, options.code, timeout);
             console.log(JSON.stringify(ret));
           }
 

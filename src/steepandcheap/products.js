@@ -1,7 +1,7 @@
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
-
+const {getElementPropertyString} = require('../eleutils');
 /**
  * parseURL - parse URL
  * @param {string} url - url
@@ -56,6 +56,36 @@ async function getFirstProductURL(page) {
 }
 
 /**
+ * getPageURL - get page url
+ * @param {object} page - page
+ * @param {number} pageid - pageid, is like 1, 2, 3
+ * @return {object} ret - {error, url}
+ */
+async function getPageURL(page, pageid) {
+  let awaiterr;
+  const url = await page
+      .evaluate((pageid) => {
+        const lstpages = document.getElementsByClassName('page-link');
+        if (lstpages.length > 0) {
+          const lsta = lstpages[pageid - 2].getElementsByTagName('a');
+          if (lsta.length > 0) {
+            return lsta[0].href;
+          }
+        }
+
+        return '';
+      }, pageid)
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    return {error: awaiterr};
+  }
+
+  return {url: url};
+}
+
+/**
  * chgPage - change to page
  * @param {object} page - page
  * @param {number} pageid - pageid, is like 1, 2, 3
@@ -70,9 +100,11 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
 
     let awaiterr;
 
-    await page.waitForSelector('.page-link', {timeout: timeout}).catch((err) => {
-      awaiterr = err;
-    });
+    await page
+        .waitForSelector('.page-link', {timeout: timeout})
+        .catch((err) => {
+          awaiterr = err;
+        });
 
     if (awaiterr) {
       return awaiterr;
@@ -102,6 +134,13 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
     if (awaiterr) {
       return awaiterr;
     }
+
+    const urlret = await getPageURL(page, pageid);
+    if (urlret.error) {
+      return urlret.error;
+    }
+
+    baseurl = urlret.url;
 
     await lstpages[pageid - 2].click().catch((err) => {
       awaiterr = err;
@@ -209,7 +248,13 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
 
   const firsturl = await getFirstProductURL(page);
 
-  awaiterr = await chgPage(page, pageid, 'https://www.steepandcheap.com/' + url, firsturl, timeout);
+  awaiterr = await chgPage(
+      page,
+      pageid,
+      'https://www.steepandcheap.com/' + url,
+      firsturl,
+      timeout
+  );
   if (awaiterr) {
     console.log('steepandcheapProducts.chgPage ', awaiterr);
 
@@ -223,7 +268,10 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   });
 
   if (awaiterr) {
-    console.log('steepandcheapProducts.waitForSelector .plp-products-wrap', awaiterr);
+    console.log(
+        'steepandcheapProducts.waitForSelector .plp-products-wrap',
+        awaiterr
+    );
 
     await page.close();
 
@@ -272,7 +320,9 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
               curret.productName = titlename[0].innerText.split('-', -1);
             }
 
-            const lowprice = curele.getElementsByClassName('ui-pl-pricing-low-price');
+            const lowprice = curele.getElementsByClassName(
+                'ui-pl-pricing-low-price'
+            );
             if (lowprice.length > 0) {
               const lowpricearr = lowprice[0].innerText.split('$', -1);
               if (lowpricearr.length != 2) {
@@ -286,7 +336,9 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
               }
             }
 
-            const highprice = curele.getElementsByClassName('ui-pl-pricing-high-price');
+            const highprice = curele.getElementsByClassName(
+                'ui-pl-pricing-high-price'
+            );
             if (highprice.length > 0) {
               const highpricearr = highprice[0].innerText.split('$', -1);
               if (highpricearr.length != 2) {
@@ -303,7 +355,9 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
             const ratingbase = curele.getElementsByClassName('rating-base');
             if (ratingbase.length > 0) {
               try {
-                curret.ratingValue = parseInt(ratingbase[0].children[0].innerText);
+                curret.ratingValue = parseInt(
+                    ratingbase[0].children[0].innerText
+                );
               } catch (err) {
                 console.log('invalid rating-base ' + ratingbase[0]);
               }

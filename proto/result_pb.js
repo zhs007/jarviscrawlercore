@@ -40,6 +40,7 @@ goog.exportSymbol('proto.jarviscrawlercore.DTTodayGameData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ExportArticleResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ImageInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFund', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JRJFundDayValue', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundManager', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundSize', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundValue', null, global);
@@ -16043,6 +16044,202 @@ proto.jarviscrawlercore.JRJFundManager.prototype.setResume = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.JRJFundDayValue = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.JRJFundDayValue, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JRJFundDayValue.displayName = 'proto.jarviscrawlercore.JRJFundDayValue';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JRJFundDayValue.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JRJFundDayValue.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    date: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    value: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    totalvalue: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JRJFundDayValue;
+  return proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDate(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setValue(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalvalue(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDate();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getValue();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = message.getTotalvalue();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string date = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getDate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setDate = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional int32 value = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getValue = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setValue = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int32 totalValue = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getTotalvalue = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setTotalvalue = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.JRJFundValue = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.JRJFundValue.repeatedFields_, null);
 };
@@ -16055,7 +16252,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.JRJFundValue.repeatedFields_ = [2,3,4,5,6];
+proto.jarviscrawlercore.JRJFundValue.repeatedFields_ = [2,3,4,5,6,7];
 
 
 
@@ -16091,7 +16288,9 @@ proto.jarviscrawlercore.JRJFundValue.toObject = function(includeInstance, msg) {
     totalvalueList: jspb.Message.getRepeatedFloatingPointField(msg, 3),
     ivalueList: jspb.Message.getRepeatedField(msg, 4),
     itotalvalueList: jspb.Message.getRepeatedField(msg, 5),
-    dateList: jspb.Message.getRepeatedField(msg, 6)
+    dateList: jspb.Message.getRepeatedField(msg, 6),
+    valuesList: jspb.Message.toObjectList(msg.getValuesList(),
+    proto.jarviscrawlercore.JRJFundDayValue.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -16151,6 +16350,11 @@ proto.jarviscrawlercore.JRJFundValue.deserializeBinaryFromReader = function(msg,
     case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.addDate(value);
+      break;
+    case 7:
+      var value = new proto.jarviscrawlercore.JRJFundDayValue;
+      reader.readMessage(value,proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader);
+      msg.addValues(value);
       break;
     default:
       reader.skipField();
@@ -16221,6 +16425,14 @@ proto.jarviscrawlercore.JRJFundValue.serializeBinaryToWriter = function(message,
     writer.writeRepeatedString(
       6,
       f
+    );
+  }
+  f = message.getValuesList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter
     );
   }
 };
@@ -16383,6 +16595,37 @@ proto.jarviscrawlercore.JRJFundValue.prototype.addDate = function(value, opt_ind
 
 proto.jarviscrawlercore.JRJFundValue.prototype.clearDateList = function() {
   this.setDateList([]);
+};
+
+
+/**
+ * repeated JRJFundDayValue values = 7;
+ * @return {!Array<!proto.jarviscrawlercore.JRJFundDayValue>}
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.getValuesList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.JRJFundDayValue>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.JRJFundDayValue, 7));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.JRJFundDayValue>} value */
+proto.jarviscrawlercore.JRJFundValue.prototype.setValuesList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.addValues = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.jarviscrawlercore.JRJFundDayValue, opt_index);
+};
+
+
+proto.jarviscrawlercore.JRJFundValue.prototype.clearValuesList = function() {
+  this.setValuesList([]);
 };
 
 

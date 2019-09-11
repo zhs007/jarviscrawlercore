@@ -16,6 +16,29 @@ function newJRJFunds(obj) {
 }
 
 /**
+ * new JRJFundDayValue with object
+ * @param {object} obj - JRJFundDayValue object
+ * @return {messages.JRJFundDayValue} result - JRJFundDayValue
+ */
+function newJRJFundDayValue(obj) {
+  const result = new messages.JRJFundDayValue();
+
+  if (obj.date) {
+    result.setDate(obj.date);
+  }
+
+  if (obj.value) {
+    result.setValue(obj.value);
+  }
+
+  if (obj.totalValue) {
+    result.setTotalvalue(obj.totalValue);
+  }
+
+  return result;
+}
+
+/**
  * new JRJFundValue with object
  * @param {object} obj - JRJFundValue object
  * @return {messages.JRJFundValue} result - JRJFundValue
@@ -27,24 +50,10 @@ function newJRJFundValue(obj) {
     result.setCode(obj.code);
   }
 
-  if (Array.isArray(obj.value) && obj.value.length > 0) {
-    result.setValueList(obj.value);
-  }
-
-  if (Array.isArray(obj.totalValue) && obj.totalValue.length > 0) {
-    result.setTotalvalueList(obj.totalValue);
-  }
-
-  if (Array.isArray(obj.iValue) && obj.iValue.length > 0) {
-    result.setIvalueList(obj.iValue);
-  }
-
-  if (Array.isArray(obj.iTotalValue) && obj.iTotalValue.length > 0) {
-    result.setItotalvalueList(obj.iTotalValue);
-  }
-
-  if (Array.isArray(obj.date) && obj.date.length > 0) {
-    result.setDateList(obj.date);
+  if (Array.isArray(obj.values) && obj.values.length > 0) {
+    for (let i = 0; i < obj.values.length; ++i) {
+      result.addValues(newJRJFundDayValue(obj.values[i]), i);
+    }
   }
 
   return result;

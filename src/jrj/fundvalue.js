@@ -94,11 +94,19 @@ async function jrjFundValue(browser, code, date, timeout) {
     const ret = {code: code, values: []};
 
     const netValue = sandbox.obj.fundHistoryNetValue;
-    if (Array.isArray(netValue) && netValue.length > 0 && netValue[0].unit_net) {
+    if (
+      Array.isArray(netValue) &&
+      netValue.length > 0 &&
+      netValue[0].unit_net
+    ) {
       for (let i = 0; i < netValue.length; ++i) {
         try {
           const uval = Math.floor(parseFloat(netValue[i].unit_net) * 10000);
-          const aval = Math.floor(parseFloat(netValue[i].accum_net) * 10000);
+          let aval = -1;
+          if (netValue[i].accum_net) {
+            aval = Math.floor(parseFloat(netValue[i].accum_net) * 10000);
+          }
+
           const cd = netValue[i].enddate;
 
           const ct = moment(cd, 'YYYY-MM-DD');
@@ -111,7 +119,9 @@ async function jrjFundValue(browser, code, date, timeout) {
           // ret.date.push(cd);
           // ret.iValue.push(uval);
           // ret.iTotalValue.push(aval);
-        } catch (err) {}
+        } catch (err) {
+          console.log('jrjFundValue proc values err ' + err);
+        }
       }
     }
 

@@ -94,7 +94,7 @@ async function jrjFundValue(browser, code, date, timeout) {
     const ret = {code: code, values: []};
 
     const netValue = sandbox.obj.fundHistoryNetValue;
-    if (Array.isArray(netValue) && netValue.length > 0) {
+    if (Array.isArray(netValue) && netValue.length > 0 && netValue[0].unit_net) {
       for (let i = 0; i < netValue.length; ++i) {
         try {
           const uval = Math.floor(parseFloat(netValue[i].unit_net) * 10000);

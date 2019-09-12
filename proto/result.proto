@@ -762,14 +762,21 @@ message JRJFundManager {
     string resume = 8;
 }
 
+message JRJFundDayValue {
+    string date = 1;
+    int32 value = 2;
+    int32 totalValue = 3;
+}
+
 // JRJFundValue - jrj fund value
 message JRJFundValue {
     string code = 1;
-    repeated float value = 2;
-    repeated float totalValue = 3;
-    repeated int32 iValue = 4;
-    repeated int32 iTotalValue = 5;
-    repeated string data = 6;
+    repeated float value = 2 [deprecated = true];
+    repeated float totalValue = 3 [deprecated = true];
+    repeated int32 iValue = 4 [deprecated = true];
+    repeated int32 iTotalValue = 5 [deprecated = true];
+    repeated string date = 6 [deprecated = true];
+    repeated JRJFundDayValue values = 7;
 }
 
 // JRJFund - jrj fund
@@ -832,6 +839,7 @@ message RequestCrawler {
         RequestGeoIP geoip = 105;
         RequestTechInAsia techinasia = 106;
         RequestSteepAndCheap steepandcheap = 107;
+        RequestJRJ jrj = 108;
     }
 }
 
@@ -847,6 +855,7 @@ message ReplyCrawler {
         ReplyGeoIP geoip = 105;
         ReplyTechInAsia techinasia = 106;
         ReplySteepAndCheap steepandcheap = 107;
+        ReplyJRJ jrj = 108;
     }
 }
 

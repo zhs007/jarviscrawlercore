@@ -156,6 +156,8 @@ async function jrjFund(browser, code, timeout) {
           const lstspan = eles[0].getElementsByTagName('span');
           if (lstspan.length == 7) {
             ret2.strCreateTime = lstspan[2].innerText;
+          } else if (lstspan.length == 6) {
+            ret2.strCreateTime = lstspan[1].innerText;
           }
 
           return ret2;
@@ -175,12 +177,45 @@ async function jrjFund(browser, code, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  if (ret2 == undefined) {
+    const ret3 = await page
+        .$$eval('.tittopone', (eles) => {
+          console.log(eles);
+
+          if (eles.length > 0) {
+            const ret3 = {};
+
+            const lsta = eles[0].getElementsByTagName('a');
+            if (lsta.length == 3) {
+              ret3.company = lsta[2].innerText;
+            }
+
+            return ret3;
+          }
+
+          return undefined;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      console.log('jrjFund.$$eval .tittopone', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    ret.company = ret3.company;
+  } else {
+    ret.createTime = getCreateTime(ret2.strCreateTime);
+    ret.company = ret2.company;
+  }
+
   ret.code = code;
   ret.name = getName(ret1.fullname);
   ret.tags = ret1.tags;
-
-  ret.createTime = getCreateTime(ret2.strCreateTime);
-  ret.company = ret2.company;
 
   await page.close();
 

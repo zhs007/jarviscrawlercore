@@ -196,7 +196,7 @@ async function jrjFundManager(browser, code, timeout) {
     }
   }
 
-  return {ret: arr};
+  return {ret: {managers: arr}};
 }
 
 exports.jrjFundManager = jrjFundManager;

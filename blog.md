@@ -1,5 +1,11 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-09-09
+
+今天部署了一台国内的机器，整个流程都非常的不顺，需要加各种镜像映射才行，后来还是将dockerhub弄好了，这样就不用走build docker的流程，会好很多吧。
+
+dockerhub非常慢，build一次要18分钟。
+
 ### 2019-08-25
 
 前几天开始把npm提交放到github的action了，这几天测了一下，没啥问题，每次合并master时，就会自动发布到npm。

@@ -40,10 +40,12 @@ goog.exportSymbol('proto.jarviscrawlercore.DTTodayGameData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ExportArticleResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ImageInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFund', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JRJFundDayValue', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundManager', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundSize', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundValue', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFunds', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JRJMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.Paragraph', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ParagraphType', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyAnalyzePage', null, global);
@@ -53,6 +55,7 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawlerStream', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ReplyJRJ', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplySteepAndCheap', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTranslate', null, global);
@@ -62,6 +65,7 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestJRJ', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestSteepAndCheap', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
@@ -16040,6 +16044,202 @@ proto.jarviscrawlercore.JRJFundManager.prototype.setResume = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.JRJFundDayValue = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.JRJFundDayValue, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JRJFundDayValue.displayName = 'proto.jarviscrawlercore.JRJFundDayValue';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JRJFundDayValue.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JRJFundDayValue.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    date: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    value: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    totalvalue: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JRJFundDayValue;
+  return proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setDate(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setValue(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setTotalvalue(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getDate();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getValue();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = message.getTotalvalue();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string date = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getDate = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setDate = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional int32 value = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getValue = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setValue = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int32 totalValue = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.getTotalvalue = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JRJFundDayValue.prototype.setTotalvalue = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.JRJFundValue = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.JRJFundValue.repeatedFields_, null);
 };
@@ -16052,7 +16252,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.JRJFundValue.repeatedFields_ = [2,3,4,5];
+proto.jarviscrawlercore.JRJFundValue.repeatedFields_ = [2,3,4,5,6,7];
 
 
 
@@ -16087,7 +16287,10 @@ proto.jarviscrawlercore.JRJFundValue.toObject = function(includeInstance, msg) {
     valueList: jspb.Message.getRepeatedFloatingPointField(msg, 2),
     totalvalueList: jspb.Message.getRepeatedFloatingPointField(msg, 3),
     ivalueList: jspb.Message.getRepeatedField(msg, 4),
-    itotalvalueList: jspb.Message.getRepeatedField(msg, 5)
+    itotalvalueList: jspb.Message.getRepeatedField(msg, 5),
+    dateList: jspb.Message.getRepeatedField(msg, 6),
+    valuesList: jspb.Message.toObjectList(msg.getValuesList(),
+    proto.jarviscrawlercore.JRJFundDayValue.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -16143,6 +16346,15 @@ proto.jarviscrawlercore.JRJFundValue.deserializeBinaryFromReader = function(msg,
     case 5:
       var value = /** @type {!Array<number>} */ (reader.readPackedInt32());
       msg.setItotalvalueList(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDate(value);
+      break;
+    case 7:
+      var value = new proto.jarviscrawlercore.JRJFundDayValue;
+      reader.readMessage(value,proto.jarviscrawlercore.JRJFundDayValue.deserializeBinaryFromReader);
+      msg.addValues(value);
       break;
     default:
       reader.skipField();
@@ -16206,6 +16418,21 @@ proto.jarviscrawlercore.JRJFundValue.serializeBinaryToWriter = function(message,
     writer.writePackedInt32(
       5,
       f
+    );
+  }
+  f = message.getDateList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      6,
+      f
+    );
+  }
+  f = message.getValuesList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      7,
+      f,
+      proto.jarviscrawlercore.JRJFundDayValue.serializeBinaryToWriter
     );
   }
 };
@@ -16339,6 +16566,66 @@ proto.jarviscrawlercore.JRJFundValue.prototype.addItotalvalue = function(value, 
 
 proto.jarviscrawlercore.JRJFundValue.prototype.clearItotalvalueList = function() {
   this.setItotalvalueList([]);
+};
+
+
+/**
+ * repeated string date = 6;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.getDateList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.JRJFundValue.prototype.setDateList = function(value) {
+  jspb.Message.setField(this, 6, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.addDate = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 6, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.JRJFundValue.prototype.clearDateList = function() {
+  this.setDateList([]);
+};
+
+
+/**
+ * repeated JRJFundDayValue values = 7;
+ * @return {!Array<!proto.jarviscrawlercore.JRJFundDayValue>}
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.getValuesList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.JRJFundDayValue>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.JRJFundDayValue, 7));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.JRJFundDayValue>} value */
+proto.jarviscrawlercore.JRJFundValue.prototype.setValuesList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 7, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.JRJFundDayValue=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.JRJFundDayValue}
+ */
+proto.jarviscrawlercore.JRJFundValue.prototype.addValues = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 7, opt_value, proto.jarviscrawlercore.JRJFundDayValue, opt_index);
+};
+
+
+proto.jarviscrawlercore.JRJFundValue.prototype.clearValuesList = function() {
+  this.setValuesList([]);
 };
 
 
@@ -16879,6 +17166,503 @@ proto.jarviscrawlercore.JRJFunds.prototype.clearCodesList = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.RequestJRJ = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestJRJ, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestJRJ.displayName = 'proto.jarviscrawlercore.RequestJRJ';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestJRJ.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestJRJ.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestJRJ} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestJRJ.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    fundcode: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    year: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestJRJ}
+ */
+proto.jarviscrawlercore.RequestJRJ.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestJRJ;
+  return proto.jarviscrawlercore.RequestJRJ.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestJRJ} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestJRJ}
+ */
+proto.jarviscrawlercore.RequestJRJ.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.JRJMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFundcode(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setYear(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestJRJ.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestJRJ.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestJRJ} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestJRJ.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getFundcode();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getYear();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional JRJMode mode = 1;
+ * @return {!proto.jarviscrawlercore.JRJMode}
+ */
+proto.jarviscrawlercore.RequestJRJ.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.JRJMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.JRJMode} value */
+proto.jarviscrawlercore.RequestJRJ.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional string fundcode = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestJRJ.prototype.getFundcode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestJRJ.prototype.setFundcode = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string year = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestJRJ.prototype.getYear = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestJRJ.prototype.setYear = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ReplyJRJ = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.ReplyJRJ.oneofGroups_);
+};
+goog.inherits(proto.jarviscrawlercore.ReplyJRJ, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ReplyJRJ.displayName = 'proto.jarviscrawlercore.ReplyJRJ';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.jarviscrawlercore.ReplyJRJ.oneofGroups_ = [[100,101,102]];
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.ReplyJRJ.ReplyCase = {
+  REPLY_NOT_SET: 0,
+  FUNDS: 100,
+  FUND: 101,
+  FUNDVALUE: 102
+};
+
+/**
+ * @return {proto.jarviscrawlercore.ReplyJRJ.ReplyCase}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.getReplyCase = function() {
+  return /** @type {proto.jarviscrawlercore.ReplyJRJ.ReplyCase} */(jspb.Message.computeOneofCase(this, proto.jarviscrawlercore.ReplyJRJ.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ReplyJRJ.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ReplyJRJ} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyJRJ.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    funds: (f = msg.getFunds()) && proto.jarviscrawlercore.JRJFunds.toObject(includeInstance, f),
+    fund: (f = msg.getFund()) && proto.jarviscrawlercore.JRJFund.toObject(includeInstance, f),
+    fundvalue: (f = msg.getFundvalue()) && proto.jarviscrawlercore.JRJFundValue.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ReplyJRJ}
+ */
+proto.jarviscrawlercore.ReplyJRJ.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ReplyJRJ;
+  return proto.jarviscrawlercore.ReplyJRJ.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ReplyJRJ} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ReplyJRJ}
+ */
+proto.jarviscrawlercore.ReplyJRJ.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.JRJMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 100:
+      var value = new proto.jarviscrawlercore.JRJFunds;
+      reader.readMessage(value,proto.jarviscrawlercore.JRJFunds.deserializeBinaryFromReader);
+      msg.setFunds(value);
+      break;
+    case 101:
+      var value = new proto.jarviscrawlercore.JRJFund;
+      reader.readMessage(value,proto.jarviscrawlercore.JRJFund.deserializeBinaryFromReader);
+      msg.setFund(value);
+      break;
+    case 102:
+      var value = new proto.jarviscrawlercore.JRJFundValue;
+      reader.readMessage(value,proto.jarviscrawlercore.JRJFundValue.deserializeBinaryFromReader);
+      msg.setFundvalue(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ReplyJRJ.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ReplyJRJ} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyJRJ.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getFunds();
+  if (f != null) {
+    writer.writeMessage(
+      100,
+      f,
+      proto.jarviscrawlercore.JRJFunds.serializeBinaryToWriter
+    );
+  }
+  f = message.getFund();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.JRJFund.serializeBinaryToWriter
+    );
+  }
+  f = message.getFundvalue();
+  if (f != null) {
+    writer.writeMessage(
+      102,
+      f,
+      proto.jarviscrawlercore.JRJFundValue.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional JRJMode mode = 1;
+ * @return {!proto.jarviscrawlercore.JRJMode}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.JRJMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.JRJMode} value */
+proto.jarviscrawlercore.ReplyJRJ.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional JRJFunds funds = 100;
+ * @return {?proto.jarviscrawlercore.JRJFunds}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.getFunds = function() {
+  return /** @type{?proto.jarviscrawlercore.JRJFunds} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JRJFunds, 100));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JRJFunds|undefined} value */
+proto.jarviscrawlercore.ReplyJRJ.prototype.setFunds = function(value) {
+  jspb.Message.setOneofWrapperField(this, 100, proto.jarviscrawlercore.ReplyJRJ.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyJRJ.prototype.clearFunds = function() {
+  this.setFunds(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.hasFunds = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional JRJFund fund = 101;
+ * @return {?proto.jarviscrawlercore.JRJFund}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.getFund = function() {
+  return /** @type{?proto.jarviscrawlercore.JRJFund} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JRJFund, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JRJFund|undefined} value */
+proto.jarviscrawlercore.ReplyJRJ.prototype.setFund = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyJRJ.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyJRJ.prototype.clearFund = function() {
+  this.setFund(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.hasFund = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+/**
+ * optional JRJFundValue fundValue = 102;
+ * @return {?proto.jarviscrawlercore.JRJFundValue}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.getFundvalue = function() {
+  return /** @type{?proto.jarviscrawlercore.JRJFundValue} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JRJFundValue, 102));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JRJFundValue|undefined} value */
+proto.jarviscrawlercore.ReplyJRJ.prototype.setFundvalue = function(value) {
+  jspb.Message.setOneofWrapperField(this, 102, proto.jarviscrawlercore.ReplyJRJ.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyJRJ.prototype.clearFundvalue = function() {
+  this.setFundvalue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyJRJ.prototype.hasFundvalue = function() {
+  return jspb.Message.getField(this, 102) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestCrawler = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.RequestCrawler.oneofGroups_);
 };
@@ -16894,7 +17678,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108]];
 
 /**
  * @enum {number}
@@ -16907,7 +17691,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   ANALYZEPAGE: 103,
   GEOIP: 105,
   TECHINASIA: 106,
-  STEEPANDCHEAP: 107
+  STEEPANDCHEAP: 107,
+  JRJ: 108
 };
 
 /**
@@ -16955,7 +17740,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.AnalyzePage.toObject(includeInstance, f),
     geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.RequestGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.RequestTechInAsia.toObject(includeInstance, f),
-    steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.RequestSteepAndCheap.toObject(includeInstance, f)
+    steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.RequestSteepAndCheap.toObject(includeInstance, f),
+    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.RequestJRJ.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -17038,6 +17824,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.RequestSteepAndCheap;
       reader.readMessage(value,proto.jarviscrawlercore.RequestSteepAndCheap.deserializeBinaryFromReader);
       msg.setSteepandcheap(value);
+      break;
+    case 108:
+      var value = new proto.jarviscrawlercore.RequestJRJ;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestJRJ.deserializeBinaryFromReader);
+      msg.setJrj(value);
       break;
     default:
       reader.skipField();
@@ -17143,6 +17934,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       107,
       f,
       proto.jarviscrawlercore.RequestSteepAndCheap.serializeBinaryToWriter
+    );
+  }
+  f = message.getJrj();
+  if (f != null) {
+    writer.writeMessage(
+      108,
+      f,
+      proto.jarviscrawlercore.RequestJRJ.serializeBinaryToWriter
     );
   }
 };
@@ -17403,6 +18202,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasSteepandcheap = function() {
 };
 
 
+/**
+ * optional RequestJRJ jrj = 108;
+ * @return {?proto.jarviscrawlercore.RequestJRJ}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getJrj = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestJRJ} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestJRJ, 108));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestJRJ|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setJrj = function(value) {
+  jspb.Message.setOneofWrapperField(this, 108, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearJrj = function() {
+  this.setJrj(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasJrj = function() {
+  return jspb.Message.getField(this, 108) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -17429,7 +18258,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108]];
 
 /**
  * @enum {number}
@@ -17442,7 +18271,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   ANALYZEPAGE: 103,
   GEOIP: 105,
   TECHINASIA: 106,
-  STEEPANDCHEAP: 107
+  STEEPANDCHEAP: 107,
+  JRJ: 108
 };
 
 /**
@@ -17488,7 +18318,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.ReplyAnalyzePage.toObject(includeInstance, f),
     geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.ReplyGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.ReplyTechInAsia.toObject(includeInstance, f),
-    steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.ReplySteepAndCheap.toObject(includeInstance, f)
+    steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.ReplySteepAndCheap.toObject(includeInstance, f),
+    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.ReplyJRJ.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -17563,6 +18394,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.ReplySteepAndCheap;
       reader.readMessage(value,proto.jarviscrawlercore.ReplySteepAndCheap.deserializeBinaryFromReader);
       msg.setSteepandcheap(value);
+      break;
+    case 108:
+      var value = new proto.jarviscrawlercore.ReplyJRJ;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyJRJ.deserializeBinaryFromReader);
+      msg.setJrj(value);
       break;
     default:
       reader.skipField();
@@ -17654,6 +18490,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       107,
       f,
       proto.jarviscrawlercore.ReplySteepAndCheap.serializeBinaryToWriter
+    );
+  }
+  f = message.getJrj();
+  if (f != null) {
+    writer.writeMessage(
+      108,
+      f,
+      proto.jarviscrawlercore.ReplyJRJ.serializeBinaryToWriter
     );
   }
 };
@@ -17881,6 +18725,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearSteepandcheap = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasSteepandcheap = function() {
   return jspb.Message.getField(this, 107) != null;
+};
+
+
+/**
+ * optional ReplyJRJ jrj = 108;
+ * @return {?proto.jarviscrawlercore.ReplyJRJ}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getJrj = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyJRJ} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyJRJ, 108));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyJRJ|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setJrj = function(value) {
+  jspb.Message.setOneofWrapperField(this, 108, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearJrj = function() {
+  this.setJrj(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasJrj = function() {
+  return jspb.Message.getField(this, 108) != null;
 };
 
 
@@ -18329,7 +19203,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_ANALYZEPAGE: 3,
   CT_GEOIP: 5,
   CT_TECHINASIA: 6,
-  CT_STEEPANDCHEAP: 7
+  CT_STEEPANDCHEAP: 7,
+  CT_JRJ: 8
 };
 
 /**
@@ -18356,6 +19231,16 @@ proto.jarviscrawlercore.TechInAsiaMode = {
 proto.jarviscrawlercore.SteepAndCheapMode = {
   SACM_PRODUCTS: 0,
   SACM_PRODUCT: 1
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.JRJMode = {
+  JRJM_FUNDS: 0,
+  JRJM_FUND: 1,
+  JRJM_FUNDVALUE: 2,
+  JRJM_FUNDMANAGER: 3
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

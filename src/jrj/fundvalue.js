@@ -1,5 +1,6 @@
 const {DownloadRequest} = require('../downloadrequest');
 const vm = require('vm');
+const moment = require('moment');
 
 /**
  * jrjFundValue - jrj fundvalue
@@ -47,7 +48,11 @@ async function jrjFundValue(browser, code, date, timeout) {
   //   url += '&page=' + (pageid - 1).toString();
   // }
 
-  const url = 'http://fund.jrj.com.cn/json/archives/history/netvalue?fundCode=' + code + '&obj=obj&date=' + date;
+  const url =
+    'http://fund.jrj.com.cn/json/archives/history/netvalue?fundCode=' +
+    code +
+    '&obj=obj&date=' +
+    date;
   const downreq = new DownloadRequest(page, [url]);
 
   await page
@@ -86,7 +91,41 @@ async function jrjFundValue(browser, code, date, timeout) {
     vm.createContext(sandbox);
     vm.runInContext(strcode, sandbox);
 
-    return {ret: sandbox.obj.fundHistoryNetValue};
+    const ret = {code: code, values: []};
+
+    const netValue = sandbox.obj.fundHistoryNetValue;
+    if (
+      Array.isArray(netValue) &&
+      netValue.length > 0 &&
+      netValue[0].unit_net
+    ) {
+      for (let i = 0; i < netValue.length; ++i) {
+        try {
+          const uval = Math.floor(parseFloat(netValue[i].unit_net) * 10000);
+          let aval = -1;
+          if (netValue[i].accum_net) {
+            aval = Math.floor(parseFloat(netValue[i].accum_net) * 10000);
+          }
+
+          const cd = netValue[i].enddate;
+
+          const ct = moment(cd, 'YYYY-MM-DD');
+
+          ret.values.push({
+            date: ct.format('YYYYMMDD'),
+            value: uval,
+            totalValue: aval,
+          });
+          // ret.date.push(cd);
+          // ret.iValue.push(uval);
+          // ret.iTotalValue.push(aval);
+        } catch (err) {
+          console.log('jrjFundValue proc values err ' + err);
+        }
+      }
+    }
+
+    return {ret: ret};
   }
 
   return {error: 'jrjFundValue no js code'};

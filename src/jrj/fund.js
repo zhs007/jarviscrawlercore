@@ -91,6 +91,22 @@ async function jrjFund(browser, code, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  await page
+      .waitForSelector('.hdmain', {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    console.log('jrjFund.waitForSelector .hdmain', err);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   const ret1 = await page
       .$$eval('.hdmain', (eles) => {
         console.log(eles);

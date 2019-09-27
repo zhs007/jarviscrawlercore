@@ -214,6 +214,13 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
         return new Error('chgPage invalid pi(-99999)');
       }
 
+      const lstpages = await page.$$('.page-link').catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
+
       if (cpoi.pi >= 0 && cpoi.pi >= lstpages.length) {
         return new Error(
             'chgPage invalid pi(' + cpoi.pi + ',' + lstpages.length + ')'
@@ -227,13 +234,6 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
       }
 
       const ccpi = -cpoi.pi;
-
-      const lstpages = await page.$$('.page-link').catch((err) => {
-        awaiterr = err;
-      });
-      if (awaiterr) {
-        return awaiterr;
-      }
 
       await lstpages[ccpi].hover().catch((err) => {
         awaiterr = err;

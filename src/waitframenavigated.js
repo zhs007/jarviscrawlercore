@@ -69,6 +69,13 @@ class WaitFrameNavigated {
   }
 
   /**
+   * resetex
+   */
+  resetex() {
+    this.isDone = false;
+  }
+
+  /**
    * release
    */
   release() {

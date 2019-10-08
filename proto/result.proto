@@ -681,6 +681,17 @@ message SteepAndCheapReview {
     SteepAndCheapUser user = 9;
 }
 
+// SteepAndCheapHistory - Steep&Cheap history
+message SteepAndCheapHistory {
+    int64 updateTime = 1;
+    float price = 2;
+    float curPrice = 3;
+    int32 stockLevel = 4;
+    int32 reviews = 5;
+    float ratingValue = 6;
+    repeated SteepAndCheapColorSize color = 7;
+}
+
 // SteepAndCheapProduct - Steep&Cheap product
 message SteepAndCheapProduct {
     string brandName = 1;
@@ -710,6 +721,7 @@ message SteepAndCheapProduct {
     string sizeChart = 25;
     repeated SteepAndCheapReview lstReview = 26;
     repeated string linkProducts = 27;
+    repeated SteepAndCheapHistory lstHistory = 28;
 }
 
 // SteepAndCheapProducts - Steep&Cheap products

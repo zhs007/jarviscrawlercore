@@ -150,6 +150,9 @@ async function countPageObjIndex(page, pageid) {
           }
 
           if (pageid > maxi) {
+            if (maxi >= 95) {
+              return -(lstpages.length - 3);
+            }
             return -(lstpages.length - 2);
           }
 
@@ -205,6 +208,16 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
     let cpi = -1;
 
     while (true) {
+      await page
+          .waitForSelector('.page-link', {timeout: timeout})
+          .catch((err) => {
+            awaiterr = err;
+          });
+
+      if (awaiterr) {
+        return awaiterr;
+      }
+
       const cpoi = await countPageObjIndex(page, pageid);
       if (cpoi.error) {
         return cpoi.error;

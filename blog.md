@@ -1,5 +1,12 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-08
+
+关于``puppeteer``，特别需要注意要waitFor，会有大量的element都不是马上构建好的，切记一定要waitFor以后再操作。
+
+然后就是click，最好先hover，这时会移动滚动条，保证该element可见。  
+这时可能还会有些页面级的bug，譬如分页的表单，页数为1位数甚至2位数都可见，但到3位数时，可能就会看不见，这时hover或者click都会报错，这时就只能自己特殊处理了。
+
 ### 2019-09-09
 
 今天部署了一台国内的机器，整个流程都非常的不顺，需要加各种镜像映射才行，后来还是将dockerhub弄好了，这样就不用走build docker的流程，会好很多吧。

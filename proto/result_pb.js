@@ -71,6 +71,7 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapColorSize', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapColorSizeData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapHistory', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.SteepAndCheapProduct', null, global);
@@ -13056,6 +13057,177 @@ proto.jarviscrawlercore.ReplyTechInAsia.prototype.hasTags = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.SteepAndCheapColorSizeData, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.SteepAndCheapColorSizeData.displayName = 'proto.jarviscrawlercore.SteepAndCheapColorSizeData';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.SteepAndCheapColorSizeData.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSizeData} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    size: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    sizevalid: jspb.Message.getFieldWithDefault(msg, 2, false)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSizeData}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.SteepAndCheapColorSizeData;
+  return proto.jarviscrawlercore.SteepAndCheapColorSizeData.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSizeData} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSizeData}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSize(value);
+      break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSizevalid(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.SteepAndCheapColorSizeData.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSizeData} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getSize();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getSizevalid();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string size = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.getSize = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.setSize = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional bool sizeValid = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.getSizevalid = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.SteepAndCheapColorSizeData.prototype.setSizevalid = function(value) {
+  jspb.Message.setProto3BooleanField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.SteepAndCheapColorSize = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.SteepAndCheapColorSize.repeatedFields_, null);
 };
@@ -13068,7 +13240,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.SteepAndCheapColorSize.repeatedFields_ = [2,3];
+proto.jarviscrawlercore.SteepAndCheapColorSize.repeatedFields_ = [2,3,4];
 
 
 
@@ -13101,7 +13273,9 @@ proto.jarviscrawlercore.SteepAndCheapColorSize.toObject = function(includeInstan
   var f, obj = {
     color: jspb.Message.getFieldWithDefault(msg, 1, ""),
     sizeList: jspb.Message.getRepeatedField(msg, 2),
-    sizevalidList: jspb.Message.getRepeatedField(msg, 3)
+    sizevalidList: jspb.Message.getRepeatedField(msg, 3),
+    dataList: jspb.Message.toObjectList(msg.getDataList(),
+    proto.jarviscrawlercore.SteepAndCheapColorSizeData.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -13149,6 +13323,11 @@ proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinaryFromReader = fun
     case 3:
       var value = /** @type {!Array<boolean>} */ (reader.readPackedBool());
       msg.setSizevalidList(value);
+      break;
+    case 4:
+      var value = new proto.jarviscrawlercore.SteepAndCheapColorSizeData;
+      reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapColorSizeData.deserializeBinaryFromReader);
+      msg.addData(value);
       break;
     default:
       reader.skipField();
@@ -13198,6 +13377,14 @@ proto.jarviscrawlercore.SteepAndCheapColorSize.serializeBinaryToWriter = functio
     writer.writePackedBool(
       3,
       f
+    );
+  }
+  f = message.getDataList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      4,
+      f,
+      proto.jarviscrawlercore.SteepAndCheapColorSizeData.serializeBinaryToWriter
     );
   }
 };
@@ -13275,6 +13462,37 @@ proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.addSizevalid = function
 
 proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.clearSizevalidList = function() {
   this.setSizevalidList([]);
+};
+
+
+/**
+ * repeated SteepAndCheapColorSizeData data = 4;
+ * @return {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSizeData>}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.getDataList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.SteepAndCheapColorSizeData>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.SteepAndCheapColorSizeData, 4));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSizeData>} value */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.setDataList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 4, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSizeData=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSizeData}
+ */
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.addData = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.jarviscrawlercore.SteepAndCheapColorSizeData, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapColorSize.prototype.clearDataList = function() {
+  this.setDataList([]);
 };
 
 

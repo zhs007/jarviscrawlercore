@@ -653,11 +653,18 @@ message ReplyTechInAsia {
     }    
 }
 
+// SteepAndCheapColorSizeData - Steep&Cheap color size data
+message SteepAndCheapColorSizeData {
+    string size = 1;
+    bool sizeValid = 2;
+}
+
 // SteepAndCheapColorSize - Steep&Cheap color size
 message SteepAndCheapColorSize {
     string color = 1;
     repeated string size = 2;
     repeated bool sizeValid = 3;
+    repeated SteepAndCheapColorSizeData data = 4;
 }
 
 // SteepAndCheapUser - Steep&Cheap user

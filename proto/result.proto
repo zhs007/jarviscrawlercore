@@ -653,6 +653,13 @@ message ReplyTechInAsia {
     }    
 }
 
+// SteepAndCheapSaleProductInfo - Steep&Cheap product infomation for sale
+message SteepAndCheapSaleProductInfo {
+    string saleCode = 1;
+    int32 rank = 2;
+    int32 score = 3;
+}
+
 // SteepAndCheapColorSizeData - Steep&Cheap color size data
 message SteepAndCheapColorSizeData {
     string size = 1;
@@ -729,6 +736,7 @@ message SteepAndCheapProduct {
     repeated SteepAndCheapReview lstReview = 26;
     repeated string linkProducts = 27;
     repeated SteepAndCheapHistory lstHistory = 28;
+    repeated SteepAndCheapSaleProductInfo lstSale = 29;
 }
 
 // SteepAndCheapProducts - Steep&Cheap products

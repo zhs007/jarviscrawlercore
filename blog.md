@@ -1,5 +1,11 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-16
+
+这几天一直发现Charles可能会卡，以为是Charles的问题，今天仔细查了一下，还是crawler的bug，有时候chrome还是会卡住。
+
+最初想法是从grpc这边加超时，后来想到这样crawler这边还是可能会慢慢积累chrome进程，时间长了，内存会受不了的。
+
 ### 2019-10-08
 
 关于``puppeteer``，特别需要注意要waitFor，会有大量的element都不是马上构建好的，切记一定要waitFor以后再操作。

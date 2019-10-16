@@ -737,6 +737,7 @@ message SteepAndCheapProduct {
     repeated string linkProducts = 27;
     repeated SteepAndCheapHistory lstHistory = 28;
     repeated SteepAndCheapSaleProductInfo lstSale = 29;
+    int64 lastUpdatedTime = 30;
 }
 
 // SteepAndCheapProducts - Steep&Cheap products

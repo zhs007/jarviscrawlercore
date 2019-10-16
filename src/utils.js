@@ -258,10 +258,12 @@ async function attachJQuery(page) {
     // let isok = true;
 
     // do {
-    await page.addScriptTag({path: './browser/jquery3.3.1.min.js'}).catch((err) => {
-      console.log('attachJQuery:addScriptTag', err);
-      // isok = false;
-    });
+    await page
+        .addScriptTag({path: './browser/jquery3.3.1.min.js'})
+        .catch((err) => {
+          console.log('attachJQuery:addScriptTag', err);
+        // isok = false;
+        });
     // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
@@ -284,9 +286,11 @@ async function attachJarvisCrawlerCore(page) {
     // isok = false;
   });
 
-  await page.waitForFunction('typeof jarvisCrawlerCoreVer === "string"').catch((err) => {
-    console.log('attachJQuery:waitForFunction', err);
-  });
+  await page
+      .waitForFunction('typeof jarvisCrawlerCoreVer === "string"')
+      .catch((err) => {
+        console.log('attachJQuery:waitForFunction', err);
+      });
 }
 
 /**
@@ -617,7 +621,10 @@ function newCrunchBaseOrganization(obj) {
 
   if (Array.isArray(obj.fundingrounds)) {
     for (let i = 0; i < obj.fundingrounds.length; ++i) {
-      result.addFundingrounds(newCrunchBaseFundingRound(obj.fundingrounds[i]), i);
+      result.addFundingrounds(
+          newCrunchBaseFundingRound(obj.fundingrounds[i]),
+          i
+      );
     }
     // result.setFoundersList(obj.fundingrounds);
   }
@@ -1364,7 +1371,10 @@ async function mouseMoveToEle(page, selector) {
   if (ele) {
     const bbox = await ele.boundingBox();
     console.log(bbox);
-    await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+    await page.mouse.move(
+        Math.floor(bbox.x + bbox.width / 2),
+        Math.floor(bbox.y + bbox.height / 2)
+    );
   }
 }
 
@@ -1383,7 +1393,10 @@ async function mouseMoveToEleEx(page, selector, isThis) {
     if (await isThis(eles[i])) {
       const bbox = await eles[i].boundingBox();
       console.log(bbox);
-      await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+      await page.mouse.move(
+          Math.floor(bbox.x + bbox.width / 2),
+          Math.floor(bbox.y + bbox.height / 2)
+      );
 
       return;
     }
@@ -1411,7 +1424,10 @@ async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
 
           return;
         }
@@ -1433,7 +1449,10 @@ async function mouseClickEle(page, selector) {
   if (ele) {
     const bbox = await ele.boundingBox();
     console.log(bbox);
-    await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+    await page.mouse.move(
+        Math.floor(bbox.x + bbox.width / 2),
+        Math.floor(bbox.y + bbox.height / 2)
+    );
     await page.mouse.down();
     await page.mouse.up();
   }
@@ -1460,7 +1479,10 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
           await page.mouse.down();
           await page.mouse.up();
 
@@ -1495,7 +1517,10 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
           console.log(bbox);
-          await page.mouse.move(Math.floor(bbox.x + bbox.width / 2), Math.floor(bbox.y + bbox.height / 2));
+          await page.mouse.move(
+              Math.floor(bbox.x + bbox.width / 2),
+              Math.floor(bbox.y + bbox.height / 2)
+          );
           await page.mouse.down();
           await sleep(timeHold);
           await page.mouse.up();
@@ -1536,6 +1561,30 @@ async function findFrame(page, funcIsFrame) {
   return undefined;
 }
 
+/**
+ * isElementVisible
+ * @param {object} page - page
+ * @param {object} ele - element
+ * @return {bool} isvisible - is visible
+ */
+async function isElementVisible(page, ele) {
+  const isVisibleHandle = await page.evaluateHandle((e) => {
+    const style = window.getComputedStyle(e);
+    return (
+      style &&
+      style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      style.opacity !== '0'
+    );
+  }, ele);
+  const visible = await isVisibleHandle.jsonValue();
+  const box = await ele.boxModel();
+  if (visible && box) {
+    return true;
+  }
+  return false;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -1571,3 +1620,4 @@ exports.findFrame = findFrame;
 exports.newReplyGeoIP = newReplyGeoIP;
 exports.newReplyTechInAsia = newReplyTechInAsia;
 exports.newReplySteepAndCheap = newReplySteepAndCheap;
+exports.isElementVisible = isElementVisible;

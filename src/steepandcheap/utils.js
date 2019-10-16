@@ -1,3 +1,5 @@
+const {isElementVisible} = require('../utils');
+
 /**
  * closeEMailSignUpModal - close email-signup-modal
  * @param {object} page - page
@@ -17,6 +19,12 @@ async function closeEMailSignUpModal(page) {
   }
 
   if (lstdialog.length > 0) {
+    const isVisible = await isElementVisible(page, lstdialog[0]);
+
+    if (!isVisible) {
+      return undefined;
+    }
+
     const btns = await lstdialog[0].$$('button').catch((err) => {
       awaiterr = err;
     });
@@ -35,6 +43,8 @@ async function closeEMailSignUpModal(page) {
       }
     }
   }
+
+  return undefined;
 }
 
 /**

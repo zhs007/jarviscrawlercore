@@ -402,7 +402,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
 
     await page.close();
 
-    return {error: awaiterr.toString()};
+    return {error: 'steepandcheapProducts.chgPage ' + awaiterr.toString()};
   }
 
   const firsturl = await getFirstProductURL(page);

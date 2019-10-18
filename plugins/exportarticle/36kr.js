@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 
 /**
  * ismine
@@ -24,9 +25,6 @@ async function exportArticle(page) {
       (element) => {
         return element.innerHTML;
       });
-
-  //   console.log('geekpark.article');
-  //   console.log(dom.length);
 
   await page.setContent(dom);
 
@@ -156,7 +154,7 @@ async function exportArticle(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('36kr.article:exportArticle.evaluate', err);
+    log.error('36kr.article:exportArticle.evaluate', err);
 
     errret = err;
   });

@@ -7,6 +7,7 @@ const {
 // const {formatDTNumber} = require('./utils');
 const {mgrDTGame} = require('./games/allgames');
 const messages = require('../../proto/result_pb');
+const log = require('../log');
 
 let lsticon404 = [];
 
@@ -45,7 +46,7 @@ async function wait4RightFrame(rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('wait4RightFrame', err);
+        log.error('wait4RightFrame', err);
       });
 }
 
@@ -87,7 +88,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
     return frame.name().indexOf('layui-layer-iframe') === 0;
   });
 
-  console.log('subgameframe ' + subgameframe);
+  log.debug('subgameframe ' + subgameframe);
 
   if (subgameframe) {
     await subgameframe.waitForFunction(() => {
@@ -101,7 +102,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
       return false;
     });
 
-    console.log('subgameframe:waitForFunction ok.');
+    log.debug('subgameframe:waitForFunction ok.');
 
     const lst = await subgameframe
         .$$eval(
@@ -255,8 +256,6 @@ async function checkGPKGameResult(
       .waitForFunction(() => {
         const jlxxmenu = getElement('.menuson.jlxx');
         if (jlxxmenu) {
-        //   console.log(jlxxmenu.style[0]);
-
           if (jlxxmenu.style[0] === 'display') {
             return true;
           }
@@ -265,7 +264,7 @@ async function checkGPKGameResult(
         return false;
       })
       .catch((err) => {
-        console.log('checkGPKGameResult:waitFor.menuson.jlxx', err);
+        log.error('checkGPKGameResult:waitFor.menuson.jlxx', err);
       });
 
   const isdone1 = await waitRightFrame.wait4URL(
@@ -280,8 +279,6 @@ async function checkGPKGameResult(
   if (!isdone1) {
     return {error: 'wait4URL timeout'};
   }
-
-  // console.log('haha');
 
   await wait4RightFrame(rightFrame);
 
@@ -354,9 +351,7 @@ async function checkGPKGameResult(
     return false;
   });
 
-  console.log('rightFrame:waitForFunction ok.');
-
-  // console.log('haha1');
+  log.debug('rightFrame:waitForFunction ok.');
 
   const lst = await rightFrame.$$eval('tr', (eles) => {
     const arr = [];
@@ -540,7 +535,7 @@ async function checkGPKGameResult(
       );
 
       if (cursubgames.ret) {
-        console.log('getSubGame ' + cursubgames.ret.length);
+        log.debug('getSubGame ' + cursubgames.ret.length);
 
         lst[i].children = cursubgames.ret;
       }
@@ -554,7 +549,7 @@ async function checkGPKGameResult(
     if (lst[i].err) {
       ++errnums;
 
-      console.log(
+      log.error(
           'I got a error! ' +
           lst[i].id +
           ' ' +
@@ -579,7 +574,7 @@ async function checkGPKGameResult(
       ),
     });
 
-    console.log(
+    log.error(
         'I got a error! ' +
         messages.DTGameResultErrCode.DTGRE_ICON404 +
         ' ' +
@@ -592,7 +587,7 @@ async function checkGPKGameResult(
     errnums: errnums,
   };
 
-  console.log(ret.errnums);
+  log.debug(ret.errnums);
 
   return {ret: newDTGPKCheckGameResult(ret)};
 }

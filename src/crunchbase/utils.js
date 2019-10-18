@@ -1,4 +1,5 @@
 const {sleep, mouseHoldFrameEleEx} = require('../utils');
+const log = require('../log');
 
 /**
  * reCAPTCHA
@@ -23,13 +24,13 @@ async function reCAPTCHA(browser, page, url) {
         ct = new Date().getTime();
       }
 
-      console.log('mainframenavigated ' + frame.name() + ' ' + frame.url());
+      log.debug('mainframenavigated ' + frame.name() + ' ' + frame.url());
     }
   });
 
   page.on('domcontentloaded', () => {
     ++domcontentloadedtimes;
-    console.log('domcontentloaded ' + domcontentloadedtimes);
+    log.debug('domcontentloaded ' + domcontentloadedtimes);
   });
 
   page.on('response', async (response) => {
@@ -40,7 +41,7 @@ async function reCAPTCHA(browser, page, url) {
         url403 = true;
       }
 
-      console.log('response ' + urlresponse + ' ' + url403);
+      log.debug('response ' + urlresponse + ' ' + url403);
     }
   });
 
@@ -51,7 +52,7 @@ async function reCAPTCHA(browser, page, url) {
   // });
 
   await page.goto(url).catch((err) => {
-    console.log('reCAPTCHA.goto', err);
+    log.error('reCAPTCHA.goto', err);
   });
 
   while (true) {

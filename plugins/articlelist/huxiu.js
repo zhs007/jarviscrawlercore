@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 // const {jarviscrawlercore} = require('../../proto/result');
 // const images = require('images');
 
@@ -8,7 +9,6 @@ const {mgrPlugins} = require('./pluginsmgr');
  * @return {bool} ismine
  */
 function ismine(url) {
-  // console.log(url);
   if (url == 'https://www.huxiu.com') {
     return true;
   }
@@ -23,42 +23,44 @@ function ismine(url) {
  */
 async function getArticles(page) {
   let errret = undefined;
-  const ret = await page.evaluate(async () => {
-    const ret = {};
-    ret.articles = [];
+  const ret = await page
+      .evaluate(async () => {
+        const ret = {};
+        ret.articles = [];
 
-    const lst = $('.mod-b.mod-art.clearfix');
-    // console.log(lst.length);
-    for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByTagName('h2');
-      if (title.length > 0) {
-        const url = title[0].getElementsByTagName('a');
-        const summary = lst[i].getElementsByClassName('mob-sub');
+        const lst = $('.mod-b.mod-art.clearfix');
 
-        co = {
-          title: title[0].innerText,
-        };
+        for (let i = 0; i < lst.length; ++i) {
+          const title = lst[i].getElementsByTagName('h2');
+          if (title.length > 0) {
+            const url = title[0].getElementsByTagName('a');
+            const summary = lst[i].getElementsByClassName('mob-sub');
 
-        if (url.length > 0) {
-          co.url = url[0].href;
+            co = {
+              title: title[0].innerText,
+            };
+
+            if (url.length > 0) {
+              co.url = url[0].href;
+            }
+
+            if (summary.length > 0) {
+              co.summary = summary[0].innerText;
+            }
+
+            ret.articles.push(co);
+          }
         }
 
-        if (summary.length > 0) {
-          co.summary = summary[0].innerText;
-        }
+        console.log(ret);
 
-        ret.articles.push(co);
-      }
-    }
+        return ret;
+      })
+      .catch((err) => {
+        log.error('huxiu.main:getArticles.evaluate', err);
 
-    console.log(ret);
-
-    return ret;
-  }).catch((err) => {
-    console.log('huxiu.main:getArticles.evaluate', err);
-
-    errret = err;
-  });
+        errret = err;
+      });
 
   return {
     result: ret,

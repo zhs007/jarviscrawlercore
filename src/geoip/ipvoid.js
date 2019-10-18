@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * isEmptyValue - geoip with ipvoid
  * @param {string} str - value
@@ -36,11 +38,10 @@ async function ipvoidgeoip(browser, ipaddr) {
   const page = await browser.newPage();
   await page.goto('https://www.ipvoid.com/ip-geolocation/').catch((err) => {
     awaiterr = err;
-    // console.log('ipvoidgeoip.goto', err);
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.goto', awaiterr);
+    log.error('ipvoidgeoip.goto', awaiterr);
 
     await page.close();
 
@@ -52,7 +53,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.waitForSelector input', awaiterr);
+    log.error('ipvoidgeoip.waitForSelector input', awaiterr);
 
     await page.close();
 
@@ -64,7 +65,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.waitForSelector btn', awaiterr);
+    log.error('ipvoidgeoip.waitForSelector btn', awaiterr);
 
     await page.close();
 
@@ -76,7 +77,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.type', awaiterr);
+    log.error('ipvoidgeoip.type', awaiterr);
 
     await page.close();
 
@@ -88,7 +89,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.click', awaiterr);
+    log.error('ipvoidgeoip.click', awaiterr);
 
     await page.close();
 
@@ -100,7 +101,7 @@ async function ipvoidgeoip(browser, ipaddr) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.waitForSelector result', awaiterr);
+    log.error('ipvoidgeoip.waitForSelector result', awaiterr);
 
     await page.close();
 

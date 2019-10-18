@@ -2,6 +2,7 @@ const {startBrowser} = require('../browser');
 const {cbcompanies} = require('./companies');
 const {cbcompany} = require('./company');
 const {cblogin} = require('./login');
+const log = require('../log');
 
 /**
  * crunchbaseexec
@@ -17,11 +18,11 @@ async function crunchbaseexec(program, version) {
       .option('-u, --user [user]', 'user name')
       .option('-p, --password [password]', 'password name')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (mode == 'companies' || mode == 'company') {
           if (!options.company) {
-            console.log(
+            log.console(
                 'command wrong, please type ' + 'jarviscrawler crunchbase --help'
             );
 
@@ -31,7 +32,7 @@ async function crunchbaseexec(program, version) {
 
         if (mode == 'login') {
           if (!options.user || !options.password) {
-            console.log(
+            log.console(
                 'command wrong, please type ' + 'jarviscrawler crunchbase --help'
             );
 
@@ -40,13 +41,13 @@ async function crunchbaseexec(program, version) {
         }
 
         if (!(mode == 'companies' || mode == 'company' || mode == 'login')) {
-          console.log('command wrong, the mode is companies or company or login');
+          log.console('command wrong, the mode is companies or company or login');
 
           return;
         }
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
@@ -61,7 +62,7 @@ async function crunchbaseexec(program, version) {
 
         // await browser.close();
         })().catch((err) => {
-          console.log('crunchbaseexec ', err);
+          log.console('crunchbaseexec ', err);
 
           if (headless) {
             process.exit(-1);

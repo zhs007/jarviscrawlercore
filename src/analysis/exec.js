@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {analyzePage} = require('./page');
+const log = require('../log');
 
 /**
  * execAnalysis
@@ -14,20 +15,20 @@ async function execAnalysis(program, version) {
       .option('-u, --url [url]', 'url')
       .option('-d, --delay [delay]', 'dealy time in seconds')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!mode) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler analyze --help'
           );
 
           return;
         }
 
-        console.log('mode - ', mode);
+        log.console('mode - ', mode);
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         let delay = 0;
         if (options.delay) {
@@ -43,7 +44,7 @@ async function execAnalysis(program, version) {
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

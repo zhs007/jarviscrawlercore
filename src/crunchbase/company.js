@@ -9,6 +9,7 @@ const {
   mouseHoldFrameEleEx,
   sleep,
 } = require('../utils');
+const log = require('../log');
 
 /**
  * cbcompany
@@ -24,7 +25,7 @@ async function cbcompany(browser, company) {
         deviceScaleFactor: 1,
       })
       .catch((err) => {
-        console.log('cbcompany.setViewport', err);
+        log.error('cbcompany.setViewport', err);
       });
 
   // page.on('framenavigated', (frame) => {
@@ -64,7 +65,7 @@ async function cbcompany(browser, company) {
       'https://www.crunchbase.com/organization/' + company
   );
 
-  console.log('cbcompany.reCAPTCHA ' + recaptcha);
+  log.debug('cbcompany.reCAPTCHA ' + recaptcha);
 
   if (recaptcha) {
     await sleep(10 * 1000);
@@ -85,7 +86,7 @@ async function cbcompany(browser, company) {
   //       console.log('cbcompany.goto', err);
   //     });
 
-  console.log('haha');
+  log.debug('haha');
 
   let x = 10;
   const y = 50;

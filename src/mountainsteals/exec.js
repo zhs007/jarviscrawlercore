@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {mountainstealsSale} = require('./sale');
+const log = require('../log');
 
 /**
  * execMountainSteals
@@ -15,20 +16,20 @@ async function execMountainSteals(program, version) {
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!mode) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
           );
 
           return;
         }
 
-        console.log('mode - ', mode);
+        log.console('mode - ', mode);
 
         if (mode == 'sale' && !options.url) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
           );
 
@@ -36,7 +37,7 @@ async function execMountainSteals(program, version) {
         }
 
         if (mode == 'product' && !options.url) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
           );
 
@@ -56,7 +57,7 @@ async function execMountainSteals(program, version) {
         }
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
@@ -68,12 +69,12 @@ async function execMountainSteals(program, version) {
                 page,
                 timeout
             );
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           }
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

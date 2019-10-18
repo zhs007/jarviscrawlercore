@@ -1,6 +1,7 @@
 const {DownloadRequest} = require('../downloadrequest');
 const vm = require('vm');
 const moment = require('moment');
+const log = require('../log');
 
 /**
  * jrjFundValue - jrj fundvalue
@@ -25,7 +26,7 @@ async function jrjFundValue(browser, code, date, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFundValue.setViewport', awaiterr);
+    log.error('jrjFundValue.setViewport', awaiterr);
 
     await page.close();
 
@@ -64,7 +65,7 @@ async function jrjFundValue(browser, code, date, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFundValue.goto', awaiterr);
+    log.error('jrjFundValue.goto', awaiterr);
 
     await page.close();
 
@@ -120,7 +121,7 @@ async function jrjFundValue(browser, code, date, timeout) {
           // ret.iValue.push(uval);
           // ret.iTotalValue.push(aval);
         } catch (err) {
-          console.log('jrjFundValue proc values err ' + err);
+          log.error('jrjFundValue proc values err ' + err);
         }
       }
     }

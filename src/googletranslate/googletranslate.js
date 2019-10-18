@@ -1,4 +1,5 @@
 const {attachJQuery} = require('../utils');
+const log = require('../log');
 
 /**
  * google translate
@@ -19,16 +20,16 @@ async function googletranslate(browser, srctext, srclang, destlang) {
         '&text='
       )
       .catch((err) => {
-        console.log('googletranslate.goto', err);
+        log.error('googletranslate.goto', err);
       });
 
   // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   await attachJQuery(page);
   await page.waitForSelector('.tlid-input.input').catch((err) => {
-    console.log('googletranslate.waitForSelector', err);
+    log.error('googletranslate.waitForSelector', err);
   });
   await page.type('.tlid-input.input', srctext).catch((err) => {
-    console.log('googletranslate.type', err);
+    log.error('googletranslate.type', err);
   });
 
   await page
@@ -36,7 +37,7 @@ async function googletranslate(browser, srctext, srclang, destlang) {
           '$(\'.tlid-translation.translation\').length > 0 && $(\'.tlid-translation.translation\')[0].innerText != \'\''
       )
       .catch((err) => {
-        console.log('googletranslate.waitForFunction', err);
+        log.error('googletranslate.waitForFunction', err);
       });
   //   await page.waitForSelector('.tlid-results-container.results-container');
   const desttext = await page
@@ -49,7 +50,7 @@ async function googletranslate(browser, srctext, srclang, destlang) {
         return '';
       })
       .catch((err) => {
-        console.log('googletranslate.evaluate', err);
+        log.error('googletranslate.evaluate', err);
       });
 
   await page.close();

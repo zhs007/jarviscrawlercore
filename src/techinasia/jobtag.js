@@ -1,5 +1,6 @@
 const {sleep} = require('../utils');
 const {resetPage} = require('./utils');
+const log = require('../log');
 
 /**
  * getMainClassName - get main class name
@@ -42,7 +43,8 @@ async function getMainTag(ele) {
     awaiterr = err;
   });
   if (awaiterr) {
-    console.log('getMainTag.getProperty ' + awaiterr);
+    log.error('getMainTag.getProperty ' + awaiterr);
+
     return '';
   }
 
@@ -51,7 +53,8 @@ async function getMainTag(ele) {
       awaiterr = err;
     });
     if (awaiterr) {
-      console.log('getMainTag.jsonValue ' + awaiterr);
+      log.error('getMainTag.jsonValue ' + awaiterr);
+
       return '';
     }
 
@@ -89,7 +92,7 @@ async function getTag(page, ele, timeout) {
   });
 
   if (awaiterr) {
-    console.log('getTag.ele.click ' + awaiterr);
+    log.error('getTag.ele.click ' + awaiterr);
 
     return undefined;
   }
@@ -122,7 +125,7 @@ async function getTag(page, ele, timeout) {
   //     });
 
   if (awaiterr) {
-    console.log('getTag.waitForSelector ' + awaiterr);
+    log.error('getTag.waitForSelector ' + awaiterr);
 
     return undefined;
   }
@@ -154,7 +157,7 @@ async function getTag(page, ele, timeout) {
       });
 
   if (awaiterr) {
-    console.log('getTag.$$eval ' + awaiterr);
+    log.error('getTag.$$eval ' + awaiterr);
 
     return undefined;
   }
@@ -222,7 +225,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJobTag.setViewport', awaiterr);
+    log.error('techinasiaJobTag.setViewport', awaiterr);
 
     await page.close();
 
@@ -249,7 +252,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJobsType.goto', awaiterr);
+    log.error('techinasiaJobsType.goto', awaiterr);
 
     await page.close();
 
@@ -258,7 +261,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
 
   awaiterr = await resetPage(page);
   if (awaiterr) {
-    console.log('techinasiaJobsType.resetPage', awaiterr);
+    log.error('techinasiaJobsType.resetPage', awaiterr);
 
     await page.close();
 

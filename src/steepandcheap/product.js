@@ -1,6 +1,7 @@
 const {sleep} = require('../utils');
 const {closeDialog} = require('./utils');
 const {WaitAllResponse} = require('../waitallresponse');
+const log = require('../log');
 
 /**
  * validImageSrc - //a.b.c/d.jpg => https://a.b.c/d.jpg
@@ -272,7 +273,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.setViewport', awaiterr);
+    log.error('steepandcheapProduct.setViewport', awaiterr);
 
     await page.close();
 
@@ -301,7 +302,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.goto', awaiterr);
+    log.error('steepandcheapProduct.goto', awaiterr);
 
     await page.close();
 
@@ -313,7 +314,7 @@ async function steepandcheapProduct(browser, url, timeout) {
   });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
+    log.error('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
 
     await page.close();
 
@@ -339,7 +340,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .crumb', awaiterr);
+    log.error('steepandcheapProduct.$$eval .crumb', awaiterr);
 
     await page.close();
 
@@ -368,7 +369,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log(
+    log.error(
         'steepandcheapProduct.$$eval .ui-mediacarousel__list',
         awaiterr
     );
@@ -397,7 +398,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .sku-id', awaiterr);
+    log.error('steepandcheapProduct.$$eval .sku-id', awaiterr);
 
     await page.close();
 
@@ -454,7 +455,7 @@ async function steepandcheapProduct(browser, url, timeout) {
     awaiterr = err;
   });
   if (awaiterr) {
-    console.log('steepandcheapProduct.pdp__recommendations', awaiterr);
+    log.error('steepandcheapProduct.pdp__recommendations', awaiterr);
 
     await page.close();
 
@@ -466,7 +467,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       awaiterr = err;
     });
     if (awaiterr) {
-      console.log('steepandcheapProduct.pdp__recommendations.hover', awaiterr);
+      log.error('steepandcheapProduct.pdp__recommendations.hover', awaiterr);
 
       await page.close();
 
@@ -510,7 +511,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .tech-specs-section', awaiterr);
+    log.error('steepandcheapProduct.$$eval .tech-specs-section', awaiterr);
 
     await page.close();
 
@@ -538,7 +539,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .product-information', awaiterr);
+    log.error('steepandcheapProduct.$$eval .product-information', awaiterr);
 
     await page.close();
 
@@ -558,7 +559,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .size-info', awaiterr);
+    log.error('steepandcheapProduct.$$eval .size-info', awaiterr);
 
     await page.close();
 
@@ -582,7 +583,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProduct.$$eval .review-count', awaiterr);
+    log.error('steepandcheapProduct.$$eval .review-count', awaiterr);
 
     await page.close();
 
@@ -592,7 +593,7 @@ async function steepandcheapProduct(browser, url, timeout) {
   if (reviewCount > 0) {
     awaiterr = await getAllReviews(page, waitAllResponse, reviewCount, timeout);
     if (awaiterr) {
-      console.log('steepandcheapProduct.getAllReviews ', awaiterr);
+      log.error('steepandcheapProduct.getAllReviews ', awaiterr);
 
       await page.close();
 
@@ -608,7 +609,7 @@ async function steepandcheapProduct(browser, url, timeout) {
         });
 
     if (awaiterr) {
-      console.log(
+      log.error(
           'steepandcheapProduct.waitForSelector article.review',
           awaiterr
       );
@@ -728,7 +729,7 @@ async function steepandcheapProduct(browser, url, timeout) {
           });
 
       if (awaiterr) {
-        console.log('steepandcheapProduct.$$eval article.review', awaiterr);
+        log.error('steepandcheapProduct.$$eval article.review', awaiterr);
 
         await page.close();
 
@@ -761,7 +762,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    console.log(
+    log.error(
         'steepandcheapProduct.waitForSelector .product ' + url + ' error ',
         awaiterr
     );
@@ -790,7 +791,7 @@ async function steepandcheapProduct(browser, url, timeout) {
         });
 
     if (awaiterr) {
-      console.log('steepandcheapProduct.$$eval .product', awaiterr);
+      log.error('steepandcheapProduct.$$eval .product', awaiterr);
 
       await page.close();
 

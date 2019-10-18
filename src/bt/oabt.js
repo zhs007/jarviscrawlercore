@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * oabt
  * @param {object} browser - browser
@@ -5,7 +7,7 @@
  * @param {string} url - oabt url
  */
 async function oabt(browser, page, url) {
-  console.log('oabt');
+  log.debug('oabt');
 
   const lst = await page.$$eval('li', (eles) => {
     console.log(eles.length);

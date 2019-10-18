@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {steepandcheapProducts} = require('./products');
 const {steepandcheapProduct} = require('./product');
+const log = require('../log');
 
 /**
  * execSteepAndCheap
@@ -16,24 +17,30 @@ async function execSteepAndCheap(program, version) {
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!mode) {
-          console.log('command wrong, please type ' + 'jarviscrawler steepandcheap --help');
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+          );
 
           return;
         }
 
-        console.log('mode - ', mode);
+        log.console('mode - ', mode);
 
         if (mode == 'products' && !options.url) {
-          console.log('command wrong, please type ' + 'jarviscrawler steepandcheap --help');
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+          );
 
           return;
         }
 
         if (mode == 'product' && !options.url) {
-          console.log('command wrong, please type ' + 'jarviscrawler steepandcheap --help');
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+          );
 
           return;
         }
@@ -51,22 +58,27 @@ async function execSteepAndCheap(program, version) {
         }
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
 
           if (mode == 'products') {
-            const ret = await steepandcheapProducts(browser, options.url, page, timeout);
-            console.log(JSON.stringify(ret));
+            const ret = await steepandcheapProducts(
+                browser,
+                options.url,
+                page,
+                timeout
+            );
+            log.console(JSON.stringify(ret));
           } else if (mode == 'product') {
             const ret = await steepandcheapProduct(browser, options.url, timeout);
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           }
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

@@ -1,5 +1,6 @@
 const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
+const log = require('../log');
 
 const grpc = require('grpc');
 
@@ -24,11 +25,11 @@ function startTranslate(servAddr, srclang, destlang, text) {
 
   client.translate(request, function(err, response) {
     if (err) {
-      console.log('err:', err);
+      log.error('err:', err);
     }
 
     if (response) {
-      console.log('text:', response.getText());
+      log.debug('text:', response.getText());
     }
   });
 }
@@ -52,16 +53,16 @@ function startArticle(servAddr, url, attachJQuery) {
   call.on('data', (msg) =>{
     const result = msg.getResult();
     if (result) {
-      console.log(result.getTitle());
+      log.debug(result.getTitle());
     } else {
-      console.log(msg.getTotallength(), msg.getCurlength());
+      log.debug(msg.getTotallength(), msg.getCurlength());
     }
   });
   call.on('end', ()=>{
-    console.log('end.');
+    log.debug('end.');
   });
   call.on('error', (err)=>{
-    console.log('err', err);
+    log.error('err', err);
   });
 }
 
@@ -82,11 +83,11 @@ function startGetArticles(servAddr, website) {
 
   client.getArticles(request, function(err, response) {
     if (err) {
-      console.log('err:', err);
+      log.error('err:', err);
     }
 
     if (response) {
-      console.log('text:', JSON.stringify(response.getArticles().toObject()));
+      log.debug('text:', JSON.stringify(response.getArticles().toObject()));
     }
   });
 }

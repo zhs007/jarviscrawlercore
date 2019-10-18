@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const log = require('../log');
 
 /**
  * getPageType - get page type
@@ -79,7 +80,7 @@ async function techinasiaCompany(browser, company, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaCompany.goto', awaiterr);
+    log.error('techinasiaCompany.goto', awaiterr);
 
     await page.close();
 
@@ -88,7 +89,7 @@ async function techinasiaCompany(browser, company, timeout) {
 
   const pagetype = await getPageType(page, timeout);
   if (pagetype.error) {
-    console.log('techinasiaCompany.getPageType ', awaiterr);
+    log.error('techinasiaCompany.getPageType ', awaiterr);
 
     await page.close();
 
@@ -173,7 +174,7 @@ async function techinasiaCompany(browser, company, timeout) {
         });
 
     if (awaiterr) {
-      console.log('techinasiaCompany.eval input', awaiterr);
+      log.error('techinasiaCompany.eval input', awaiterr);
 
       await page.close();
 
@@ -253,7 +254,7 @@ async function techinasiaCompany(browser, company, timeout) {
         });
 
     if (awaiterr) {
-      console.log('techinasiaCompany.eval input', awaiterr);
+      log.error('techinasiaCompany.eval input', awaiterr);
 
       await page.close();
 
@@ -269,7 +270,7 @@ async function techinasiaCompany(browser, company, timeout) {
     return {ret: ret};
   }
 
-  console.log('invalid page type.');
+  log.error('invalid page type.');
 
   await page.close();
 

@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const log = require('../log');
 
 /**
  * mountainstealsSale - mountainsteals sale
@@ -23,7 +24,7 @@ async function mountainstealsSale(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('mountainstealsSale.setViewport', awaiterr);
+    log.error('mountainstealsSale.setViewport', awaiterr);
 
     await page.close();
 
@@ -39,7 +40,7 @@ async function mountainstealsSale(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('mountainstealsSale.goto', awaiterr);
+    log.error('mountainstealsSale.goto', awaiterr);
 
     await page.close();
 

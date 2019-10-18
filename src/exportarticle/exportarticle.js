@@ -8,6 +8,7 @@ const {
   attachJarvisCrawlerCore,
 } = require('../utils');
 const {exportJPG} = require('./expjpg');
+const log = require('../log');
 
 /**
  * export article to a pdf file or a jpg file.
@@ -21,8 +22,17 @@ const {exportJPG} = require('./expjpg');
  * @param {bool} isoutpurimages - is output images
  * @param {bool} debugmode - is debug mode
  */
-async function exportArticle(browser, url, outputfile, mode,
-    pdfformat, jpgquality, jquery, isoutpurimages, debugmode) {
+async function exportArticle(
+    browser,
+    url,
+    outputfile,
+    mode,
+    pdfformat,
+    jpgquality,
+    jquery,
+    isoutpurimages,
+    debugmode
+) {
   // const browser = await puppeteer.launch({
   //   headless: headless,
   //   args: [
@@ -48,19 +58,23 @@ async function exportArticle(browser, url, outputfile, mode,
     const url = response.url();
     // console.log(url);
     const headers = response.headers();
-    if (headers && headers['content-type'] &&
-          headers['content-type'].indexOf('image') == 0) {
+    if (
+      headers &&
+      headers['content-type'] &&
+      headers['content-type'].indexOf('image') == 0
+    ) {
       mapResponse[url] = await response.buffer();
     }
   });
 
-  await page.goto(url,
-      {
+  await page
+      .goto(url, {
         waitUntil: 'networkidle2',
         timeout: 0,
-      }).catch((err) => {
-    console.log('page.goto', url, err);
-  });
+      })
+      .catch((err) => {
+        log.error('page.goto', url, err);
+      });
 
   // await page.goto(url).catch((err) => {
   //   console.log('page.goto', url, err);
@@ -95,22 +109,29 @@ async function exportArticle(browser, url, outputfile, mode,
 
       if (ret.titleImage) {
         ret.titleImage = setImageInfo(
-            ret.titleImage, mapResponse, isoutpurimages);
+            ret.titleImage,
+            mapResponse,
+            isoutpurimages
+        );
       }
 
       if (ret.imgs && ret.imgs.length && ret.imgs.length > 0) {
         for (let i = 0; i < ret.imgs.length; ++i) {
-          ret.imgs[i] = setImageInfo(
-              ret.imgs[i], mapResponse, isoutpurimages);
+          ret.imgs[i] = setImageInfo(ret.imgs[i], mapResponse, isoutpurimages);
         }
       }
 
-      if (ret.paragraphs && ret.paragraphs.length &&
-        ret.paragraphs.length > 0) {
+      if (
+        ret.paragraphs &&
+        ret.paragraphs.length &&
+        ret.paragraphs.length > 0
+      ) {
         for (let i = 0; i < ret.paragraphs.length; ++i) {
           if (ret.paragraphs[i].pt == 2) {
             ret.paragraphs[i].imgHashName = getImageHashName(
-                ret.paragraphs[i].imgURL, mapResponse);
+                ret.paragraphs[i].imgURL,
+                mapResponse
+            );
 
             ret.paragraphs[i].imgURL = undefined;
           }
@@ -119,9 +140,11 @@ async function exportArticle(browser, url, outputfile, mode,
 
       const ear = newExportArticleResult(ret);
 
-      if (outputfile &&
-          typeof(outputfile) == 'string' &&
-          outputfile.length > 0) {
+      if (
+        outputfile &&
+        typeof outputfile == 'string' &&
+        outputfile.length > 0
+      ) {
         if (mode == 'pb') {
           saveMessage(outputfile, ear);
         } else if (mode == 'pdf') {

@@ -3,6 +3,7 @@ const {techinasiaCompany} = require('./company');
 const {techinasiaJob} = require('./job');
 const {techinasiaJobs} = require('./jobs');
 const {techinasiaJobTag} = require('./jobtag');
+const log = require('../log');
 
 /**
  * execTechInAsia
@@ -21,30 +22,30 @@ async function execTechInAsia(program, version) {
       .option('-s, --subtag [subtag]', 'sub tag')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!mode) {
-          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
+          log.console('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
 
-        console.log('mode - ', mode);
+        log.console('mode - ', mode);
 
         if (mode == 'compnay' && !options.company) {
-          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
+          log.console('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
 
         if (mode == 'job' && !options.job) {
-          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
+          log.console('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
 
         if (mode == 'jobs' && !options.jobnums) {
-          console.log('command wrong, please type ' + 'jarviscrawler techinasia --help');
+          log.console('command wrong, please type ' + 'jarviscrawler techinasia --help');
 
           return;
         }
@@ -65,28 +66,28 @@ async function execTechInAsia(program, version) {
         }
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
 
           if (mode == 'company') {
             const ret = await techinasiaCompany(browser, options.company, timeout);
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           } else if (mode == 'job') {
             const ret = await techinasiaJob(browser, options.job, timeout);
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           } else if (mode == 'jobs') {
             const ret = await techinasiaJobs(browser, options.jobnums, maintag, subtag, timeout);
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           } else if (mode == 'jobtag') {
             const ret = await techinasiaJobTag(browser, maintag, timeout);
-            console.log(JSON.stringify(ret));
+            log.console(JSON.stringify(ret));
           }
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

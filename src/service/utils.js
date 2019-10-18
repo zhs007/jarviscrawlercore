@@ -1,4 +1,5 @@
 const messages = require('../../proto/result_pb');
+const log = require('../log');
 
 const MAX_BUFF_LEN = 4 * 1024 * 1024;
 const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
@@ -10,7 +11,7 @@ const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
  * @param {bool} isend - is end
  */
 function replyError(call, error, isend) {
-  console.log(error);
+  log.error(error);
 
   const reply = new messages.ReplyCrawlerStream();
 

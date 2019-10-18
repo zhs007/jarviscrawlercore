@@ -1,6 +1,7 @@
 const {sleep} = require('../utils');
 const {WaitURLResponse} = require('../waiturlresponse');
 const {WaitDomContentLoaded} = require('../waitfordomcontentloaded');
+const log = require('../log');
 
 /**
  * douban search
@@ -19,11 +20,11 @@ async function search(browser, type, str, debugmode) {
   await waitdomloaded.wait(async () => {
     if (type == 'movie') {
       await page.goto('https://movie.douban.com/').catch((err) => {
-        console.log('douban.search.goto', err);
+        log.error('douban.search.goto', err);
       });
     } else {
       await page.goto('https://www.douban.com/').catch((err) => {
-        console.log('douban.search.goto', err);
+        log.error('douban.search.goto', err);
       });
     }
   }, 3 * 60 * 1000);
@@ -74,7 +75,7 @@ async function search(browser, type, str, debugmode) {
     return lst;
   });
 
-  console.log(lst);
+  log.debug(lst);
 
   if (!debugmode) {
     await page.close();

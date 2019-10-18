@@ -1,4 +1,5 @@
 const {sleep} = require('./utils');
+const log = require('./log');
 
 /**
  * DownloadRequest class
@@ -60,7 +61,10 @@ class DownloadRequest {
       if (req) {
         const headers = res.headers();
 
-        if (headers['content-type'] && headers['content-type'].indexOf('video') == 0) {
+        if (
+          headers['content-type'] &&
+          headers['content-type'].indexOf('video') == 0
+        ) {
           req.status = res.status();
 
           return;
@@ -73,7 +77,7 @@ class DownloadRequest {
         }
 
         req.buf = await res.buffer().catch((err) => {
-          console.log('DownloadRequest.buffer ' + err);
+          log.error('DownloadRequest.buffer ' + err);
         });
         req.status = res.status();
       }

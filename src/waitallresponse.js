@@ -1,4 +1,5 @@
 const {sleep} = require('./utils');
+const log = require('./log');
 
 /**
  * WaitAllResponse class
@@ -64,7 +65,10 @@ class WaitAllResponse {
       if (req) {
         const headers = res.headers();
 
-        if (headers['content-type'] && headers['content-type'].indexOf('video') == 0) {
+        if (
+          headers['content-type'] &&
+          headers['content-type'].indexOf('video') == 0
+        ) {
           req.status = res.status();
 
           return;
@@ -77,7 +81,7 @@ class WaitAllResponse {
         }
 
         await res.buffer().catch((err) => {
-          console.log('WaitAllResponse.buffer ' + err + ' ' + Date.now());
+          log.error('WaitAllResponse.buffer ' + err);
         });
         req.status = res.status();
       }

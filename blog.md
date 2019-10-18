@@ -6,6 +6,36 @@
 
 最初想法是从grpc这边加超时，后来想到这样crawler这边还是可能会慢慢积累chrome进程，时间长了，内存会受不了的。
 
+实际测了一下，这种情况下，很多是websocket的一个错误，因为现在一个请求，可能要几分钟时间才能返回，有可能是grpc底层网络问题吧，但如果这时重启jarviscrawlerserv，客户端那边能很快得到响应，原因待查。  
+
+有个正确的判断element是否可视的接口。
+
+``` js
+/**
+ * isElementVisible
+ * @param {object} page - page
+ * @param {object} ele - element
+ * @return {bool} isvisible - is visible
+ */
+async function isElementVisible(page, ele) {
+  const isVisibleHandle = await page.evaluateHandle((e) => {
+    const style = window.getComputedStyle(e);
+    return (
+      style &&
+      style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      style.opacity !== '0'
+    );
+  }, ele);
+  const visible = await isVisibleHandle.jsonValue();
+  const box = await ele.boxModel();
+  if (visible && box) {
+    return true;
+  }
+  return false;
+}
+```
+
 ### 2019-10-08
 
 关于``puppeteer``，特别需要注意要waitFor，会有大量的element都不是马上构建好的，切记一定要waitFor以后再操作。

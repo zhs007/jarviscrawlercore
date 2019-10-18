@@ -21,6 +21,7 @@ const {execGeoIP} = require('../src/geoip/exec');
 const {execTinypng} = require('../src/tinypng/exec');
 const {execTechInAsia} = require('../src/techinasia/exec');
 const {execSteepAndCheap} = require('../src/steepandcheap/exec');
+const {execMountainSteals} = require('../src/mountainsteals/exec');
 const {execJRJ} = require('../src/jrj/exec');
 const fs = require('fs');
 
@@ -355,5 +356,6 @@ execTinypng(program, VERSION);
 execTechInAsia(program, VERSION);
 execSteepAndCheap(program, VERSION);
 execJRJ(program, VERSION);
+execMountainSteals(program, VERSION);
 
 program.parse(process.argv);

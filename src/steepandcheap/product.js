@@ -2,6 +2,7 @@ const {sleep} = require('../utils');
 const {closeDialog} = require('./utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
+const {DEFAULT_REVIEWS_NUMS} = require('./basedef');
 
 /**
  * validImageSrc - //a.b.c/d.jpg => https://a.b.c/d.jpg
@@ -164,6 +165,14 @@ async function loadMoreReviews(page, waitAllResponse, reviewCount, timeout) {
       }
 
       waitAllResponse.reset();
+
+      const reviewnums = await page.$$eval('article.review', (eles) => {
+        return eles.length;
+      });
+
+      if (reviewnums >= reviewCount) {
+        return undefined;
+      }
     } else {
       break;
     }
@@ -232,6 +241,10 @@ async function getAllReviews(page, waitAllResponse, reviewCount, timeout) {
       });
       if (awaiterr) {
         return awaiterr;
+      }
+
+      if (reviewCount > DEFAULT_REVIEWS_NUMS) {
+        reviewCount = DEFAULT_REVIEWS_NUMS;
       }
 
       awaiterr = await loadMoreReviews(
@@ -369,10 +382,7 @@ async function steepandcheapProduct(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error(
-        'steepandcheapProduct.$$eval .ui-mediacarousel__list',
-        awaiterr
-    );
+    log.error('steepandcheapProduct.$$eval .ui-mediacarousel__list', awaiterr);
 
     await page.close();
 

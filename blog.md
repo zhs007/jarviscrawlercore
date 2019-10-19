@@ -1,5 +1,135 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-18
+
+jd的商品页面，在 https://item.jd.com/下面，一般是html页面，譬如https://item.jd.com/100006585530.html。  
+商品类别，可以找这个 ``#crumb-wrap``，或者直接找这个 ``.crumb.fl.clearfix``。  
+
+``` js
+$$('.crumb.fl.clearfix')[0].getElementsByClassName('item')
+```
+
+这样的结果，里面去掉class包含sep的，也就是``.item.sep``的。  
+里面品牌那里是个select，但我们只要文本，所以也可以很方便取到。  
+
+``` js
+$$('.crumb.fl.clearfix')[0].getElementsByClassName('item')[6].innerText
+```
+
+取名字。  
+
+``` js
+$$('.sku-name')[0].innerText
+```
+
+这里，如果里面有img，最好把alt取出来，做tag用。  
+
+``` js
+$$('.sku-name')[0].getElementsByTagName('img')[0].alt
+```
+
+下面是产品描述，不知道为啥叫new。  
+
+``` js
+$$('.news')[0].innerText
+```
+
+接下来是banner，这个应该是分类型的。
+
+``` js
+$$('.activity-banner')
+```
+
+类型，我估计可以通过这个id来判断。  
+或者，取到下面的innerText也可以的。  
+
+``` js
+$$('.activity-type')[0].innerText
+```
+
+然后，估计不同的类型，会有不同的数据。
+
+``` js
+$$('.activity-message')[0].getElementsByClassName('item')
+```
+
+这里，如果是预售，第一个是预定量，第二个是剩余时间，时间是中文的剩余时间，要反推出结束时间来。
+
+然后是价格，我估计要根据类型来。  
+下面这个是尽量回避类型的取值了。
+
+``` js
+$$('.summary-price-wrap')[0].getElementsByClassName('summary-price')
+```
+
+商品摘要信息。  
+
+``` js
+$$('.summary.p-choose-wrap')
+```
+
+这个是售后提供者。  
+
+``` js
+$$('.summary-service')[0].getElementsByTagName('span')[0].innerText
+```
+
+这个是发货时间。  
+
+``` js
+$$('#summary-yushou-ship')[0].getElementsByClassName('dd')[0].innerText
+```
+
+这个是重量。  
+
+``` js
+$$('#summary-weight')[0].getElementsByClassName('dd')[0].innerText
+```
+
+下面是选择项，估计可能有多个，这个children里面，id会类似``choose-attr-1``这样。  
+
+``` js
+$$('#choose-attrs')[0].children
+```
+
+或者，这样  
+
+``` js
+$$('#choose-attrs')[0].getElementsByClassName('li p-choose')
+```
+
+取选项数据  
+
+``` js
+$$('#choose-attrs')[0].getElementsByClassName('li p-choose')[0].getElementsByClassName('item')
+```
+
+评论数据。  
+
+``` js
+$$('.comment-info.J-comment-info')
+```
+
+好评百分比。  
+
+``` js
+$$('.percent-con')[0].innerText
+```
+
+这里是评论的tag列表。  
+
+``` js
+$$('.percent-info')[0].getElementsByTagName('span')
+```
+
+这里是评论的统计。  
+
+``` js
+$$('.J-comments-list.comments-list.ETab')[0].getElementsByClassName('tab-main small')[0].getElementsByTagName('li')
+```
+
+其中，class为current的是总计，class为J-addComment的是追评，剩下的有class的都可以放弃掉。
+
 ### 2019-10-16
 
 这几天一直发现Charles可能会卡，以为是Charles的问题，今天仔细查了一下，还是crawler的bug，有时候chrome还是会卡住。

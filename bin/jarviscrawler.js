@@ -22,6 +22,7 @@ const {execTinypng} = require('../src/tinypng/exec');
 const {execTechInAsia} = require('../src/techinasia/exec');
 const {execSteepAndCheap} = require('../src/steepandcheap/exec');
 const {execMountainSteals} = require('../src/mountainsteals/exec');
+const {execJD} = require('../src/jd/exec');
 const {execJRJ} = require('../src/jrj/exec');
 const fs = require('fs');
 const log = require('../src/log');
@@ -131,7 +132,9 @@ program
       log.console('version is ', VERSION);
 
       if (!url || !options.output) {
-        log.console('command wrong, please type ' + 'jarviscrawler tracing --help');
+        log.console(
+            'command wrong, please type ' + 'jarviscrawler tracing --help'
+        );
 
         return;
       }
@@ -356,5 +359,6 @@ execTechInAsia(program, VERSION);
 execSteepAndCheap(program, VERSION);
 execJRJ(program, VERSION);
 execMountainSteals(program, VERSION);
+execJD(program, VERSION);
 
 program.parse(process.argv);

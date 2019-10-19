@@ -130,6 +130,13 @@ $$('.J-comments-list.comments-list.ETab')[0].getElementsByClassName('tab-main sm
 
 其中，class为current的是总计，class为J-addComment的是追评，剩下的有class的都可以放弃掉。
 
+``#detail``这个里面，找``li``。  
+里面找 商品评价 。
+
+``` js
+$$('#detail')[0].getElementsByTagName('li')
+```
+
 ### 2019-10-16
 
 这几天一直发现Charles可能会卡，以为是Charles的问题，今天仔细查了一下，还是crawler的bug，有时候chrome还是会卡住。

@@ -1,5 +1,173 @@
 // const {sleep} = require('../utils');
 const log = require('../log');
+const {WaitAllResponse} = require('../waitallresponse');
+
+/**
+ * getComments - get comments
+ * @param {object} page - page
+ * @param {object} waitAllResponse - WaitAllResponse
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {err, ret}
+ */
+async function getComments(page, waitAllResponse, timeout) {
+  let awaiterr = undefined;
+
+  await page
+      .$$eval('#detail', (eles) => {
+        if (eles.length > 0) {
+          const lstli = eles[0].getElementsByTagName('li');
+          for (let i = 0; i < lstli.length; ++i) {
+            if (lstli[i].innerText.indexOf('商品评价') == 0) {
+              lstli[i].className = 'jcjdcomments';
+
+              return;
+            }
+          }
+        }
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('getComments#detail ' + awaiterr);
+
+    return {err: err};
+  }
+
+  const licomment = await page.$('.jcjdcomments');
+  if (licomment != undefined) {
+    await licomment.hover().catch((err) => {
+      awaiterr = err;
+    });
+
+    if (awaiterr) {
+      log.error('getComments.hover ' + awaiterr);
+
+      return {err: err};
+    }
+
+    await licomment.click().catch((err) => {
+      awaiterr = err;
+    });
+
+    if (awaiterr) {
+      log.error('getComments.click ' + awaiterr);
+
+      return {err: err};
+    }
+
+    // const isok = await waitAllResponse.waitDone(timeout);
+    // if (!isok) {
+    //   return {err: new Error('getComments.waitDone timeout.')};
+    // }
+
+    waitAllResponse.reset();
+
+    const ret = {};
+
+    ret.percent = await page
+        .$$eval('.percent-con', (eles) => {
+          if (eles.length > 0) {
+            return eles[0].innerText;
+          }
+
+          return '';
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      log.error('getComments.percent-con', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    ret.tags = await page
+        .$$eval('.percent-info', (eles) => {
+          if (eles.length > 0) {
+            const tags = [];
+            const lsttag = eles[0].getElementsByTagName('span');
+
+            for (let i = 0; i < lsttag.length; ++i) {
+              tags.push(lsttag[i].innerText);
+            }
+
+            return tags;
+          }
+
+          return undefined;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      log.error('getComments.percent-con', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    ret.lst = await page
+        .$$eval('.J-comments-list.comments-list.ETab', (eles) => {
+          if (eles.length > 0) {
+            const lstsmall = eles[0].getElementsByClassName('tab-main small');
+            if (lstsmall.length > 0) {
+              const lst = [];
+              const lstli = lstsmall[0].getElementsByTagName('li');
+              for (let i = 0; i < lstli.length; ++i) {
+                const cli = {};
+
+                if (
+                  lstli[i].className == 'current' ||
+                lstli[i].className == 'J-addComment'
+                ) {
+                  cli.type = lstli[i].innerText;
+
+                  if (lstli[i].dataset && lstli[i].dataset.num) {
+                    cli.nums = lstli[i].dataset.num;
+                  }
+
+                  lst.push(cli);
+                } else if (lstli[i].className == '') {
+                  cli.type = lstli[i].innerText;
+
+                  if (lstli[i].dataset && lstli[i].dataset.num) {
+                    cli.nums = lstli[i].dataset.num;
+                  }
+
+                  lst.push(cli);
+                }
+              }
+
+              return lst;
+            }
+          }
+
+          return undefined;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      log.error('getComments.percent-con', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    return {ret: ret};
+  }
+
+  return undefined;
+}
 
 /**
  * jdProduct - jd product
@@ -11,6 +179,8 @@ const log = require('../log');
 async function jdProduct(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  const waitAllResponse = new WaitAllResponse(page);
 
   await page
       .setViewport({
@@ -48,12 +218,22 @@ async function jdProduct(browser, url, timeout) {
 
   const ret = {};
 
-  ret.breadCrumbs = await page
+  const breadcrumbsret = await page
       .$$eval('.crumb.fl.clearfix', (eles) => {
         if (eles.length > 0) {
-          const lst = [];
+          const breadcrumbsret = {
+            breadCrumbs: [],
+          };
+
           const lstitems = eles[0].getElementsByClassName('item');
           for (let i = 0; i < lstitems.length; ++i) {
+            const lstbrand = lstitems[i].getElementsByClassName(
+                'J-crumb-br crumb-br EDropdown'
+            );
+            if (lstbrand.length > 0) {
+              breadcrumbsret.brand = lstitems[i].innerText;
+            }
+
             let isvaliditem = true;
             if (lstitems[i].classList.length > 1) {
               if (lstitems[i].classList[1] == 'sep') {
@@ -62,11 +242,11 @@ async function jdProduct(browser, url, timeout) {
             }
 
             if (isvaliditem) {
-              lst.push(lstitems[i].innerText);
+              breadcrumbsret.breadCrumbs.push(lstitems[i].innerText);
             }
           }
 
-          return lst;
+          return breadcrumbsret;
         }
 
         return undefined;
@@ -81,6 +261,19 @@ async function jdProduct(browser, url, timeout) {
     await page.close();
 
     return {error: awaiterr.toString()};
+  }
+
+  if (breadcrumbsret != undefined) {
+    ret.breadCrumbs = breadcrumbsret.breadCrumbs;
+
+    if (breadcrumbsret.brand) {
+      const lststr = breadcrumbsret.brand.split('（');
+      if (lststr.length > 1) {
+        const lststr1 = lststr[1].split('）');
+        ret.brandChs = lststr[0];
+        ret.brandEng = lststr1[0];
+      }
+    }
   }
 
   const skunameret = await page
@@ -317,9 +510,78 @@ async function jdProduct(browser, url, timeout) {
 
   ret.weight = weight;
 
+  ret.SKUs = await page
+      .$$eval('#choose-attrs', (eles) => {
+        if (eles.length > 0) {
+          const skus = [];
+          const lsttype = eles[0].getElementsByClassName('li p-choose');
+
+          for (let i = 0; i < lsttype.length; ++i) {
+            let skutype = '';
+            if (lsttype[0].dataset && lsttype[0].dataset.type) {
+              if (lsttype[0].dataset.type == '颜色') {
+                skutype = 'color';
+              }
+            }
+
+            const lstitem = lsttype[i].getElementsByClassName('item');
+            for (let j = 0; j < lstitem.length; ++j) {
+              const sku = {};
+              if (lstitem[j].dataset && lstitem[j].dataset.sku) {
+                sku.skuID = lstitem[j].dataset.sku;
+              }
+
+              if (skutype == 'color') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.color = lstitem[j].dataset.value;
+                }
+              }
+
+              skus.push(sku);
+            }
+          }
+
+          return skus;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('jdProduct#choose-attrs', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const commentret = await getComments(page, waitAllResponse, timeout);
+  if (commentret == undefined) {
+    log.error('jdProduct.getComments undefined');
+
+    await page.close();
+
+    return {error: 'jdProduct.getComments undefined'};
+  }
+
+  if (commentret && commentret.err) {
+    log.error('jdProduct.getComments ', commentret.err);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (commentret.ret) {
+    ret.comment = commentret.ret;
+  }
+
   await page.close();
 
-  return {ret: {}};
+  return {ret: ret};
 }
 
 exports.jdProduct = jdProduct;

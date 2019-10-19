@@ -867,6 +867,26 @@ message JDPingou {
     float price = 4;
 }
 
+// JDSKUInfo - jd sku info
+message JDSKUInfo {
+    string skuID = 1;
+    string type = 2;
+    string color = 3;
+}
+
+// JDCommentType - jd comments type
+message JDCommentsType {
+    string type = 1;
+    int32 nums = 2;
+}
+
+// JDCommentsInfo - jd comments infomation
+message JDCommentsInfo {
+    float percent = 1;
+    repeated string tags = 2;
+    repeated JDCommentsType lst = 3;
+}
+
 // JDProduct - jd product
 message JDProduct {
     string url = 1;
@@ -878,6 +898,10 @@ message JDProduct {
     string summaryService = 7;
     int64 shipTime = 8;
     float weight = 9;
+    string brandChs = 10;
+    string brandEng = 11;
+    repeated JDSKUInfo SKUs = 12;
+    JDCommentsInfo comment = 13;
 }
 
 // RequestJD - request jd

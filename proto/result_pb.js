@@ -39,6 +39,9 @@ goog.exportSymbol('proto.jarviscrawlercore.DTGameResultErrCode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DTTodayGameData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ExportArticleResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ImageInfo', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDMode', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDPingou', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDProduct', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFund', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundDayValue', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundManager', null, global);
@@ -55,6 +58,7 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawlerStream', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ReplyJD', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyJRJ', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplySteepAndCheap', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTechInAsia', null, global);
@@ -65,6 +69,7 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestGeoIP', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestJD', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestJRJ', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestSteepAndCheap', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTechInAsia', null, global);
@@ -14728,7 +14733,8 @@ proto.jarviscrawlercore.SteepAndCheapProduct.toObject = function(includeInstance
     lsthistoryList: jspb.Message.toObjectList(msg.getLsthistoryList(),
     proto.jarviscrawlercore.SteepAndCheapHistory.toObject, includeInstance),
     lstsaleList: jspb.Message.toObjectList(msg.getLstsaleList(),
-    proto.jarviscrawlercore.SteepAndCheapSaleProductInfo.toObject, includeInstance)
+    proto.jarviscrawlercore.SteepAndCheapSaleProductInfo.toObject, includeInstance),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 30, 0)
   };
 
   if (includeInstance) {
@@ -14884,6 +14890,10 @@ proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader = funct
       var value = new proto.jarviscrawlercore.SteepAndCheapSaleProductInfo;
       reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapSaleProductInfo.deserializeBinaryFromReader);
       msg.addLstsale(value);
+      break;
+    case 30:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
       break;
     default:
       reader.skipField();
@@ -15119,6 +15129,13 @@ proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter = function(
       29,
       f,
       proto.jarviscrawlercore.SteepAndCheapSaleProductInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      30,
+      f
     );
   }
 };
@@ -15692,6 +15709,21 @@ proto.jarviscrawlercore.SteepAndCheapProduct.prototype.addLstsale = function(opt
 
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.clearLstsaleList = function() {
   this.setLstsaleList([]);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 30;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 30, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 30, value);
 };
 
 
@@ -18501,6 +18533,843 @@ proto.jarviscrawlercore.ReplyJRJ.prototype.hasFundvalue = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.JDPingou = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.JDPingou, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JDPingou.displayName = 'proto.jarviscrawlercore.JDPingou';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JDPingou.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JDPingou.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JDPingou} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDPingou.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    preorders: jspb.Message.getFieldWithDefault(msg, 1, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JDPingou}
+ */
+proto.jarviscrawlercore.JDPingou.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JDPingou;
+  return proto.jarviscrawlercore.JDPingou.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JDPingou} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JDPingou}
+ */
+proto.jarviscrawlercore.JDPingou.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPreorders(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JDPingou.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JDPingou.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JDPingou} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDPingou.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPreorders();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 preOrders = 1;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDPingou.prototype.getPreorders = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDPingou.prototype.setPreorders = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.JDProduct = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.JDProduct.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.JDProduct, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JDProduct.displayName = 'proto.jarviscrawlercore.JDProduct';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.JDProduct.repeatedFields_ = [3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JDProduct.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JDProduct} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDProduct.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    url: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    breadcrumbsList: jspb.Message.getRepeatedField(msg, 3),
+    info: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    nametag: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    pingou: (f = msg.getPingou()) && proto.jarviscrawlercore.JDPingou.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JDProduct}
+ */
+proto.jarviscrawlercore.JDProduct.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JDProduct;
+  return proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JDProduct} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JDProduct}
+ */
+proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addBreadcrumbs(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setInfo(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNametag(value);
+      break;
+    case 6:
+      var value = new proto.jarviscrawlercore.JDPingou;
+      reader.readMessage(value,proto.jarviscrawlercore.JDPingou.deserializeBinaryFromReader);
+      msg.setPingou(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JDProduct} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getBreadcrumbsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      3,
+      f
+    );
+  }
+  f = message.getInfo();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getNametag();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getPingou();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      proto.jarviscrawlercore.JDPingou.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string url = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string name = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated string breadCrumbs = 3;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getBreadcrumbsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.JDProduct.prototype.setBreadcrumbsList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.JDProduct.prototype.addBreadcrumbs = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.JDProduct.prototype.clearBreadcrumbsList = function() {
+  this.setBreadcrumbsList([]);
+};
+
+
+/**
+ * optional string info = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getInfo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setInfo = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string nameTag = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getNametag = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setNametag = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional JDPingou pingou = 6;
+ * @return {?proto.jarviscrawlercore.JDPingou}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getPingou = function() {
+  return /** @type{?proto.jarviscrawlercore.JDPingou} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JDPingou, 6));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JDPingou|undefined} value */
+proto.jarviscrawlercore.JDProduct.prototype.setPingou = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.jarviscrawlercore.JDProduct.prototype.clearPingou = function() {
+  this.setPingou(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.hasPingou = function() {
+  return jspb.Message.getField(this, 6) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.RequestJD = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestJD, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestJD.displayName = 'proto.jarviscrawlercore.RequestJD';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestJD.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestJD.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestJD} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestJD.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    url: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestJD}
+ */
+proto.jarviscrawlercore.RequestJD.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestJD;
+  return proto.jarviscrawlercore.RequestJD.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestJD} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestJD}
+ */
+proto.jarviscrawlercore.RequestJD.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.JDMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestJD.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestJD.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestJD} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestJD.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional JDMode mode = 1;
+ * @return {!proto.jarviscrawlercore.JDMode}
+ */
+proto.jarviscrawlercore.RequestJD.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.JDMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.JDMode} value */
+proto.jarviscrawlercore.RequestJD.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional string url = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestJD.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestJD.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ReplyJD = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.ReplyJD.oneofGroups_);
+};
+goog.inherits(proto.jarviscrawlercore.ReplyJD, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ReplyJD.displayName = 'proto.jarviscrawlercore.ReplyJD';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.jarviscrawlercore.ReplyJD.oneofGroups_ = [[100]];
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.ReplyJD.ReplyCase = {
+  REPLY_NOT_SET: 0,
+  PRODUCT: 100
+};
+
+/**
+ * @return {proto.jarviscrawlercore.ReplyJD.ReplyCase}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.getReplyCase = function() {
+  return /** @type {proto.jarviscrawlercore.ReplyJD.ReplyCase} */(jspb.Message.computeOneofCase(this, proto.jarviscrawlercore.ReplyJD.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ReplyJD.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ReplyJD} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyJD.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    product: (f = msg.getProduct()) && proto.jarviscrawlercore.JDProduct.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ReplyJD}
+ */
+proto.jarviscrawlercore.ReplyJD.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ReplyJD;
+  return proto.jarviscrawlercore.ReplyJD.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ReplyJD} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ReplyJD}
+ */
+proto.jarviscrawlercore.ReplyJD.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.JDMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 100:
+      var value = new proto.jarviscrawlercore.JDProduct;
+      reader.readMessage(value,proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader);
+      msg.setProduct(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ReplyJD.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ReplyJD} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyJD.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getProduct();
+  if (f != null) {
+    writer.writeMessage(
+      100,
+      f,
+      proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional JDMode mode = 1;
+ * @return {!proto.jarviscrawlercore.JDMode}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.JDMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.JDMode} value */
+proto.jarviscrawlercore.ReplyJD.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional JDProduct product = 100;
+ * @return {?proto.jarviscrawlercore.JDProduct}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.getProduct = function() {
+  return /** @type{?proto.jarviscrawlercore.JDProduct} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JDProduct, 100));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JDProduct|undefined} value */
+proto.jarviscrawlercore.ReplyJD.prototype.setProduct = function(value) {
+  jspb.Message.setOneofWrapperField(this, 100, proto.jarviscrawlercore.ReplyJD.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyJD.prototype.clearProduct = function() {
+  this.setProduct(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.hasProduct = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestCrawler = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.RequestCrawler.oneofGroups_);
 };
@@ -18516,7 +19385,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109]];
 
 /**
  * @enum {number}
@@ -18530,7 +19399,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   GEOIP: 105,
   TECHINASIA: 106,
   STEEPANDCHEAP: 107,
-  JRJ: 108
+  JRJ: 108,
+  JD: 109
 };
 
 /**
@@ -18579,7 +19449,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.RequestGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.RequestTechInAsia.toObject(includeInstance, f),
     steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.RequestSteepAndCheap.toObject(includeInstance, f),
-    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.RequestJRJ.toObject(includeInstance, f)
+    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.RequestJRJ.toObject(includeInstance, f),
+    jd: (f = msg.getJd()) && proto.jarviscrawlercore.RequestJD.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -18667,6 +19538,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.RequestJRJ;
       reader.readMessage(value,proto.jarviscrawlercore.RequestJRJ.deserializeBinaryFromReader);
       msg.setJrj(value);
+      break;
+    case 109:
+      var value = new proto.jarviscrawlercore.RequestJD;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestJD.deserializeBinaryFromReader);
+      msg.setJd(value);
       break;
     default:
       reader.skipField();
@@ -18780,6 +19656,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       108,
       f,
       proto.jarviscrawlercore.RequestJRJ.serializeBinaryToWriter
+    );
+  }
+  f = message.getJd();
+  if (f != null) {
+    writer.writeMessage(
+      109,
+      f,
+      proto.jarviscrawlercore.RequestJD.serializeBinaryToWriter
     );
   }
 };
@@ -19070,6 +19954,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasJrj = function() {
 };
 
 
+/**
+ * optional RequestJD jd = 109;
+ * @return {?proto.jarviscrawlercore.RequestJD}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getJd = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestJD} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestJD, 109));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestJD|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setJd = function(value) {
+  jspb.Message.setOneofWrapperField(this, 109, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearJd = function() {
+  this.setJd(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasJd = function() {
+  return jspb.Message.getField(this, 109) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -19096,7 +20010,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109]];
 
 /**
  * @enum {number}
@@ -19110,7 +20024,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   GEOIP: 105,
   TECHINASIA: 106,
   STEEPANDCHEAP: 107,
-  JRJ: 108
+  JRJ: 108,
+  JD: 109
 };
 
 /**
@@ -19157,7 +20072,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     geoip: (f = msg.getGeoip()) && proto.jarviscrawlercore.ReplyGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.ReplyTechInAsia.toObject(includeInstance, f),
     steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.ReplySteepAndCheap.toObject(includeInstance, f),
-    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.ReplyJRJ.toObject(includeInstance, f)
+    jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.ReplyJRJ.toObject(includeInstance, f),
+    jd: (f = msg.getJd()) && proto.jarviscrawlercore.ReplyJD.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -19237,6 +20153,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.ReplyJRJ;
       reader.readMessage(value,proto.jarviscrawlercore.ReplyJRJ.deserializeBinaryFromReader);
       msg.setJrj(value);
+      break;
+    case 109:
+      var value = new proto.jarviscrawlercore.ReplyJD;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyJD.deserializeBinaryFromReader);
+      msg.setJd(value);
       break;
     default:
       reader.skipField();
@@ -19336,6 +20257,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       108,
       f,
       proto.jarviscrawlercore.ReplyJRJ.serializeBinaryToWriter
+    );
+  }
+  f = message.getJd();
+  if (f != null) {
+    writer.writeMessage(
+      109,
+      f,
+      proto.jarviscrawlercore.ReplyJD.serializeBinaryToWriter
     );
   }
 };
@@ -19593,6 +20522,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearJrj = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasJrj = function() {
   return jspb.Message.getField(this, 108) != null;
+};
+
+
+/**
+ * optional ReplyJD jd = 109;
+ * @return {?proto.jarviscrawlercore.ReplyJD}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getJd = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyJD} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyJD, 109));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyJD|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setJd = function(value) {
+  jspb.Message.setOneofWrapperField(this, 109, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearJd = function() {
+  this.setJd(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasJd = function() {
+  return jspb.Message.getField(this, 109) != null;
 };
 
 
@@ -20079,6 +21038,13 @@ proto.jarviscrawlercore.JRJMode = {
   JRJM_FUND: 1,
   JRJM_FUNDVALUE: 2,
   JRJM_FUNDMANAGER: 3
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.JDMode = {
+  JDM_PRODUCT: 0
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

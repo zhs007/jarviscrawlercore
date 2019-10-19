@@ -1,6 +1,6 @@
-const { startBrowser } = require("../browser");
-const { jdProduct } = require("./product");
-const log = require("../log");
+const {startBrowser} = require('../browser');
+const {jdProduct} = require('./product');
+const log = require('../log');
 
 /**
  * execJD
@@ -9,54 +9,54 @@ const log = require("../log");
  */
 async function execJD(program, version) {
   program
-    .command("jd [mode]")
-    .description("jd")
-    .option("-u, --url [url]", "url")
-    .option("-p, --page [page]", "pageid")
-    .option("-t, --timeout [timeout]", "time out")
-    .option("-h, --headless [isheadless]", "headless mode")
-    .action(function(mode, options) {
-      log.console("version is ", version);
+      .command('jd [mode]')
+      .description('jd')
+      .option('-u, --url [url]', 'url')
+      .option('-p, --page [page]', 'pageid')
+      .option('-t, --timeout [timeout]', 'time out')
+      .option('-h, --headless [isheadless]', 'headless mode')
+      .action(function(mode, options) {
+        log.console('version is ', version);
 
-      if (!mode) {
-        log.console("command wrong, please type " + "jarviscrawler jd --help");
+        if (!mode) {
+          log.console('command wrong, please type ' + 'jarviscrawler jd --help');
 
-        return;
-      }
+          return;
+        }
 
-      log.console("mode - ", mode);
+        log.console('mode - ', mode);
 
-      if (mode == "sale" && !options.url) {
-        log.console("command wrong, please type " + "jarviscrawler jd --help");
+        if (mode == 'sale' && !options.url) {
+          log.console('command wrong, please type ' + 'jarviscrawler jd --help');
 
-        return;
-      }
+          return;
+        }
 
-      if (mode == "product" && !options.url) {
-        log.console("command wrong, please type " + "jarviscrawler jd --help");
+        if (mode == 'product' && !options.url) {
+          log.console('command wrong, please type ' + 'jarviscrawler jd --help');
 
-        return;
-      }
+          return;
+        }
 
-      let timeout = 3 * 60 * 1000;
-      if (typeof options.timeout == "number") {
-        timeout = options.timeout;
-      }
+        let timeout = 3 * 60 * 1000;
+        if (typeof options.timeout == 'number') {
+          timeout = options.timeout;
+        }
 
-      let page = 0;
-      if (options.page) {
-        try {
-          page = parseInt(options.page);
-        } catch (err) {}
-      }
+        // let page = 0;
+        if (options.page) {
+          try {
+            page = parseInt(options.page);
+          } catch (err) {}
+        }
 
-      const headless = options.headless === "true";
-      log.console("headless - ", headless);
+        const headless = options.headless === 'true';
+        log.console('headless - ', headless);
 
-      (async () => {
-        const browser = await startBrowser(headless);
+        (async () => {
+          const browser = await startBrowser(headless);
 
-        if (mode == "sale") {
+          if (mode == 'sale') {
           // const ret = await mountainstealsSale(
           //     browser,
           //     options.url,
@@ -64,20 +64,20 @@ async function execJD(program, version) {
           //     timeout
           // );
           // log.console(JSON.stringify(ret));
-        } else if (mode == "product") {
-          const ret = await jdProduct(browser, options.url, timeout);
-          log.console(JSON.stringify(ret));
-        }
+          } else if (mode == 'product') {
+            const ret = await jdProduct(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
+          }
 
-        await browser.close();
-      })().catch(err => {
-        log.console("catch a err ", err);
+          await browser.close();
+        })().catch((err) => {
+          log.console('catch a err ', err);
 
-        if (headless) {
-          process.exit(-1);
-        }
+          if (headless) {
+            process.exit(-1);
+          }
+        });
       });
-    });
 }
 
 exports.execJD = execJD;

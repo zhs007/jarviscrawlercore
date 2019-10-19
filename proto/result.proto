@@ -853,6 +853,48 @@ message ReplyJRJ {
     }    
 }
 
+// JDMode - jd mode
+enum JDMode {
+    // JDM_PRODUCT - product
+    JDM_PRODUCT = 0;
+}
+
+// JDPingou - jd pingou
+message JDPingou {
+    int32 preOrders = 1;
+    int32 lastTime = 2;
+    float scheduledPrice = 3;
+    float price = 4;
+}
+
+// JDProduct - jd product
+message JDProduct {
+    string url = 1;
+    string name = 2;
+    repeated string breadCrumbs = 3;
+    string info = 4;
+    string nameTag = 5;
+    JDPingou pingou = 6;
+    string summaryService = 7;
+    int64 shipTime = 8;
+    float weight = 9;
+}
+
+// RequestJD - request jd
+message RequestJD {
+    JDMode mode = 1;
+    string url = 2;
+}
+
+// ReplyJD - reply jd
+message ReplyJD {
+    JDMode mode = 1;
+
+    oneof reply {
+        JDProduct product = 100;
+    }
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -868,6 +910,7 @@ message RequestCrawler {
         RequestTechInAsia techinasia = 106;
         RequestSteepAndCheap steepandcheap = 107;
         RequestJRJ jrj = 108;
+        RequestJD jd = 109;
     }
 }
 
@@ -884,6 +927,7 @@ message ReplyCrawler {
         ReplyTechInAsia techinasia = 106;
         ReplySteepAndCheap steepandcheap = 107;
         ReplyJRJ jrj = 108;
+        ReplyJD jd = 109;
     }
 }
 

@@ -19405,7 +19405,8 @@ proto.jarviscrawlercore.JDActive.prototype.toObject = function(opt_includeInstan
 proto.jarviscrawlercore.JDActive.toObject = function(includeInstance, msg) {
   var f, obj = {
     urlactiveList: jspb.Message.getRepeatedField(msg, 1),
-    urlproductList: jspb.Message.getRepeatedField(msg, 2)
+    urlproductList: jspb.Message.getRepeatedField(msg, 2),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -19450,6 +19451,10 @@ proto.jarviscrawlercore.JDActive.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {string} */ (reader.readString());
       msg.addUrlproduct(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -19490,6 +19495,13 @@ proto.jarviscrawlercore.JDActive.serializeBinaryToWriter = function(message, wri
   if (f.length > 0) {
     writer.writeRepeatedString(
       2,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
       f
     );
   }
@@ -19551,6 +19563,21 @@ proto.jarviscrawlercore.JDActive.prototype.addUrlproduct = function(value, opt_i
 
 proto.jarviscrawlercore.JDActive.prototype.clearUrlproductList = function() {
   this.setUrlproductList([]);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDActive.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDActive.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -19621,7 +19648,8 @@ proto.jarviscrawlercore.JDProduct.toObject = function(includeInstance, msg) {
     brandeng: jspb.Message.getFieldWithDefault(msg, 11, ""),
     skusList: jspb.Message.toObjectList(msg.getSkusList(),
     proto.jarviscrawlercore.JDSKUInfo.toObject, includeInstance),
-    comment: (f = msg.getComment()) && proto.jarviscrawlercore.JDCommentsInfo.toObject(includeInstance, f)
+    comment: (f = msg.getComment()) && proto.jarviscrawlercore.JDCommentsInfo.toObject(includeInstance, f),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 14, 0)
   };
 
   if (includeInstance) {
@@ -19712,6 +19740,10 @@ proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader = function(msg, re
       var value = new proto.jarviscrawlercore.JDCommentsInfo;
       reader.readMessage(value,proto.jarviscrawlercore.JDCommentsInfo.deserializeBinaryFromReader);
       msg.setComment(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
       break;
     default:
       reader.skipField();
@@ -19834,6 +19866,13 @@ proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter = function(message, wr
       13,
       f,
       proto.jarviscrawlercore.JDCommentsInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      14,
+      f
     );
   }
 };
@@ -20091,6 +20130,21 @@ proto.jarviscrawlercore.JDProduct.prototype.clearComment = function() {
  */
 proto.jarviscrawlercore.JDProduct.prototype.hasComment = function() {
   return jspb.Message.getField(this, 13) != null;
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 14;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDProduct.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
@@ -22116,7 +22170,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_GEOIP: 5,
   CT_TECHINASIA: 6,
   CT_STEEPANDCHEAP: 7,
-  CT_JRJ: 8
+  CT_JRJ: 8,
+  CT_JD: 9
 };
 
 /**
@@ -22159,7 +22214,8 @@ proto.jarviscrawlercore.JRJMode = {
  * @enum {number}
  */
 proto.jarviscrawlercore.JDMode = {
-  JDM_PRODUCT: 0
+  JDM_PRODUCT: 0,
+  JDM_ACTIVE: 1
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

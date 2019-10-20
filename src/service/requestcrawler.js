@@ -6,6 +6,7 @@ const {callGeoIP} = require('./plugins/geoip');
 const {callTechInAsia} = require('./plugins/techinasia');
 const {callSteepAndCheap} = require('./plugins/steepandcheap');
 const {callJRJ} = require('./plugins/jrj');
+const {callJD} = require('./plugins/jd');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -97,6 +98,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getJrj();
 
     callJRJ(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_JD) {
+    if (!call.request.hasJd()) {
+      replyError(call, 'no jd');
+
+      return;
+    }
+
+    const param = call.request.getJd();
+
+    callJD(browser, cfg, call, param, call.request);
   }
 }
 

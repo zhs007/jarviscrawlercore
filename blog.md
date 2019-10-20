@@ -1,5 +1,13 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-19
+
+jd的促销活动页面，一般是这样的，https://pro.jd.com/mall/active/3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html 。  
+这个页面，其实没有太多结构化数据，简单的找到 ``a`` 即可。  
+
+如果是 ``https://item.jd.com/`` 开头的就是商品页。  
+如果是 ``https://pro.jd.com/mall/active/`` 开头的就是活动页。  
+
 ### 2019-10-18
 
 jd的商品页面，在 https://item.jd.com/下面，一般是html页面，譬如https://item.jd.com/100006585530.html。  

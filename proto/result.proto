@@ -887,6 +887,12 @@ message JDCommentsInfo {
     repeated JDCommentsType lst = 3;
 }
 
+// JDActive - jd active
+message JDActive {
+    repeated string urlActive = 1;
+    repeated string urlProduct = 2;
+}
+
 // JDProduct - jd product
 message JDProduct {
     string url = 1;

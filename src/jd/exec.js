@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {jdProduct} = require('./product');
+const {jdActive} = require('./active');
 const log = require('../log');
 
 /**
@@ -26,7 +27,7 @@ async function execJD(program, version) {
 
         log.console('mode - ', mode);
 
-        if (mode == 'sale' && !options.url) {
+        if (mode == 'active' && !options.url) {
           log.console('command wrong, please type ' + 'jarviscrawler jd --help');
 
           return;
@@ -56,14 +57,9 @@ async function execJD(program, version) {
         (async () => {
           const browser = await startBrowser(headless);
 
-          if (mode == 'sale') {
-          // const ret = await mountainstealsSale(
-          //     browser,
-          //     options.url,
-          //     page,
-          //     timeout
-          // );
-          // log.console(JSON.stringify(ret));
+          if (mode == 'active') {
+            const ret = await jdActive(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
           } else if (mode == 'product') {
             const ret = await jdProduct(browser, options.url, timeout);
             log.console(JSON.stringify(ret));

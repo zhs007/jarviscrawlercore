@@ -8,6 +8,139 @@ jd的促销活动页面，一般是这样的，https://pro.jd.com/mall/active/3n
 如果是 ``https://item.jd.com/`` 开头的就是商品页。  
 如果是 ``https://pro.jd.com/mall/active/`` 开头的就是活动页。  
 
+mountainsteals 商品页，下面是商品类型。  
+
+``` js
+$$('.breadcrumb-itm')
+```
+
+下面是价格购买区。  
+
+``` js
+$$('#widget_product_info_viewer')
+```
+
+下面是商品名。  
+商品名里有品牌。
+
+``` js
+$$('.product_name')
+```
+
+这是品牌。  
+
+``` js
+$$('.brand')
+```
+
+商品评分。  
+
+``` js
+$$('.RatingAddtlInfo')
+```
+
+当前价格。  
+
+``` js
+$$('.price-set')
+```
+
+原价
+
+``` js
+$$('.pdp-strike-extra')
+```
+
+这个是大小、颜色的选框，可能多个，也可能是大小颜色以外的。  
+
+``` js
+$$('.po-link.po-size-link')
+```
+
+这个是选项内容。  
+
+``` js
+$$('.selector-itm-box')
+```
+
+取到这个节点的class以后，可以根据class是否有 js-size-product-thumb 或 js-color-product-thumb 判断是 size 还是 color。  
+
+``` js
+$$('.selector-itm-box')[0].getElementsByClassName('po-row')[0].getElementsByClassName('product-thumb')
+```
+
+如果是size，这样可以取到size内容。
+
+``` js
+$$('.selector-itm-box')[0].getElementsByClassName('po-row')[0].getElementsByClassName('js-size-name')
+```
+
+如果是color，这样可以取到color内容。
+
+``` js
+$$('.selector-itm-box')[1].getElementsByClassName('po-row')[0].getElementsByClassName('js-color-name')
+```
+
+下面是各种评分的人数。  
+这里面，``data-bv-histogram-rating-value``是星，``data-bv-histogram-rating-count``是人数。
+
+``` js
+$$('.bv-inline-histogram-ratings-bar')
+```
+
+平均明细评分，一个标题 ``$$('.bv-secondary-rating-summary-id.bv-td')``，一个评分 ``$$('.bv-secondary-rating-summary-rating')``。  
+其中，如果是 Fit，则没有数字的评分。  
+Fit 还要找一些例子看。
+
+评论，``$$('.bv-content-item.bv-content-top-review.bv-content-review')`` 这样可以找到。  
+
+作者名。  
+可能会找到多个，取第一个即可。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-author')
+```
+
+作者位置，字符串的。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-author-location')
+```
+
+下面是这个用户对这件商品的评分。  
+children[0] 的 attributes 里，应该有 itemprop ，且该值为 ratingValue 。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-rating bv-rating-ratio')[0].children[0].content
+```
+
+评价的标题。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-title')
+```
+
+评价的内容。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-summary-body-text')
+```
+
+是否推荐，找到这个节点。  
+如果有 ``bv-content-data-recommend-no`` 节点，表示不推荐。  
+``'bv-content-data-recommend-yes'`` 表示推荐。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[3].getElementsByClassName('bv-content-data')
+```
+
+评论时间，字符串方式的。  
+几年以前几个月以前这样的。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[2].getElementsByClassName('bv-content-datetime-stamp')
+```
+
 ### 2019-10-18
 
 jd的商品页面，在 https://item.jd.com/下面，一般是html页面，譬如https://item.jd.com/100006585530.html。  

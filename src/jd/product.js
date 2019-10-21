@@ -67,7 +67,7 @@ async function getComments(page, waitAllResponse, timeout) {
 
     waitAllResponse.reset();
 
-    const ret = {url: url};
+    const ret = {};
 
     ret.percent = await page
         .$$eval('.percent-con', (eles) => {
@@ -255,7 +255,7 @@ async function jdProduct(browser, url, timeout) {
 
   waitAllResponse.reset();
 
-  const ret = {};
+  const ret = {url: url};
 
   const breadcrumbsret = await page
       .$$eval('.crumb.fl.clearfix', (eles) => {

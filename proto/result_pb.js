@@ -19406,7 +19406,8 @@ proto.jarviscrawlercore.JDActive.toObject = function(includeInstance, msg) {
   var f, obj = {
     urlactiveList: jspb.Message.getRepeatedField(msg, 1),
     urlproductList: jspb.Message.getRepeatedField(msg, 2),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    url: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -19455,6 +19456,10 @@ proto.jarviscrawlercore.JDActive.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -19502,6 +19507,13 @@ proto.jarviscrawlercore.JDActive.serializeBinaryToWriter = function(message, wri
   if (f !== 0) {
     writer.writeInt64(
       3,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
       f
     );
   }
@@ -19578,6 +19590,21 @@ proto.jarviscrawlercore.JDActive.prototype.getLastupdatedtime = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.JDActive.prototype.setLastupdatedtime = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional string url = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDActive.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDActive.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

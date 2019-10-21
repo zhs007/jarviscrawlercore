@@ -897,6 +897,7 @@ message JDActive {
     repeated string urlActive = 1;
     repeated string urlProduct = 2;
     int64 lastUpdatedTime = 3;
+    string url = 4;
 }
 
 // JDProduct - jd product

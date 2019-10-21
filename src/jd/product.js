@@ -67,7 +67,7 @@ async function getComments(page, waitAllResponse, timeout) {
 
     waitAllResponse.reset();
 
-    const ret = {};
+    const ret = {url: url};
 
     ret.percent = await page
         .$$eval('.percent-con', (eles) => {

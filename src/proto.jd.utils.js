@@ -175,6 +175,10 @@ function newJDActive(obj) {
     result.setUrlproductList(obj.urlProduct);
   }
 
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
   return result;
 }
 

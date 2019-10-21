@@ -1,6 +1,7 @@
 // const {sleep} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
+const {parsePercent} = require('./utils');
 
 /**
  * getComments - get comments
@@ -57,10 +58,10 @@ async function getComments(page, waitAllResponse, timeout) {
       return {err: err};
     }
 
-    // const isok = await waitAllResponse.waitDone(timeout);
-    // if (!isok) {
-    //   return {err: new Error('getComments.waitDone timeout.')};
-    // }
+    const isok = await waitAllResponse.waitDone(timeout);
+    if (!isok) {
+      return {err: new Error('getComments.waitDone timeout.')};
+    }
 
     waitAllResponse.reset();
 
@@ -81,10 +82,25 @@ async function getComments(page, waitAllResponse, timeout) {
     if (awaiterr) {
       log.error('getComments.percent-con', awaiterr);
 
-      await page.close();
-
       return {error: awaiterr.toString()};
     }
+
+    const percent = parsePercent(ret.percent);
+    if (percent == undefined) {
+      const err = new Error('getComments.parsePercent return undefined');
+
+      log.error('getComments.parsePercent', err);
+
+      return {error: err.toString()};
+    }
+
+    if (percent.err) {
+      log.error('getComments.parsePercent', percent.err);
+
+      return {error: percent.err.toString()};
+    }
+
+    ret.percent = percent.percent;
 
     ret.tags = await page
         .$$eval('.percent-info', (eles) => {
@@ -107,8 +123,6 @@ async function getComments(page, waitAllResponse, timeout) {
 
     if (awaiterr) {
       log.error('getComments.percent-con', awaiterr);
-
-      await page.close();
 
       return {error: awaiterr.toString()};
     }
@@ -158,9 +172,17 @@ async function getComments(page, waitAllResponse, timeout) {
     if (awaiterr) {
       log.error('getComments.percent-con', awaiterr);
 
-      await page.close();
-
       return {error: awaiterr.toString()};
+    }
+
+    for (let i = 0; i < ret.lst.length; ++i) {
+      try {
+        ret.lst[i].nums = parseInt(ret.lst[i].nums);
+      } catch (err) {
+        log.error('getComments.parseInt(lst[i].nums)', err);
+
+        return {error: err.toString()};
+      }
     }
 
     return {ret: ret};
@@ -365,9 +387,11 @@ async function jdProduct(browser, url, timeout) {
 
               const lstt = lstitem[1].getElementsByClassName('J-time');
               if (lstt.length > 0) {
-                pingouret.lastTime = lstt[0].innerText;
+                pingouret.strLastTime = lstt[0].innerText;
               }
             }
+
+            return pingouret;
           }
 
           return undefined;
@@ -385,9 +409,19 @@ async function jdProduct(browser, url, timeout) {
     }
 
     if (pingouret != undefined) {
+      try {
+        pingouret.preOrders = parseInt(pingouret.preOrders);
+      } catch (err) {
+        log.error('jdProduct.pingouret.parseInt', err);
+
+        await page.close();
+
+        return {error: err.toString()};
+      }
+
       ret.pingou = {
         preOrders: pingouret.preOrders,
-        lastTime: pingouret.lastTime,
+        strLastTime: pingouret.strLastTime,
       };
     }
 
@@ -402,7 +436,7 @@ async function jdProduct(browser, url, timeout) {
                 pingouprice.scheduledPrice = jp[0].innerText;
               }
 
-              const p = lst[0].getElementsByClassName('price J-presale-price');
+              const p = lst[1].getElementsByClassName('price J-presale-price');
               if (p.length > 0) {
                 pingouprice.price = p[0].innerText;
               }
@@ -428,6 +462,17 @@ async function jdProduct(browser, url, timeout) {
     if (pingouprice != undefined) {
       if (ret.pingou == undefined) {
         ret.pingou = {};
+      }
+
+      try {
+        pingouprice.scheduledPrice = parseFloat(pingouprice.scheduledPrice);
+        pingouprice.price = parseFloat(pingouprice.price);
+      } catch (err) {
+        log.error('jdProduct.pingouprice.parseFloat', err);
+
+        await page.close();
+
+        return {error: err.toString()};
       }
 
       ret.pingou.scheduledPrice = pingouprice.scheduledPrice;
@@ -460,7 +505,7 @@ async function jdProduct(browser, url, timeout) {
 
   ret.summaryService = summaryService;
 
-  const shipTime = await page
+  const strShipTime = await page
       .$$eval('#summary-yushou-ship', (eles) => {
         if (eles.length > 0) {
           const lstdd = eles[0].getElementsByClassName('dd');
@@ -483,9 +528,9 @@ async function jdProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  ret.shipTime = shipTime;
+  ret.strShipTime = strShipTime;
 
-  const weight = await page
+  const strWeight = await page
       .$$eval('#summary-weight', (eles) => {
         if (eles.length > 0) {
           const lstdd = eles[0].getElementsByClassName('dd');
@@ -508,7 +553,7 @@ async function jdProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  ret.weight = weight;
+  ret.strWeight = strWeight;
 
   ret.SKUs = await page
       .$$eval('#choose-attrs', (eles) => {
@@ -526,7 +571,7 @@ async function jdProduct(browser, url, timeout) {
 
             const lstitem = lsttype[i].getElementsByClassName('item');
             for (let j = 0; j < lstitem.length; ++j) {
-              const sku = {};
+              const sku = {type: skutype};
               if (lstitem[j].dataset && lstitem[j].dataset.sku) {
                 sku.skuID = lstitem[j].dataset.sku;
               }

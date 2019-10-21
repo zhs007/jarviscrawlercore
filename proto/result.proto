@@ -867,7 +867,7 @@ enum JDMode {
 // JDPingou - jd pingou
 message JDPingou {
     int32 preOrders = 1;
-    int32 lastTime = 2;
+    string strLastTime = 2;
     float scheduledPrice = 3;
     float price = 4;
 }
@@ -908,8 +908,8 @@ message JDProduct {
     string nameTag = 5;
     JDPingou pingou = 6;
     string summaryService = 7;
-    int64 shipTime = 8;
-    float weight = 9;
+    string strShipTime = 8;
+    string strWeight = 9;
     string brandChs = 10;
     string brandEng = 11;
     repeated JDSKUInfo SKUs = 12;
@@ -929,6 +929,7 @@ message ReplyJD {
 
     oneof reply {
         JDProduct product = 100;
+        JDActive active = 101;
     }
 }
 

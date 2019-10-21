@@ -431,6 +431,70 @@ function jrjFundValue(servAddr, code, year) {
   );
 }
 
+/**
+ * jdActive
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function jdActive(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestJD();
+  request.setMode(messages.JDMode.JDM_ACTIVE);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JD,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * jdProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function jdProduct(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestJD();
+  request.setMode(messages.JDMode.JDM_PRODUCT);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JD,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -457,4 +521,7 @@ function jrjFundValue(servAddr, code, year) {
 // jrjFunds('127.0.0.1:7051');
 // jrjFund('127.0.0.1:7051', '110011');
 // jrjFundManager('127.0.0.1:7051', '110011');
-jrjFundValue('127.0.0.1:7051', '110011', '2019');
+// jrjFundValue('127.0.0.1:7051', '110011', '2019');
+
+// jdActive('127.0.0.1:7051', '3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html');
+jdProduct('127.0.0.1:7051', '100006585530.html');

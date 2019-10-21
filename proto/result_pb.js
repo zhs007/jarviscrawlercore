@@ -18574,7 +18574,7 @@ proto.jarviscrawlercore.JDPingou.prototype.toObject = function(opt_includeInstan
 proto.jarviscrawlercore.JDPingou.toObject = function(includeInstance, msg) {
   var f, obj = {
     preorders: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    lasttime: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    strlasttime: jspb.Message.getFieldWithDefault(msg, 2, ""),
     scheduledprice: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
     price: +jspb.Message.getFieldWithDefault(msg, 4, 0.0)
   };
@@ -18618,8 +18618,8 @@ proto.jarviscrawlercore.JDPingou.deserializeBinaryFromReader = function(msg, rea
       msg.setPreorders(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setLasttime(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrlasttime(value);
       break;
     case 3:
       var value = /** @type {number} */ (reader.readFloat());
@@ -18665,9 +18665,9 @@ proto.jarviscrawlercore.JDPingou.serializeBinaryToWriter = function(message, wri
       f
     );
   }
-  f = message.getLasttime();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = message.getStrlasttime();
+  if (f.length > 0) {
+    writer.writeString(
       2,
       f
     );
@@ -18705,17 +18705,17 @@ proto.jarviscrawlercore.JDPingou.prototype.setPreorders = function(value) {
 
 
 /**
- * optional int32 lastTime = 2;
- * @return {number}
+ * optional string strLastTime = 2;
+ * @return {string}
  */
-proto.jarviscrawlercore.JDPingou.prototype.getLasttime = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.jarviscrawlercore.JDPingou.prototype.getStrlasttime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
-/** @param {number} value */
-proto.jarviscrawlercore.JDPingou.prototype.setLasttime = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+/** @param {string} value */
+proto.jarviscrawlercore.JDPingou.prototype.setStrlasttime = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
@@ -19642,8 +19642,8 @@ proto.jarviscrawlercore.JDProduct.toObject = function(includeInstance, msg) {
     nametag: jspb.Message.getFieldWithDefault(msg, 5, ""),
     pingou: (f = msg.getPingou()) && proto.jarviscrawlercore.JDPingou.toObject(includeInstance, f),
     summaryservice: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    shiptime: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    weight: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
+    strshiptime: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    strweight: jspb.Message.getFieldWithDefault(msg, 9, ""),
     brandchs: jspb.Message.getFieldWithDefault(msg, 10, ""),
     brandeng: jspb.Message.getFieldWithDefault(msg, 11, ""),
     skusList: jspb.Message.toObjectList(msg.getSkusList(),
@@ -19716,12 +19716,12 @@ proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader = function(msg, re
       msg.setSummaryservice(value);
       break;
     case 8:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setShiptime(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrshiptime(value);
       break;
     case 9:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setWeight(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrweight(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readString());
@@ -19824,16 +19824,16 @@ proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter = function(message, wr
       f
     );
   }
-  f = message.getShiptime();
-  if (f !== 0) {
-    writer.writeInt64(
+  f = message.getStrshiptime();
+  if (f.length > 0) {
+    writer.writeString(
       8,
       f
     );
   }
-  f = message.getWeight();
-  if (f !== 0.0) {
-    writer.writeFloat(
+  f = message.getStrweight();
+  if (f.length > 0) {
+    writer.writeString(
       9,
       f
     );
@@ -20013,32 +20013,32 @@ proto.jarviscrawlercore.JDProduct.prototype.setSummaryservice = function(value) 
 
 
 /**
- * optional int64 shipTime = 8;
- * @return {number}
+ * optional string strShipTime = 8;
+ * @return {string}
  */
-proto.jarviscrawlercore.JDProduct.prototype.getShiptime = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
+proto.jarviscrawlercore.JDProduct.prototype.getStrshiptime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
 
-/** @param {number} value */
-proto.jarviscrawlercore.JDProduct.prototype.setShiptime = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setStrshiptime = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional float weight = 9;
- * @return {number}
+ * optional string strWeight = 9;
+ * @return {string}
  */
-proto.jarviscrawlercore.JDProduct.prototype.getWeight = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 9, 0.0));
+proto.jarviscrawlercore.JDProduct.prototype.getStrweight = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
 
-/** @param {number} value */
-proto.jarviscrawlercore.JDProduct.prototype.setWeight = function(value) {
-  jspb.Message.setProto3FloatField(this, 9, value);
+/** @param {string} value */
+proto.jarviscrawlercore.JDProduct.prototype.setStrweight = function(value) {
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
@@ -20343,14 +20343,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyJD.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.ReplyJD.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.ReplyJD.ReplyCase = {
   REPLY_NOT_SET: 0,
-  PRODUCT: 100
+  PRODUCT: 100,
+  ACTIVE: 101
 };
 
 /**
@@ -20390,7 +20391,8 @@ proto.jarviscrawlercore.ReplyJD.prototype.toObject = function(opt_includeInstanc
 proto.jarviscrawlercore.ReplyJD.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    product: (f = msg.getProduct()) && proto.jarviscrawlercore.JDProduct.toObject(includeInstance, f)
+    product: (f = msg.getProduct()) && proto.jarviscrawlercore.JDProduct.toObject(includeInstance, f),
+    active: (f = msg.getActive()) && proto.jarviscrawlercore.JDActive.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -20436,6 +20438,11 @@ proto.jarviscrawlercore.ReplyJD.deserializeBinaryFromReader = function(msg, read
       reader.readMessage(value,proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader);
       msg.setProduct(value);
       break;
+    case 101:
+      var value = new proto.jarviscrawlercore.JDActive;
+      reader.readMessage(value,proto.jarviscrawlercore.JDActive.deserializeBinaryFromReader);
+      msg.setActive(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -20478,6 +20485,14 @@ proto.jarviscrawlercore.ReplyJD.serializeBinaryToWriter = function(message, writ
       100,
       f,
       proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter
+    );
+  }
+  f = message.getActive();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.JDActive.serializeBinaryToWriter
     );
   }
 };
@@ -20525,6 +20540,36 @@ proto.jarviscrawlercore.ReplyJD.prototype.clearProduct = function() {
  */
 proto.jarviscrawlercore.ReplyJD.prototype.hasProduct = function() {
   return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional JDActive active = 101;
+ * @return {?proto.jarviscrawlercore.JDActive}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.getActive = function() {
+  return /** @type{?proto.jarviscrawlercore.JDActive} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JDActive, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JDActive|undefined} value */
+proto.jarviscrawlercore.ReplyJD.prototype.setActive = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyJD.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyJD.prototype.clearActive = function() {
+  this.setActive(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyJD.prototype.hasActive = function() {
+  return jspb.Message.getField(this, 101) != null;
 };
 
 

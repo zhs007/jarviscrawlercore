@@ -79,8 +79,8 @@ function newJDPingou(obj) {
     result.setPreorders(obj.preOrders);
   }
 
-  if (obj.lastTime) {
-    result.setLasttime(obj.lastTime);
+  if (obj.strLastTime) {
+    result.setStrlasttime(obj.strLastTime);
   }
 
   if (obj.scheduledPrice) {
@@ -130,12 +130,12 @@ function newJDProduct(obj) {
     result.setSummaryservice(obj.summaryService);
   }
 
-  if (obj.shipTime) {
-    result.setShiptime(obj.shipTime);
+  if (obj.strShipTime) {
+    result.setStrshiptime(obj.strShipTime);
   }
 
-  if (obj.weight) {
-    result.setWeight(obj.weight);
+  if (obj.strWeight) {
+    result.setStrweight(obj.strWeight);
   }
 
   if (obj.brandChs) {

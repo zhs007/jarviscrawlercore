@@ -59,9 +59,9 @@ async function jdActive(browser, url, timeout) {
 
           for (let i = 0; i < eles.length; ++i) {
             if (eles[i].href.indexOf('https://pro.jd.com/mall/active/') == 0) {
-              activeret.urlActive.push(eles[i].href);
+              activeret.urlActive.push(eles[i].href.split('https://pro.jd.com/mall/active/')[1]);
             } else if (eles[i].href.indexOf('https://item.jd.com/') == 0) {
-              activeret.urlProduct.push(eles[i].href);
+              activeret.urlProduct.push(eles[i].href.split('https://item.jd.com/')[1]);
             }
           }
 

@@ -1,4 +1,4 @@
-// const {sleep} = require('../utils');
+const {sleep} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
 const {parsePercent} = require('./utils');
@@ -47,6 +47,8 @@ async function getComments(page, waitAllResponse, timeout) {
 
       return {err: err};
     }
+
+    await sleep(3 * 1000);
 
     await licomment.click().catch((err) => {
       awaiterr = err;
@@ -175,13 +177,15 @@ async function getComments(page, waitAllResponse, timeout) {
       return {error: awaiterr.toString()};
     }
 
-    for (let i = 0; i < ret.lst.length; ++i) {
-      try {
-        ret.lst[i].nums = parseInt(ret.lst[i].nums);
-      } catch (err) {
-        log.error('getComments.parseInt(lst[i].nums)', err);
+    if (ret.lst) {
+      for (let i = 0; i < ret.lst.length; ++i) {
+        try {
+          ret.lst[i].nums = parseInt(ret.lst[i].nums);
+        } catch (err) {
+          log.error('getComments.parseInt(lst[i].nums)', err);
 
-        return {error: err.toString()};
+          return {error: err.toString()};
+        }
       }
     }
 
@@ -237,6 +241,19 @@ async function jdProduct(browser, url, timeout) {
 
     return {error: awaiterr.toString()};
   }
+
+  const isok = await waitAllResponse.waitDone(timeout);
+  if (!isok) {
+    const err = new Error('jdProduct.waitDone timeout.');
+
+    log.error('jdProduct.waitDone ', err);
+
+    await page.close();
+
+    return {err: err};
+  }
+
+  waitAllResponse.reset();
 
   const ret = {};
 

@@ -7,6 +7,7 @@ const {callGetArticleList} = require('./getarticles');
 const {callGetDTData} = require('./dtdata');
 const {replyError} = require('./utils');
 const {callRequestCrawler} = require('./requestcrawler');
+const log = require('../log');
 
 const grpc = require('grpc');
 
@@ -20,7 +21,7 @@ async function startService(cfgfile) {
   const cfg = loadConfig(cfgfile);
   const err = checkConfig(cfg);
   if (err) {
-    console.log(err);
+    log.error(err);
 
     return;
   }
@@ -42,7 +43,7 @@ async function startService(cfgfile) {
     },
     exportArticle: (call) => {
       if (!isValidToken(cfg, call.request.getToken())) {
-        console.log('invalid token', call.request.getToken());
+        log.error('invalid token', call.request.getToken());
 
         call.end();
 

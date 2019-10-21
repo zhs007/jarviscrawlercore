@@ -1,6 +1,7 @@
 const puppeteer = require('puppeteer');
 const {loadConfig, checkConfig} = require('./cfg');
 const {runActions} = require('./actions');
+const log = require('../log');
 
 /**
  * a bot for confluence
@@ -11,17 +12,14 @@ async function confluencebot(cfgfile, headless) {
   const cfg = loadConfig(cfgfile);
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
-    console.log('config file error: ' + cfgerr);
+    log.error('config file error: ' + cfgerr);
 
     return;
   }
 
   const browser = await puppeteer.launch({
     headless: headless,
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-    ],
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
   const page = await browser.newPage();
@@ -32,12 +30,12 @@ async function confluencebot(cfgfile, headless) {
   await page.click('#loginButton');
 
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-    console.log('confluencebot:waitForNavigation ', err);
+    log.error('confluencebot:waitForNavigation ', err);
   });
 
   await runActions(page, cfg);
 
-//   await browser.close();
+  //   await browser.close();
 }
 
 exports.confluencebot = confluencebot;

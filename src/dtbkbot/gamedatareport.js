@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * onRightFrameLoaded GDR
  * @param {object} rightFrame - rightFrame
@@ -6,8 +8,6 @@ async function onRightFrameLoadedGDR(rightFrame) {
   // 等待页面加载
   await rightFrame
       .waitForFunction(() => {
-      // console.log(typeof jarvisCrawlerCoreVer);
-
         if (typeof jarvisCrawlerCoreVer === 'string') {
           const btncx = getElementWithDefaultValue('.scbtn', '查询');
           if (btncx) {
@@ -20,7 +20,7 @@ async function onRightFrameLoadedGDR(rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('onRightFrameLoadedGDR', err);
+        log.error('onRightFrameLoadedGDR', err);
       });
 }
 
@@ -55,7 +55,7 @@ async function getGameDataReport(
         return false;
       })
       .catch((err) => {
-        console.log('getGameDataReport.waitFor.menuson.bbtj', err);
+        log.error('getGameDataReport.waitFor.menuson.bbtj', err);
       });
 
   //   await leftFrame.waitFor(3000);
@@ -94,7 +94,7 @@ async function getGameDataReport(
         return false;
       })
       .catch((err) => {
-        console.log('getGameDataReport.waitFor.paginList', err);
+        log.error('getGameDataReport.waitFor.paginList', err);
       });
 
   await rightFrame.$eval(
@@ -125,7 +125,6 @@ async function getGameDataReport(
   // 等待页面加载
   await rightFrame
       .waitForFunction(() => {
-      // console.log(typeof jarvisCrawlerCoreVer);
         if (typeof jarvisCrawlerCoreVer === 'string') {
           const recordnums = getElement('.blue.recordnums');
           if (recordnums == undefined) {
@@ -152,7 +151,7 @@ async function getGameDataReport(
         return false;
       })
       .catch((err) => {
-        console.log('getGameDataReport.waitFor.recordnums', err);
+        log.error('getGameDataReport.waitFor.recordnums', err);
       });
 
   const recordnums = await rightFrame.$eval('.blue.recordnums', (ele) => {

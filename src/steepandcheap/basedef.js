@@ -1,0 +1,1 @@
+exports.DEFAULT_REVIEWS_NUMS = 50;

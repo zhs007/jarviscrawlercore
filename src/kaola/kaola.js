@@ -1,7 +1,5 @@
-const {
-  attachJQuery,
-  attachJarvisCrawlerCore,
-} = require('../utils');
+const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
+const log = require('../log');
 
 /**
  * kaola
@@ -20,19 +18,21 @@ async function kaola(browser, srctext, srclang, destlang) {
   // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   // await page.addScriptTag({path: './browser/utils.js'});
 
-  await page.evaluate(() => {
-    const jrxsg = getElementWithText('.toplevel', '今日限时购');
-    if (jrxsg) {
-      // 增加class，方便一次定位
-      // Increase class for easy positioning
-      jrxsg.className = 'toplevel jrxsg';
-      // 取消新窗口打开
-      // Cancel new window open
-      jrxsg.removeAttribute('target');
-    }
-  }).catch((err) => {
-    console.log('kaola.evaluate', err);
-  });
+  await page
+      .evaluate(() => {
+        const jrxsg = getElementWithText('.toplevel', '今日限时购');
+        if (jrxsg) {
+        // 增加class，方便一次定位
+        // Increase class for easy positioning
+          jrxsg.className = 'toplevel jrxsg';
+          // 取消新窗口打开
+          // Cancel new window open
+          jrxsg.removeAttribute('target');
+        }
+      })
+      .catch((err) => {
+        log.error('kaola.evaluate', err);
+      });
 
   await page.click('.toplevel.jrxsg');
 }

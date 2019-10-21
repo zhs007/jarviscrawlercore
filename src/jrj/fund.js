@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * getName - get name
  * @param {string} fullname - fullname
@@ -49,7 +51,7 @@ async function jrjFund(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.setViewport', awaiterr);
+    log.error('jrjFund.setViewport', awaiterr);
 
     await page.close();
 
@@ -84,7 +86,7 @@ async function jrjFund(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.goto', awaiterr);
+    log.error('jrjFund.goto', awaiterr);
 
     await page.close();
 
@@ -100,7 +102,7 @@ async function jrjFund(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.waitForSelector .hdmain', err);
+    log.error('jrjFund.waitForSelector .hdmain', err);
 
     await page.close();
 
@@ -140,7 +142,7 @@ async function jrjFund(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.$$eval .hdmain', awaiterr);
+    log.error('jrjFund.$$eval .hdmain', awaiterr);
 
     await page.close();
 
@@ -148,7 +150,7 @@ async function jrjFund(browser, code, timeout) {
   }
 
   if (!ret1) {
-    console.log('jrjFund.no ret1');
+    log.error('jrjFund.no ret1');
 
     await page.close();
 
@@ -186,7 +188,7 @@ async function jrjFund(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.$$eval .tit-inf', awaiterr);
+    log.error('jrjFund.$$eval .tit-inf', awaiterr);
 
     await page.close();
 
@@ -216,7 +218,7 @@ async function jrjFund(browser, code, timeout) {
         });
 
     if (awaiterr) {
-      console.log('jrjFund.$$eval .tittopone', awaiterr);
+      log.error('jrjFund.$$eval .tittopone', awaiterr);
 
       await page.close();
 

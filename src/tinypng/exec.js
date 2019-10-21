@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {tinypng} = require('./tinypng');
 const fs = require('fs');
+const log = require('../log');
 
 /**
  * execTinypng
@@ -14,20 +15,20 @@ async function execTinypng(program, version) {
       .option('-o, --output [outputfile]', 'output file')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(filename, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!filename) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler tinypng --help'
           );
 
           return;
         }
 
-        console.log('filename - ', filename);
+        log.console('filename - ', filename);
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
@@ -35,7 +36,7 @@ async function execTinypng(program, version) {
           const ret = await tinypng(browser, filename);
           if (ret) {
             if (ret.error) {
-              console.log('error - ', ret.error);
+              log.console('error - ', ret.error);
             } else if (ret.lstbuf && options.output) {
               for (let i = 0; i < ret.lstbuf.length; ++i) {
                 fs.writeFileSync(options.output, ret.lstbuf[i]);
@@ -47,7 +48,7 @@ async function execTinypng(program, version) {
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

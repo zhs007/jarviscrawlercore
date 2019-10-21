@@ -5,6 +5,7 @@ const {
   attachJQuery,
   attachJarvisCrawlerCore,
 } = require('../utils');
+const log = require('../log');
 
 /**
  * export article to a pdf file or a jpg file.
@@ -34,19 +35,23 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
 
     const url = response.url();
     const headers = response.headers();
-    if (headers && headers['content-type'] &&
-          headers['content-type'].indexOf('image') == 0) {
+    if (
+      headers &&
+      headers['content-type'] &&
+      headers['content-type'].indexOf('image') == 0
+    ) {
       mapResponse[url] = await response.buffer();
     }
   });
 
-  await page.goto(url,
-      {
+  await page
+      .goto(url, {
         waitUntil: 'domcontentloaded',
         timeout: 0,
-      }).catch((err) => {
-    console.log('getArticleList:page.goto', url, err);
-  });
+      })
+      .catch((err) => {
+        log.error('getArticleList:page.goto', url, err);
+      });
 
   await attachJQuery(page);
   await attachJarvisCrawlerCore(page);
@@ -62,9 +67,7 @@ async function getArticleList(browser, url, outputfile, jquery, debugmode) {
   if (result) {
     const lst = newArticleList(result);
 
-    if (outputfile &&
-      typeof(outputfile) == 'string' &&
-      outputfile.length > 0) {
+    if (outputfile && typeof outputfile == 'string' && outputfile.length > 0) {
       saveMessage(outputfile, lst);
     }
 

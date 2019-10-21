@@ -2,6 +2,7 @@ const {mgrDTGame} = require('./mgr');
 const {isArrayNumberNM, isMyRespin} = require('../utils');
 const messages = require('../../../proto/result_pb');
 const {newDTGameResultErr} = require('../../utils');
+const log = require('../../log');
 
 const GAMECODE = 'hiphopman';
 const LINES = 50;
@@ -131,7 +132,7 @@ function countfgnums(children, baseid, isroot) {
             }
           }
         } catch (err) {
-          console.log(GAMECODE + '.countfgnums catch err ' + err);
+          log.error(GAMECODE + '.countfgnums catch err ' + err);
         }
       }
     }
@@ -149,7 +150,7 @@ function countfgnums(children, baseid, isroot) {
             }
           }
         } catch (err) {
-          console.log(GAMECODE + '.countfgnums catch err ' + err);
+          log.error(GAMECODE + '.countfgnums catch err ' + err);
         }
       }
     }

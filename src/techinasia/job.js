@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * techinasiaJob - techinasia jobs
  * @param {object} browser - browser
@@ -29,7 +31,7 @@ async function techinasiaJob(browser, jobid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJob.goto', awaiterr);
+    log.error('techinasiaJob.goto', awaiterr);
 
     await page.close();
 
@@ -41,7 +43,7 @@ async function techinasiaJob(browser, jobid, timeout) {
   });
 
   if (awaiterr) {
-    console.log('techinasiaJob.waitForSelector header.page-header', awaiterr);
+    log.error('techinasiaJob.waitForSelector header.page-header', awaiterr);
 
     await page.close();
 
@@ -116,7 +118,7 @@ async function techinasiaJob(browser, jobid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJob.eval header.page-header', awaiterr);
+    log.error('techinasiaJob.eval header.page-header', awaiterr);
 
     await page.close();
 
@@ -156,7 +158,7 @@ async function techinasiaJob(browser, jobid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJob.eval section', awaiterr);
+    log.error('techinasiaJob.eval section', awaiterr);
 
     await page.close();
 

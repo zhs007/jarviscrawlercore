@@ -1,6 +1,7 @@
 const {loadConfig, checkConfig, getWebsiteConfig} = require('./cfg');
 const {oabt} = require('./oabt');
 const {sleep} = require('../utils');
+const log = require('../log');
 
 /**
  * a bot for dtbk
@@ -17,7 +18,7 @@ async function bt(browser, cfgfile, debugmode, website) {
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
     const errstr = 'config file error: ' + cfgerr;
-    console.log(errstr);
+    log.error(errstr);
 
     return {error: errstr};
   }
@@ -25,7 +26,7 @@ async function bt(browser, cfgfile, debugmode, website) {
   const websitecfg = getWebsiteConfig(cfg, website);
   if (!websitecfg) {
     const errstr = 'no website ' + website;
-    console.log(errstr);
+    log.error(errstr);
 
     return {error: errstr};
   }
@@ -33,13 +34,13 @@ async function bt(browser, cfgfile, debugmode, website) {
   const page = await browser.newPage();
   let isloaded = false;
   page.on('domcontentloaded', async () => {
-    console.log('domcontentloaded');
+    log.debug('domcontentloaded');
 
     isloaded = true;
   });
 
   await page.goto(websitecfg.url).catch((err) => {
-    console.log('dtbkbot.goto', err);
+    log.debug('dtbkbot.goto', err);
   });
 
   while (true) {

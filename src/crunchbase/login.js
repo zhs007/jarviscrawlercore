@@ -1,4 +1,5 @@
 const {reCAPTCHA} = require('./utils');
+const log = require('../log');
 
 /**
  * cblogin
@@ -19,9 +20,8 @@ async function cblogin(browser, email, password) {
         deviceScaleFactor: 1,
       })
       .catch((err) => {
-        console.log('cblogin.setViewport', err);
+        log.error('cblogin.setViewport', err);
       });
-
 
   // page.on('framenavigated', (frame) => {
   //   console.log('framenavigated ' + frame.name() + ' ' + frame.url());
@@ -78,7 +78,7 @@ async function cblogin(browser, email, password) {
       'https://www.crunchbase.com/login'
   );
 
-  console.log('cbcompany.reCAPTCHA ' + recaptcha);
+  log.debug('cbcompany.reCAPTCHA ' + recaptcha);
 
   // console.log('haha');
 
@@ -105,7 +105,7 @@ async function cblogin(browser, email, password) {
         return false;
       })
       .catch((err) => {
-        console.log('cblogin.waitForFunction', err);
+        log.error('cblogin.waitForFunction', err);
       });
 
   // console.log('haha1');

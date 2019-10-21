@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * getCode - get code
  * @param {string} name - name
@@ -36,7 +38,7 @@ async function jrjFunds(browser, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFunds.setViewport', awaiterr);
+    log.error('jrjFunds.setViewport', awaiterr);
 
     await page.close();
 
@@ -69,7 +71,7 @@ async function jrjFunds(browser, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFunds.goto', awaiterr);
+    log.error('jrjFunds.goto', awaiterr);
 
     await page.close();
 
@@ -81,7 +83,7 @@ async function jrjFunds(browser, timeout) {
   });
 
   if (awaiterr) {
-    console.log('jrjFunds.waitForSelector div.box', awaiterr);
+    log.error('jrjFunds.waitForSelector div.box', awaiterr);
 
     await page.close();
 
@@ -114,7 +116,7 @@ async function jrjFunds(browser, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFunds.$$eval div.box', awaiterr);
+    log.error('jrjFunds.$$eval div.box', awaiterr);
 
     await page.close();
 

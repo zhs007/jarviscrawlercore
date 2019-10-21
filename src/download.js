@@ -1,4 +1,5 @@
 const {sleep} = require('./utils');
+const log = require('./log');
 
 /**
  * getBaseURL - get base url, https://a.b.c/d?e=f => https://a.b.c/d
@@ -30,7 +31,7 @@ async function download(page, url, timeout) {
     });
 
     if (awaiterr) {
-      console.log('download.newPage', awaiterr);
+      log.error('download.newPage', awaiterr);
 
       return {error: awaiterr};
     }
@@ -95,7 +96,7 @@ async function download(page, url, timeout) {
   });
 
   if (awaiterr) {
-    console.log('download.goto', awaiterr);
+    log.error('download.goto', awaiterr);
 
     return {error: awaiterr};
   }

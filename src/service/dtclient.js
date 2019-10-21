@@ -1,5 +1,6 @@
 const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
+const log = require('../log');
 
 const grpc = require('grpc');
 
@@ -29,11 +30,11 @@ function startGetDTData(servAddr, envName, dtDataType, startTime, endTime) {
 
   client.getDTData(request, function(err, response) {
     if (err) {
-      console.log('err:', err);
+      log.error('err:', err);
     }
 
     if (response) {
-      console.log('result:', JSON.stringify(response.toObject()));
+      log.debug('result:', JSON.stringify(response.toObject()));
     }
   });
 }

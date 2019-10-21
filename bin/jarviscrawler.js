@@ -21,8 +21,11 @@ const {execGeoIP} = require('../src/geoip/exec');
 const {execTinypng} = require('../src/tinypng/exec');
 const {execTechInAsia} = require('../src/techinasia/exec');
 const {execSteepAndCheap} = require('../src/steepandcheap/exec');
+const {execMountainSteals} = require('../src/mountainsteals/exec');
+const {execJD} = require('../src/jd/exec');
 const {execJRJ} = require('../src/jrj/exec');
 const fs = require('fs');
+const log = require('../src/log');
 
 const package = JSON.parse(fs.readFileSync('package.json'));
 const VERSION = package.version;
@@ -41,24 +44,24 @@ program
     .option('-i, --images [isoutput]', 'output images')
     .option('-d, --debug [isdebug]', 'debug mode')
     .action(function(url, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log(
+        log.console(
             'command wrong, please type ' + 'jarviscrawler exparticle --help'
         );
 
         return;
       }
 
-      console.log('url - ', url);
+      log.console('url - ', url);
 
       if (options.output) {
-        console.log('output - ', options.output);
+        log.console('output - ', options.output);
       }
 
       if (options.mode) {
-        console.log('mode - ', options.mode);
+        log.console('mode - ', options.mode);
       } else {
         options.mode = 'pb';
       }
@@ -68,7 +71,7 @@ program
           options.pdfformat = 'A4';
         }
 
-        console.log('pdfformat - ', options.pdfformat);
+        log.console('pdfformat - ', options.pdfformat);
       } else if (options.mode == 'jpg') {
         if (!options.jpgquality) {
           options.jpgquality = 60;
@@ -76,22 +79,22 @@ program
           options.jpgquality = parseInt(options.jpgquality);
         }
 
-        console.log('jpgquality - ', options.jpgquality);
+        log.console('jpgquality - ', options.jpgquality);
       }
 
       const images = options.images === 'true';
       if (options.mode == 'pdf' || options.mode == 'pb') {
-        console.log('images - ', images);
+        log.console('images - ', images);
       }
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       const jquery = options.jquery === 'true';
-      console.log('jquery - ', jquery);
+      log.console('jquery - ', jquery);
 
       const debugmode = options.debug === 'true';
-      console.log('debug - ', debugmode);
+      log.console('debug - ', debugmode);
 
       (async () => {
         const browser = await startBrowser(headless);
@@ -112,7 +115,7 @@ program
           await browser.close();
         }
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -126,26 +129,26 @@ program
     .option('-o, --output [filename]', 'export output file')
     .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(url, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log(
+        log.console(
             'command wrong, please type ' + 'jarviscrawler tracing --help'
         );
 
         return;
       }
 
-      console.log('url - ', url);
-      console.log('output - ', options.output);
+      log.console('url - ', url);
+      log.console('output - ', options.output);
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       (async () => {
         await tracing(url, options.output, headless);
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -158,24 +161,24 @@ program
     .description('a confluence bot')
     .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(cfgfile, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       if (!cfgfile) {
-        console.log(
+        log.console(
             'command wrong, please type ' + 'jarviscrawler confluencebot --help'
         );
 
         return;
       }
 
-      console.log('cfgfile - ', cfgfile);
+      log.console('cfgfile - ', cfgfile);
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       (async () => {
         await confluencebot(cfgfile, headless);
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -188,10 +191,10 @@ program
     .description('amazon')
     .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(mode, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
@@ -200,7 +203,7 @@ program
 
       // await browser.close();
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -213,10 +216,10 @@ program
     .description('kaola')
     .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(mode, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
@@ -225,7 +228,7 @@ program
 
       // await browser.close();
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -241,30 +244,30 @@ program
     .option('-q, --jquery [isattach]', 'attach jquery')
     .option('-d, --debug [isdebug]', 'debug mode')
     .action(function(url, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       if (!url || !options.output) {
-        console.log(
+        log.console(
             'command wrong, please type ' + 'jarviscrawler exparticle --help'
         );
 
         return;
       }
 
-      console.log('url - ', url);
+      log.console('url - ', url);
 
       if (options.output) {
-        console.log('output - ', options.output);
+        log.console('output - ', options.output);
       }
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       const jquery = options.jquery === 'true';
-      console.log('jquery - ', jquery);
+      log.console('jquery - ', jquery);
 
       const debugmode = options.debug === 'true';
-      console.log('debug - ', debugmode);
+      log.console('debug - ', debugmode);
 
       (async () => {
         const browser = await startBrowser(headless);
@@ -275,7 +278,7 @@ program
           await browser.close();
         }
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -288,10 +291,10 @@ program
     .description('yc')
     .option('-h, --headless [isheadless]', 'headless mode')
     .action(function(mode, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       (async () => {
         const browser = await startBrowser(headless);
@@ -300,7 +303,7 @@ program
 
       // await browser.close();
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -314,13 +317,13 @@ program
     .option('-h, --headless [isheadless]', 'headless mode')
     .option('-g, --gamecode [gamecode]', 'gamecode')
     .action(function(mode, options) {
-      console.log('version is ', VERSION);
+      log.console('version is ', VERSION);
 
       const headless = options.headless === 'true';
-      console.log('headless - ', headless);
+      log.console('headless - ', headless);
 
       if (!options.gamecode) {
-        console.log(
+        log.console(
             'command wrong, please type ' + 'jarviscrawler playngo --help'
         );
 
@@ -334,7 +337,7 @@ program
 
       // await browser.close();
       })().catch((err) => {
-        console.log('catch a err ', err);
+        log.console('catch a err ', err);
 
         if (headless) {
           process.exit(-1);
@@ -355,5 +358,7 @@ execTinypng(program, VERSION);
 execTechInAsia(program, VERSION);
 execSteepAndCheap(program, VERSION);
 execJRJ(program, VERSION);
+execMountainSteals(program, VERSION);
+execJD(program, VERSION);
 
 program.parse(process.argv);

@@ -2,6 +2,7 @@ const {WaitFrameNavigated} = require('../waitframenavigated');
 const {WaitAllResponse} = require('../waitallresponse');
 const {sleep} = require('../utils');
 const {resetPage} = require('./utils');
+const log = require('../log');
 
 /**
  * getMainTagElement - get main tag element
@@ -17,7 +18,7 @@ async function getMainTagElement(page, maintag) {
       awaiterr = err;
     });
     if (awaiterr) {
-      console.log('getMainTagElement.$$ ' + awaiterr);
+      log.error('getMainTagElement.$$ ' + awaiterr);
       return undefined;
     }
 
@@ -36,7 +37,7 @@ async function getMainTagElement(page, maintag) {
       }
     }
   } catch (err) {
-    console.log('getMainTagElement ' + err);
+    log.error('getMainTagElement ' + err);
     return undefined;
   }
 
@@ -58,7 +59,7 @@ async function getSubTagElement(page, subtag) {
     });
 
     if (awaiterr) {
-      console.log('getSubTagElement ' + awaiterr);
+      log.error('getSubTagElement ' + awaiterr);
       return undefined;
     }
 
@@ -84,7 +85,7 @@ async function getSubTagElement(page, subtag) {
       }
     }
   } catch (err) {
-    console.log('getSubTagElement ' + err);
+    log.error('getSubTagElement ' + err);
     return undefined;
   }
 
@@ -202,7 +203,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJobs.setViewport', awaiterr);
+    log.error('techinasiaJobs.setViewport', awaiterr);
 
     await page.close();
 
@@ -230,7 +231,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
       });
 
   if (awaiterr) {
-    console.log('techinasiaJobs.goto', awaiterr);
+    log.error('techinasiaJobs.goto', awaiterr);
 
     await page.close();
 
@@ -239,7 +240,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
 
   awaiterr = await resetPage(page);
   if (awaiterr) {
-    console.log('techinasiaJobs.resetPage', awaiterr);
+    log.error('techinasiaJobs.resetPage', awaiterr);
 
     await page.close();
 
@@ -248,7 +249,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
 
   awaiterr = await selectTag(page, maintag, subtag, timeout);
   if (awaiterr) {
-    console.log('techinasiaJobs.selectTag', awaiterr);
+    log.error('techinasiaJobs.selectTag', awaiterr);
 
     await page.close();
 
@@ -274,7 +275,10 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
         break;
       }
 
-      if (lastjobnums == lstarticle.length && Date.now() - starttime >= timeout) {
+      if (
+        lastjobnums == lstarticle.length &&
+        Date.now() - starttime >= timeout
+      ) {
         break;
       }
 
@@ -327,7 +331,7 @@ async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    console.log('techinasiaJobs.eval article', awaiterr);
+    log.error('techinasiaJobs.eval article', awaiterr);
 
     await page.close();
 

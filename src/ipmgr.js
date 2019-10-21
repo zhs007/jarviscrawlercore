@@ -1,4 +1,5 @@
 const dns = require('dns');
+const log = require('./log');
 
 /**
  * getHostName - get hostname
@@ -14,7 +15,7 @@ function getHostName(url) {
     const urlinfo = new URL(url);
     return urlinfo.hostname;
   } catch (err) {
-    console.log('getHostName ' + url + ' ' + err);
+    log.error('getHostName ' + url + ' ' + err);
   }
 
   return '';
@@ -50,7 +51,7 @@ class IPMgr {
         try {
           dns.lookup(curhostname, {all: true}, (err, addresses) => {
             if (err) {
-              console.log('getIP.dns.lookup ' + curhostname + ' ' + err);
+              log.error('getIP.dns.lookup ' + curhostname + ' ' + err);
 
               resolve('');
 
@@ -70,7 +71,7 @@ class IPMgr {
             resolve(ip);
           });
         } catch (err) {
-          console.log('getIP ' + err);
+          log.error('getIP ' + err);
 
           resolve('');
         }
@@ -81,6 +82,6 @@ class IPMgr {
       resolve('');
     });
   }
-};
+}
 
 exports.IPMgr = IPMgr;

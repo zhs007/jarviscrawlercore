@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 // const {jarviscrawlercore} = require('../../proto/result');
 // const images = require('images');
 
@@ -22,32 +23,34 @@ function ismine(url) {
  */
 async function getArticles(page) {
   let errret = undefined;
-  const ret = await page.evaluate(async () => {
-    const ret = {};
-    ret.articles = [];
+  const ret = await page
+      .evaluate(async () => {
+        const ret = {};
+        ret.articles = [];
 
-    const lst = $('.item-wrap.clearfix');
-    for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByClassName('title');
-      if (title.length > 0) {
-        co = {
-          title: title[0].innerText,
-        };
+        const lst = $('.item-wrap.clearfix');
+        for (let i = 0; i < lst.length; ++i) {
+          const title = lst[i].getElementsByClassName('title');
+          if (title.length > 0) {
+            co = {
+              title: title[0].innerText,
+            };
 
-        co.url = title[0].href;
+            co.url = title[0].href;
 
-        ret.articles.push(co);
-      }
-    }
+            ret.articles.push(co);
+          }
+        }
 
-    console.log(ret);
+        console.log(ret);
 
-    return ret;
-  }).catch((err) => {
-    console.log('iheima.main:getArticles.evaluate', err);
+        return ret;
+      })
+      .catch((err) => {
+        log.error('iheima.main:getArticles.evaluate', err);
 
-    errret = err;
-  });
+        errret = err;
+      });
 
   return {
     result: ret,

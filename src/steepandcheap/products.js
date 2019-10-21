@@ -1,6 +1,7 @@
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
+const log = require('../log');
 // const {getElementPropertyString} = require('../eleutils');
 /**
  * parseURL - parse URL
@@ -47,7 +48,7 @@ async function getFirstProductURL(page) {
       });
 
   if (awaiterr) {
-    console.log('getFirstProductURL.$$eval .plp-products-wrap', awaiterr);
+    log.error('getFirstProductURL.$$eval .plp-products-wrap', awaiterr);
 
     return '';
   }
@@ -357,7 +358,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProducts.setViewport', awaiterr);
+    log.error('steepandcheapProducts.setViewport', awaiterr);
 
     await page.close();
 
@@ -389,7 +390,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProducts.goto', awaiterr);
+    log.error('steepandcheapProducts.goto', awaiterr);
 
     await page.close();
 
@@ -398,7 +399,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
 
   awaiterr = await closeDialog(page);
   if (awaiterr) {
-    console.log('steepandcheapProducts.chgPage ', awaiterr);
+    log.error('steepandcheapProducts.chgPage ', awaiterr);
 
     await page.close();
 
@@ -415,7 +416,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
       timeout
   );
   if (awaiterr) {
-    console.log('steepandcheapProducts.chgPage ', awaiterr);
+    log.error('steepandcheapProducts.chgPage ', awaiterr);
 
     await page.close();
 
@@ -427,7 +428,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   });
 
   if (awaiterr) {
-    console.log(
+    log.error(
         'steepandcheapProducts.waitForSelector .plp-products-wrap',
         awaiterr
     );
@@ -549,7 +550,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProducts.$$eval .product', awaiterr);
+    log.error('steepandcheapProducts.$$eval .product', awaiterr);
 
     await page.close();
 
@@ -571,7 +572,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    console.log('steepandcheapProducts.$$eval .page-number', awaiterr);
+    log.error('steepandcheapProducts.$$eval .page-number', awaiterr);
 
     await page.close();
 

@@ -15,6 +15,7 @@ const {
 const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
 const {WaitRightFrame} = require('./utils');
 const messages = require('../../proto/result_pb');
+const log = require('../log');
 
 /**
  * a bot for dtbk
@@ -48,7 +49,7 @@ async function dtbkbot(
   const cfgerr = checkConfig(cfg);
   if (cfgerr) {
     const errstr = 'config file error: ' + cfgerr;
-    console.log(errstr);
+    log.error(errstr);
 
     return {error: errstr};
   }
@@ -56,14 +57,14 @@ async function dtbkbot(
   const envcfg = getEnvConfig(cfg, envName);
   if (!envcfg) {
     const errstr = 'no envName ' + envName;
-    console.log(errstr);
+    log.error(errstr);
 
     return {error: errstr};
   }
 
   const page = await browser.newPage();
   page.on('console', (msg) => {
-    console.log('PAGE LOG:', msg.text());
+    log.debug('PAGE LOG:', msg.text());
   });
 
   page.on('response', async (response) => {
@@ -79,11 +80,11 @@ async function dtbkbot(
         deviceScaleFactor: 1,
       })
       .catch((err) => {
-        console.log('dtbkbot.setViewport', err);
+        log.error('dtbkbot.setViewport', err);
       });
 
   await page.goto(envcfg.url).catch((err) => {
-    console.log('dtbkbot.goto', err);
+    log.error('dtbkbot.goto', err);
   });
 
   // 等待登录加载完成
@@ -97,7 +98,7 @@ async function dtbkbot(
         return false;
       })
       .catch((err) => {
-        console.log('dtbkbot.waitForFunction.loginbox', err);
+        log.error('dtbkbot.waitForFunction.loginbox', err);
       });
 
   // 登录
@@ -107,7 +108,7 @@ async function dtbkbot(
 
   // 等待页面跳转完成
   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-    console.log('catch a err ', err);
+    log.error('catch a err ', err);
   });
 
   // 处理frames
@@ -132,7 +133,7 @@ async function dtbkbot(
 
     page.on('framenavigated', async (frame) => {
       if (frame.name() === 'rightFrame') {
-        console.log(frame.url());
+        log.debug(frame.url());
 
         await attachJQuery(frame);
         await attachJarvisCrawlerCore(frame);
@@ -196,7 +197,7 @@ async function dtbkbot(
           }
         })
         .catch((err) => {
-          console.log('dtbkbot:leftFrame.evaluate', err);
+          log.error('dtbkbot:leftFrame.evaluate', err);
         });
 
     if (dtDataType == messages.DTDataType.DT_DT_TODAYGAMEDATA) {
@@ -239,7 +240,7 @@ async function dtbkbot(
             return false;
           })
           .catch((err) => {
-            console.log('dtbkbot.logout.waitForFunction.loginbox', err);
+            log.error('dtbkbot.logout.waitForFunction.loginbox', err);
           });
     }
 

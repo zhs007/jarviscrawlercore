@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {search} = require('./search');
+const log = require('../log');
 
 /**
  * doubanexec
@@ -15,23 +16,23 @@ async function doubanexec(program, version) {
       .option('-s, --search [search]', 'search string')
       .option('-t, --type [type]', 'type')
       .action(function(mode, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!mode) {
-          console.log(
+          log.debug(
               'command wrong, please type ' + 'jarviscrawler douban --help'
           );
 
           return;
         }
 
-        console.log('mode - ', mode);
+        log.console('mode - ', mode);
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         const debugmode = options.debug === 'true';
-        console.log('debug - ', debugmode);
+        log.console('debug - ', debugmode);
 
         (async () => {
           const browser = await startBrowser(headless);
@@ -42,7 +43,7 @@ async function doubanexec(program, version) {
             await browser.close();
           }
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

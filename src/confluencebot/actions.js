@@ -1,9 +1,8 @@
 const {allUpdates} = require('./allupdates');
 const {likePage} = require('./like');
 const {addComment} = require('./addcomment');
-const {
-  attachJarvisCrawlerCore,
-} = require('../utils');
+const {attachJarvisCrawlerCore} = require('../utils');
+const log = require('../log');
 
 /**
  * run actions
@@ -12,7 +11,7 @@ const {
  */
 async function runActions(page, cfg) {
   for (let i = 0; i < cfg.actions.length; ++i) {
-    console.log(cfg.actions[i]);
+    log.debug(cfg.actions[i]);
 
     const curaction = cfg.actions[i];
     if (curaction.action === 'allupdates') {
@@ -20,11 +19,10 @@ async function runActions(page, cfg) {
       // await page.addScriptTag({path: './browser/utils.js'});
       const allupdates = await allUpdates(page);
 
-      console.log('%j', allupdates);
+      log.debug('%j', allupdates);
     } else if (curaction.action === 'like') {
       await likePage(page, cfg, curaction.pageid);
     } else if (curaction.action === 'addcomment') {
-      // console.log(cfg.actions[i]);
       await addComment(page, cfg, curaction.pageid, curaction.comment);
     }
   }

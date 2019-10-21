@@ -2,6 +2,7 @@ const {sleep, hashMD5} = require('../utils');
 const messages = require('../../proto/result_pb');
 const {getImageInfo} = require('../imgutils');
 const {IPMgr} = require('../ipmgr');
+const log = require('../log');
 
 /**
  * getURL - get url
@@ -128,7 +129,7 @@ async function analyzePage(browser, url, viewport, options) {
   page.on('error', (err) => {
     lstErr.push(err.toString());
 
-    console.log('ERROR - ' + err.toString());
+    log.error('ERROR - ' + err.toString());
   });
 
   page.on('request', (req) => {
@@ -143,7 +144,7 @@ async function analyzePage(browser, url, viewport, options) {
       return;
     }
 
-    console.log('request - ', url);
+    log.info('request - ', url);
 
     lstReq.push({
       url: url,
@@ -174,7 +175,7 @@ async function analyzePage(browser, url, viewport, options) {
       }
     }
 
-    console.log('requestfailed - ', url);
+    log.info('requestfailed - ', url);
   });
 
   page.on('response', async (res) => {
@@ -185,7 +186,7 @@ async function analyzePage(browser, url, viewport, options) {
 
     const url = getURL(res.url());
 
-    console.log('response - ', url);
+    log.info('response - ', url);
 
     const req = findReq(lstReq, url);
     if (req) {
@@ -242,7 +243,7 @@ async function analyzePage(browser, url, viewport, options) {
         req.remoteaddr = remoteaddr.ip + ':' + remoteaddr.port;
       }
     } else {
-      console.log('no response', url);
+      log.info('no response', url);
     }
 
     // --downloadNums;
@@ -251,7 +252,7 @@ async function analyzePage(browser, url, viewport, options) {
   let pagegotoerr = undefined;
 
   await page.goto(url, {timeout: timeout}).catch((err) => {
-    console.log('analyzePage.goto', url, err);
+    log.error('analyzePage.goto', url, err);
 
     pagegotoerr = err;
   });
@@ -260,7 +261,7 @@ async function analyzePage(browser, url, viewport, options) {
   //       waitUntil: 'networkidle2',
   //     })
   //     .catch((err) => {
-  //       console.log('analyzePage.goto', url, err);
+  //       log.error('analyzePage.goto', url, err);
 
   //       pagegotoerr = err;
   //     });
@@ -376,16 +377,16 @@ async function analyzePage(browser, url, viewport, options) {
     }
   }
 
-  console.log('page time is ', ret.pageTime);
+  log.info('page time is ', ret.pageTime);
 
   for (let i = 0; i < lstReq.length; ++i) {
     ret.pageBytes += lstReq[i].buflen;
   }
 
-  console.log('page bytes is ', ret.pageBytes);
+  log.info('page bytes is ', ret.pageBytes);
 
-  console.log('err - ', JSON.stringify(lstErr));
-  console.log('request - ', JSON.stringify(lstReq));
+  log.info('err - ', JSON.stringify(lstErr));
+  log.info('request - ', JSON.stringify(lstReq));
 
   return {
     ret: ret,

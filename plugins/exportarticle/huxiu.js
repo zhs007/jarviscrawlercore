@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 
 /**
  * ismine
@@ -24,9 +25,6 @@ async function exportArticle(page) {
       (element) => {
         return element.innerHTML;
       });
-
-  //   console.log('geekpark.article');
-  //   console.log(dom.length);
 
   await page.setContent(dom);
 
@@ -63,9 +61,6 @@ async function exportArticle(page) {
           // if (window.waitimgs > 0) {
           //   --window.waitimgs;
           // }
-
-          // console.log(curimg.width);
-          // console.log(curimg.height);
         };
         curimg.src = imghead.children[0].src;
 
@@ -118,9 +113,6 @@ async function exportArticle(page) {
             curimg.onload = () => {
               ret.imgs[ret.imgs.length - 1].width = curimg.width;
               ret.imgs[ret.imgs.length - 1].height = curimg.height;
-
-              // console.log(curimg.width);
-              // console.log(curimg.height);
             };
             curimg.src = curimgs[0].src;
 
@@ -164,7 +156,7 @@ async function exportArticle(page) {
 
     return ret;
   }).catch((err) => {
-    console.log('huxiu.article:exportArticle.evaluate', err);
+    log.error('huxiu.article:exportArticle.evaluate', err);
 
     errret = err;
   });

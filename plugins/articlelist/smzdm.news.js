@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 // const {jarviscrawlercore} = require('../../proto/result');
 // const images = require('images');
 
@@ -22,40 +23,42 @@ function ismine(url) {
  */
 async function getArticles(page) {
   let errret = undefined;
-  const ret = await page.evaluate(async () => {
-    const ret = {};
-    ret.articles = [];
+  const ret = await page
+      .evaluate(async () => {
+        const ret = {};
+        ret.articles = [];
 
-    const lst = $('.list');
-    for (let i = 0; i < lst.length; ++i) {
-      const title = lst[i].getElementsByClassName('listTitle');
-      if (title.length > 0) {
-        co = {
-          title: title[0].innerText,
-        };
+        const lst = $('.list');
+        for (let i = 0; i < lst.length; ++i) {
+          const title = lst[i].getElementsByClassName('listTitle');
+          if (title.length > 0) {
+            co = {
+              title: title[0].innerText,
+            };
 
-        const href = title[0].getElementsByTagName('a');
-        if (href.length > 0) {
-          co.url = href[0].href;
+            const href = title[0].getElementsByTagName('a');
+            if (href.length > 0) {
+              co.url = href[0].href;
+            }
+
+            const lrInfo = lst[i].getElementsByClassName('lrInfo');
+            if (lrInfo.length > 0) {
+              co.summary = lrInfo[0].innerText;
+            }
+
+            ret.articles.push(co);
+          }
         }
 
-        const lrInfo = lst[i].getElementsByClassName('lrInfo');
-        if (lrInfo.length > 0) {
-          co.summary = lrInfo[0].innerText;
-        }
+        console.log(ret);
 
-        ret.articles.push(co);
-      }
-    }
+        return ret;
+      })
+      .catch((err) => {
+        log.error('smzdm.news:getArticles.evaluate', err);
 
-    console.log(ret);
-
-    return ret;
-  }).catch((err) => {
-    console.log('smzdm.news:getArticles.evaluate', err);
-
-    errret = err;
-  });
+        errret = err;
+      });
 
   return {
     result: ret,

@@ -1,6 +1,7 @@
 const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
 const {requestCrawler} = require('./utils');
+const log = require('../log');
 
 const grpc = require('grpc');
 
@@ -14,22 +15,31 @@ const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
  * @param {string} text - text
  */
 function startTranslate2(servAddr, srclang, destlang, text) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestTranslate2();
   request.setText(text);
   request.setSrclang(srclang);
   request.setDestlang(destlang);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TRANSLATE2, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TRANSLATE2,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('text:', reply.getText());
-    }
-  });
+        if (reply) {
+          log.debug('text:', reply.getText());
+        }
+      }
+  );
 }
 
 /**
@@ -38,20 +48,29 @@ function startTranslate2(servAddr, srclang, destlang, text) {
  * @param {string} company - company code
  */
 function getCrunchBaseCompany(servAddr, company) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestCrunchBaseCompany();
   request.setSearch(company);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_CB_COMPANY, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_CB_COMPANY,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('text:', reply);
-    }
-  });
+        if (reply) {
+          log.debug('text:', reply);
+        }
+      }
+  );
 }
 
 /**
@@ -63,7 +82,10 @@ function getCrunchBaseCompany(servAddr, company) {
  * @param {number} h - viewport height
  */
 function analyzePage(servAddr, url, delay, w, h) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.AnalyzePage();
   request.setUrl(url);
@@ -71,15 +93,21 @@ function analyzePage(servAddr, url, delay, w, h) {
   request.setViewportwidth(w);
   request.setViewportheight(h);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_ANALYZEPAGE, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ANALYZEPAGE,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -88,20 +116,29 @@ function analyzePage(servAddr, url, delay, w, h) {
  * @param {string} ip - ip
  */
 function geoip(servAddr, ip) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestGeoIP();
   request.setIp(ip);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_GEOIP, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_GEOIP,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -110,21 +147,30 @@ function geoip(servAddr, ip) {
  * @param {string} companycode - companycode
  */
 function techinasiaCompany(servAddr, companycode) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_COMPANY);
   request.setCompanycode(companycode);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -133,21 +179,30 @@ function techinasiaCompany(servAddr, companycode) {
  * @param {string} jobcode - jobcode
  */
 function techinasiaJob(servAddr, jobcode) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_JOB);
   request.setJobcode(jobcode);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -156,21 +211,30 @@ function techinasiaJob(servAddr, jobcode) {
  * @param {string} maintag - main tag
  */
 function techinasiaJobTags(servAddr, maintag) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestTechInAsia();
   request.setMode(messages.TechInAsiaMode.TIAM_JOBTAG);
   request.setJobtag(maintag);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_TECHINASIA, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TECHINASIA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -180,22 +244,31 @@ function techinasiaJobTags(servAddr, maintag) {
  * @param {string} page - page
  */
 function steepandcheapProducts(servAddr, url, page) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestSteepAndCheap();
   request.setMode(messages.SteepAndCheapMode.SACM_PRODUCTS);
   request.setUrl(url);
   request.setPage(page);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_STEEPANDCHEAP, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_STEEPANDCHEAP,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -204,21 +277,30 @@ function steepandcheapProducts(servAddr, url, page) {
  * @param {string} url - url
  */
 function steepandcheapProduct(servAddr, url) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestSteepAndCheap();
   request.setMode(messages.SteepAndCheapMode.SACM_PRODUCT);
   request.setUrl(url);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_STEEPANDCHEAP, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_STEEPANDCHEAP,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -226,20 +308,29 @@ function steepandcheapProduct(servAddr, url) {
  * @param {string} servAddr - servAddr
  */
 function jrjFunds(servAddr) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestJRJ();
   request.setMode(messages.JRJMode.JRJM_FUNDS);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JRJ,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -248,21 +339,30 @@ function jrjFunds(servAddr) {
  * @param {string} code - code
  */
 function jrjFund(servAddr, code) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestJRJ();
   request.setMode(messages.JRJMode.JRJM_FUND);
   request.setFundcode(code);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JRJ,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -271,21 +371,30 @@ function jrjFund(servAddr, code) {
  * @param {string} code - code
  */
 function jrjFundManager(servAddr, code) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestJRJ();
   request.setMode(messages.JRJMode.JRJM_FUNDMANAGER);
   request.setFundcode(code);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JRJ,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 /**
@@ -295,22 +404,95 @@ function jrjFundManager(servAddr, code) {
  * @param {string} year - year
  */
 function jrjFundValue(servAddr, code, year) {
-  const client = new services.JarvisCrawlerServiceClient(servAddr, grpc.credentials.createInsecure());
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
 
   const request = new messages.RequestJRJ();
   request.setMode(messages.JRJMode.JRJM_FUNDVALUE);
   request.setFundcode(code);
   request.setYear(year);
 
-  requestCrawler(client, TOKEN, messages.CrawlerType.CT_JRJ, request, (err, reply) => {
-    if (err) {
-      console.log('err:', err);
-    }
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JRJ,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
 
-    if (reply) {
-      console.log('reply:', JSON.stringify(reply.toObject()));
-    }
-  });
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * jdActive
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function jdActive(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestJD();
+  request.setMode(messages.JDMode.JDM_ACTIVE);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JD,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * jdProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function jdProduct(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestJD();
+  request.setMode(messages.JDMode.JDM_PRODUCT);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JD,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
 }
 
 // startTranslate2(
@@ -339,4 +521,7 @@ function jrjFundValue(servAddr, code, year) {
 // jrjFunds('127.0.0.1:7051');
 // jrjFund('127.0.0.1:7051', '110011');
 // jrjFundManager('127.0.0.1:7051', '110011');
-jrjFundValue('127.0.0.1:7051', '110011', '2019');
+// jrjFundValue('127.0.0.1:7051', '110011', '2019');
+
+// jdActive('127.0.0.1:7051', '3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html');
+jdProduct('127.0.0.1:7051', '100006585530.html');

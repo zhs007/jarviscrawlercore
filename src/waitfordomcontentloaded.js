@@ -13,7 +13,7 @@ class WaitDomContentLoaded {
     this.isDone = false;
 
     page.on('domcontentloaded', () => {
-      console.log('domcontentloaded');
+      log.debug('domcontentloaded');
 
       this.isDone = true;
     });

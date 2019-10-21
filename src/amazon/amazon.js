@@ -1,7 +1,5 @@
-const {
-  attachJQuery,
-  attachJarvisCrawlerCore,
-} = require('../utils');
+const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
+const log = require('../log');
 
 /**
  * amazon
@@ -20,16 +18,18 @@ async function amazoncn(browser, srctext, srclang, destlang) {
   // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
   // await page.addScriptTag({path: './browser/utils.js'});
 
-  await page.evaluate(() => {
-    const zms = getElementWithText('.nav-a', 'Z秒杀');
-    if (zms) {
-      // 增加class，方便一次定位
-      // Increase class for easy positioning
-      zms.className = 'nav-a zms';
-    }
-  }).catch((err) => {
-    console.log('amazoncn.evaluate', err);
-  });
+  await page
+      .evaluate(() => {
+        const zms = getElementWithText('.nav-a', 'Z秒杀');
+        if (zms) {
+        // 增加class，方便一次定位
+        // Increase class for easy positioning
+          zms.className = 'nav-a zms';
+        }
+      })
+      .catch((err) => {
+        log.error('amazoncn.evaluate', err);
+      });
 
   await page.click('.nav-a.zms');
 
@@ -43,7 +43,7 @@ async function amazoncn(browser, srctext, srclang, destlang) {
   //   await page.type('.tlid-input.input', srctext);
 
   //   await page.waitForFunction('$(\'.tlid-translation.translation\').length > 0 && $(\'.tlid-translation.translation\')[0].innerText != \'\'').catch((err) => {
-  //     console.log('zhihu.article.formatArticle', err);
+  //     log.error('zhihu.article.formatArticle', err);
   //   });
   //   //   await page.waitForSelector('.tlid-results-container.results-container');
   //   const desttext = await page.evaluate(()=>{
@@ -57,8 +57,7 @@ async function amazoncn(browser, srctext, srclang, destlang) {
 
   //   await page.close();
 
-//   return desttext;
+  //   return desttext;
 }
 
 exports.amazoncn = amazoncn;
-

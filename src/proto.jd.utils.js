@@ -1,0 +1,201 @@
+const messages = require('../proto/result_pb');
+
+/**
+ * new JDCommentsType with object
+ * @param {object} obj - JDCommentsType object
+ * @return {messages.JDCommentsType} result - JDCommentsType
+ */
+function newJDCommentsType(obj) {
+  const result = new messages.JDCommentsType();
+
+  if (obj.type) {
+    result.setType(obj.type);
+  }
+
+  if (obj.nums) {
+    result.setNums(obj.nums);
+  }
+
+  return result;
+}
+
+/**
+ * new JDCommentsInfo with object
+ * @param {object} obj - JDCommentsInfo object
+ * @return {messages.JDCommentsInfo} result - JDCommentsInfo
+ */
+function newJDCommentsInfo(obj) {
+  const result = new messages.JDCommentsInfo();
+
+  if (obj.percent) {
+    result.setPercent(obj.percent);
+  }
+
+  if (Array.isArray(obj.tags) && obj.tags.length > 0) {
+    result.setTagsList(obj.tags);
+  }
+
+  if (Array.isArray(obj.lst) && obj.lst.length > 0) {
+    for (let i = 0; i < obj.lst.length; ++i) {
+      result.addLst(newJDCommentsType(obj.lst[i], i));
+    }
+  }
+
+  return result;
+}
+
+/**
+ * new JDSKUInfo with object
+ * @param {object} obj - JDSKUInfo object
+ * @return {messages.JDSKUInfo} result - JDSKUInfo
+ */
+function newJDSKUInfo(obj) {
+  const result = new messages.JDSKUInfo();
+
+  if (obj.skuID) {
+    result.setSkuid(obj.skuID);
+  }
+
+  if (obj.type) {
+    result.setType(obj.type);
+  }
+
+  if (obj.color) {
+    result.setColor(obj.color);
+  }
+
+  return result;
+}
+
+/**
+ * new JDPingou with object
+ * @param {object} obj - JDPingou object
+ * @return {messages.JDPingou} result - JDPingou
+ */
+function newJDPingou(obj) {
+  const result = new messages.JDPingou();
+
+  if (obj.preOrders) {
+    result.setPreorders(obj.preOrders);
+  }
+
+  if (obj.strLastTime) {
+    result.setStrlasttime(obj.strLastTime);
+  }
+
+  if (obj.scheduledPrice) {
+    result.setScheduledprice(obj.scheduledPrice);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  return result;
+}
+
+/**
+ * new JDProduct with object
+ * @param {object} obj - JDProduct object
+ * @return {messages.JDProduct} result - JDProduct
+ */
+function newJDProduct(obj) {
+  const result = new messages.JDProduct();
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (Array.isArray(obj.breadCrumbs) && obj.breadCrumbs.length > 0) {
+    result.setBreadcrumbsList(obj.breadCrumbs);
+  }
+
+  if (obj.info) {
+    result.setInfo(obj.info);
+  }
+
+  if (obj.nameTag) {
+    result.setNametag(obj.nameTag);
+  }
+
+  if (obj.pingou) {
+    result.setPingou(newJDPingou(obj.pingou));
+  }
+
+  if (obj.summaryService) {
+    result.setSummaryservice(obj.summaryService);
+  }
+
+  if (obj.strShipTime) {
+    result.setStrshiptime(obj.strShipTime);
+  }
+
+  if (obj.strWeight) {
+    result.setStrweight(obj.strWeight);
+  }
+
+  if (obj.brandChs) {
+    result.setBrandchs(obj.brandChs);
+  }
+
+  if (obj.brandEng) {
+    result.setBrandeng(obj.brandEng);
+  }
+
+  if (Array.isArray(obj.SKUs) && obj.SKUs.length > 0) {
+    for (let i = 0; i < obj.SKUs.length; ++i) {
+      result.addSkus(newJDSKUInfo(obj.SKUs[i], i));
+    }
+  }
+
+  if (obj.comment) {
+    result.setComment(newJDCommentsInfo(obj.comment));
+  }
+
+  return result;
+}
+
+/**
+ * new JDActive with object
+ * @param {object} obj - JDActive object
+ * @return {messages.JDActive} result - JDActive
+ */
+function newJDActive(obj) {
+  const result = new messages.JDActive();
+
+  if (Array.isArray(obj.urlActive) && obj.urlActive.length > 0) {
+    result.setUrlactiveList(obj.urlActive);
+  }
+
+  if (Array.isArray(obj.urlProduct) && obj.urlProduct.length > 0) {
+    result.setUrlproductList(obj.urlProduct);
+  }
+
+  return result;
+}
+
+/**
+ * new ReplyJD with object
+ * @param {number} mode - messages.JDMode
+ * @param {object} obj - JDProduct or JDActive object
+ * @return {messages.ReplyJD} result - ReplyJD
+ */
+function newReplyJD(mode, obj) {
+  const result = new messages.ReplyJD();
+
+  result.setMode(mode);
+
+  if (mode == messages.JDMode.JDM_PRODUCT) {
+    result.setProduct(newJDProduct(obj));
+  } else if (mode == messages.JDMode.JDM_ACTIVE) {
+    result.setActive(newJDActive(obj));
+  }
+
+  return result;
+}
+
+exports.newReplyJD = newReplyJD;

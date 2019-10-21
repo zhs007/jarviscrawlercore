@@ -1,10 +1,318 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-19
+
+jd的促销活动页面，一般是这样的，https://pro.jd.com/mall/active/3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html 。  
+这个页面，其实没有太多结构化数据，简单的找到 ``a`` 即可。  
+
+如果是 ``https://item.jd.com/`` 开头的就是商品页。  
+如果是 ``https://pro.jd.com/mall/active/`` 开头的就是活动页。  
+
+mountainsteals 商品页，下面是商品类型。  
+
+``` js
+$$('.breadcrumb-itm')
+```
+
+下面是价格购买区。  
+
+``` js
+$$('#widget_product_info_viewer')
+```
+
+下面是商品名。  
+商品名里有品牌。
+
+``` js
+$$('.product_name')
+```
+
+这是品牌。  
+
+``` js
+$$('.brand')
+```
+
+商品评分。  
+
+``` js
+$$('.RatingAddtlInfo')
+```
+
+当前价格。  
+
+``` js
+$$('.price-set')
+```
+
+原价
+
+``` js
+$$('.pdp-strike-extra')
+```
+
+这个是大小、颜色的选框，可能多个，也可能是大小颜色以外的。  
+
+``` js
+$$('.po-link.po-size-link')
+```
+
+这个是选项内容。  
+
+``` js
+$$('.selector-itm-box')
+```
+
+取到这个节点的class以后，可以根据class是否有 js-size-product-thumb 或 js-color-product-thumb 判断是 size 还是 color。  
+
+``` js
+$$('.selector-itm-box')[0].getElementsByClassName('po-row')[0].getElementsByClassName('product-thumb')
+```
+
+如果是size，这样可以取到size内容。
+
+``` js
+$$('.selector-itm-box')[0].getElementsByClassName('po-row')[0].getElementsByClassName('js-size-name')
+```
+
+如果是color，这样可以取到color内容。
+
+``` js
+$$('.selector-itm-box')[1].getElementsByClassName('po-row')[0].getElementsByClassName('js-color-name')
+```
+
+下面是各种评分的人数。  
+这里面，``data-bv-histogram-rating-value``是星，``data-bv-histogram-rating-count``是人数。
+
+``` js
+$$('.bv-inline-histogram-ratings-bar')
+```
+
+平均明细评分，一个标题 ``$$('.bv-secondary-rating-summary-id.bv-td')``，一个评分 ``$$('.bv-secondary-rating-summary-rating')``。  
+其中，如果是 Fit，则没有数字的评分。  
+Fit 还要找一些例子看。
+
+评论，``$$('.bv-content-item.bv-content-top-review.bv-content-review')`` 这样可以找到。  
+
+作者名。  
+可能会找到多个，取第一个即可。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-author')
+```
+
+作者位置，字符串的。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-author-location')
+```
+
+下面是这个用户对这件商品的评分。  
+children[0] 的 attributes 里，应该有 itemprop ，且该值为 ratingValue 。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-rating bv-rating-ratio')[0].children[0].content
+```
+
+评价的标题。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-title')
+```
+
+评价的内容。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[0].getElementsByClassName('bv-content-summary-body-text')
+```
+
+是否推荐，找到这个节点。  
+如果有 ``bv-content-data-recommend-no`` 节点，表示不推荐。  
+``'bv-content-data-recommend-yes'`` 表示推荐。
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[3].getElementsByClassName('bv-content-data')
+```
+
+评论时间，字符串方式的。  
+几年以前几个月以前这样的。  
+
+``` js
+$$('.bv-content-item.bv-content-top-review.bv-content-review')[2].getElementsByClassName('bv-content-datetime-stamp')
+```
+
+### 2019-10-18
+
+jd的商品页面，在 https://item.jd.com/下面，一般是html页面，譬如https://item.jd.com/100006585530.html。  
+商品类别，可以找这个 ``#crumb-wrap``，或者直接找这个 ``.crumb.fl.clearfix``。  
+
+``` js
+$$('.crumb.fl.clearfix')[0].getElementsByClassName('item')
+```
+
+这样的结果，里面去掉class包含sep的，也就是``.item.sep``的。  
+里面品牌那里是个select，但我们只要文本，所以也可以很方便取到。  
+
+``` js
+$$('.crumb.fl.clearfix')[0].getElementsByClassName('item')[6].innerText
+```
+
+取名字。  
+
+``` js
+$$('.sku-name')[0].innerText
+```
+
+这里，如果里面有img，最好把alt取出来，做tag用。  
+
+``` js
+$$('.sku-name')[0].getElementsByTagName('img')[0].alt
+```
+
+下面是产品描述，不知道为啥叫new。  
+
+``` js
+$$('.news')[0].innerText
+```
+
+接下来是banner，这个应该是分类型的。
+
+``` js
+$$('.activity-banner')
+```
+
+类型，我估计可以通过这个id来判断。  
+或者，取到下面的innerText也可以的。  
+
+``` js
+$$('.activity-type')[0].innerText
+```
+
+然后，估计不同的类型，会有不同的数据。
+
+``` js
+$$('.activity-message')[0].getElementsByClassName('item')
+```
+
+这里，如果是预售，第一个是预定量，第二个是剩余时间，时间是中文的剩余时间，要反推出结束时间来。
+
+然后是价格，我估计要根据类型来。  
+下面这个是尽量回避类型的取值了。
+
+``` js
+$$('.summary-price-wrap')[0].getElementsByClassName('summary-price')
+```
+
+商品摘要信息。  
+
+``` js
+$$('.summary.p-choose-wrap')
+```
+
+这个是售后提供者。  
+
+``` js
+$$('.summary-service')[0].getElementsByTagName('span')[0].innerText
+```
+
+这个是发货时间。  
+
+``` js
+$$('#summary-yushou-ship')[0].getElementsByClassName('dd')[0].innerText
+```
+
+这个是重量。  
+
+``` js
+$$('#summary-weight')[0].getElementsByClassName('dd')[0].innerText
+```
+
+下面是选择项，估计可能有多个，这个children里面，id会类似``choose-attr-1``这样。  
+
+``` js
+$$('#choose-attrs')[0].children
+```
+
+或者，这样  
+
+``` js
+$$('#choose-attrs')[0].getElementsByClassName('li p-choose')
+```
+
+取选项数据  
+
+``` js
+$$('#choose-attrs')[0].getElementsByClassName('li p-choose')[0].getElementsByClassName('item')
+```
+
+评论数据。  
+
+``` js
+$$('.comment-info.J-comment-info')
+```
+
+好评百分比。  
+
+``` js
+$$('.percent-con')[0].innerText
+```
+
+这里是评论的tag列表。  
+
+``` js
+$$('.percent-info')[0].getElementsByTagName('span')
+```
+
+这里是评论的统计。  
+
+``` js
+$$('.J-comments-list.comments-list.ETab')[0].getElementsByClassName('tab-main small')[0].getElementsByTagName('li')
+```
+
+其中，class为current的是总计，class为J-addComment的是追评，剩下的有class的都可以放弃掉。
+
+``#detail``这个里面，找``li``。  
+里面找 商品评价 。
+
+``` js
+$$('#detail')[0].getElementsByTagName('li')
+```
+
 ### 2019-10-16
 
 这几天一直发现Charles可能会卡，以为是Charles的问题，今天仔细查了一下，还是crawler的bug，有时候chrome还是会卡住。
 
 最初想法是从grpc这边加超时，后来想到这样crawler这边还是可能会慢慢积累chrome进程，时间长了，内存会受不了的。
+
+实际测了一下，这种情况下，很多是websocket的一个错误，因为现在一个请求，可能要几分钟时间才能返回，有可能是grpc底层网络问题吧，但如果这时重启jarviscrawlerserv，客户端那边能很快得到响应，原因待查。  
+
+有个正确的判断element是否可视的接口。
+
+``` js
+/**
+ * isElementVisible
+ * @param {object} page - page
+ * @param {object} ele - element
+ * @return {bool} isvisible - is visible
+ */
+async function isElementVisible(page, ele) {
+  const isVisibleHandle = await page.evaluateHandle((e) => {
+    const style = window.getComputedStyle(e);
+    return (
+      style &&
+      style.display !== 'none' &&
+      style.visibility !== 'hidden' &&
+      style.opacity !== '0'
+    );
+  }, ele);
+  const visible = await isVisibleHandle.jsonValue();
+  const box = await ele.boxModel();
+  if (visible && box) {
+    return true;
+  }
+  return false;
+}
+```
 
 ### 2019-10-08
 

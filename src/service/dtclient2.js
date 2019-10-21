@@ -3,6 +3,7 @@ const services = require('../../proto/result_grpc_pb');
 const {requestCrawler} = require('./utils');
 const {printDTGPKCheckGameResult} = require('../utils');
 const grpc = require('grpc');
+const log = require('../log');
 
 const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
 
@@ -50,11 +51,11 @@ function startGetDTData(
       request,
       (err, reply) => {
         if (err) {
-          console.log('err:', err);
+          log.error('err:', err);
         }
 
         if (reply) {
-          console.log('dtdata:', JSON.stringify(reply.toObject(false)));
+          log.debug('dtdata:', JSON.stringify(reply.toObject(false)));
 
           if (reply.hasCheckgameresultgpk()) {
             printDTGPKCheckGameResult(reply.getCheckgameresultgpk());

@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * cbcompanies
  * @param {object} browser - browser
@@ -12,11 +14,11 @@ async function cbcompanies(browser, company) {
         deviceScaleFactor: 1,
       })
       .catch((err) => {
-        console.log('cbcompanies.setViewport', err);
+        log.error('cbcompanies.setViewport', err);
       });
 
   await page.goto('https://www.crunchbase.com/').catch((err) => {
-    console.log('cbcompanies.goto', err);
+    log.error('cbcompanies.goto', err);
   });
 
   await page.waitFor(3000);
@@ -31,7 +33,7 @@ async function cbcompanies(browser, company) {
         return false;
       })
       .catch((err) => {
-        console.log('cbcompanies.waitForFunction:multi-search', err);
+        log.error('cbcompanies.waitForFunction:multi-search', err);
       });
 
   await page.type('input', company, {delay: 100});
@@ -49,7 +51,7 @@ async function cbcompanies(browser, company) {
         return false;
       })
       .catch((err) => {
-        console.log('cbcompanies.waitForFunction:component--results-info', err);
+        log.error('cbcompanies.waitForFunction:component--results-info', err);
       });
 
   const companies = await page.$$eval(
@@ -75,14 +77,14 @@ async function cbcompanies(browser, company) {
       }
   );
 
-  console.log(companies);
+  log.debug(companies);
 
   for (let i = 0; i < companies.length; ++i) {
     if (
       companies[i].href ==
       'https://www.crunchbase.com/organization/' + company
     ) {
-      console.log(companies[i]);
+      log.debug(companies[i]);
     }
   }
 }

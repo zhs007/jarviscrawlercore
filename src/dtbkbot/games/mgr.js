@@ -1,6 +1,7 @@
 const messages = require('../../../proto/result_pb');
 const {getGameID} = require('../utils');
 const {newDTGameResultErr} = require('../../utils');
+const log = require('../../log');
 
 /**
  * DTGamesMgr class
@@ -205,7 +206,7 @@ class DTGamesMgr {
               fgnums++;
             }
           } catch (err) {
-            console.log('DTGamesMgr._countFGNums catch error ' + err);
+            log.error('DTGamesMgr._countFGNums catch error ' + err);
           }
         }
       }

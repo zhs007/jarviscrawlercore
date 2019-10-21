@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {bt} = require('./bt');
+const log = require('../log');
 
 /**
  * dtbkbotexec
@@ -14,21 +15,21 @@ async function btexec(program, version) {
       .option('-d, --debug [isdebug]', 'debug mode')
       .option('-n, --name [name]', 'website name')
       .action(function(cfgfile, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!cfgfile || !options.name) {
-          console.log('command wrong, please type ' + 'jarviscrawler bt --help');
+          log.console('command wrong, please type ' + 'jarviscrawler bt --help');
 
           return;
         }
 
-        console.log('cfgfile - ', cfgfile);
+        log.console('cfgfile - ', cfgfile);
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         const debugmode = options.debug === 'true';
-        console.log('debug - ', debugmode);
+        log.console('debug - ', debugmode);
 
         (async () => {
           const browser = await startBrowser(headless);
@@ -39,7 +40,7 @@ async function btexec(program, version) {
             await browser.close();
           }
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

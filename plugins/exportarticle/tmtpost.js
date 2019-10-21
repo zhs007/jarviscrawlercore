@@ -1,4 +1,5 @@
 const {mgrPlugins} = require('./pluginsmgr');
+const log = require('../../src/log');
 
 /**
  * ismine
@@ -19,176 +20,174 @@ function ismine(url) {
  * @return {ExportArticleResult} result - result
  */
 async function exportArticle(page) {
-  const dom = await page.$eval(
-      'article',
-      (element) => {
-        return element.innerHTML;
-      });
+  const dom = await page.$eval('article', (element) => {
+    return element.innerHTML;
+  });
 
   await page.setContent(dom);
 
   let errret = undefined;
-  const ret = await page.evaluate(async () => {
-    const ret = {};
-    ret.imgs = [];
-    ret.paragraphs = [];
+  const ret = await page
+      .evaluate(async () => {
+        const ret = {};
+        ret.imgs = [];
+        ret.paragraphs = [];
 
-    const objbody = getElement('body');
-    if (objbody) {
-      const objhead = document.createElement('div');
-      objhead.className = 'article-head';
+        const objbody = getElement('body');
+        if (objbody) {
+          const objhead = document.createElement('div');
+          objhead.className = 'article-head';
 
-      objbody.appendChild(objhead);
+          objbody.appendChild(objhead);
 
-      const objarticlebody = document.createElement('div');
-      objarticlebody.className = 'article-body';
+          const objarticlebody = document.createElement('div');
+          objarticlebody.className = 'article-body';
 
-      objbody.appendChild(objarticlebody);
+          objbody.appendChild(objarticlebody);
 
-      // const imghead = getElement('.article-img-box');
-      // if (imghead) {
-      //   ret.titleImage = await fetchImage(imghead.children[0].src);
+          // const imghead = getElement('.article-img-box');
+          // if (imghead) {
+          //   ret.titleImage = await fetchImage(imghead.children[0].src);
 
-      //   const curnode = document.createElement('p');
-      //   curnode.style.cssText = 'text-align: center;';
+          //   const curnode = document.createElement('p');
+          //   curnode.style.cssText = 'text-align: center;';
 
-      //   const curimg = document.createElement('img');
-      //   curimg.onload = () => {
-      //     ret.imgs[ret.imgs.length - 1].width = curimg.width;
-      //     ret.imgs[ret.imgs.length - 1].height = curimg.height;
+          //   const curimg = document.createElement('img');
+          //   curimg.onload = () => {
+          //     ret.imgs[ret.imgs.length - 1].width = curimg.width;
+          //     ret.imgs[ret.imgs.length - 1].height = curimg.height;
 
-      //     // if (window.waitimgs > 0) {
-      //     //   --window.waitimgs;
-      //     // }
+          //     // if (window.waitimgs > 0) {
+          //     //   --window.waitimgs;
+          //     // }
+          //   };
+          //   curimg.src = imghead.children[0].src;
 
-      //     // console.log(curimg.width);
-      //     // console.log(curimg.height);
-      //   };
-      //   curimg.src = imghead.children[0].src;
+          //   curnode.appendChild(curimg);
 
-      //   curnode.appendChild(curimg);
+          //   objhead.appendChild(curnode);
+          // }
 
-      //   objhead.appendChild(curnode);
-      // }
+          const title = getElement('h1');
+          if (title) {
+            const objtitle = document.createElement('h1');
+            objtitle.innerText = title.innerText;
+            objhead.appendChild(objtitle);
 
-      const title = getElement('h1');
-      if (title) {
-        const objtitle = document.createElement('h1');
-        objtitle.innerText = title.innerText;
-        objhead.appendChild(objtitle);
-
-        ret.title = objtitle.innerText;
-      }
-
-      const author = getElement('.color-orange');
-      if (author) {
-        const objauthor = document.createElement('div');
-        objauthor.className = 'article-author';
-        objauthor.innerText = author.innerText;
-        objhead.appendChild(objauthor);
-
-        ret.author = objauthor.innerText;
-      }
-
-      const articletime = getElement('.time');
-      if (articletime) {
-        const objarticletime = document.createElement('div');
-        objarticletime.className = 'article-time';
-        objarticletime.innerText = articletime.innerText;
-        objhead.appendChild(objarticletime);
-
-        ret.writeTime = objarticletime.innerText;
-      }
-
-      const objsummary = getElement('.post-abstract');
-      if (objsummary) {
-        const objarticlesummary = document.createElement('div');
-        objarticlesummary.className = 'article-summary';
-
-        objarticlesummary.innerText = objsummary.innerText;
-        objhead.appendChild(objarticlesummary);
-
-        ret.summary = objarticlesummary.innerText;
-      }
-
-      const articlenode = getElement('.inner');
-      if (articlenode) {
-        for (let i = 0; i < articlenode.childNodes.length; ++i) {
-          if (articlenode.childNodes[i].nodeName == '#comment') {
-            break;
+            ret.title = objtitle.innerText;
           }
 
-          if (articlenode.childNodes[i].nodeName == '#text') {
-            continue;
+          const author = getElement('.color-orange');
+          if (author) {
+            const objauthor = document.createElement('div');
+            objauthor.className = 'article-author';
+            objauthor.innerText = author.innerText;
+            objhead.appendChild(objauthor);
+
+            ret.author = objauthor.innerText;
           }
 
-          if (articlenode.childNodes[i].nodeName == 'P' &&
-              articlenode.childNodes[i].className == 'caption') {
-            continue;
+          const articletime = getElement('.time');
+          if (articletime) {
+            const objarticletime = document.createElement('div');
+            objarticletime.className = 'article-time';
+            objarticletime.innerText = articletime.innerText;
+            objhead.appendChild(objarticletime);
+
+            ret.writeTime = objarticletime.innerText;
           }
 
-          const curimgs = articlenode.childNodes[i].getElementsByTagName('img');
-          if (curimgs.length > 0) {
-            ret.imgs.push(await fetchImage(curimgs[0].src));
-            ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
+          const objsummary = getElement('.post-abstract');
+          if (objsummary) {
+            const objarticlesummary = document.createElement('div');
+            objarticlesummary.className = 'article-summary';
 
-            const curnode = document.createElement('p');
-            curnode.style.cssText = 'text-align: center;';
+            objarticlesummary.innerText = objsummary.innerText;
+            objhead.appendChild(objarticlesummary);
 
-            const curimg = document.createElement('img');
-            curimg.onload = () => {
-              ret.imgs[ret.imgs.length - 1].width = curimg.width;
-              ret.imgs[ret.imgs.length - 1].height = curimg.height;
+            ret.summary = objarticlesummary.innerText;
+          }
 
-              // console.log(curimg.width);
-              // console.log(curimg.height);
-            };
-            curimg.src = curimgs[0].src;
+          const articlenode = getElement('.inner');
+          if (articlenode) {
+            for (let i = 0; i < articlenode.childNodes.length; ++i) {
+              if (articlenode.childNodes[i].nodeName == '#comment') {
+                break;
+              }
 
-            curnode.appendChild(curimg);
+              if (articlenode.childNodes[i].nodeName == '#text') {
+                continue;
+              }
 
-            objarticlebody.appendChild(curnode);
-          } else if (articlenode.childNodes[i].nodeName == 'H2') {
-            const curnode = document.createElement('h2');
+              if (
+                articlenode.childNodes[i].nodeName == 'P' &&
+              articlenode.childNodes[i].className == 'caption'
+              ) {
+                continue;
+              }
 
-            curnode.innerText = articlenode.childNodes[i].innerText;
-            // curnode.className = 'article-body-h1';
+              const curimgs = articlenode.childNodes[i].getElementsByTagName(
+                  'img'
+              );
+              if (curimgs.length > 0) {
+                ret.imgs.push(await fetchImage(curimgs[0].src));
+                ret.paragraphs.push({pt: 2, imgURL: curimgs[0].src});
 
-            ret.paragraphs.push({pt: 3, text: curnode.innerText});
+                const curnode = document.createElement('p');
+                curnode.style.cssText = 'text-align: center;';
 
-            objarticlebody.appendChild(curnode);
-          } else {
-            const curnode = document.createElement('p');
+                const curimg = document.createElement('img');
+                curimg.onload = () => {
+                  ret.imgs[ret.imgs.length - 1].width = curimg.width;
+                  ret.imgs[ret.imgs.length - 1].height = curimg.height;
+                };
+                curimg.src = curimgs[0].src;
 
-            curnode.innerText = articlenode.childNodes[i].innerText;
+                curnode.appendChild(curimg);
 
-            ret.paragraphs.push({pt: 1, text: curnode.innerText});
+                objarticlebody.appendChild(curnode);
+              } else if (articlenode.childNodes[i].nodeName == 'H2') {
+                const curnode = document.createElement('h2');
 
-            objarticlebody.appendChild(curnode);
+                curnode.innerText = articlenode.childNodes[i].innerText;
+                // curnode.className = 'article-body-h1';
+
+                ret.paragraphs.push({pt: 3, text: curnode.innerText});
+
+                objarticlebody.appendChild(curnode);
+              } else {
+                const curnode = document.createElement('p');
+
+                curnode.innerText = articlenode.childNodes[i].innerText;
+
+                ret.paragraphs.push({pt: 1, text: curnode.innerText});
+
+                objarticlebody.appendChild(curnode);
+              }
+            }
           }
         }
-      }
-    }
 
-    const lsttag = $('.column-link');
-    if (lsttag.length > 0) {
-      ret.tags = [];
+        const lsttag = $('.column-link');
+        if (lsttag.length > 0) {
+          ret.tags = [];
 
-      for (let i = 0; i < lsttag.length; ++i) {
-        ret.tags.push(lsttag[i].innerText);
-      }
-    }
+          for (let i = 0; i < lsttag.length; ++i) {
+            ret.tags.push(lsttag[i].innerText);
+          }
+        }
 
-    clearArticleElement(objbody);
+        clearArticleElement(objbody);
 
-    ret.article = objbody.innerText;
+        ret.article = objbody.innerText;
 
-    return ret;
-  }).catch((err) => {
-    console.log('tmtpost.article:exportArticle.evaluate', err);
+        return ret;
+      })
+      .catch((err) => {
+        log.error('tmtpost.article:exportArticle.evaluate', err);
 
-    errret = err;
-  });
+        errret = err;
+      });
 
   return {
     result: ret,

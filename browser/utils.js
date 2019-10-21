@@ -64,10 +64,8 @@ function base64ArrayBuffer(arrayBuffer) {
  * @return {ImageInfo} image info
  */
 async function fetchImage(url) {
-  // console.log(url);
   // const response = await fetch(url);
   // const imgbuf = await response.arrayBuffer();
-  // console.log(imgbuf.byteLength);
 
   return {
     url: url,
@@ -99,7 +97,6 @@ function getElementWithText(selector, text) {
   const lst = $(selector);
   if (lst.length > 0) {
     for (let i = 0; i < lst.length; ++i) {
-      // console.log(lst[i].innerText);
       if (lst[i].innerText === text) {
         return lst[i];
       }
@@ -148,7 +145,6 @@ function getElementAttributes(ele, key) {
 function getElementChildWithTagAndText(ele, tag, text) {
   const lst = ele.getElementsByTagName(tag);
   for (let i = 0; i < lst.length; ++i) {
-    // console.log(lst[i].innerText);
     if (lst[i].innerText === text) {
       return lst[i];
     }
@@ -167,7 +163,6 @@ function getElementWithDefaultValue(selector, value) {
   const lst = $(selector);
   if (lst.length > 0) {
     for (let i = 0; i < lst.length; ++i) {
-      // console.log(lst[i].innerText);
       if (lst[i].defaultValue === value) {
         return lst[i];
       }

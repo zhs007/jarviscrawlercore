@@ -1,4 +1,5 @@
 const {download} = require('../request');
+const log = require('../log');
 
 /**
  * tinypng - tinypng
@@ -9,15 +10,13 @@ const {download} = require('../request');
 async function tinypng(browser, fn) {
   let awaiterr = undefined;
   const page = await browser.newPage();
-  await page
-      .goto('https://tinypng.com/')
-      .catch((err) => {
-        awaiterr = err;
-      // console.log('ipvoidgeoip.goto', err);
-      });
+  await page.goto('https://tinypng.com/').catch((err) => {
+    awaiterr = err;
+    // console.log('ipvoidgeoip.goto', err);
+  });
 
   if (awaiterr) {
-    console.log('tinypng.goto', awaiterr);
+    log.error('tinypng.goto', awaiterr);
 
     return {error: awaiterr};
   }
@@ -27,7 +26,7 @@ async function tinypng(browser, fn) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.waitForSelector upload', awaiterr);
+    log.error('ipvoidgeoip.waitForSelector upload', awaiterr);
 
     return {error: awaiterr};
   }
@@ -41,7 +40,7 @@ async function tinypng(browser, fn) {
       });
 
       if (awaiterr) {
-        console.log('ipvoidgeoip.uploadFile upload', awaiterr);
+        log.error('ipvoidgeoip.uploadFile upload', awaiterr);
 
         return {error: awaiterr};
       }
@@ -53,7 +52,7 @@ async function tinypng(browser, fn) {
   });
 
   if (awaiterr) {
-    console.log('ipvoidgeoip.waitForSelector after', awaiterr);
+    log.error('ipvoidgeoip.waitForSelector after', awaiterr);
 
     return {error: awaiterr};
   }

@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {ipvoidgeoip} = require('./ipvoid');
+const log = require('../log');
 
 /**
  * execGeoIP
@@ -13,35 +14,35 @@ async function execGeoIP(program, version) {
       .option('-m, --mode [mode]', 'mode, its like ipvoid')
       .option('-h, --headless [isheadless]', 'headless mode')
       .action(function(ipaddr, options) {
-        console.log('version is ', version);
+        log.console('version is ', version);
 
         if (!ipaddr) {
-          console.log(
+          log.console(
               'command wrong, please type ' + 'jarviscrawler geoip --help'
           );
 
           return;
         }
 
-        console.log('ipaddr - ', ipaddr);
+        log.console('ipaddr - ', ipaddr);
 
         if (!options.mode) {
           options.mode = 'ipvoid';
         }
 
         const headless = options.headless === 'true';
-        console.log('headless - ', headless);
+        log.console('headless - ', headless);
 
         (async () => {
           const browser = await startBrowser(headless);
 
           const ret = await ipvoidgeoip(browser, ipaddr);
 
-          console.log(JSON.stringify(ret));
+          log.console(JSON.stringify(ret));
 
           await browser.close();
         })().catch((err) => {
-          console.log('catch a err ', err);
+          log.console('catch a err ', err);
 
           if (headless) {
             process.exit(-1);

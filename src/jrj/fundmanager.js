@@ -1,3 +1,5 @@
+const log = require('../log');
+
 /**
  * parseTime - parse time
  * @param {string} strtime - strtime
@@ -34,7 +36,7 @@ async function jrjFundManager(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFundManager.setViewport', awaiterr);
+    log.error('jrjFundManager.setViewport', awaiterr);
 
     await page.close();
 
@@ -69,7 +71,7 @@ async function jrjFundManager(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFundManager.goto', awaiterr);
+    log.error('jrjFundManager.goto', awaiterr);
 
     await page.close();
 
@@ -103,7 +105,7 @@ async function jrjFundManager(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFundManager.$$eval .stb', awaiterr);
+    log.error('jrjFundManager.$$eval .stb', awaiterr);
 
     await page.close();
 
@@ -111,7 +113,7 @@ async function jrjFundManager(browser, code, timeout) {
   }
 
   if (!ret1) {
-    console.log('jrjFundManager.no ret1');
+    log.error('jrjFundManager.no ret1');
 
     await page.close();
 
@@ -154,7 +156,7 @@ async function jrjFundManager(browser, code, timeout) {
       });
 
   if (awaiterr) {
-    console.log('jrjFund.$$eval .htb1', awaiterr);
+    log.error('jrjFund.$$eval .htb1', awaiterr);
 
     await page.close();
 

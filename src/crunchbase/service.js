@@ -1,5 +1,6 @@
 const {loadConfig, checkConfig} = require('./cfg');
 const {cbcompany} = require('./company');
+const log = require('../log');
 
 /**
  * searchInCrunchBase
@@ -14,7 +15,7 @@ async function searchInCrunchBase(browser, cfgfile, searchstr) {
   if (cfgerr) {
     const err = 'config file error: ' + cfgerr;
 
-    console.log(err);
+    log.error(err);
 
     return {error: err};
   }

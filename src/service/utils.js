@@ -1,4 +1,5 @@
 const messages = require('../../proto/result_pb');
+const log = require('../log');
 
 const MAX_BUFF_LEN = 4 * 1024 * 1024;
 const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
@@ -10,7 +11,7 @@ const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
  * @param {bool} isend - is end
  */
 function replyError(call, error, isend) {
-  console.log(error);
+  log.error(error);
 
   const reply = new messages.ReplyCrawlerStream();
 
@@ -103,6 +104,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setSteepandcheap(msg);
   } else if (crawlerType == messages.CrawlerType.CT_JRJ) {
     req.setJrj(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_JD) {
+    req.setJd(msg);
   }
 
   let isend = false;
@@ -245,6 +248,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_JD) {
+        if (!reply.getJd()) {
+          cb('no jd reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getJd());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -298,6 +315,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_JRJ) {
     reply.setJrj(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_JD) {
+    reply.setJd(val);
     reply.setCrawlertype(crawlerType);
   }
 }

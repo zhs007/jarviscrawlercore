@@ -2,6 +2,7 @@ const fs = require('fs');
 const messages = require('../proto/result_pb');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
+const log = require('./log');
 
 /**
  * save protobuf message
@@ -261,13 +262,13 @@ async function attachJQuery(page) {
     await page
         .addScriptTag({path: './browser/jquery3.3.1.min.js'})
         .catch((err) => {
-          console.log('attachJQuery:addScriptTag', err);
+          log.error('attachJQuery:addScriptTag', err);
         // isok = false;
         });
     // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
-      console.log('attachJQuery:waitForFunction', err);
+      log.error('attachJQuery:waitForFunction', err);
     });
   }
 }
@@ -282,14 +283,14 @@ async function attachJarvisCrawlerCore(page) {
   // });
 
   await page.addScriptTag({path: './browser/utils.js'}).catch((err) => {
-    console.log('attachJarvisCrawlerCore:addScriptTag', err);
+    log.error('attachJarvisCrawlerCore:addScriptTag', err);
     // isok = false;
   });
 
   await page
       .waitForFunction('typeof jarvisCrawlerCoreVer === "string"')
       .catch((err) => {
-        console.log('attachJQuery:waitForFunction', err);
+        log.error('attachJQuery:waitForFunction', err);
       });
 }
 
@@ -386,7 +387,7 @@ function newDTGameResultErr(errcode, value0, value1, strval0) {
  */
 function printDTGameResultErr(str, err) {
   if (err.getValue0() || err.getValue1() || err.getStrval0()) {
-    console.log(
+    log.error(
         str +
         ' [ errcode: ' +
         err.getErrcode() +
@@ -399,7 +400,7 @@ function printDTGameResultErr(str, err) {
         ' ]'
     );
   } else {
-    console.log(str + ' [ errcode: ' + err.getErrcode() + ' ]');
+    log.error(str + ' [ errcode: ' + err.getErrcode() + ' ]');
   }
 }
 
@@ -1354,7 +1355,7 @@ async function mouseMove(page, x, y, cx, cy) {
           {x: x, y: y, cx: cx, cy: cy}
       )
       .catch((err) => {
-        console.log('mouseMove ' + err);
+        log.error('mouseMove ' + err);
       });
 }
 
@@ -1365,12 +1366,12 @@ async function mouseMove(page, x, y, cx, cy) {
  */
 async function mouseMoveToEle(page, selector) {
   const ele = await page.$(selector).catch((err) => {
-    console.log('mouseMoveToEle ' + err);
+    log.error('mouseMoveToEle ' + err);
   });
 
   if (ele) {
     const bbox = await ele.boundingBox();
-    console.log(bbox);
+    log.debug(bbox);
     await page.mouse.move(
         Math.floor(bbox.x + bbox.width / 2),
         Math.floor(bbox.y + bbox.height / 2)
@@ -1386,13 +1387,13 @@ async function mouseMoveToEle(page, selector) {
  */
 async function mouseMoveToEleEx(page, selector, isThis) {
   const eles = await page.$$(selector).catch((err) => {
-    console.log('mouseMoveToEleEx ' + err);
+    log.error('mouseMoveToEleEx ' + err);
   });
 
   for (let i = 0; i < eles.length; ++i) {
     if (await isThis(eles[i])) {
       const bbox = await eles[i].boundingBox();
-      console.log(bbox);
+      log.debug(bbox);
       await page.mouse.move(
           Math.floor(bbox.x + bbox.width / 2),
           Math.floor(bbox.y + bbox.height / 2)
@@ -1417,13 +1418,13 @@ async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
     const frame = lstFrames[i];
     if (isFrame(frame)) {
       const eles = await frame.$$(selector).catch((err) => {
-        console.log('mouseMoveToFrameEleEx:$$(' + selector + ') ' + err);
+        log.error('mouseMoveToFrameEleEx:$$(' + selector + ') ' + err);
       });
 
       for (let j = 0; j < eles.length; ++j) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
-          console.log(bbox);
+          log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
               Math.floor(bbox.y + bbox.height / 2)
@@ -1443,12 +1444,12 @@ async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
  */
 async function mouseClickEle(page, selector) {
   const ele = await page.$(selector).catch((err) => {
-    console.log('mouseClickEle ' + err);
+    log.error('mouseClickEle ' + err);
   });
 
   if (ele) {
     const bbox = await ele.boundingBox();
-    console.log(bbox);
+    log.debug(bbox);
     await page.mouse.move(
         Math.floor(bbox.x + bbox.width / 2),
         Math.floor(bbox.y + bbox.height / 2)
@@ -1472,13 +1473,13 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
     const frame = lstFrames[i];
     if (isFrame(frame)) {
       const eles = await frame.$$(selector).catch((err) => {
-        console.log('mouseClickFrameEleEx:$$(' + selector + ') ' + err);
+        log.error('mouseClickFrameEleEx:$$(' + selector + ') ' + err);
       });
 
       for (let j = 0; j < eles.length; ++j) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
-          console.log(bbox);
+          log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
               Math.floor(bbox.y + bbox.height / 2)
@@ -1504,19 +1505,19 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
 async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
   const lstFrames = await page.frames();
 
-  console.log('mouseHoldFrameEleEx ' + lstFrames.length);
+  log.debug('mouseHoldFrameEleEx ' + lstFrames.length);
 
   for (let i = 0; i < lstFrames.length; ++i) {
     const frame = lstFrames[i];
     if (frame != page.mainFrame() && isFrame(frame)) {
       const eles = await frame.$$(selector).catch((err) => {
-        console.log('mouseHoldFrameEleEx:$$(' + selector + ') ' + err);
+        log.error('mouseHoldFrameEleEx:$$(' + selector + ') ' + err);
       });
 
       for (let j = 0; j < eles.length; ++j) {
         if (await isThis(eles[j])) {
           const bbox = await eles[j].boundingBox();
-          console.log(bbox);
+          log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
               Math.floor(bbox.y + bbox.height / 2)

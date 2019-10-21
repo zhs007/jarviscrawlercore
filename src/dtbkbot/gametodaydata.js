@@ -1,4 +1,5 @@
 const {newDTTodayGameData} = require('../utils');
+const log = require('../log');
 
 /**
  * onRightFrameLoaded GTDS
@@ -8,8 +9,6 @@ async function onRightFrameLoadedGTDS(rightFrame) {
   // 等待页面加载
   await rightFrame
       .waitForFunction(() => {
-      // console.log(typeof jarvisCrawlerCoreVer);
-
         if (typeof jarvisCrawlerCoreVer === 'string') {
           const btncx = getElementWithDefaultValue('.scbtn', '查询');
           if (btncx) {
@@ -22,7 +21,7 @@ async function onRightFrameLoadedGTDS(rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('onRightFrameLoadedGTDS', err);
+        log.error('onRightFrameLoadedGTDS', err);
       });
 }
 
@@ -41,8 +40,6 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
       .waitForFunction(() => {
         const jlxxmenu = getElement('.menuson.jlxx');
         if (jlxxmenu) {
-        //   console.log(jlxxmenu.style[0]);
-
           if (jlxxmenu.style[0] === 'display') {
             return true;
           }
@@ -51,7 +48,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
+        log.error('getGameTodayDataSummary:waitFor.menuson.jlxx', err);
       });
 
   // 点击二级菜单
@@ -59,7 +56,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
 
   //   // 等待页面跳转完成
   //   await page.waitForNavigation({waitUntil: 'load'}).catch((err) => {
-  //     console.log('catch a err ', err);
+  //     log.error('catch a err ', err);
   //   });
 
   //   await rightFrame.goto(cfg.url + '/log/bets!findAll.html');
@@ -96,7 +93,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.yxjl', err);
+        log.error('getGameTodayDataSummary:waitFor.yxjl', err);
       });
 
   await rightFrame.click('.scbtn.cx');
@@ -133,7 +130,7 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
         return false;
       })
       .catch((err) => {
-        console.log('getGameTodayDataSummary:waitFor.paginList', err);
+        log.error('getGameTodayDataSummary:waitFor.paginList', err);
       });
 
   const gamenums = await rightFrame.$eval('.blue.gamenums', (ele) => {
@@ -152,9 +149,9 @@ async function getGameTodayDataSummary(page, leftFrame, rightFrame) {
     }
   });
 
-  console.log('gamenums - ' + gamenums);
-  console.log('bet - ' + bet);
-  console.log('win - ' + win);
+  log.debug('gamenums - ' + gamenums);
+  log.debug('bet - ' + bet);
+  log.debug('win - ' + win);
 
   return newDTTodayGameData({
     gameNums: gamenums,

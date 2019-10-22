@@ -314,7 +314,7 @@ async function getPingou(page, timeout) {
 async function getNormalPrice(page, timeout) {
   let awaiterr = undefined;
 
-  const ret = await page
+  let ret = await page
       .$$eval('#summary', (eles) => {
         if (eles.length > 0) {
           const ret = {};
@@ -363,6 +363,59 @@ async function getNormalPrice(page, timeout) {
     log.error('getNormalPrice#summary', awaiterr);
 
     return {error: awaiterr.toString()};
+  }
+
+  if (ret == undefined) {
+    ret = await page
+        .$$eval('.summary', (eles) => {
+          if (eles.length > 0) {
+            const ret = {};
+
+            const lstprice = document.getElementById('jd-price');
+            if (lstprice) {
+              ret.price = lstprice.innerText;
+            }
+
+            const lstoldprice = document.getElementById('page_maprice');
+            if (lstoldprice) {
+              ret.oldPrice = lstoldprice.innerText;
+            }
+
+            const lstquan = eles[0].getElementsByClassName('quan-item');
+            if (lstquan.length > 0) {
+              ret.coupons = [];
+              for (let i = 0; i < lstquan.length; ++i) {
+                ret.coupons.push(lstquan[i].innerText);
+              }
+            }
+
+            const lstprom = eles[0].getElementsByClassName('prom-item');
+            if (lstprom.length > 0) {
+              ret.promotionals = [];
+              for (let i = 0; i < lstprom.length; ++i) {
+                if (lstprom[i].children.length >= 2) {
+                  ret.promotionals.push({
+                    title: lstprom[i].children[0].innerText,
+                    info: lstprom[i].children[1].innerText,
+                  });
+                }
+              }
+            }
+
+            return ret;
+          }
+
+          return undefined;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      log.error('getNormalPrice#summary', awaiterr);
+
+      return {error: awaiterr.toString()};
+    }
   }
 
   if (ret) {

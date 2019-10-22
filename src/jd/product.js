@@ -257,13 +257,13 @@ async function getPingou(page, timeout) {
         if (eles.length > 0) {
           const lst = eles[0].getElementsByClassName('summary-price');
           const pingouprice = {};
-          if (lst.length == 2) {
-            const jp = lst[0].getElementsByClassName('price J-earnest');
+          for (let i = 0; i < lst.length; ++i) {
+            const jp = lst[i].getElementsByClassName('price J-earnest');
             if (jp.length > 0) {
               pingouprice.scheduledPrice = jp[0].innerText;
             }
 
-            const p = lst[1].getElementsByClassName('price J-presale-price');
+            const p = lst[i].getElementsByClassName('price J-presale-price');
             if (p.length > 0) {
               pingouprice.price = p[0].innerText;
             }
@@ -290,8 +290,13 @@ async function getPingou(page, timeout) {
     }
 
     try {
-      pingouprice.scheduledPrice = parseFloat(pingouprice.scheduledPrice);
-      pingouprice.price = parseFloat(pingouprice.price);
+      if (pingouprice.scheduledPrice) {
+        pingouprice.scheduledPrice = parseFloat(pingouprice.scheduledPrice);
+      }
+
+      if (pingouprice.price) {
+        pingouprice.price = parseFloat(pingouprice.price);
+      }
     } catch (err) {
       log.error('jdProduct.pingouprice.parseFloat', err);
 
@@ -322,6 +327,11 @@ async function getNormalPrice(page, timeout) {
           const lstprice = document.getElementById('jd-price');
           if (lstprice) {
             ret.price = lstprice.innerText;
+          } else {
+            lstprice = eles[0].getElementsByClassName('p-price');
+            if (lstprice.length > 0) {
+              ret.price = lstprice[0].innerText;
+            }
           }
 
           const lstoldprice = document.getElementById('page_maprice');
@@ -371,9 +381,14 @@ async function getNormalPrice(page, timeout) {
           if (eles.length > 0) {
             const ret = {};
 
-            const lstprice = document.getElementById('jd-price');
+            let lstprice = document.getElementById('jd-price');
             if (lstprice) {
               ret.price = lstprice.innerText;
+            } else {
+              lstprice = eles[0].getElementsByClassName('p-price');
+              if (lstprice.length > 0) {
+                ret.price = lstprice[0].innerText;
+              }
             }
 
             const lstoldprice = document.getElementById('page_maprice');
@@ -601,6 +616,8 @@ async function jdProduct(browser, url, timeout) {
   }
 
   waitAllResponse.reset();
+
+  await sleep(3 * 1000);
 
   const ret = {url: url};
 
@@ -846,7 +863,7 @@ async function jdProduct(browser, url, timeout) {
       return {error: priceret.error.toString()};
     }
 
-    ret.shangou = priceret.ret;
+    ret.price = priceret.ret;
 
     const summaryService = await page
         .$$eval('#summary-service', (eles) => {
@@ -914,6 +931,44 @@ async function jdProduct(browser, url, timeout) {
                 skutype = 'series';
               } else if (lsttype[0].dataset.type == '品种') {
                 skutype = 'variety';
+              } else if (lsttype[0].dataset.type == '尺寸') {
+                skutype = 'size';
+              } else if (lsttype[0].dataset.type == '尺码') {
+                skutype = 'size';
+              } else if (lsttype[0].dataset.type == '匹数') {
+                skutype = 'size';
+              } else if (lsttype[0].dataset.type == '规格') {
+                skutype = 'size';
+              } else if (lsttype[0].dataset.type == '版本') {
+                skutype = 'model';
+              } else if (lsttype[0].dataset.type == '购买方式') {
+                skutype = 'purchase';
+              } else if (lsttype[0].dataset.type == '类别') {
+                skutype = 'category';
+              } else if (lsttype[0].dataset.type == '产品') {
+                skutype = 'productType';
+              } else if (lsttype[0].dataset.type == '粘度') {
+                skutype = 'productType';
+              } else if (lsttype[0].dataset.type == '材质') {
+                skutype = 'productType';
+              } else if (lsttype[0].dataset.type == '型号') {
+                skutype = 'productType';
+              } else if (lsttype[0].dataset.type == '口味') {
+                skutype = 'category';
+              } else if (lsttype[0].dataset.type == '轮胎性能') {
+                skutype = 'series';
+              } else if (lsttype[0].dataset.type == '轮胎花纹') {
+                skutype = 'variety';
+              } else if (lsttype[0].dataset.type == '选择规格尺寸') {
+                skutype = 'size';
+              } else if (lsttype[0].dataset.type == '科目') {
+                skutype = 'category';
+              } else if (lsttype[0].dataset.type == '段位') {
+                skutype = 'category';
+              } else if (lsttype[0].dataset.type == '套装') {
+                skutype = 'series';
+              } else if (lsttype[0].dataset.type == '种类') {
+                skutype = 'category';
               }
             }
 
@@ -922,6 +977,16 @@ async function jdProduct(browser, url, timeout) {
               const sku = {type: skutype};
               if (lstitem[j].dataset && lstitem[j].dataset.sku) {
                 sku.skuID = lstitem[j].dataset.sku;
+              }
+
+              if (lstitem[j].classList.length > 0) {
+                for (let k = 0; k < lstitem[j].classList.length; ++k) {
+                  if (lstitem[j].classList[k] == 'selected') {
+                    sku.selected = true;
+                  } else if (lstitem[j].classList[k] == 'disabled') {
+                    sku.disabled = true;
+                  }
+                }
               }
 
               if (skutype == 'color') {
@@ -935,6 +1000,26 @@ async function jdProduct(browser, url, timeout) {
               } else if (skutype == 'variety') {
                 if (lstitem[j].dataset && lstitem[j].dataset.value) {
                   sku.variety = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'size') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.size = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'model') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.model = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'purchase') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.purchase = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'category') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.category = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'productType') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.productType = lstitem[j].dataset.value;
                 }
               }
 
@@ -960,24 +1045,18 @@ async function jdProduct(browser, url, timeout) {
   }
 
   const commentret = await getComments(page, waitAllResponse, timeout);
-  if (commentret == undefined) {
-    log.error('jdProduct.getComments undefined');
+  if (commentret) {
+    if (commentret.err) {
+      log.error('jdProduct.getComments ', commentret.err);
 
-    await page.close();
+      await page.close();
 
-    return {error: 'jdProduct.getComments undefined'};
-  }
+      return {error: awaiterr.toString()};
+    }
 
-  if (commentret && commentret.err) {
-    log.error('jdProduct.getComments ', commentret.err);
-
-    await page.close();
-
-    return {error: awaiterr.toString()};
-  }
-
-  if (commentret.ret) {
-    ret.comment = commentret.ret;
+    if (commentret.ret) {
+      ret.comment = commentret.ret;
+    }
   }
 
   await page.close();

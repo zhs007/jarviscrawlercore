@@ -19431,7 +19431,14 @@ proto.jarviscrawlercore.JDSKUInfo.toObject = function(includeInstance, msg) {
     type: jspb.Message.getFieldWithDefault(msg, 2, ""),
     color: jspb.Message.getFieldWithDefault(msg, 3, ""),
     series: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    variety: jspb.Message.getFieldWithDefault(msg, 5, "")
+    variety: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    size: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    model: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    purchase: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    disabled: jspb.Message.getFieldWithDefault(msg, 9, false),
+    selected: jspb.Message.getFieldWithDefault(msg, 10, false),
+    category: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    producttype: jspb.Message.getFieldWithDefault(msg, 12, "")
   };
 
   if (includeInstance) {
@@ -19487,6 +19494,34 @@ proto.jarviscrawlercore.JDSKUInfo.deserializeBinaryFromReader = function(msg, re
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setVariety(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSize(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setModel(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPurchase(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setDisabled(value);
+      break;
+    case 10:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSelected(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCategory(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setProducttype(value);
       break;
     default:
       reader.skipField();
@@ -19549,6 +19584,55 @@ proto.jarviscrawlercore.JDSKUInfo.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       5,
+      f
+    );
+  }
+  f = message.getSize();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getModel();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getPurchase();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getDisabled();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
+    );
+  }
+  f = message.getSelected();
+  if (f) {
+    writer.writeBool(
+      10,
+      f
+    );
+  }
+  f = message.getCategory();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getProducttype();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
       f
     );
   }
@@ -19627,6 +19711,115 @@ proto.jarviscrawlercore.JDSKUInfo.prototype.getVariety = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.JDSKUInfo.prototype.setVariety = function(value) {
   jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string size = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getSize = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setSize = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string model = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getModel = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setModel = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string purchase = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getPurchase = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setPurchase = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional bool disabled = 9;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getDisabled = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setDisabled = function(value) {
+  jspb.Message.setProto3BooleanField(this, 9, value);
+};
+
+
+/**
+ * optional bool selected = 10;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getSelected = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 10, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setSelected = function(value) {
+  jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional string category = 11;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getCategory = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setCategory = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional string productType = 12;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getProducttype = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setProducttype = function(value) {
+  jspb.Message.setProto3StringField(this, 12, value);
 };
 
 

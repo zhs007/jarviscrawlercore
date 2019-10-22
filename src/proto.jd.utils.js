@@ -72,6 +72,34 @@ function newJDSKUInfo(obj) {
     result.setVariety(obj.variety);
   }
 
+  if (obj.size) {
+    result.setSize(obj.size);
+  }
+
+  if (obj.model) {
+    result.setModel(obj.model);
+  }
+
+  if (obj.purchase) {
+    result.setPurchase(obj.purchase);
+  }
+
+  if (obj.disabled) {
+    result.setDisabled(obj.disabled);
+  }
+
+  if (obj.selected) {
+    result.setSelected(obj.selected);
+  }
+
+  if (obj.category) {
+    result.setCategory(obj.category);
+  }
+
+  if (obj.productType) {
+    result.setProducttype(obj.productType);
+  }
+
   return result;
 }
 

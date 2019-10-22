@@ -902,6 +902,13 @@ message JDSKUInfo {
     string color = 3;
     string series = 4;
     string variety = 5;
+    string size = 6;
+    string model = 7;
+    string purchase = 8;
+    bool disabled = 9;
+    bool selected = 10;
+    string category = 11;
+    string productType = 12;
 }
 
 // JDCommentType - jd comments type

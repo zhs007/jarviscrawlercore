@@ -1,7 +1,7 @@
 const {sleep} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
-const {parsePercent} = require('./utils');
+const {parsePercent, parseMoney} = require('./utils');
 
 /**
  * getComments - get comments
@@ -365,7 +365,126 @@ async function getNormalPrice(page, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  if (ret.price != '') {
+    const priceret = parseMoney(ret.price);
+    if (priceret.err) {
+      log.error('getNormalPrice.parseMoney.price', priceret.err);
+
+      return {error: priceret.err.toString()};
+    }
+
+    ret.price = priceret.money;
+  }
+
+  if (ret.oldPrice != '') {
+    const priceret = parseMoney(ret.oldPrice);
+    if (priceret.err) {
+      log.error('getNormalPrice.parseMoney.oldPrice', priceret.err);
+
+      return {error: priceret.err.toString()};
+    }
+
+    ret.oldPrice = priceret.money;
+  }
+
   return {ret: ret};
+}
+
+/**
+ * getShangou - get shangou
+ * @param {object} page - page
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {error, ret}
+ */
+async function getShangou(page, timeout) {
+  let awaiterr = undefined;
+
+  const sangou = {};
+
+  const lasttime = await page
+      .$$eval('.activity-message', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('getShangou.activity-message', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (lasttime) {
+    sangou.strLastTime = lasttime;
+  }
+
+  const price = await page
+      .$$eval('.summary-price-wrap', (eles) => {
+        if (eles.length > 0) {
+          const lstp = eles[0].getElementsByClassName('p-price');
+          if (lstp.length > 0) {
+            return lstp[0].innerText;
+          }
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('getShangou.summary-price-wrap', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (price) {
+    const priceret = parseMoney(price);
+    if (priceret.err) {
+      log.error('getShangou.parseMoney.price', priceret.err);
+
+      return {error: priceret.err.toString()};
+    }
+
+    sangou.price = priceret.money;
+  }
+
+  const oldprice = await page
+      .$$eval('#page_opprice', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('getShangou#page_opprice', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (oldprice) {
+    const priceret = parseMoney(oldprice);
+    if (priceret.err) {
+      log.error('getShangou.parseMoney.oldprice', priceret.err);
+
+      return {error: priceret.err.toString()};
+    }
+
+    sangou.oldPrice = priceret.money;
+  }
+
+  return {ret: sangou};
 }
 
 /**
@@ -624,6 +743,42 @@ async function jdProduct(browser, url, timeout) {
     }
 
     ret.strShipTime = strShipTime;
+  } else if (bannertype == 'banner-shangou') {
+    const shangouret = await getShangou(page, timeout);
+    if (shangouret.error) {
+      log.error('jdProduct.getShangou', shangouret.error);
+
+      await page.close();
+
+      return {error: shangouret.error.toString()};
+    }
+
+    ret.shangou = shangouret.ret;
+
+    const summaryService = await page
+        .$$eval('#summary-service', (eles) => {
+          if (eles.length > 0) {
+            const lsthl = eles[0].getElementsByClassName('hl_red');
+            if (lsthl.length > 0) {
+              return lsthl[0].innerText;
+            }
+          }
+
+          return '';
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      log.error('jdProduct#summary-service', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    ret.summaryService = summaryService;
   } else {
     const priceret = await getNormalPrice(page, timeout);
     if (priceret.error) {
@@ -633,6 +788,8 @@ async function jdProduct(browser, url, timeout) {
 
       return {error: priceret.error.toString()};
     }
+
+    ret.shangou = priceret.ret;
 
     const summaryService = await page
         .$$eval('#summary-service', (eles) => {

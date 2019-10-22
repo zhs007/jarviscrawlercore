@@ -95,6 +95,29 @@ function newJDPingou(obj) {
 }
 
 /**
+ * new JDShangou with object
+ * @param {object} obj - JDShangou object
+ * @return {messages.JDShangou} result - JDShangou
+ */
+function newJDShangou(obj) {
+  const result = new messages.JDShangou();
+
+  if (obj.oldPrice) {
+    result.setOldprice(obj.oldPrice);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (obj.strLastTime) {
+    result.setStrlasttime(obj.strLastTime);
+  }
+
+  return result;
+}
+
+/**
  * new JDPromotional with object
  * @param {object} obj - JDPromotional object
  * @return {messages.JDPromotional} result - JDPromotional
@@ -206,6 +229,10 @@ function newJDProduct(obj) {
 
   if (obj.price) {
     result.setPrice(newJDNormalPrice(obj.price));
+  }
+
+  if (obj.shangou) {
+    result.setShangou(newJDShangou(obj.shangou));
   }
 
   return result;

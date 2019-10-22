@@ -19430,7 +19430,8 @@ proto.jarviscrawlercore.JDSKUInfo.toObject = function(includeInstance, msg) {
     skuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     type: jspb.Message.getFieldWithDefault(msg, 2, ""),
     color: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    series: jspb.Message.getFieldWithDefault(msg, 4, "")
+    series: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    variety: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -19482,6 +19483,10 @@ proto.jarviscrawlercore.JDSKUInfo.deserializeBinaryFromReader = function(msg, re
     case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setSeries(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVariety(value);
       break;
     default:
       reader.skipField();
@@ -19537,6 +19542,13 @@ proto.jarviscrawlercore.JDSKUInfo.serializeBinaryToWriter = function(message, wr
   if (f.length > 0) {
     writer.writeString(
       4,
+      f
+    );
+  }
+  f = message.getVariety();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -19600,6 +19612,21 @@ proto.jarviscrawlercore.JDSKUInfo.prototype.getSeries = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.JDSKUInfo.prototype.setSeries = function(value) {
   jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string variety = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getVariety = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setVariety = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

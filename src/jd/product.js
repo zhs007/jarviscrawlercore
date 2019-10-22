@@ -320,13 +320,13 @@ async function getNormalPrice(page, timeout) {
           const ret = {};
 
           const lstprice = document.getElementById('jd-price');
-          if (lstprice.length > 0) {
-            ret.price = lstprice[0].innerText;
+          if (lstprice) {
+            ret.price = lstprice.innerText;
           }
 
           const lstoldprice = document.getElementById('page_maprice');
-          if (lstoldprice.length > 0) {
-            ret.oldPrice = lstoldprice[0].innerText;
+          if (lstoldprice) {
+            ret.oldPrice = lstoldprice.innerText;
           }
 
           const lstquan = eles[0].getElementsByClassName('quan-item');
@@ -365,26 +365,28 @@ async function getNormalPrice(page, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  if (ret.price != '') {
-    const priceret = parseMoney(ret.price);
-    if (priceret.err) {
-      log.error('getNormalPrice.parseMoney.price', priceret.err);
+  if (ret) {
+    if (ret.price) {
+      const priceret = parseMoney(ret.price);
+      if (priceret.err) {
+        log.error('getNormalPrice.parseMoney.price', priceret.err);
 
-      return {error: priceret.err.toString()};
+        return {error: priceret.err.toString()};
+      }
+
+      ret.price = priceret.money;
     }
 
-    ret.price = priceret.money;
-  }
+    if (ret.oldPrice) {
+      const priceret = parseMoney(ret.oldPrice);
+      if (priceret.err) {
+        log.error('getNormalPrice.parseMoney.oldPrice', priceret.err);
 
-  if (ret.oldPrice != '') {
-    const priceret = parseMoney(ret.oldPrice);
-    if (priceret.err) {
-      log.error('getNormalPrice.parseMoney.oldPrice', priceret.err);
+        return {error: priceret.err.toString()};
+      }
 
-      return {error: priceret.err.toString()};
+      ret.oldPrice = priceret.money;
     }
-
-    ret.oldPrice = priceret.money;
   }
 
   return {ret: ret};
@@ -665,6 +667,8 @@ async function jdProduct(browser, url, timeout) {
         if (eles.length > 0) {
           if (eles[0].id == 'pingou-banner') {
             return 'pingou';
+          } else if (eles[0].id == 'banner-shangou') {
+            return 'shangou';
           }
         }
 
@@ -743,7 +747,7 @@ async function jdProduct(browser, url, timeout) {
     }
 
     ret.strShipTime = strShipTime;
-  } else if (bannertype == 'banner-shangou') {
+  } else if (bannertype == 'shangou') {
     const shangouret = await getShangou(page, timeout);
     if (shangouret.error) {
       log.error('jdProduct.getShangou', shangouret.error);
@@ -855,6 +859,8 @@ async function jdProduct(browser, url, timeout) {
                 skutype = 'color';
               } else if (lsttype[0].dataset.type == '系列') {
                 skutype = 'series';
+              } else if (lsttype[0].dataset.type == '品种') {
+                skutype = 'variety';
               }
             }
 
@@ -872,6 +878,10 @@ async function jdProduct(browser, url, timeout) {
               } else if (skutype == 'series') {
                 if (lstitem[j].dataset && lstitem[j].dataset.value) {
                   sku.series = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'variety') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.variety = lstitem[j].dataset.value;
                 }
               }
 

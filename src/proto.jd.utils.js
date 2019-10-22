@@ -64,6 +64,14 @@ function newJDSKUInfo(obj) {
     result.setColor(obj.color);
   }
 
+  if (obj.series) {
+    result.setSeries(obj.series);
+  }
+
+  if (obj.variety) {
+    result.setVariety(obj.variety);
+  }
+
   return result;
 }
 

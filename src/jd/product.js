@@ -573,6 +573,8 @@ async function jdProduct(browser, url, timeout) {
       return {error: pingouret.error.toString()};
     }
 
+    ret.pingou = pingouret.ret;
+
     const summaryService = await page
         .$$eval('.summary-service', (eles) => {
           if (eles.length > 0) {

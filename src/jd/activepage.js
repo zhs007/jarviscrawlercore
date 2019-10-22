@@ -1,4 +1,5 @@
 const log = require('../log');
+const {WaitAllResponse} = require('../waitallresponse');
 
 /**
  * jdActivePage - jd active page
@@ -10,6 +11,8 @@ const log = require('../log');
 async function jdActivePage(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  const waitAllResponse = new WaitAllResponse(page);
 
   await page
       .setViewport({
@@ -44,6 +47,19 @@ async function jdActivePage(browser, url, timeout) {
 
     return {error: awaiterr.toString()};
   }
+
+  const isok = await waitAllResponse.waitDone(timeout);
+  if (!isok) {
+    const err = new Error('jdActivePage.waitDone timeout.');
+
+    log.error('jdActivePage.waitDone ', err);
+
+    await page.close();
+
+    return {erroor: err};
+  }
+
+  waitAllResponse.reset();
 
   const ret = await page
       .$$eval('a', (eles) => {

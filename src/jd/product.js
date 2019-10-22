@@ -8,7 +8,7 @@ const {parsePercent} = require('./utils');
  * @param {object} page - page
  * @param {object} waitAllResponse - WaitAllResponse
  * @param {number} timeout - timeout in microseconds
- * @return {object} ret - {err, ret}
+ * @return {object} ret - {error, ret}
  */
 async function getComments(page, waitAllResponse, timeout) {
   let awaiterr = undefined;
@@ -33,7 +33,7 @@ async function getComments(page, waitAllResponse, timeout) {
   if (awaiterr) {
     log.error('getComments#detail ' + awaiterr);
 
-    return {err: err};
+    return {error: err};
   }
 
   const licomment = await page.$('.jcjdcomments');
@@ -45,7 +45,7 @@ async function getComments(page, waitAllResponse, timeout) {
     if (awaiterr) {
       log.error('getComments.hover ' + awaiterr);
 
-      return {err: err};
+      return {error: err};
     }
 
     await sleep(3 * 1000);
@@ -57,12 +57,12 @@ async function getComments(page, waitAllResponse, timeout) {
     if (awaiterr) {
       log.error('getComments.click ' + awaiterr);
 
-      return {err: err};
+      return {error: err};
     }
 
     const isok = await waitAllResponse.waitDone(timeout);
     if (!isok) {
-      return {err: new Error('getComments.waitDone timeout.')};
+      return {error: new Error('getComments.waitDone timeout.')};
     }
 
     waitAllResponse.reset();
@@ -196,6 +196,179 @@ async function getComments(page, waitAllResponse, timeout) {
 }
 
 /**
+ * getPingou - get pingou
+ * @param {object} page - page
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {error, ret}
+ */
+async function getPingou(page, timeout) {
+  let awaiterr = undefined;
+  const ret = {};
+
+  const pingouret = await page
+      .$$eval('.activity-message', (eles) => {
+        if (eles.length > 0) {
+          const pingouret = {};
+          const lstitem = eles[0].getElementsByClassName('item');
+          if (lstitem.length == 2) {
+            const lstc = lstitem[0].getElementsByClassName('J-count');
+            if (lstc.length > 0) {
+              pingouret.preOrders = lstc[0].innerText;
+            }
+
+            const lstt = lstitem[1].getElementsByClassName('J-time');
+            if (lstt.length > 0) {
+              pingouret.strLastTime = lstt[0].innerText;
+            }
+          }
+
+          return pingouret;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('jdProduct.activity-message', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (pingouret != undefined) {
+    try {
+      pingouret.preOrders = parseInt(pingouret.preOrders);
+    } catch (err) {
+      log.error('jdProduct.pingouret.parseInt', err);
+
+      return {error: err.toString()};
+    }
+
+    ret.pingou = {
+      preOrders: pingouret.preOrders,
+      strLastTime: pingouret.strLastTime,
+    };
+  }
+
+  const pingouprice = await page
+      .$$eval('.summary-price-wrap', (eles) => {
+        if (eles.length > 0) {
+          const lst = eles[0].getElementsByClassName('summary-price');
+          const pingouprice = {};
+          if (lst.length == 2) {
+            const jp = lst[0].getElementsByClassName('price J-earnest');
+            if (jp.length > 0) {
+              pingouprice.scheduledPrice = jp[0].innerText;
+            }
+
+            const p = lst[1].getElementsByClassName('price J-presale-price');
+            if (p.length > 0) {
+              pingouprice.price = p[0].innerText;
+            }
+          }
+
+          return pingouprice;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('jdProduct.summary-price-wrap', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (pingouprice != undefined) {
+    if (ret.pingou == undefined) {
+      ret.pingou = {};
+    }
+
+    try {
+      pingouprice.scheduledPrice = parseFloat(pingouprice.scheduledPrice);
+      pingouprice.price = parseFloat(pingouprice.price);
+    } catch (err) {
+      log.error('jdProduct.pingouprice.parseFloat', err);
+
+      return {error: err.toString()};
+    }
+
+    ret.pingou.scheduledPrice = pingouprice.scheduledPrice;
+    ret.pingou.price = pingouprice.price;
+  }
+
+  return {ret: ret.pingou};
+}
+
+/**
+ * getNormalPrice - get normal price
+ * @param {object} page - page
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {error, ret}
+ */
+async function getNormalPrice(page, timeout) {
+  let awaiterr = undefined;
+
+  const ret = await page
+      .$$eval('#summary', (eles) => {
+        if (eles.length > 0) {
+          const ret = {};
+
+          const lstprice = document.getElementById('jd-price');
+          if (lstprice.length > 0) {
+            ret.price = lstprice[0].innerText;
+          }
+
+          const lstoldprice = document.getElementById('page_maprice');
+          if (lstoldprice.length > 0) {
+            ret.oldPrice = lstoldprice[0].innerText;
+          }
+
+          const lstquan = eles[0].getElementsByClassName('quan-item');
+          if (lstquan.length > 0) {
+            ret.coupons = [];
+            for (let i = 0; i < lstquan.length; ++i) {
+              ret.coupons.push(lstquan[i].innerText);
+            }
+          }
+
+          const lstprom = eles[0].getElementsByClassName('prom-item');
+          if (lstprom.length > 0) {
+            ret.promotionals = [];
+            for (let i = 0; i < lstprom.length; ++i) {
+              if (lstprom[i].children.length >= 2) {
+                ret.promotionals.push({
+                  title: lstprom[i].children[0].innerText,
+                  info: lstprom[i].children[1].innerText,
+                });
+              }
+            }
+          }
+
+          return ret;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('getNormalPrice#summary', awaiterr);
+
+    return {error: awaiterr.toString()};
+  }
+
+  return {ret: ret};
+}
+
+/**
  * jdProduct - jd product
  * @param {object} browser - browser
  * @param {string} url - url
@@ -250,7 +423,7 @@ async function jdProduct(browser, url, timeout) {
 
     await page.close();
 
-    return {err: err};
+    return {erroor: err};
   }
 
   waitAllResponse.reset();
@@ -391,161 +564,99 @@ async function jdProduct(browser, url, timeout) {
   }
 
   if (bannertype == 'pingou') {
-    const pingouret = await page
-        .$$eval('.activity-message', (eles) => {
+    const pingouret = await getPingou(page, timeout);
+    if (pingouret.error) {
+      log.error('jdProduct.getPingou', pingouret.error);
+
+      await page.close();
+
+      return {error: pingouret.error.toString()};
+    }
+
+    const summaryService = await page
+        .$$eval('.summary-service', (eles) => {
           if (eles.length > 0) {
-            const pingouret = {};
-            const lstitem = eles[0].getElementsByClassName('item');
-            if (lstitem.length == 2) {
-              const lstc = lstitem[0].getElementsByClassName('J-count');
-              if (lstc.length > 0) {
-                pingouret.preOrders = lstc[0].innerText;
-              }
-
-              const lstt = lstitem[1].getElementsByClassName('J-time');
-              if (lstt.length > 0) {
-                pingouret.strLastTime = lstt[0].innerText;
-              }
+            const lstspan = eles[0].getElementsByTagName('span');
+            if (lstspan.length > 0) {
+              return lstspan[0].innerText;
             }
-
-            return pingouret;
           }
 
-          return undefined;
+          return '';
         })
         .catch((err) => {
           awaiterr = err;
         });
 
     if (awaiterr) {
-      log.error('jdProduct.activity-message', awaiterr);
+      log.error('jdProduct.summary-service', awaiterr);
 
       await page.close();
 
       return {error: awaiterr.toString()};
     }
 
-    if (pingouret != undefined) {
-      try {
-        pingouret.preOrders = parseInt(pingouret.preOrders);
-      } catch (err) {
-        log.error('jdProduct.pingouret.parseInt', err);
+    ret.summaryService = summaryService;
 
-        await page.close();
-
-        return {error: err.toString()};
-      }
-
-      ret.pingou = {
-        preOrders: pingouret.preOrders,
-        strLastTime: pingouret.strLastTime,
-      };
-    }
-
-    const pingouprice = await page
-        .$$eval('.summary-price-wrap', (eles) => {
+    const strShipTime = await page
+        .$$eval('#summary-yushou-ship', (eles) => {
           if (eles.length > 0) {
-            const lst = eles[0].getElementsByClassName('summary-price');
-            const pingouprice = {};
-            if (lst.length == 2) {
-              const jp = lst[0].getElementsByClassName('price J-earnest');
-              if (jp.length > 0) {
-                pingouprice.scheduledPrice = jp[0].innerText;
-              }
-
-              const p = lst[1].getElementsByClassName('price J-presale-price');
-              if (p.length > 0) {
-                pingouprice.price = p[0].innerText;
-              }
+            const lstdd = eles[0].getElementsByClassName('dd');
+            if (lstdd.length > 0) {
+              return lstdd[0].innerText;
             }
-
-            return pingouprice;
           }
 
-          return undefined;
+          return '';
         })
         .catch((err) => {
           awaiterr = err;
         });
 
     if (awaiterr) {
-      log.error('jdProduct.summary-price-wrap', awaiterr);
+      log.error('jdProduct#summary-yushou-ship', awaiterr);
 
       await page.close();
 
       return {error: awaiterr.toString()};
     }
 
-    if (pingouprice != undefined) {
-      if (ret.pingou == undefined) {
-        ret.pingou = {};
-      }
+    ret.strShipTime = strShipTime;
+  } else {
+    const priceret = await getNormalPrice(page, timeout);
+    if (priceret.error) {
+      log.error('jdProduct.getNormalPrice', priceret.error);
 
-      try {
-        pingouprice.scheduledPrice = parseFloat(pingouprice.scheduledPrice);
-        pingouprice.price = parseFloat(pingouprice.price);
-      } catch (err) {
-        log.error('jdProduct.pingouprice.parseFloat', err);
+      await page.close();
 
-        await page.close();
-
-        return {error: err.toString()};
-      }
-
-      ret.pingou.scheduledPrice = pingouprice.scheduledPrice;
-      ret.pingou.price = pingouprice.price;
+      return {error: priceret.error.toString()};
     }
-  }
 
-  const summaryService = await page
-      .$$eval('.summary-service', (eles) => {
-        if (eles.length > 0) {
-          const lstspan = eles[0].getElementsByTagName('span');
-          if (lstspan.length > 0) {
-            return lstspan[0].innerText;
+    const summaryService = await page
+        .$$eval('#summary-service', (eles) => {
+          if (eles.length > 0) {
+            const lsthl = eles[0].getElementsByClassName('hl_red');
+            if (lsthl.length > 0) {
+              return lsthl[0].innerText;
+            }
           }
-        }
 
-        return '';
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
+          return '';
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
 
-  if (awaiterr) {
-    log.error('jdProduct.summary-service', awaiterr);
+    if (awaiterr) {
+      log.error('jdProduct#summary-service', awaiterr);
 
-    await page.close();
+      await page.close();
 
-    return {error: awaiterr.toString()};
+      return {error: awaiterr.toString()};
+    }
+
+    ret.summaryService = summaryService;
   }
-
-  ret.summaryService = summaryService;
-
-  const strShipTime = await page
-      .$$eval('#summary-yushou-ship', (eles) => {
-        if (eles.length > 0) {
-          const lstdd = eles[0].getElementsByClassName('dd');
-          if (lstdd.length > 0) {
-            return lstdd[0].innerText;
-          }
-        }
-
-        return '';
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
-
-  if (awaiterr) {
-    log.error('jdProduct#summary-yushou-ship', awaiterr);
-
-    await page.close();
-
-    return {error: awaiterr.toString()};
-  }
-
-  ret.strShipTime = strShipTime;
 
   const strWeight = await page
       .$$eval('#summary-weight', (eles) => {
@@ -583,6 +694,8 @@ async function jdProduct(browser, url, timeout) {
             if (lsttype[0].dataset && lsttype[0].dataset.type) {
               if (lsttype[0].dataset.type == '颜色') {
                 skutype = 'color';
+              } else if (lsttype[0].dataset.type == '系列') {
+                skutype = 'series';
               }
             }
 
@@ -596,6 +709,10 @@ async function jdProduct(browser, url, timeout) {
               if (skutype == 'color') {
                 if (lstitem[j].dataset && lstitem[j].dataset.value) {
                   sku.color = lstitem[j].dataset.value;
+                }
+              } else if (skutype == 'series') {
+                if (lstitem[j].dataset && lstitem[j].dataset.value) {
+                  sku.series = lstitem[j].dataset.value;
                 }
               }
 

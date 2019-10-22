@@ -1,19 +1,15 @@
-// const {sleep} = require('../utils');
 const log = require('../log');
-// const {WaitAllResponse} = require('../waitallresponse');
 
 /**
- * jdActive - jd active
+ * jdActivePage - jd active page
  * @param {object} browser - browser
  * @param {string} url - url
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function jdActive(browser, url, timeout) {
+async function jdActivePage(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
-
-  // const waitAllResponse = new WaitAllResponse(page);
 
   await page
       .setViewport({
@@ -26,7 +22,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.setViewport', awaiterr);
+    log.error('jdActivePage.setViewport', awaiterr);
 
     await page.close();
 
@@ -34,7 +30,7 @@ async function jdActive(browser, url, timeout) {
   }
 
   await page
-      .goto('https://pro.jd.com/mall/active/' + url, {
+      .goto(url, {
         timeout: timeout,
       })
       .catch((err) => {
@@ -42,7 +38,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.goto', awaiterr);
+    log.error('jdActivePage.goto', awaiterr);
 
     await page.close();
 
@@ -80,7 +76,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.a', awaiterr);
+    log.error('jdActivePage.a', awaiterr);
 
     await page.close();
 
@@ -94,4 +90,4 @@ async function jdActive(browser, url, timeout) {
   return {ret: ret};
 }
 
-exports.jdActive = jdActive;
+exports.jdActivePage = jdActivePage;

@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const {jdProduct} = require('./product');
 const {jdActive} = require('./active');
+const {jdActivePage} = require('./activepage');
 const log = require('../log');
 
 /**
@@ -28,6 +29,12 @@ async function execJD(program, version) {
         log.console('mode - ', mode);
 
         if (mode == 'active' && !options.url) {
+          log.console('command wrong, please type ' + 'jarviscrawler jd --help');
+
+          return;
+        }
+
+        if (mode == 'activepage' && !options.url) {
           log.console('command wrong, please type ' + 'jarviscrawler jd --help');
 
           return;
@@ -62,6 +69,9 @@ async function execJD(program, version) {
             log.console(JSON.stringify(ret));
           } else if (mode == 'product') {
             const ret = await jdProduct(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'activepage') {
+            const ret = await jdActivePage(browser, options.url, timeout);
             log.console(JSON.stringify(ret));
           }
 

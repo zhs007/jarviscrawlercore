@@ -495,6 +495,38 @@ function jdProduct(servAddr, url) {
   );
 }
 
+/**
+ * jdActivePage
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function jdActivePage(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestJD();
+  request.setMode(messages.JDMode.JDM_ACTIVEPAGE);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_JD,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -524,4 +556,5 @@ function jdProduct(servAddr, url) {
 // jrjFundValue('127.0.0.1:7051', '110011', '2019');
 
 // jdActive('127.0.0.1:7051', '3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html');
-jdProduct('127.0.0.1:7051', '100006585530.html');
+// jdProduct('127.0.0.1:7051', '100006585530.html');
+jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');

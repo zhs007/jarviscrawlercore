@@ -95,6 +95,54 @@ function newJDPingou(obj) {
 }
 
 /**
+ * new JDPromotional with object
+ * @param {object} obj - JDPromotional object
+ * @return {messages.JDPromotional} result - JDPromotional
+ */
+function newJDPromotional(obj) {
+  const result = new messages.JDPromotional();
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.info) {
+    result.setInfo(obj.info);
+  }
+
+  return result;
+}
+
+/**
+ * new JDNormalPrice with object
+ * @param {object} obj - JDNormalPrice object
+ * @return {messages.JDNormalPrice} result - JDNormalPrice
+ */
+function newJDNormalPrice(obj) {
+  const result = new messages.JDNormalPrice();
+
+  if (obj.oldPrice) {
+    result.setOldprice(obj.oldPrice);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (Array.isArray(obj.coupons) && obj.coupons.length > 0) {
+    result.setCouponsList(obj.coupons);
+  }
+
+  if (Array.isArray(obj.promotionals) && obj.promotionals.length > 0) {
+    for (let i = 0; i < obj.promotionals.length; ++i) {
+      result.addPromotionals(newJDPromotional(obj.promotionals[i], i));
+    }
+  }
+
+  return result;
+}
+
+/**
  * new JDProduct with object
  * @param {object} obj - JDProduct object
  * @return {messages.JDProduct} result - JDProduct
@@ -156,6 +204,10 @@ function newJDProduct(obj) {
     result.setComment(newJDCommentsInfo(obj.comment));
   }
 
+  if (obj.price) {
+    result.setPrice(newJDNormalPrice(obj.price));
+  }
+
   return result;
 }
 
@@ -179,6 +231,10 @@ function newJDActive(obj) {
     result.setUrl(obj.url);
   }
 
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
   return result;
 }
 
@@ -195,7 +251,10 @@ function newReplyJD(mode, obj) {
 
   if (mode == messages.JDMode.JDM_PRODUCT) {
     result.setProduct(newJDProduct(obj));
-  } else if (mode == messages.JDMode.JDM_ACTIVE) {
+  } else if (
+    mode == messages.JDMode.JDM_ACTIVE ||
+    mode == messages.JDMode.JDM_ACTIVEPAGE
+  ) {
     result.setActive(newJDActive(obj));
   }
 

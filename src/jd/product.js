@@ -1006,6 +1006,8 @@ async function jdProduct(browser, url, timeout) {
                 skutype = 'series';
               } else if (lsttype[0].dataset.type == '种类') {
                 skutype = 'category';
+              } else if (lsttype[0].dataset.type == '功效') {
+                skutype = 'category';
               }
             }
 

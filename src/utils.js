@@ -1586,6 +1586,67 @@ async function isElementVisible(page, ele) {
   return false;
 }
 
+/**
+ * clearLocalStorage
+ * @param {object} page - page
+ * @return {error} err - error
+ */
+async function clearLocalStorage(page) {
+  let awaiterr = undefined;
+  await page
+      .evaluate(() => {
+        localStorage.clear();
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  return awaiterr;
+}
+
+/**
+ * clearSessionStorage
+ * @param {object} page - page
+ * @return {error} err - error
+ */
+async function clearSessionStorage(page) {
+  let awaiterr = undefined;
+  await page
+      .evaluate(() => {
+        sessionStorage.clear();
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  return awaiterr;
+}
+
+/**
+ * clearCookies
+ * @param {object} page - page
+ * @return {error} err - error
+ */
+async function clearCookies(page) {
+  let awaiterr = undefined;
+  await page
+      .evaluate(() => {
+        const cookies = document.cookie.split(';');
+
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i];
+          const eqPos = cookie.indexOf('=');
+          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        }
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  return awaiterr;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -1622,3 +1683,6 @@ exports.newReplyGeoIP = newReplyGeoIP;
 exports.newReplyTechInAsia = newReplyTechInAsia;
 exports.newReplySteepAndCheap = newReplySteepAndCheap;
 exports.isElementVisible = isElementVisible;
+exports.clearCookies = clearCookies;
+exports.clearSessionStorage = clearSessionStorage;
+exports.clearLocalStorage = clearLocalStorage;

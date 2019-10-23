@@ -30,5 +30,26 @@ function parseMoney(money) {
   }
 }
 
+/**
+ * checkBan - check if page is ban
+ * @param {object} page - page
+ * @param {string} url - url
+ * @param {function} onban - onban()
+ */
+function checkBan(page, url, onban) {
+  page.on('framenavigated', (frame) => {
+    if (frame == page.mainFrame()) {
+      if (frame.url().indexOf(url) == 0) {
+        return;
+      }
+
+      if (frame.url().indexOf('https://www.jd.com/') == 0) {
+        onban();
+      }
+    }
+  });
+}
+
 exports.parsePercent = parsePercent;
 exports.parseMoney = parseMoney;
+exports.checkBan = checkBan;

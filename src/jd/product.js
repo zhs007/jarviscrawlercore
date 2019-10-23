@@ -1,7 +1,12 @@
-const {sleep} = require('../utils');
+const {
+  sleep,
+  clearCookies,
+  clearSessionStorage,
+  clearLocalStorage,
+} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
-const {parsePercent, parseMoney} = require('./utils');
+const {parsePercent, parseMoney, checkBan} = require('./utils');
 
 /**
  * getComments - get comments
@@ -566,9 +571,14 @@ async function getShangou(page, timeout) {
  */
 async function jdProduct(browser, url, timeout) {
   let awaiterr = undefined;
+  let isban = false;
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
+
+  checkBan(page, 'https://item.jd.com/' + url, () => {
+    isban = true;
+  });
 
   await page
       .setViewport({
@@ -598,6 +608,33 @@ async function jdProduct(browser, url, timeout) {
 
   if (awaiterr) {
     log.error('jdProduct.goto', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearCookies(page);
+  if (awaiterr) {
+    log.error('jdProduct.clearCookies', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearSessionStorage(page);
+  if (awaiterr) {
+    log.error('jdProduct.clearSessionStorage', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearLocalStorage(page);
+  if (awaiterr) {
+    log.error('jdProduct.clearLocalStorage', awaiterr);
 
     await page.close();
 
@@ -1057,6 +1094,16 @@ async function jdProduct(browser, url, timeout) {
     if (commentret.ret) {
       ret.comment = commentret.ret;
     }
+  }
+
+  if (isban) {
+    awaiterr = new Error('ban');
+
+    log.error('jdProduct.isban ', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   await page.close();

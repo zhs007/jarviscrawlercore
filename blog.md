@@ -1,5 +1,9 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-24
+
+``node.js`` 版本更新非常频繁，大部分时候大版本升级都是向下兼容的，但``node-gyp``相关的没那么快，所以``package-lock.json``最好还是同步一下，然后 ``Dockerfile`` 里的node版本号，至少也要给到大版本，今天``dockerhub``发布就遇到问题了，一查才发现``node.js``升级到13了，按照``node.js``的规划，奇数版本属于开发版，还是用现在的LTS版比较好。  
+
 ### 2019-10-22
 
 JD，如果 ``.activity-banner`` 的 id 是 ``J_atmosphere_banner``，可能是双十一。  

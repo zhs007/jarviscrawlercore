@@ -3,6 +3,7 @@ const {
   clearCookies,
   clearSessionStorage,
   clearLocalStorage,
+  clearIndexedDB,
 } = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
@@ -641,6 +642,15 @@ async function jdProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  awaiterr = await clearIndexedDB(page);
+  if (awaiterr) {
+    log.error('jdProduct.clearIndexedDB', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   const isok = await waitAllResponse.waitDone(timeout);
   if (!isok) {
     const err = new Error('jdProduct.waitDone timeout.');
@@ -1007,6 +1017,12 @@ async function jdProduct(browser, url, timeout) {
               } else if (lsttype[0].dataset.type == '种类') {
                 skutype = 'category';
               } else if (lsttype[0].dataset.type == '功效') {
+                skutype = 'category';
+              }
+            }
+
+            if (skutype == '') {
+              if (lsttype.length == 1) {
                 skutype = 'category';
               }
             }

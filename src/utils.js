@@ -1647,6 +1647,33 @@ async function clearCookies(page) {
   return awaiterr;
 }
 
+/**
+ * clearIndexedDB
+ * @param {object} page - page
+ * @return {error} err - error
+ */
+async function clearIndexedDB(page) {
+  let awaiterr = undefined;
+  await page
+      .evaluate(() => {
+        window.indexedDB
+            .databases()
+            .then((dbs) => {
+              dbs.forEach((db) => {
+                window.indexedDB.deleteDatabase(db.name);
+              });
+            })
+            .catch((err) => {
+              console.log('window.indexedDB.databases ', err);
+            });
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  return awaiterr;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -1686,3 +1713,4 @@ exports.isElementVisible = isElementVisible;
 exports.clearCookies = clearCookies;
 exports.clearSessionStorage = clearSessionStorage;
 exports.clearLocalStorage = clearLocalStorage;
+exports.clearIndexedDB = clearIndexedDB;

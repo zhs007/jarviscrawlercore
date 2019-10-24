@@ -1,5 +1,12 @@
+const {
+  clearCookies,
+  clearSessionStorage,
+  clearLocalStorage,
+  clearIndexedDB,
+} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
+const {checkBan} = require('./utils');
 
 /**
  * jdActivePage - jd active page
@@ -10,9 +17,14 @@ const {WaitAllResponse} = require('../waitallresponse');
  */
 async function jdActivePage(browser, url, timeout) {
   let awaiterr = undefined;
+  let isban = false;
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
+
+  checkBan(page, 'https://pro.jd.com/mall/active/' + url, () => {
+    isban = true;
+  });
 
   await page
       .setViewport({
@@ -42,6 +54,42 @@ async function jdActivePage(browser, url, timeout) {
 
   if (awaiterr) {
     log.error('jdActivePage.goto', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearCookies(page);
+  if (awaiterr) {
+    log.error('jdActivePage.clearCookies', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearSessionStorage(page);
+  if (awaiterr) {
+    log.error('jdActivePage.clearSessionStorage', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearLocalStorage(page);
+  if (awaiterr) {
+    log.error('jdActivePage.clearLocalStorage', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  awaiterr = await clearIndexedDB(page);
+  if (awaiterr) {
+    log.error('jdActivePage.clearIndexedDB', awaiterr);
 
     await page.close();
 
@@ -100,6 +148,16 @@ async function jdActivePage(browser, url, timeout) {
   }
 
   ret.url = url;
+
+  if (isban) {
+    awaiterr = new Error('ban');
+
+    log.error('jdActive.isban ', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
 
   await page.close();
 

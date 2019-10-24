@@ -1,5 +1,26 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-10-22
+
+JD，如果 ``.activity-banner`` 的 id 是 ``J_atmosphere_banner``，可能是双十一。  
+如果是 ``banner-shangou``，则是闪购。  
+``$$('.activity-message')[0].innerText``是闪购的剩余时间，好像可以取到更细的值，但估计用处不大。  
+``$$('.summary-price-wrap')[0].getElementsByClassName('p-price')`` 这个是闪购价格。  
+``document.getElementById('page_opprice').innerText``是原始价格。
+只要不是``pingou`` 和 ``banner-shangou``，估计都是正常商品。  
+这时，取``#jd-price``是价格。  
+这里的价格类似￥279.30，如果要转浮点数，需要特殊处理一下。  
+``#page_maprice`` 这是原价。  
+``.quan-item`` 这是优惠券。  
+``.prom-item`` 可以取到促销信息。  
+这可能有多个，每个节点下面，前面2个em，一个是类型，一个是内容。  
+
+如果不是pingou，这样可以找到服务提供商。  
+
+``` js
+$$('#summary-service')[0].getElementsByClassName('hl_red')
+```
+
 ### 2019-10-19
 
 jd的促销活动页面，一般是这样的，https://pro.jd.com/mall/active/3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html 。  

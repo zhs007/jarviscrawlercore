@@ -43,9 +43,12 @@ goog.exportSymbol('proto.jarviscrawlercore.JDActive', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDCommentsInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDCommentsType', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDMode', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDNormalPrice', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDPingou', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDProduct', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDPromotional', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JDSKUInfo', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.JDShangou', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFund', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundDayValue', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJFundManager', null, global);
@@ -18760,6 +18763,634 @@ proto.jarviscrawlercore.JDPingou.prototype.setPrice = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.JDShangou = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.JDShangou, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JDShangou.displayName = 'proto.jarviscrawlercore.JDShangou';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JDShangou.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JDShangou.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JDShangou} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDShangou.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    oldprice: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    price: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    strlasttime: jspb.Message.getFieldWithDefault(msg, 3, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JDShangou}
+ */
+proto.jarviscrawlercore.JDShangou.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JDShangou;
+  return proto.jarviscrawlercore.JDShangou.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JDShangou} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JDShangou}
+ */
+proto.jarviscrawlercore.JDShangou.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setOldprice(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrlasttime(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JDShangou.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JDShangou.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JDShangou} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDShangou.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getOldprice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      1,
+      f
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      2,
+      f
+    );
+  }
+  f = message.getStrlasttime();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional float oldPrice = 1;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDShangou.prototype.getOldprice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDShangou.prototype.setOldprice = function(value) {
+  jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional float price = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDShangou.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDShangou.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * optional string strLastTime = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDShangou.prototype.getStrlasttime = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDShangou.prototype.setStrlasttime = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.JDPromotional = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.JDPromotional, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JDPromotional.displayName = 'proto.jarviscrawlercore.JDPromotional';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JDPromotional.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JDPromotional.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JDPromotional} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDPromotional.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    title: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    info: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JDPromotional}
+ */
+proto.jarviscrawlercore.JDPromotional.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JDPromotional;
+  return proto.jarviscrawlercore.JDPromotional.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JDPromotional} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JDPromotional}
+ */
+proto.jarviscrawlercore.JDPromotional.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setInfo(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JDPromotional.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JDPromotional.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JDPromotional} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDPromotional.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getInfo();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string title = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDPromotional.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDPromotional.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string info = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDPromotional.prototype.getInfo = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDPromotional.prototype.setInfo = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.JDNormalPrice = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.JDNormalPrice.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.JDNormalPrice, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.JDNormalPrice.displayName = 'proto.jarviscrawlercore.JDNormalPrice';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.JDNormalPrice.repeatedFields_ = [3,4];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.JDNormalPrice.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.JDNormalPrice} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDNormalPrice.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    oldprice: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
+    price: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    promotionalsList: jspb.Message.toObjectList(msg.getPromotionalsList(),
+    proto.jarviscrawlercore.JDPromotional.toObject, includeInstance),
+    couponsList: jspb.Message.getRepeatedField(msg, 4)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.JDNormalPrice}
+ */
+proto.jarviscrawlercore.JDNormalPrice.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.JDNormalPrice;
+  return proto.jarviscrawlercore.JDNormalPrice.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.JDNormalPrice} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.JDNormalPrice}
+ */
+proto.jarviscrawlercore.JDNormalPrice.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setOldprice(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
+      break;
+    case 3:
+      var value = new proto.jarviscrawlercore.JDPromotional;
+      reader.readMessage(value,proto.jarviscrawlercore.JDPromotional.deserializeBinaryFromReader);
+      msg.addPromotionals(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addCoupons(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.JDNormalPrice.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.JDNormalPrice} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.JDNormalPrice.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getOldprice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      1,
+      f
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      2,
+      f
+    );
+  }
+  f = message.getPromotionalsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto.jarviscrawlercore.JDPromotional.serializeBinaryToWriter
+    );
+  }
+  f = message.getCouponsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional float oldPrice = 1;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.getOldprice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDNormalPrice.prototype.setOldprice = function(value) {
+  jspb.Message.setProto3FloatField(this, 1, value);
+};
+
+
+/**
+ * optional float price = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.JDNormalPrice.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * repeated JDPromotional promotionals = 3;
+ * @return {!Array<!proto.jarviscrawlercore.JDPromotional>}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.getPromotionalsList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.JDPromotional>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.JDPromotional, 3));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.JDPromotional>} value */
+proto.jarviscrawlercore.JDNormalPrice.prototype.setPromotionalsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.JDPromotional=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.JDPromotional}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.addPromotionals = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.jarviscrawlercore.JDPromotional, opt_index);
+};
+
+
+proto.jarviscrawlercore.JDNormalPrice.prototype.clearPromotionalsList = function() {
+  this.setPromotionalsList([]);
+};
+
+
+/**
+ * repeated string coupons = 4;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.getCouponsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.JDNormalPrice.prototype.setCouponsList = function(value) {
+  jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.JDNormalPrice.prototype.addCoupons = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.JDNormalPrice.prototype.clearCouponsList = function() {
+  this.setCouponsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.JDSKUInfo = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -18798,7 +19429,16 @@ proto.jarviscrawlercore.JDSKUInfo.toObject = function(includeInstance, msg) {
   var f, obj = {
     skuid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     type: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    color: jspb.Message.getFieldWithDefault(msg, 3, "")
+    color: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    series: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    variety: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    size: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    model: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    purchase: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    disabled: jspb.Message.getFieldWithDefault(msg, 9, false),
+    selected: jspb.Message.getFieldWithDefault(msg, 10, false),
+    category: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    producttype: jspb.Message.getFieldWithDefault(msg, 12, "")
   };
 
   if (includeInstance) {
@@ -18846,6 +19486,42 @@ proto.jarviscrawlercore.JDSKUInfo.deserializeBinaryFromReader = function(msg, re
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setColor(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSeries(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVariety(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSize(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setModel(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPurchase(value);
+      break;
+    case 9:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setDisabled(value);
+      break;
+    case 10:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSelected(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCategory(value);
+      break;
+    case 12:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setProducttype(value);
       break;
     default:
       reader.skipField();
@@ -18897,6 +19573,69 @@ proto.jarviscrawlercore.JDSKUInfo.serializeBinaryToWriter = function(message, wr
       f
     );
   }
+  f = message.getSeries();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getVariety();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getSize();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getModel();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getPurchase();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getDisabled();
+  if (f) {
+    writer.writeBool(
+      9,
+      f
+    );
+  }
+  f = message.getSelected();
+  if (f) {
+    writer.writeBool(
+      10,
+      f
+    );
+  }
+  f = message.getCategory();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getProducttype();
+  if (f.length > 0) {
+    writer.writeString(
+      12,
+      f
+    );
+  }
 };
 
 
@@ -18942,6 +19681,145 @@ proto.jarviscrawlercore.JDSKUInfo.prototype.getColor = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.JDSKUInfo.prototype.setColor = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string series = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getSeries = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setSeries = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string variety = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getVariety = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setVariety = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string size = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getSize = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setSize = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string model = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getModel = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setModel = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string purchase = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getPurchase = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setPurchase = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional bool disabled = 9;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getDisabled = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 9, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setDisabled = function(value) {
+  jspb.Message.setProto3BooleanField(this, 9, value);
+};
+
+
+/**
+ * optional bool selected = 10;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getSelected = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 10, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setSelected = function(value) {
+  jspb.Message.setProto3BooleanField(this, 10, value);
+};
+
+
+/**
+ * optional string category = 11;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getCategory = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setCategory = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional string productType = 12;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDSKUInfo.prototype.getProducttype = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDSKUInfo.prototype.setProducttype = function(value) {
+  jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
@@ -19406,7 +20284,9 @@ proto.jarviscrawlercore.JDActive.toObject = function(includeInstance, msg) {
   var f, obj = {
     urlactiveList: jspb.Message.getRepeatedField(msg, 1),
     urlproductList: jspb.Message.getRepeatedField(msg, 2),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    url: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -19455,6 +20335,14 @@ proto.jarviscrawlercore.JDActive.deserializeBinaryFromReader = function(msg, rea
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
       break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -19502,6 +20390,20 @@ proto.jarviscrawlercore.JDActive.serializeBinaryToWriter = function(message, wri
   if (f !== 0) {
     writer.writeInt64(
       3,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
       f
     );
   }
@@ -19581,6 +20483,36 @@ proto.jarviscrawlercore.JDActive.prototype.setLastupdatedtime = function(value) 
 };
 
 
+/**
+ * optional string url = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDActive.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDActive.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string title = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.JDActive.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.JDActive.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -19649,7 +20581,9 @@ proto.jarviscrawlercore.JDProduct.toObject = function(includeInstance, msg) {
     skusList: jspb.Message.toObjectList(msg.getSkusList(),
     proto.jarviscrawlercore.JDSKUInfo.toObject, includeInstance),
     comment: (f = msg.getComment()) && proto.jarviscrawlercore.JDCommentsInfo.toObject(includeInstance, f),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 14, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    price: (f = msg.getPrice()) && proto.jarviscrawlercore.JDNormalPrice.toObject(includeInstance, f),
+    shangou: (f = msg.getShangou()) && proto.jarviscrawlercore.JDShangou.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -19744,6 +20678,16 @@ proto.jarviscrawlercore.JDProduct.deserializeBinaryFromReader = function(msg, re
     case 14:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
+      break;
+    case 15:
+      var value = new proto.jarviscrawlercore.JDNormalPrice;
+      reader.readMessage(value,proto.jarviscrawlercore.JDNormalPrice.deserializeBinaryFromReader);
+      msg.setPrice(value);
+      break;
+    case 16:
+      var value = new proto.jarviscrawlercore.JDShangou;
+      reader.readMessage(value,proto.jarviscrawlercore.JDShangou.deserializeBinaryFromReader);
+      msg.setShangou(value);
       break;
     default:
       reader.skipField();
@@ -19873,6 +20817,22 @@ proto.jarviscrawlercore.JDProduct.serializeBinaryToWriter = function(message, wr
     writer.writeInt64(
       14,
       f
+    );
+  }
+  f = message.getPrice();
+  if (f != null) {
+    writer.writeMessage(
+      15,
+      f,
+      proto.jarviscrawlercore.JDNormalPrice.serializeBinaryToWriter
+    );
+  }
+  f = message.getShangou();
+  if (f != null) {
+    writer.writeMessage(
+      16,
+      f,
+      proto.jarviscrawlercore.JDShangou.serializeBinaryToWriter
     );
   }
 };
@@ -20145,6 +21105,66 @@ proto.jarviscrawlercore.JDProduct.prototype.getLastupdatedtime = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.JDProduct.prototype.setLastupdatedtime = function(value) {
   jspb.Message.setProto3IntField(this, 14, value);
+};
+
+
+/**
+ * optional JDNormalPrice price = 15;
+ * @return {?proto.jarviscrawlercore.JDNormalPrice}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getPrice = function() {
+  return /** @type{?proto.jarviscrawlercore.JDNormalPrice} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JDNormalPrice, 15));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JDNormalPrice|undefined} value */
+proto.jarviscrawlercore.JDProduct.prototype.setPrice = function(value) {
+  jspb.Message.setWrapperField(this, 15, value);
+};
+
+
+proto.jarviscrawlercore.JDProduct.prototype.clearPrice = function() {
+  this.setPrice(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.hasPrice = function() {
+  return jspb.Message.getField(this, 15) != null;
+};
+
+
+/**
+ * optional JDShangou shangou = 16;
+ * @return {?proto.jarviscrawlercore.JDShangou}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.getShangou = function() {
+  return /** @type{?proto.jarviscrawlercore.JDShangou} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.JDShangou, 16));
+};
+
+
+/** @param {?proto.jarviscrawlercore.JDShangou|undefined} value */
+proto.jarviscrawlercore.JDProduct.prototype.setShangou = function(value) {
+  jspb.Message.setWrapperField(this, 16, value);
+};
+
+
+proto.jarviscrawlercore.JDProduct.prototype.clearShangou = function() {
+  this.setShangou(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.JDProduct.prototype.hasShangou = function() {
+  return jspb.Message.getField(this, 16) != null;
 };
 
 
@@ -22260,7 +23280,8 @@ proto.jarviscrawlercore.JRJMode = {
  */
 proto.jarviscrawlercore.JDMode = {
   JDM_PRODUCT: 0,
-  JDM_ACTIVE: 1
+  JDM_ACTIVE: 1,
+  JDM_ACTIVEPAGE: 2
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

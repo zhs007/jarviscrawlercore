@@ -9,13 +9,13 @@ const {WaitAllResponse} = require('../waitallresponse');
 const {checkBan} = require('./utils');
 
 /**
- * jdActive - jd active
+ * jdActivePage - jd active page
  * @param {object} browser - browser
  * @param {string} url - url
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function jdActive(browser, url, timeout) {
+async function jdActivePage(browser, url, timeout) {
   let awaiterr = undefined;
   let isban = false;
   const page = await browser.newPage();
@@ -37,7 +37,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.setViewport', awaiterr);
+    log.error('jdActivePage.setViewport', awaiterr);
 
     await page.close();
 
@@ -45,7 +45,7 @@ async function jdActive(browser, url, timeout) {
   }
 
   await page
-      .goto('https://pro.jd.com/mall/active/' + url, {
+      .goto(url, {
         timeout: timeout,
       })
       .catch((err) => {
@@ -53,7 +53,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.goto', awaiterr);
+    log.error('jdActivePage.goto', awaiterr);
 
     await page.close();
 
@@ -62,7 +62,7 @@ async function jdActive(browser, url, timeout) {
 
   awaiterr = await clearCookies(page);
   if (awaiterr) {
-    log.error('jdActive.clearCookies', awaiterr);
+    log.error('jdActivePage.clearCookies', awaiterr);
 
     await page.close();
 
@@ -71,7 +71,7 @@ async function jdActive(browser, url, timeout) {
 
   awaiterr = await clearSessionStorage(page);
   if (awaiterr) {
-    log.error('jdActive.clearSessionStorage', awaiterr);
+    log.error('jdActivePage.clearSessionStorage', awaiterr);
 
     await page.close();
 
@@ -80,7 +80,7 @@ async function jdActive(browser, url, timeout) {
 
   awaiterr = await clearLocalStorage(page);
   if (awaiterr) {
-    log.error('jdActive.clearLocalStorage', awaiterr);
+    log.error('jdActivePage.clearLocalStorage', awaiterr);
 
     await page.close();
 
@@ -89,7 +89,7 @@ async function jdActive(browser, url, timeout) {
 
   awaiterr = await clearIndexedDB(page);
   if (awaiterr) {
-    log.error('jdActive.clearIndexedDB', awaiterr);
+    log.error('jdActivePage.clearIndexedDB', awaiterr);
 
     await page.close();
 
@@ -98,9 +98,9 @@ async function jdActive(browser, url, timeout) {
 
   const isok = await waitAllResponse.waitDone(timeout);
   if (!isok) {
-    const err = new Error('jdActive.waitDone timeout.');
+    const err = new Error('jdActivePage.waitDone timeout.');
 
-    log.error('jdActive.waitDone ', err);
+    log.error('jdActivePage.waitDone ', err);
 
     await page.close();
 
@@ -140,7 +140,7 @@ async function jdActive(browser, url, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.a', awaiterr);
+    log.error('jdActivePage.a', awaiterr);
 
     await page.close();
 
@@ -164,4 +164,4 @@ async function jdActive(browser, url, timeout) {
   return {ret: ret};
 }
 
-exports.jdActive = jdActive;
+exports.jdActivePage = jdActivePage;

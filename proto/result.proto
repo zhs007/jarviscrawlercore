@@ -862,6 +862,8 @@ enum JDMode {
     JDM_PRODUCT = 0;
     // JDM_ACTIVE - active
     JDM_ACTIVE = 1;
+    // JDM_ACTIVEPAGE - active page
+    JDM_ACTIVEPAGE = 2;
 }
 
 // JDPingou - jd pingou
@@ -872,11 +874,41 @@ message JDPingou {
     float price = 4;
 }
 
+// JDShangou - jd shangou
+message JDShangou {
+    float oldPrice = 1;
+    float price = 2;
+    string strLastTime = 3;
+}
+
+// JDPromotional - jd promotional
+message JDPromotional {
+    string title = 1;
+    string info = 2;
+}
+
+// JDNormalPrice - jd normal price
+message JDNormalPrice {
+    float oldPrice = 1;
+    float price = 2;
+    repeated JDPromotional promotionals = 3;
+    repeated string coupons = 4;
+}
+
 // JDSKUInfo - jd sku info
 message JDSKUInfo {
     string skuID = 1;
     string type = 2;
     string color = 3;
+    string series = 4;
+    string variety = 5;
+    string size = 6;
+    string model = 7;
+    string purchase = 8;
+    bool disabled = 9;
+    bool selected = 10;
+    string category = 11;
+    string productType = 12;
 }
 
 // JDCommentType - jd comments type
@@ -897,6 +929,8 @@ message JDActive {
     repeated string urlActive = 1;
     repeated string urlProduct = 2;
     int64 lastUpdatedTime = 3;
+    string url = 4;
+    string title = 5;
 }
 
 // JDProduct - jd product
@@ -915,6 +949,8 @@ message JDProduct {
     repeated JDSKUInfo SKUs = 12;
     JDCommentsInfo comment = 13;
     int64 lastUpdatedTime = 14;
+    JDNormalPrice price = 15;
+    JDShangou shangou = 16;
 }
 
 // RequestJD - request jd

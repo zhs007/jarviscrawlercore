@@ -64,6 +64,42 @@ function newJDSKUInfo(obj) {
     result.setColor(obj.color);
   }
 
+  if (obj.series) {
+    result.setSeries(obj.series);
+  }
+
+  if (obj.variety) {
+    result.setVariety(obj.variety);
+  }
+
+  if (obj.size) {
+    result.setSize(obj.size);
+  }
+
+  if (obj.model) {
+    result.setModel(obj.model);
+  }
+
+  if (obj.purchase) {
+    result.setPurchase(obj.purchase);
+  }
+
+  if (obj.disabled) {
+    result.setDisabled(obj.disabled);
+  }
+
+  if (obj.selected) {
+    result.setSelected(obj.selected);
+  }
+
+  if (obj.category) {
+    result.setCategory(obj.category);
+  }
+
+  if (obj.productType) {
+    result.setProducttype(obj.productType);
+  }
+
   return result;
 }
 
@@ -89,6 +125,77 @@ function newJDPingou(obj) {
 
   if (obj.price) {
     result.setPrice(obj.price);
+  }
+
+  return result;
+}
+
+/**
+ * new JDShangou with object
+ * @param {object} obj - JDShangou object
+ * @return {messages.JDShangou} result - JDShangou
+ */
+function newJDShangou(obj) {
+  const result = new messages.JDShangou();
+
+  if (obj.oldPrice) {
+    result.setOldprice(obj.oldPrice);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (obj.strLastTime) {
+    result.setStrlasttime(obj.strLastTime);
+  }
+
+  return result;
+}
+
+/**
+ * new JDPromotional with object
+ * @param {object} obj - JDPromotional object
+ * @return {messages.JDPromotional} result - JDPromotional
+ */
+function newJDPromotional(obj) {
+  const result = new messages.JDPromotional();
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.info) {
+    result.setInfo(obj.info);
+  }
+
+  return result;
+}
+
+/**
+ * new JDNormalPrice with object
+ * @param {object} obj - JDNormalPrice object
+ * @return {messages.JDNormalPrice} result - JDNormalPrice
+ */
+function newJDNormalPrice(obj) {
+  const result = new messages.JDNormalPrice();
+
+  if (obj.oldPrice) {
+    result.setOldprice(obj.oldPrice);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (Array.isArray(obj.coupons) && obj.coupons.length > 0) {
+    result.setCouponsList(obj.coupons);
+  }
+
+  if (Array.isArray(obj.promotionals) && obj.promotionals.length > 0) {
+    for (let i = 0; i < obj.promotionals.length; ++i) {
+      result.addPromotionals(newJDPromotional(obj.promotionals[i], i));
+    }
   }
 
   return result;
@@ -156,6 +263,14 @@ function newJDProduct(obj) {
     result.setComment(newJDCommentsInfo(obj.comment));
   }
 
+  if (obj.price) {
+    result.setPrice(newJDNormalPrice(obj.price));
+  }
+
+  if (obj.shangou) {
+    result.setShangou(newJDShangou(obj.shangou));
+  }
+
   return result;
 }
 
@@ -175,6 +290,14 @@ function newJDActive(obj) {
     result.setUrlproductList(obj.urlProduct);
   }
 
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
   return result;
 }
 
@@ -191,7 +314,10 @@ function newReplyJD(mode, obj) {
 
   if (mode == messages.JDMode.JDM_PRODUCT) {
     result.setProduct(newJDProduct(obj));
-  } else if (mode == messages.JDMode.JDM_ACTIVE) {
+  } else if (
+    mode == messages.JDMode.JDM_ACTIVE ||
+    mode == messages.JDMode.JDM_ACTIVEPAGE
+  ) {
     result.setActive(newJDActive(obj));
   }
 

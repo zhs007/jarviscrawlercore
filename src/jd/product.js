@@ -572,13 +572,13 @@ async function getShangou(page, timeout) {
  */
 async function jdProduct(browser, url, timeout) {
   let awaiterr = undefined;
-  let isban = false;
+  let banret = -1;
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
 
-  checkBan(page, 'https://item.jd.com/' + url, () => {
-    isban = true;
+  checkBan(page, 'https://item.jd.com/' + url, (bantype) => {
+    banret = bantype;
   });
 
   await page
@@ -1114,8 +1114,12 @@ async function jdProduct(browser, url, timeout) {
     }
   }
 
-  if (isban) {
-    awaiterr = new Error('ban');
+  if (banret >= 0) {
+    if (banret == 0) {
+      awaiterr = new Error('noretry:ban ' + 'https://item.jd.com/' + url);
+    } else if (banret == 1) {
+      awaiterr = new Error('noretry:error ' + 'https://item.jd.com/' + url);
+    }
 
     log.error('jdProduct.isban ', awaiterr);
 

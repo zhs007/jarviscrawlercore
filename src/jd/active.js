@@ -17,13 +17,13 @@ const {checkBan} = require('./utils');
  */
 async function jdActive(browser, url, timeout) {
   let awaiterr = undefined;
-  let isban = false;
+  let banret = -1;
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
 
-  checkBan(page, 'https://pro.jd.com/mall/active/' + url, () => {
-    isban = true;
+  checkBan(page, 'https://pro.jd.com/mall/active/' + url, (bantype) => {
+    banret = bantype;
   });
 
   await page
@@ -149,8 +149,16 @@ async function jdActive(browser, url, timeout) {
 
   ret.url = url;
 
-  if (isban) {
-    awaiterr = new Error('ban');
+  if (banret >= 0) {
+    if (banret == 0) {
+      awaiterr = new Error(
+          'noretry:ban ' + 'https://pro.jd.com/mall/active/' + url
+      );
+    } else if (banret == 1) {
+      awaiterr = new Error(
+          'noretry:error ' + 'https://pro.jd.com/mall/active/' + url
+      );
+    }
 
     log.error('jdActive.isban ', awaiterr);
 

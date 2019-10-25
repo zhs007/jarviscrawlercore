@@ -34,7 +34,7 @@ function parseMoney(money) {
  * checkBan - check if page is ban
  * @param {object} page - page
  * @param {string} url - url
- * @param {function} onban - onban()
+ * @param {function} onban - onban(type) type{0: ban, 1: error}
  */
 function checkBan(page, url, onban) {
   page.on('framenavigated', (frame) => {
@@ -43,8 +43,12 @@ function checkBan(page, url, onban) {
         return;
       }
 
+      if (frame.url().indexOf('https://www.jd.com/error') == 0) {
+        onban(1);
+      }
+
       if (frame.url().indexOf('https://www.jd.com/') == 0) {
-        onban();
+        onban(0);
       }
     }
   });

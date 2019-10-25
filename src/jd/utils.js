@@ -45,10 +45,12 @@ function checkBan(page, url, onban) {
 
       if (frame.url().indexOf('https://www.jd.com/error') == 0) {
         onban(1);
+        return;
       }
 
       if (frame.url().indexOf('https://www.jd.com/') == 0) {
         onban(0);
+        return;
       }
     }
   });

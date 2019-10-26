@@ -25,7 +25,7 @@ clientToken:
 
 其中，clientToken，是用来校验权限的，可以配置多个，响应请求是会校验token。  
 
-### NodeJs Client 开发
+### node.js Client 开发
 
 ``nodejs``调用的例子，见``src/service/client2.js``。  
 

@@ -147,6 +147,56 @@ async function jdActive(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  const lstitems = await page
+      .evaluate(() => {
+        const lstitems = [];
+        if (window.__react_data__ && window.__react_data__.pageData) {
+          const floorList = window.__react_data__.pageData.floorList;
+          if (floorList && floorList.length > 0) {
+            for (let i = 0; i < floorList.length; ++i) {
+              if (
+                floorList[i].hotZone &&
+              floorList[i].hotZone.hotZonesList &&
+              floorList[i].hotZone.hotZonesList.length > 0
+              ) {
+                for (
+                  let j = 0;
+                  j < floorList[i].hotZone.hotZonesList.length;
+                  ++j
+                ) {
+                  const cz = floorList[i].hotZone.hotZonesList[j];
+                  if (cz.jump && cz.jump.params && cz.jump.params.url) {
+                    if (cz.jump.params.url.indexOf('//item.jd.com/') == 0) {
+                      const ci = cz.jump.params.url
+                          .split('//item.jd.com/')[1]
+                          .split('.html')[0];
+                      lstitems.push(ci + '.html');
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        return lstitems;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('jdActive.__react_data__ ', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  for (let i = 0; i < lstitems.length; ++i) {
+    ret.urlProduct.push(lstitems[i]);
+  }
+
   ret.url = url;
 
   if (banret >= 0) {

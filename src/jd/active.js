@@ -165,12 +165,16 @@ async function jdActive(browser, url, timeout) {
                   ++j
                 ) {
                   const cz = floorList[i].hotZone.hotZonesList[j];
-                  if (cz.jump && cz.jump.params && cz.jump.params.url) {
-                    if (cz.jump.params.url.indexOf('//item.jd.com/') == 0) {
-                      const ci = cz.jump.params.url
-                          .split('//item.jd.com/')[1]
-                          .split('.html')[0];
-                      lstitems.push(ci + '.html');
+                  if (cz.jump && cz.jump.params) {
+                    if (cz.jump.params.url) {
+                      if (cz.jump.params.url.indexOf('//item.jd.com/') == 0) {
+                        const ci = cz.jump.params.url
+                            .split('//item.jd.com/')[1]
+                            .split('.html')[0];
+                        lstitems.push(ci + '.html');
+                      }
+                    } else if (cz.jump.params.skuId) {
+                      lstitems.push(cz.jump.params.skuId + '.html');
                     }
                   }
                 }

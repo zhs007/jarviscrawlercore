@@ -247,6 +247,10 @@ async function getAllReviews(page, waitAllResponse, reviewCount, timeout) {
         reviewCount = DEFAULT_REVIEWS_NUMS;
       }
 
+      // no need to get all the reviews
+      // 不需要获取全部的reviews
+      return undefined;
+
       awaiterr = await loadMoreReviews(
           page,
           waitAllResponse,

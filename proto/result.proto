@@ -707,6 +707,7 @@ message SteepAndCheapHistory {
     int32 reviews = 5;
     float ratingValue = 6;
     repeated SteepAndCheapColorSize color = 7;
+    string saleCode = 8;
 }
 
 // SteepAndCheapProduct - Steep&Cheap product

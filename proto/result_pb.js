@@ -14385,7 +14385,8 @@ proto.jarviscrawlercore.SteepAndCheapHistory.toObject = function(includeInstance
     reviews: jspb.Message.getFieldWithDefault(msg, 5, 0),
     ratingvalue: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
     colorList: jspb.Message.toObjectList(msg.getColorList(),
-    proto.jarviscrawlercore.SteepAndCheapColorSize.toObject, includeInstance)
+    proto.jarviscrawlercore.SteepAndCheapColorSize.toObject, includeInstance),
+    salecode: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -14450,6 +14451,10 @@ proto.jarviscrawlercore.SteepAndCheapHistory.deserializeBinaryFromReader = funct
       var value = new proto.jarviscrawlercore.SteepAndCheapColorSize;
       reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapColorSize.deserializeBinaryFromReader);
       msg.addColor(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSalecode(value);
       break;
     default:
       reader.skipField();
@@ -14528,6 +14533,13 @@ proto.jarviscrawlercore.SteepAndCheapHistory.serializeBinaryToWriter = function(
       7,
       f,
       proto.jarviscrawlercore.SteepAndCheapColorSize.serializeBinaryToWriter
+    );
+  }
+  f = message.getSalecode();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
     );
   }
 };
@@ -14651,6 +14663,21 @@ proto.jarviscrawlercore.SteepAndCheapHistory.prototype.addColor = function(opt_v
 
 proto.jarviscrawlercore.SteepAndCheapHistory.prototype.clearColorList = function() {
   this.setColorList([]);
+};
+
+
+/**
+ * optional string saleCode = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.getSalecode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.setSalecode = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

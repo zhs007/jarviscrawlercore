@@ -970,6 +970,14 @@ message ReplyJD {
     }
 }
 
+// CrawlerStatistics - cralwer statistics
+message CrawlerStatistics {
+    int32 pageNums = 1;
+    int32 byteNums = 2;
+    int32 time = 3;
+    int32 requestNums = 4;
+}
+
 // RequestCrawler - request crawler
 message RequestCrawler {
     string token = 1;
@@ -992,6 +1000,7 @@ message RequestCrawler {
 // ReplyCrawler - reply crawler
 message ReplyCrawler {
     CrawlerType crawlerType = 1;
+    CrawlerStatistics statistics = 2;
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;

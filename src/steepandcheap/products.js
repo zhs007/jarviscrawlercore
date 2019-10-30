@@ -381,8 +381,11 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   //   url += '&page=' + (pageid - 1).toString();
   // }
 
+  const furl =
+    'https://www.steepandcheap.com/' + url + '?sort=-discountpercent';
+
   await page
-      .goto('https://www.steepandcheap.com/' + url, {
+      .goto(furl, {
         timeout: timeout,
       })
       .catch((err) => {
@@ -408,13 +411,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
 
   const firsturl = await getFirstProductURL(page);
 
-  awaiterr = await chgPage(
-      page,
-      pageid,
-      'https://www.steepandcheap.com/' + url,
-      firsturl,
-      timeout
-  );
+  awaiterr = await chgPage(page, pageid, furl, firsturl, timeout);
   if (awaiterr) {
     log.error('steepandcheapProducts.chgPage ', awaiterr);
 

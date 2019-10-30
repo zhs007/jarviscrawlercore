@@ -382,7 +382,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   // }
 
   const furl =
-    'https://www.steepandcheap.com/' + url + '?sort=-discountpercent';
+    'https://www.steepandcheap.com/' + url + '?sort=-price';
 
   await page
       .goto(furl, {

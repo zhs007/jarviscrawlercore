@@ -24,6 +24,7 @@ const {execSteepAndCheap} = require('../src/steepandcheap/exec');
 const {execMountainSteals} = require('../src/mountainsteals/exec');
 const {execJD} = require('../src/jd/exec');
 const {execJRJ} = require('../src/jrj/exec');
+const {execAlimama} = require('../src/alimama/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -360,5 +361,6 @@ execSteepAndCheap(program, VERSION);
 execJRJ(program, VERSION);
 execMountainSteals(program, VERSION);
 execJD(program, VERSION);
+execAlimama(program, VERSION);
 
 program.parse(process.argv);

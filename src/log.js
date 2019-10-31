@@ -46,10 +46,10 @@ function warn(info, obj) {
 /**
  * error
  * @param {string} info - infomation
- * @param {object} obj - object
+ * @param {Error} err - Error
  */
-function error(info, obj) {
-  log('ERROR', info, obj);
+function error(info, err) {
+  log('ERROR', info, {err: err.toString()});
 }
 
 exports.log = log;

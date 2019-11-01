@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {steepandcheapProducts} = require('./products');
+const {steepandcheapProducts2} = require('./products2');
 const {steepandcheapProduct} = require('./product');
 const log = require('../log');
 
@@ -37,6 +38,14 @@ async function execSteepAndCheap(program, version) {
           return;
         }
 
+        if (mode == 'products2' && !options.url) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+          );
+
+          return;
+        }
+
         if (mode == 'product' && !options.url) {
           log.console(
               'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
@@ -65,6 +74,14 @@ async function execSteepAndCheap(program, version) {
 
           if (mode == 'products') {
             const ret = await steepandcheapProducts(
+                browser,
+                options.url,
+                page,
+                timeout
+            );
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'products2') {
+            const ret = await steepandcheapProducts2(
                 browser,
                 options.url,
                 page,

@@ -970,6 +970,22 @@ message ReplyJD {
     }
 }
 
+// AlimamaProduct - alimama product
+message AlimamaProduct {
+    string name = 1;
+    string url = 2;
+    string shop = 3;
+    string img = 4;
+    float lastCoupon = 5;
+    float curPrice = 6;
+    float rebate = 7;
+    float commission = 8;
+    float moneyQuan = 9;
+    string shopType = 10;
+    int32 salesVolume = 11;
+    string shopurl = 12;
+}
+
 // CrawlerStatistics - cralwer statistics
 message CrawlerStatistics {
     int32 pageNums = 1;

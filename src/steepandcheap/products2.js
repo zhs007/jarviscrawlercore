@@ -72,14 +72,22 @@ async function nextPage(page, baseurl, firsturl, timeout) {
 
   let ct = 0;
   while (true) {
-    const isok = await page.evaluate(() => {
-      const lst = document.getElementsByClassName('pag-next');
-      if (lst.length > 0) {
-        return true;
-      }
+    const isok = await page
+        .evaluate(() => {
+          const lst = document.getElementsByClassName('pag-next');
+          if (lst.length > 0) {
+            return true;
+          }
 
-      return false;
-    });
+          return false;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+
+    if (awaiterr) {
+      return awaiterr;
+    }
 
     if (isok) {
       break;
@@ -100,7 +108,13 @@ async function nextPage(page, baseurl, firsturl, timeout) {
     return url.indexOf(baseurl) == 0;
   });
 
-  const np = await page.$$('.pag-next');
+  const np = await page.$$('.pag-next').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
+
   if (np.length > 0) {
     await np[0].hover();
     await np[0].click();
@@ -130,21 +144,6 @@ async function nextPage(page, baseurl, firsturl, timeout) {
   }
 
   return undefined;
-}
-
-/**
- * parseURL - parse URL
- * @param {string} url - url
- * @return {string} url - url
- */
-function parseURL(url) {
-  const url1 = url.split('.com/');
-  if (url1.length > 1) {
-    const url2 = url1[1].split('&ti=');
-    return url2[0];
-  }
-
-  return url;
 }
 
 /**
@@ -183,285 +182,6 @@ async function getFirstProductURL(page) {
   }
 
   return ret;
-}
-
-/**
- * getPageURL - get page url
- * @param {object} page - page
- * @param {number} pageid - pageid, is like 1, 2, 3
- * @return {object} ret - {error, url}
- */
-async function getPageURL(page, pageid) {
-  let awaiterr;
-  const url = await page
-      .evaluate((pageid) => {
-        const lstpages = document.getElementsByClassName('page-link');
-        if (lstpages.length > 0) {
-          const lsta = lstpages[pageid - 2].getElementsByTagName('a');
-          if (lsta.length > 0) {
-            return lsta[0].href;
-          }
-        }
-
-        return '';
-      }, pageid)
-      .catch((err) => {
-        awaiterr = err;
-      });
-  if (awaiterr) {
-    return {error: awaiterr};
-  }
-
-  return {url: url};
-}
-
-/**
- * getPageURLWithIndex - get page url
- * @param {object} page - page
- * @param {number} pageindex - pageindex, is like 0, 1, 2, 3
- * @return {object} ret - {error, url}
- */
-async function getPageURLWithIndex(page, pageindex) {
-  let awaiterr;
-  const url = await page
-      .evaluate((pageindex) => {
-        const lstpages = document.getElementsByClassName('page-link');
-        if (
-          lstpages.length > 0 &&
-        pageindex >= 0 &&
-        pageindex < lstpages.length
-        ) {
-          const lsta = lstpages[pageindex].getElementsByTagName('a');
-          if (lsta.length > 0) {
-            return lsta[0].href;
-          }
-        }
-
-        return '';
-      }, pageindex)
-      .catch((err) => {
-        awaiterr = err;
-      });
-  if (awaiterr) {
-    return {error: awaiterr};
-  }
-
-  return {url: url};
-}
-
-/**
- * countPageObjIndex - count pageobj index
- * @param {object} page - page
- * @param {number} pageid - pageid, is like 1, 2, 3
- * @return {object} ret - {error, pi}
- */
-async function countPageObjIndex(page, pageid) {
-  let awaiterr;
-  const pi = await page
-      .evaluate((pageid) => {
-        const lstpages = document.getElementsByClassName('page-link');
-        if (lstpages.length > 0) {
-          let mini = 1;
-          let maxi = 1;
-          for (let i = 0; i < lstpages.length; ++i) {
-            try {
-              const curtext = lstpages[i].innerText;
-              const curpi = parseInt(curtext);
-              if (i == 1) {
-                mini = curpi;
-              } else if (i == lstpages.length - 2) {
-                maxi = curpi;
-              }
-
-              if (curpi == pageid) {
-                return i;
-              }
-            } catch (err) {}
-          }
-
-          if (pageid > maxi) {
-            if (maxi >= 95) {
-              return -(lstpages.length - 3);
-            }
-            return -(lstpages.length - 2);
-          }
-
-          if (pageid < mini) {
-            return -1;
-          }
-        }
-
-        return -99999;
-      }, pageid)
-      .catch((err) => {
-        awaiterr = err;
-      });
-  if (awaiterr) {
-    return {error: awaiterr};
-  }
-
-  return {pi: pi};
-}
-
-/**
- * chgPage - change to page
- * @param {object} page - page
- * @param {number} pageid - pageid, is like 1, 2, 3
- * @param {string} baseurl - baseurl
- * @param {string} firsturl - firsturl
- * @param {number} timeout - timeout in microseconds
- * @return {error} err - error
- */
-async function chgPage(page, pageid, baseurl, firsturl, timeout) {
-  if (pageid > 1) {
-    await sleep(3 * 1000);
-
-    let awaiterr;
-
-    await page
-        .waitForSelector('.page-link', {timeout: timeout})
-        .catch((err) => {
-          awaiterr = err;
-        });
-
-    if (awaiterr) {
-      return awaiterr;
-    }
-
-    const mainframe = await page.mainFrame();
-    const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
-      const url = frame.url();
-
-      return url.indexOf(baseurl) == 0;
-    });
-
-    let cpi = -1;
-
-    while (true) {
-      await page
-          .waitForSelector('.page-link', {timeout: timeout})
-          .catch((err) => {
-            awaiterr = err;
-          });
-
-      if (awaiterr) {
-        return awaiterr;
-      }
-
-      const cpoi = await countPageObjIndex(page, pageid);
-      if (cpoi.error) {
-        return cpoi.error;
-      }
-
-      if (cpoi.pi == -99999) {
-        return new Error('chgPage invalid pi(-99999)');
-      }
-
-      const lstpages = await page.$$('.page-link').catch((err) => {
-        awaiterr = err;
-      });
-      if (awaiterr) {
-        return awaiterr;
-      }
-
-      if (cpoi.pi >= 0 && cpoi.pi >= lstpages.length) {
-        return new Error(
-            'chgPage invalid pi(' + cpoi.pi + ',' + lstpages.length + ')'
-        );
-      }
-
-      if (cpoi.pi >= 0) {
-        cpi = cpoi.pi;
-
-        break;
-      }
-
-      const ccpi = -cpoi.pi;
-
-      await lstpages[ccpi].hover().catch((err) => {
-        awaiterr = err;
-      });
-      if (awaiterr) {
-        return awaiterr;
-      }
-
-      const urlret = await getPageURLWithIndex(page, ccpi);
-      if (urlret.error) {
-        return urlret.error;
-      }
-
-      baseurl = urlret.url;
-
-      await lstpages[ccpi].click().catch((err) => {
-        awaiterr = err;
-      });
-      if (awaiterr) {
-        return awaiterr;
-      }
-
-      waitchgpage.resetex();
-      const isok = await waitchgpage.waitDone(timeout);
-      if (!isok) {
-        return new Error('chgPage.waitDone timeout');
-      }
-    }
-
-    if (cpi < 0) {
-      return new Error('chgPage invalid cpi');
-    }
-
-    const lstpages = await page.$$('.page-link').catch((err) => {
-      awaiterr = err;
-    });
-    if (awaiterr) {
-      return awaiterr;
-    }
-
-    await lstpages[cpi].hover().catch((err) => {
-      awaiterr = err;
-    });
-    if (awaiterr) {
-      return awaiterr;
-    }
-
-    const urlret = await getPageURLWithIndex(page, cpi);
-    if (urlret.error) {
-      return urlret.error;
-    }
-
-    baseurl = urlret.url;
-
-    await lstpages[cpi].click().catch((err) => {
-      awaiterr = err;
-    });
-    if (awaiterr) {
-      return awaiterr;
-    }
-
-    const isok = await waitchgpage.waitDone(timeout);
-    if (!isok) {
-      return new Error('chgPage.waitDone timeout');
-    }
-
-    waitchgpage.release();
-
-    let curms = 0;
-    while (true) {
-      const cururl = await getFirstProductURL(page);
-      if (cururl != '' && cururl != firsturl) {
-        break;
-      }
-
-      await sleep(1000);
-      curms += 1000;
-
-      if (curms > timeout) {
-        break;
-      }
-    }
-  }
-
-  return undefined;
 }
 
 /**

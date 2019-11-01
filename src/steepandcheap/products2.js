@@ -4,6 +4,21 @@ const {sleep} = require('../utils');
 const log = require('../log');
 
 /**
+ * parseURL - parse URL
+ * @param {string} url - url
+ * @return {string} url - url
+ */
+function parseURL(url) {
+  const url1 = url.split('.com/');
+  if (url1.length > 1) {
+    const url2 = url1[1].split('&ti=');
+    return url2[0];
+  }
+
+  return url;
+}
+
+/**
  * getMaxPages - get max pages
  * @param {object} page - page
  * @param {number} timeout - timeout in microseconds
@@ -394,6 +409,10 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
   }
 
   await page.close();
+
+  for (let i = 0; i < ret.length; ++i) {
+    ret[i].url = parseURL(ret[i].url);
+  }
 
   return {ret: {maxPage: maxpageret.pages, products: lst}};
 }

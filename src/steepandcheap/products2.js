@@ -2,6 +2,7 @@ const {WaitFrameNavigated} = require('../waitframenavigated');
 const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
 const log = require('../log');
+const {WaitAllResponse} = require('../waitallresponse');
 
 /**
  * parseURL - parse URL
@@ -222,7 +223,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    log.error('steepandcheapProducts.setViewport', awaiterr);
+    log.error('steepandcheapProducts2.setViewport', awaiterr);
 
     await page.close();
 
@@ -231,6 +232,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
 
   const furl = 'https://www.steepandcheap.com/' + url + '?sort=-price';
 
+  const waitAllResponse = new WaitAllResponse(page);
   await page
       .goto(furl, {
         timeout: timeout,
@@ -240,32 +242,39 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
       });
 
   if (awaiterr) {
-    log.error('steepandcheapProducts.goto', awaiterr);
+    log.error('steepandcheapProducts2.goto', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
+  const isok = await waitAllResponse.waitDone(timeout);
+  if (!isok) {
+    return new Error('steepandcheapProducts2.waitDone timeout.');
+  }
+
+  waitAllResponse.reset();
+
   awaiterr = await closeDialog(page);
   if (awaiterr) {
-    log.error('steepandcheapProducts.closeDialog ', awaiterr);
+    log.error('steepandcheapProducts2.closeDialog ', awaiterr);
 
     await page.close();
 
     return {
-      error: 'steepandcheapProducts.closeDialog ' + awaiterr.toString(),
+      error: 'steepandcheapProducts2.closeDialog ' + awaiterr.toString(),
     };
   }
 
   const maxpageret = await getMaxPages(page, timeout);
   if (maxpageret.error) {
-    log.error('steepandcheapProducts.getMaxPages ', maxpageret.error);
+    log.error('steepandcheapProducts2.getMaxPages ', maxpageret.error);
 
     await page.close();
 
     return {
-      error: 'steepandcheapProducts.getMaxPages ' + maxpageret.error.toString(),
+      error: 'steepandcheapProducts2.getMaxPages ' + maxpageret.error.toString(),
     };
   }
 
@@ -387,7 +396,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
         });
 
     if (awaiterr) {
-      log.error('steepandcheapProducts.$$eval .product', awaiterr);
+      log.error('steepandcheapProducts2.$$eval .product', awaiterr);
 
       await page.close();
 
@@ -399,12 +408,19 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     if (ci < maxpageret.pages - 1) {
       const err = await nextPage(page, furl, firsturl, timeout);
       if (err) {
-        log.error('steepandcheapProducts.nextPage', awaiterr);
+        log.error('steepandcheapProducts2.nextPage', awaiterr);
 
         await page.close();
 
         return {error: awaiterr.toString()};
       }
+
+      const isok = await waitAllResponse.waitDone(timeout);
+      if (!isok) {
+        return new Error('steepandcheapProducts2.waitDone timeout.');
+      }
+
+      waitAllResponse.reset();
     }
   }
 

@@ -1,5 +1,6 @@
 const messages = require('../../../proto/result_pb');
 const {steepandcheapProducts} = require('../../steepandcheap/products');
+const {steepandcheapProducts2} = require('../../steepandcheap/products2');
 const {steepandcheapProduct} = require('../../steepandcheap/product');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 const {newReplySteepAndCheap} = require('../../utils');
@@ -19,7 +20,7 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
   }
 
   if (param.getMode() == messages.SteepAndCheapMode.SACM_PRODUCTS) {
-    steepandcheapProducts(browser, param.getUrl(), param.getPage(), timeout)
+    steepandcheapProducts2(browser, param.getUrl(), param.getPage(), timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -29,7 +30,10 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplySteepAndCheap(messages.SteepAndCheapMode.SACM_PRODUCTS, ret.ret);
+          const val = newReplySteepAndCheap(
+              messages.SteepAndCheapMode.SACM_PRODUCTS,
+              ret.ret
+          );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
 
@@ -49,7 +53,10 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplySteepAndCheap(messages.SteepAndCheapMode.SACM_PRODUCT, ret.ret);
+          const val = newReplySteepAndCheap(
+              messages.SteepAndCheapMode.SACM_PRODUCT,
+              ret.ret
+          );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
 

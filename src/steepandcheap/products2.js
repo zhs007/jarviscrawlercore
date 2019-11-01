@@ -410,8 +410,8 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
 
   await page.close();
 
-  for (let i = 0; i < ret.length; ++i) {
-    ret[i].url = parseURL(ret[i].url);
+  for (let i = 0; i < lst.length; ++i) {
+    lst[i].url = parseURL(lst[i].url);
   }
 
   return {ret: {maxPage: maxpageret.pages, products: lst}};

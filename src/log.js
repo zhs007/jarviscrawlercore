@@ -49,7 +49,7 @@ function warn(info, obj) {
  * @param {Error} err - Error
  */
 function error(info, err) {
-  if (log != undefined) {
+  if (err != undefined) {
     log('ERROR', info, {err: err.toString()});
   } else {
     log('ERROR', info, undefined);

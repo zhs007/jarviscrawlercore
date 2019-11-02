@@ -250,7 +250,7 @@ async function alimamaGetTop(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.setViewport', awaiterr);
+    log.error('alimamaGetTop.setViewport', awaiterr);
 
     await page.close();
 
@@ -266,7 +266,7 @@ async function alimamaGetTop(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.goto', awaiterr);
+    log.error('alimamaGetTop.goto', awaiterr);
 
     await page.close();
 
@@ -275,9 +275,9 @@ async function alimamaGetTop(browser, timeout) {
 
   const isok = await waitAllResponse.waitDone(timeout);
   if (!isok) {
-    const err = new Error('jdActive.waitDone timeout.');
+    const err = new Error('alimamaGetTop.waitDone timeout.');
 
-    log.error('jdActive.waitDone ', err);
+    log.error('alimamaGetTop.waitDone ', err);
 
     await page.close();
 

@@ -1,7 +1,7 @@
 const log = require('../log');
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
-const {checkNeedLogin} = require('./utils');
+// const {checkNeedLogin} = require('./utils');
 
 /**
  * alimamaKeepalive - alimama keepalive
@@ -14,7 +14,7 @@ async function alimamaKeepalive(browser, timeout) {
   const page = await browser.newPage();
 
   const url = 'https://pub.alimama.com/promo/search/index.htm';
-  checkNeedLogin(page, url);
+  //   checkNeedLogin(page, url);
 
   const waitAllResponse = new WaitAllResponse(page);
 
@@ -29,7 +29,7 @@ async function alimamaKeepalive(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.setViewport', awaiterr);
+    log.error('alimamaKeepalive.setViewport', awaiterr);
 
     await page.close();
 
@@ -45,7 +45,7 @@ async function alimamaKeepalive(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.goto', awaiterr);
+    log.error('alimamaKeepalive.goto', awaiterr);
 
     await page.close();
 
@@ -54,9 +54,9 @@ async function alimamaKeepalive(browser, timeout) {
 
   const isok = await waitAllResponse.waitDone(timeout);
   if (!isok) {
-    const err = new Error('jdActive.waitDone timeout.');
+    const err = new Error('alimamaKeepalive.waitDone timeout.');
 
-    log.error('jdActive.waitDone ', err);
+    log.error('alimamaKeepalive.waitDone ', err);
 
     await page.close();
 

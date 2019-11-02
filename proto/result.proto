@@ -445,6 +445,7 @@ enum CrawlerType {
     CT_STEEPANDCHEAP = 7;
     CT_JRJ = 8;
     CT_JD = 9;
+    CT_ALIMAMA = 10;
 }
 
 // RequestTranslate2 - request translate
@@ -970,6 +971,16 @@ message ReplyJD {
     }
 }
 
+// AlimamaMode - alimama mode
+enum AlimamaMode {
+    // ALIMMM_KEEPALIVE - keepalive
+    ALIMMM_KEEPALIVE = 0;
+    // ALIMMM_SEARCH - search
+    ALIMMM_SEARCH = 1;
+    // ALIMMM_GETTOP - get top
+    ALIMMM_GETTOP = 2;
+}
+
 // AlimamaProduct - alimama product
 message AlimamaProduct {
     string name = 1;
@@ -990,6 +1001,33 @@ message AlimamaProduct {
 message AlimamaTopProduct {
     repeated string category = 1;
     repeated AlimamaProduct products = 2;
+}
+
+// AlimamaTopInfo - alimama top info
+message AlimamaTopInfo {
+    repeated AlimamaTopProduct lst = 1;
+}
+
+// AlimamaProducts - alimama products
+message AlimamaProducts {
+    string text = 1;
+    repeated AlimamaProduct products = 2;
+}
+
+// RequestAlimama - request alimama
+message RequestAlimama {
+    AlimamaMode mode = 1;
+    string text = 2;
+}
+
+// ReplyAlimama - reply alimama
+message ReplyAlimama {
+    AlimamaMode mode = 1;
+
+    oneof reply {
+        AlimamaProducts products = 100;
+        AlimamaTopInfo topInfo = 101;
+    }
 }
 
 // CrawlerStatistics - cralwer statistics
@@ -1016,6 +1054,7 @@ message RequestCrawler {
         RequestSteepAndCheap steepandcheap = 107;
         RequestJRJ jrj = 108;
         RequestJD jd = 109;
+        RequestAlimama alimama = 110;
     }
 }
 
@@ -1034,6 +1073,7 @@ message ReplyCrawler {
         ReplySteepAndCheap steepandcheap = 107;
         ReplyJRJ jrj = 108;
         ReplyJD jd = 109;
+        ReplyAlimama alimama = 110;
     }
 }
 

@@ -11,7 +11,10 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+goog.exportSymbol('proto.jarviscrawlercore.AlimamaMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AlimamaProduct', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.AlimamaProducts', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.AlimamaTopInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AlimamaTopProduct', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzePage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeReqInfo', null, global);
@@ -61,6 +64,7 @@ goog.exportSymbol('proto.jarviscrawlercore.JRJFunds', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.JRJMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.Paragraph', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ParagraphType', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ReplyAlimama', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyAnalyzePage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyArticles', null, global);
@@ -73,6 +77,7 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyJRJ', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplySteepAndCheap', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTechInAsia', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTranslate', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.RequestAlimama', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticles', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
@@ -22282,6 +22287,794 @@ proto.jarviscrawlercore.AlimamaTopProduct.prototype.clearProductsList = function
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.AlimamaTopInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.AlimamaTopInfo.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.AlimamaTopInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.AlimamaTopInfo.displayName = 'proto.jarviscrawlercore.AlimamaTopInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.AlimamaTopInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.AlimamaTopInfo} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    lstList: jspb.Message.toObjectList(msg.getLstList(),
+    proto.jarviscrawlercore.AlimamaTopProduct.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.AlimamaTopInfo}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.AlimamaTopInfo;
+  return proto.jarviscrawlercore.AlimamaTopInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.AlimamaTopInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.AlimamaTopInfo}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.jarviscrawlercore.AlimamaTopProduct;
+      reader.readMessage(value,proto.jarviscrawlercore.AlimamaTopProduct.deserializeBinaryFromReader);
+      msg.addLst(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.AlimamaTopInfo.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.AlimamaTopInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getLstList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.jarviscrawlercore.AlimamaTopProduct.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * repeated AlimamaTopProduct lst = 1;
+ * @return {!Array<!proto.jarviscrawlercore.AlimamaTopProduct>}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.getLstList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.AlimamaTopProduct>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.AlimamaTopProduct, 1));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.AlimamaTopProduct>} value */
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.setLstList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.AlimamaTopProduct=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.AlimamaTopProduct}
+ */
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.addLst = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.jarviscrawlercore.AlimamaTopProduct, opt_index);
+};
+
+
+proto.jarviscrawlercore.AlimamaTopInfo.prototype.clearLstList = function() {
+  this.setLstList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.AlimamaProducts = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.AlimamaProducts.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.AlimamaProducts, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.AlimamaProducts.displayName = 'proto.jarviscrawlercore.AlimamaProducts';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.AlimamaProducts.repeatedFields_ = [2];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.AlimamaProducts.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.AlimamaProducts} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.AlimamaProducts.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    text: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    productsList: jspb.Message.toObjectList(msg.getProductsList(),
+    proto.jarviscrawlercore.AlimamaProduct.toObject, includeInstance)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.AlimamaProducts}
+ */
+proto.jarviscrawlercore.AlimamaProducts.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.AlimamaProducts;
+  return proto.jarviscrawlercore.AlimamaProducts.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.AlimamaProducts} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.AlimamaProducts}
+ */
+proto.jarviscrawlercore.AlimamaProducts.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
+    case 2:
+      var value = new proto.jarviscrawlercore.AlimamaProduct;
+      reader.readMessage(value,proto.jarviscrawlercore.AlimamaProduct.deserializeBinaryFromReader);
+      msg.addProducts(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.AlimamaProducts.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.AlimamaProducts} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.AlimamaProducts.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getProductsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.jarviscrawlercore.AlimamaProduct.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional string text = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * repeated AlimamaProduct products = 2;
+ * @return {!Array<!proto.jarviscrawlercore.AlimamaProduct>}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getProductsList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.AlimamaProduct>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.AlimamaProduct, 2));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.AlimamaProduct>} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setProductsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.AlimamaProduct=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.AlimamaProduct}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.addProducts = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.jarviscrawlercore.AlimamaProduct, opt_index);
+};
+
+
+proto.jarviscrawlercore.AlimamaProducts.prototype.clearProductsList = function() {
+  this.setProductsList([]);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.RequestAlimama = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.RequestAlimama, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.RequestAlimama.displayName = 'proto.jarviscrawlercore.RequestAlimama';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.RequestAlimama.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.RequestAlimama.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.RequestAlimama} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestAlimama.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    text: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.RequestAlimama}
+ */
+proto.jarviscrawlercore.RequestAlimama.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.RequestAlimama;
+  return proto.jarviscrawlercore.RequestAlimama.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.RequestAlimama} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.RequestAlimama}
+ */
+proto.jarviscrawlercore.RequestAlimama.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.AlimamaMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.RequestAlimama.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.RequestAlimama.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.RequestAlimama} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.RequestAlimama.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional AlimamaMode mode = 1;
+ * @return {!proto.jarviscrawlercore.AlimamaMode}
+ */
+proto.jarviscrawlercore.RequestAlimama.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.AlimamaMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.AlimamaMode} value */
+proto.jarviscrawlercore.RequestAlimama.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional string text = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestAlimama.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestAlimama.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ReplyAlimama = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, proto.jarviscrawlercore.ReplyAlimama.oneofGroups_);
+};
+goog.inherits(proto.jarviscrawlercore.ReplyAlimama, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ReplyAlimama.displayName = 'proto.jarviscrawlercore.ReplyAlimama';
+}
+/**
+ * Oneof group definitions for this message. Each group defines the field
+ * numbers belonging to that group. When of these fields' value is set, all
+ * other fields in the group are cleared. During deserialization, if multiple
+ * fields are encountered for a group, only the last value seen will be kept.
+ * @private {!Array<!Array<number>>}
+ * @const
+ */
+proto.jarviscrawlercore.ReplyAlimama.oneofGroups_ = [[100,101]];
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.ReplyAlimama.ReplyCase = {
+  REPLY_NOT_SET: 0,
+  PRODUCTS: 100,
+  TOPINFO: 101
+};
+
+/**
+ * @return {proto.jarviscrawlercore.ReplyAlimama.ReplyCase}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.getReplyCase = function() {
+  return /** @type {proto.jarviscrawlercore.ReplyAlimama.ReplyCase} */(jspb.Message.computeOneofCase(this, proto.jarviscrawlercore.ReplyAlimama.oneofGroups_[0]));
+};
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ReplyAlimama.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ReplyAlimama} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyAlimama.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    products: (f = msg.getProducts()) && proto.jarviscrawlercore.AlimamaProducts.toObject(includeInstance, f),
+    topinfo: (f = msg.getTopinfo()) && proto.jarviscrawlercore.AlimamaTopInfo.toObject(includeInstance, f)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ReplyAlimama}
+ */
+proto.jarviscrawlercore.ReplyAlimama.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ReplyAlimama;
+  return proto.jarviscrawlercore.ReplyAlimama.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ReplyAlimama} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ReplyAlimama}
+ */
+proto.jarviscrawlercore.ReplyAlimama.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!proto.jarviscrawlercore.AlimamaMode} */ (reader.readEnum());
+      msg.setMode(value);
+      break;
+    case 100:
+      var value = new proto.jarviscrawlercore.AlimamaProducts;
+      reader.readMessage(value,proto.jarviscrawlercore.AlimamaProducts.deserializeBinaryFromReader);
+      msg.setProducts(value);
+      break;
+    case 101:
+      var value = new proto.jarviscrawlercore.AlimamaTopInfo;
+      reader.readMessage(value,proto.jarviscrawlercore.AlimamaTopInfo.deserializeBinaryFromReader);
+      msg.setTopinfo(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ReplyAlimama.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ReplyAlimama} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ReplyAlimama.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getMode();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      1,
+      f
+    );
+  }
+  f = message.getProducts();
+  if (f != null) {
+    writer.writeMessage(
+      100,
+      f,
+      proto.jarviscrawlercore.AlimamaProducts.serializeBinaryToWriter
+    );
+  }
+  f = message.getTopinfo();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.AlimamaTopInfo.serializeBinaryToWriter
+    );
+  }
+};
+
+
+/**
+ * optional AlimamaMode mode = 1;
+ * @return {!proto.jarviscrawlercore.AlimamaMode}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.getMode = function() {
+  return /** @type {!proto.jarviscrawlercore.AlimamaMode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.AlimamaMode} value */
+proto.jarviscrawlercore.ReplyAlimama.prototype.setMode = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
+};
+
+
+/**
+ * optional AlimamaProducts products = 100;
+ * @return {?proto.jarviscrawlercore.AlimamaProducts}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.getProducts = function() {
+  return /** @type{?proto.jarviscrawlercore.AlimamaProducts} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.AlimamaProducts, 100));
+};
+
+
+/** @param {?proto.jarviscrawlercore.AlimamaProducts|undefined} value */
+proto.jarviscrawlercore.ReplyAlimama.prototype.setProducts = function(value) {
+  jspb.Message.setOneofWrapperField(this, 100, proto.jarviscrawlercore.ReplyAlimama.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyAlimama.prototype.clearProducts = function() {
+  this.setProducts(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.hasProducts = function() {
+  return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional AlimamaTopInfo topInfo = 101;
+ * @return {?proto.jarviscrawlercore.AlimamaTopInfo}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.getTopinfo = function() {
+  return /** @type{?proto.jarviscrawlercore.AlimamaTopInfo} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.AlimamaTopInfo, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.AlimamaTopInfo|undefined} value */
+proto.jarviscrawlercore.ReplyAlimama.prototype.setTopinfo = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyAlimama.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyAlimama.prototype.clearTopinfo = function() {
+  this.setTopinfo(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyAlimama.prototype.hasTopinfo = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.CrawlerStatistics = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -22520,7 +23313,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110]];
 
 /**
  * @enum {number}
@@ -22535,7 +23328,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   TECHINASIA: 106,
   STEEPANDCHEAP: 107,
   JRJ: 108,
-  JD: 109
+  JD: 109,
+  ALIMAMA: 110
 };
 
 /**
@@ -22585,7 +23379,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.RequestTechInAsia.toObject(includeInstance, f),
     steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.RequestSteepAndCheap.toObject(includeInstance, f),
     jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.RequestJRJ.toObject(includeInstance, f),
-    jd: (f = msg.getJd()) && proto.jarviscrawlercore.RequestJD.toObject(includeInstance, f)
+    jd: (f = msg.getJd()) && proto.jarviscrawlercore.RequestJD.toObject(includeInstance, f),
+    alimama: (f = msg.getAlimama()) && proto.jarviscrawlercore.RequestAlimama.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -22678,6 +23473,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.RequestJD;
       reader.readMessage(value,proto.jarviscrawlercore.RequestJD.deserializeBinaryFromReader);
       msg.setJd(value);
+      break;
+    case 110:
+      var value = new proto.jarviscrawlercore.RequestAlimama;
+      reader.readMessage(value,proto.jarviscrawlercore.RequestAlimama.deserializeBinaryFromReader);
+      msg.setAlimama(value);
       break;
     default:
       reader.skipField();
@@ -22799,6 +23599,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       109,
       f,
       proto.jarviscrawlercore.RequestJD.serializeBinaryToWriter
+    );
+  }
+  f = message.getAlimama();
+  if (f != null) {
+    writer.writeMessage(
+      110,
+      f,
+      proto.jarviscrawlercore.RequestAlimama.serializeBinaryToWriter
     );
   }
 };
@@ -23119,6 +23927,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasJd = function() {
 };
 
 
+/**
+ * optional RequestAlimama alimama = 110;
+ * @return {?proto.jarviscrawlercore.RequestAlimama}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getAlimama = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestAlimama} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestAlimama, 110));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestAlimama|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setAlimama = function(value) {
+  jspb.Message.setOneofWrapperField(this, 110, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearAlimama = function() {
+  this.setAlimama(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasAlimama = function() {
+  return jspb.Message.getField(this, 110) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -23145,7 +23983,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110]];
 
 /**
  * @enum {number}
@@ -23160,7 +23998,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   TECHINASIA: 106,
   STEEPANDCHEAP: 107,
   JRJ: 108,
-  JD: 109
+  JD: 109,
+  ALIMAMA: 110
 };
 
 /**
@@ -23209,7 +24048,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     techinasia: (f = msg.getTechinasia()) && proto.jarviscrawlercore.ReplyTechInAsia.toObject(includeInstance, f),
     steepandcheap: (f = msg.getSteepandcheap()) && proto.jarviscrawlercore.ReplySteepAndCheap.toObject(includeInstance, f),
     jrj: (f = msg.getJrj()) && proto.jarviscrawlercore.ReplyJRJ.toObject(includeInstance, f),
-    jd: (f = msg.getJd()) && proto.jarviscrawlercore.ReplyJD.toObject(includeInstance, f)
+    jd: (f = msg.getJd()) && proto.jarviscrawlercore.ReplyJD.toObject(includeInstance, f),
+    alimama: (f = msg.getAlimama()) && proto.jarviscrawlercore.ReplyAlimama.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -23299,6 +24139,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.ReplyJD;
       reader.readMessage(value,proto.jarviscrawlercore.ReplyJD.deserializeBinaryFromReader);
       msg.setJd(value);
+      break;
+    case 110:
+      var value = new proto.jarviscrawlercore.ReplyAlimama;
+      reader.readMessage(value,proto.jarviscrawlercore.ReplyAlimama.deserializeBinaryFromReader);
+      msg.setAlimama(value);
       break;
     default:
       reader.skipField();
@@ -23414,6 +24259,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       109,
       f,
       proto.jarviscrawlercore.ReplyJD.serializeBinaryToWriter
+    );
+  }
+  f = message.getAlimama();
+  if (f != null) {
+    writer.writeMessage(
+      110,
+      f,
+      proto.jarviscrawlercore.ReplyAlimama.serializeBinaryToWriter
     );
   }
 };
@@ -23731,6 +24584,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearJd = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasJd = function() {
   return jspb.Message.getField(this, 109) != null;
+};
+
+
+/**
+ * optional ReplyAlimama alimama = 110;
+ * @return {?proto.jarviscrawlercore.ReplyAlimama}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getAlimama = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyAlimama} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyAlimama, 110));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyAlimama|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setAlimama = function(value) {
+  jspb.Message.setOneofWrapperField(this, 110, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearAlimama = function() {
+  this.setAlimama(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasAlimama = function() {
+  return jspb.Message.getField(this, 110) != null;
 };
 
 
@@ -24181,7 +25064,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_TECHINASIA: 6,
   CT_STEEPANDCHEAP: 7,
   CT_JRJ: 8,
-  CT_JD: 9
+  CT_JD: 9,
+  CT_ALIMAMA: 10
 };
 
 /**
@@ -24227,6 +25111,15 @@ proto.jarviscrawlercore.JDMode = {
   JDM_PRODUCT: 0,
   JDM_ACTIVE: 1,
   JDM_ACTIVEPAGE: 2
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.AlimamaMode = {
+  ALIMMM_KEEPALIVE: 0,
+  ALIMMM_SEARCH: 1,
+  ALIMMM_GETTOP: 2
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

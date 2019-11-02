@@ -1,5 +1,5 @@
 const messages = require('../../../proto/result_pb');
-const {steepandcheapProducts} = require('../../steepandcheap/products');
+// const {steepandcheapProducts} = require('../../steepandcheap/products');
 const {steepandcheapProducts2} = require('../../steepandcheap/products2');
 const {steepandcheapProduct} = require('../../steepandcheap/product');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');

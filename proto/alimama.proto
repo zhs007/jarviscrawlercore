@@ -1,0 +1,61 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// AlimamaMode - alimama mode
+enum AlimamaMode {
+    // ALIMMM_KEEPALIVE - keepalive
+    ALIMMM_KEEPALIVE = 0;
+    // ALIMMM_SEARCH - search
+    ALIMMM_SEARCH = 1;
+    // ALIMMM_GETTOP - get top
+    ALIMMM_GETTOP = 2;
+}
+
+// AlimamaProduct - alimama product
+message AlimamaProduct {
+    string name = 1;
+    string url = 2;
+    string shop = 3;
+    string img = 4;
+    float lastCoupon = 5;
+    float curPrice = 6;
+    float rebate = 7;
+    float commission = 8;
+    float moneyQuan = 9;
+    repeated string shopType = 10;
+    int32 salesVolume = 11;
+    string shopurl = 12;
+}
+
+// AlimamaTopProducts - alimama top products
+message AlimamaTopProducts {
+    repeated string category = 1;
+    repeated AlimamaProduct products = 2;
+}
+
+// AlimamaTopInfo - alimama top info
+message AlimamaTopInfo {
+    repeated AlimamaTopProducts lst = 1;
+}
+
+// AlimamaProducts - alimama products
+message AlimamaProducts {
+    string text = 1;
+    repeated AlimamaProduct products = 2;
+}
+
+// RequestAlimama - request alimama
+message RequestAlimama {
+    AlimamaMode mode = 1;
+    string text = 2;
+}
+
+// ReplyAlimama - reply alimama
+message ReplyAlimama {
+    AlimamaMode mode = 1;
+
+    oneof reply {
+        AlimamaProducts products = 100;
+        AlimamaTopInfo topInfo = 101;
+    }
+}

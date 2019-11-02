@@ -128,5 +128,90 @@ function checkNeedLogin(page, url, waitAllResponse) {
   });
 }
 
+/**
+ * getProducts - get products
+ * @param {object} page - page
+ * @return {object} ret - {error, lst}
+ */
+async function getProducts(page) {
+  let awaiterr = undefined;
+  const lst = await page
+      .$$eval('.common-product-container', (eles) => {
+        const lst = [];
+
+        for (let i = 0; i < eles.length; ++i) {
+          const cp = {};
+
+          const lstimgs = eles[i].getElementsByTagName('img');
+          if (lstimgs.length > 0) {
+            cp.img = lstimgs[0].src;
+          }
+
+          const lsttitle = eles[i].getElementsByClassName(
+              'color-m content-title'
+          );
+          if (lsttitle.length > 0) {
+            cp.name = lsttitle[0].innerText;
+            cp.url = lsttitle[0].href;
+          }
+
+          const lstquan = eles[i].getElementsByClassName('pub-threecn');
+          if (lstquan.length > 0) {
+            cp.lastCoupon = lstquan[0].style.width;
+          }
+
+          const lstprice = eles[i].getElementsByClassName('price-info-num');
+          if (lstprice.length == 3) {
+            cp.curPrice = lstprice[0].innerText;
+            cp.rebate = lstprice[1].innerText;
+            cp.commission = lstprice[2].innerText;
+          }
+
+          const lstfl = eles[i].getElementsByClassName('tag-coupon fl');
+          if (lstfl.length > 0) {
+            const lstmoney = lstfl[0].getElementsByClassName('money');
+            if (lstmoney.length > 0) {
+              cp.moneyQuan = lstmoney[0].innerText;
+            }
+          }
+
+          const lstfr = eles[i].getElementsByClassName('tags-container fr');
+          if (lstfr.length > 0) {
+            const lsttmall = lstfr[0].getElementsByClassName('tag-tmall');
+            if (lsttmall.length > 0) {
+              cp.shopType = 'tmall';
+            }
+          }
+
+          const lstshopinfo = eles[i].getElementsByClassName('box-shop-info');
+          if (lstshopinfo.length > 0) {
+            if (lstshopinfo[0].children.length == 2) {
+              cp.salesVolume = lstshopinfo[0].children[1].innerText;
+            }
+
+            const lsta = lstshopinfo[0].getElementsByTagName('a');
+            if (lsta.length > 0) {
+              cp.shop = lsta[0].innerText;
+              cp.shopurl = lsta[0].href;
+            }
+          }
+
+          lst.push(cp);
+        }
+
+        return lst;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    return {error: err};
+  }
+
+  return {lst: lst};
+}
+
 exports.checkNeedLogin = checkNeedLogin;
 exports.login = login;
+exports.getProducts = getProducts;

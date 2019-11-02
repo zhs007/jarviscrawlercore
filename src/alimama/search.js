@@ -1,6 +1,6 @@
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
-const {login, checkNeedLogin} = require('./utils');
+const {checkNeedLogin} = require('./utils');
 
 /**
  * alimamaSearch - alimama search

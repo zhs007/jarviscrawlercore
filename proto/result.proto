@@ -986,6 +986,12 @@ message AlimamaProduct {
     string shopurl = 12;
 }
 
+// AlimamaTopProduct - alimama top product
+message AlimamaTopProduct {
+    repeated string category = 1;
+    repeated AlimamaProduct products = 2;
+}
+
 // CrawlerStatistics - cralwer statistics
 message CrawlerStatistics {
     int32 pageNums = 1;

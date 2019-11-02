@@ -1,7 +1,7 @@
 const {startBrowser, attachBrowser} = require('../browser');
 const {alimamaSearch} = require('./search');
-// const {jdActive} = require('./active');
-// const {jdActivePage} = require('./activepage');
+const {alimamaGetTop} = require('./gettop');
+const {alimamaKeepalive} = require('./keepalive');
 const log = require('../log');
 
 /**
@@ -63,6 +63,12 @@ async function execAlimama(program, version) {
 
           if (mode == 'search') {
             const ret = await alimamaSearch(browser, options.str, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'gettop') {
+            const ret = await alimamaGetTop(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'keepalive') {
+            const ret = await alimamaKeepalive(browser, timeout);
             log.console(JSON.stringify(ret));
           }
 

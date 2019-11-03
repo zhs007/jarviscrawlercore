@@ -23,8 +23,11 @@ message AlimamaProduct {
     float commission = 8;
     float moneyQuan = 9;
     repeated string shopType = 10;
-    int32 salesVolume = 11;
+    int32 salesVolume = 11;     // 月销量
     string shopurl = 12;
+    int32 salesVolume2 = 13;    // 销量，2小时销量，如果是预订，则是预订人数
+    float presale = 14;         // 订金
+    float presaleProfit = 15;   // 订金减多少
 }
 
 // AlimamaTopProducts - alimama top products

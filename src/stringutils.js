@@ -48,6 +48,21 @@ function split2float(str, index, key) {
   }
 }
 
+/**
+ * string2int
+ * @param {string} str - islike 98
+ * @return {object} ret - {error, num}
+ */
+function string2int(str) {
+  try {
+    const f = parseInt(str);
+    return {num: f};
+  } catch (err) {
+    return {error: err};
+  }
+}
+
 exports.percentage2float = percentage2float;
 exports.string2float = string2float;
 exports.split2float = split2float;
+exports.string2int = string2int;

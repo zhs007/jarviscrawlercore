@@ -3,6 +3,7 @@ const {
   percentage2float,
   string2float,
   split2float,
+  string2int,
 } = require('../stringutils');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';
@@ -177,9 +178,21 @@ function getProductsInBrowser(eles) {
 
     const lstfr = eles[i].getElementsByClassName('tags-container fr');
     if (lstfr.length > 0) {
+      cp.shopType = [];
+
       const lsttmall = lstfr[0].getElementsByClassName('tag-tmall');
       if (lsttmall.length > 0) {
-        cp.shopType = ['tmall'];
+        cp.shopType.push('tmall');
+      }
+
+      const lstjhs = lstfr[0].getElementsByClassName('tag-jhs');
+      if (lstjhs.length > 0) {
+        cp.shopType.push('jhs');
+      }
+
+      const lstyushou = lstfr[0].getElementsByClassName('tag-yushou');
+      if (lstyushou.length > 0) {
+        cp.shopType.push('yushou');
       }
     }
 
@@ -194,6 +207,21 @@ function getProductsInBrowser(eles) {
         cp.shop = lsta[0].innerText;
         cp.shopurl = lsta[0].href;
       }
+    }
+
+    const lstsellnum = eles[i].getElementsByClassName('sell-overview-num');
+    if (lstsellnum.length > 0) {
+      cp.salesVolume2 = lstsellnum[0].innerText;
+    }
+
+    const lstpresalenum = eles[i].getElementsByClassName('pre-sale-num');
+    if (lstpresalenum.length > 0) {
+      cp.presale = lstpresalenum[0].innerText;
+    }
+
+    const lstpresaleprofit = eles[i].getElementsByClassName('pre-sale-profit');
+    if (lstpresaleprofit.length > 0) {
+      cp.presaleProfit = lstpresaleprofit[0].innerText;
     }
 
     lst.push(cp);
@@ -290,6 +318,36 @@ async function getProducts(page) {
         return {error: retSalesVolume.error};
       }
       lst[i].salesVolume = retSalesVolume.num;
+    }
+
+    if (lst[i].salesVolume2) {
+      const retSalesVolume2 = string2int(lst[i].salesVolume2);
+      if (retSalesVolume2.error) {
+        return {error: retSalesVolume2.error};
+      }
+      lst[i].salesVolume2 = retSalesVolume2.num;
+    }
+
+    if (lst[i].presale) {
+      const arr = lst[i].presale.split('定金');
+      if (arr.length == 2) {
+        const ret = split2float(arr[1], 0, '元');
+        if (ret.error) {
+          return {error: ret.error};
+        }
+        lst[i].presale = ret.num;
+      }
+    }
+
+    if (lst[i].presaleProfit) {
+      const arr = lst[i].presaleProfit.split('立减');
+      if (arr.length == 2) {
+        const ret = split2float(arr[1], 0, '元');
+        if (ret.error) {
+          return {error: ret.error};
+        }
+        lst[i].presaleProfit = ret.num;
+      }
     }
   }
 

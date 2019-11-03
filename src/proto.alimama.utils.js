@@ -56,6 +56,18 @@ function newAlimamaProduct(obj) {
     result.setShopurl(obj.shopurl);
   }
 
+  if (obj.salesVolume2) {
+    result.setSalesvolume2(obj.salesVolume2);
+  }
+
+  if (obj.presale) {
+    result.setPresale(obj.presale);
+  }
+
+  if (obj.presaleProfit) {
+    result.setPresaleprofit(obj.presaleProfit);
+  }
+
   return result;
 }
 

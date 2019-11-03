@@ -83,7 +83,10 @@ proto.jarviscrawlercore.AlimamaProduct.toObject = function(includeInstance, msg)
     moneyquan: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
     shoptypeList: jspb.Message.getRepeatedField(msg, 10),
     salesvolume: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    shopurl: jspb.Message.getFieldWithDefault(msg, 12, "")
+    shopurl: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    salesvolume2: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    presale: +jspb.Message.getFieldWithDefault(msg, 14, 0.0),
+    presaleprofit: +jspb.Message.getFieldWithDefault(msg, 15, 0.0)
   };
 
   if (includeInstance) {
@@ -167,6 +170,18 @@ proto.jarviscrawlercore.AlimamaProduct.deserializeBinaryFromReader = function(ms
     case 12:
       var value = /** @type {string} */ (reader.readString());
       msg.setShopurl(value);
+      break;
+    case 13:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSalesvolume2(value);
+      break;
+    case 14:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPresale(value);
+      break;
+    case 15:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPresaleprofit(value);
       break;
     default:
       reader.skipField();
@@ -278,6 +293,27 @@ proto.jarviscrawlercore.AlimamaProduct.serializeBinaryToWriter = function(messag
   if (f.length > 0) {
     writer.writeString(
       12,
+      f
+    );
+  }
+  f = message.getSalesvolume2();
+  if (f !== 0) {
+    writer.writeInt32(
+      13,
+      f
+    );
+  }
+  f = message.getPresale();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      14,
+      f
+    );
+  }
+  f = message.getPresaleprofit();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      15,
       f
     );
   }
@@ -475,6 +511,51 @@ proto.jarviscrawlercore.AlimamaProduct.prototype.getShopurl = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.AlimamaProduct.prototype.setShopurl = function(value) {
   jspb.Message.setProto3StringField(this, 12, value);
+};
+
+
+/**
+ * optional int32 salesVolume2 = 13;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AlimamaProduct.prototype.getSalesvolume2 = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AlimamaProduct.prototype.setSalesvolume2 = function(value) {
+  jspb.Message.setProto3IntField(this, 13, value);
+};
+
+
+/**
+ * optional float presale = 14;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AlimamaProduct.prototype.getPresale = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 14, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AlimamaProduct.prototype.setPresale = function(value) {
+  jspb.Message.setProto3FloatField(this, 14, value);
+};
+
+
+/**
+ * optional float presaleProfit = 15;
+ * @return {number}
+ */
+proto.jarviscrawlercore.AlimamaProduct.prototype.getPresaleprofit = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 15, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.AlimamaProduct.prototype.setPresaleprofit = function(value) {
+  jspb.Message.setProto3FloatField(this, 15, value);
 };
 
 

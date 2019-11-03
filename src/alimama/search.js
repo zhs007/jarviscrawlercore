@@ -2,7 +2,7 @@ const log = require('../log');
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
-const {getProducts} = require('./utils');
+const {getProducts, waitAllProducts} = require('./utils');
 
 /**
  * alimamaSearch - alimama search
@@ -97,39 +97,53 @@ async function alimamaSearch(browser, text, timeout) {
   await lstinput[0].hover();
   await lstinput[0].type(text, {delay: 10});
 
-  const lstbtn = await page.$$('.btn.btn-brand.search-btn').catch((err) => {
-    awaiterr = err;
-  });
-  if (awaiterr) {
-    log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', awaiterr);
+  // const lstbtn = await page.$$('.btn.btn-brand.search-btn').catch((err) => {
+  //   awaiterr = err;
+  // });
+  // if (awaiterr) {
+  //   log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', awaiterr);
 
-    await page.close();
+  //   await page.close();
 
-    return {erroor: awaiterr};
-  }
+  //   return {erroor: awaiterr};
+  // }
 
-  if (lstbtn.length <= 0) {
-    const err = new Error(
-        'alimamaSearch.$$(.btn.btn-brand.search-btn) non-input.'
-    );
+  // if (lstbtn.length <= 0) {
+  //   const err = new Error(
+  //       'alimamaSearch.$$(.btn.btn-brand.search-btn) non-input.'
+  //   );
 
-    log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', err);
+  //   log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', err);
 
-    await page.close();
+  //   await page.close();
 
-    return {erroor: err};
-  }
+  //   return {erroor: err};
+  // }
 
-  await lstbtn[0].hover();
-  await sleep(300 + Math.floor(Math.random() * 200));
+  // await lstbtn[0].hover();
+  // await sleep(300 + Math.floor(Math.random() * 200));
 
   waitchgpage.resetex();
   waitAllResponse.reset();
 
-  await lstbtn[0].click();
+  await lstinput[0].type(String.fromCharCode(13));
+  // await lstbtn[0].click();
 
   await waitchgpage.waitDone(timeout);
   await waitAllResponse.waitDone(timeout);
+
+  const retWaitAllProducts = await waitAllProducts(
+      page,
+      waitAllResponse,
+      timeout
+  );
+  if (retWaitAllProducts) {
+    log.error('alimamaSearch.waitAllProducts ', retWaitAllProducts);
+
+    await page.close();
+
+    return {erroor: retWaitAllProducts};
+  }
 
   const ret = await getProducts(page);
   if (ret.error) {
@@ -142,7 +156,7 @@ async function alimamaSearch(browser, text, timeout) {
 
   await page.close();
 
-  return {ret: ret.lst};
+  return {ret: {text: text, products: ret.lst}};
 }
 
 exports.alimamaSearch = alimamaSearch;

@@ -75,6 +75,8 @@ async function execAlimama(program, version) {
           if (!options.attach) {
             await browser.close();
           }
+
+          process.exit(-1);
         })().catch((err) => {
           log.console('catch a err ', err);
 

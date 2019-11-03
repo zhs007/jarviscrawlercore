@@ -1,4 +1,9 @@
 const {sleep, isElementVisible} = require('../utils');
+const {
+  percentage2float,
+  string2float,
+  split2float,
+} = require('../stringutils');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';
 
@@ -179,7 +184,7 @@ async function getProducts(page) {
           if (lstfr.length > 0) {
             const lsttmall = lstfr[0].getElementsByClassName('tag-tmall');
             if (lsttmall.length > 0) {
-              cp.shopType = 'tmall';
+              cp.shopType = ['tmall'];
             }
           }
 
@@ -209,9 +214,96 @@ async function getProducts(page) {
     return {error: err};
   }
 
+  for (let i = 0; i < lst.length; ++i) {
+    if (lst[i].lastCoupon) {
+      const retCoupon = percentage2float(lst[i].lastCoupon);
+      if (retCoupon.error) {
+        return {error: retCoupon.error};
+      }
+      lst[i].lastCoupon = retCoupon.num;
+    }
+
+    if (lst[i].curPrice) {
+      const retCurPrice = string2float(lst[i].curPrice);
+      if (retCurPrice.error) {
+        return {error: retCurPrice.error};
+      }
+      lst[i].curPrice = retCurPrice.num;
+    }
+
+    if (lst[i].rebate) {
+      const retRebate = percentage2float(lst[i].rebate);
+      if (retRebate.error) {
+        return {error: retRebate.error};
+      }
+      lst[i].rebate = retRebate.num;
+    }
+
+    if (lst[i].commission) {
+      const retCommission = string2float(lst[i].commission);
+      if (retCommission.error) {
+        return {error: retCommission.error};
+      }
+      lst[i].commission = retCommission.num;
+    }
+
+    if (lst[i].moneyQuan) {
+      const retMoneyQuan = split2float(lst[i].moneyQuan, 0, '元');
+      if (retMoneyQuan.error) {
+        return {error: retMoneyQuan.error};
+      }
+      lst[i].moneyQuan = retMoneyQuan.num;
+    }
+
+    if (lst[i].salesVolume) {
+      const retSalesVolume = split2float(lst[i].salesVolume, 1, ' ');
+      if (retSalesVolume.error) {
+        return {error: retSalesVolume.error};
+      }
+      lst[i].salesVolume = retSalesVolume.num;
+    }
+  }
+
   return {lst: lst};
+}
+
+/**
+ * waitAllProducts - wait all products
+ * @param {object} page - page
+ * @param {object} waitAllResponse - WaitAllResponse
+ * @param {int} timeout - timeout
+ * @return {Error} err - error
+ */
+async function waitAllProducts(page, waitAllResponse, timeout) {
+  let awaiterr = undefined;
+  const lstproducts = await page.$$('.common-product-container').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
+
+  waitAllResponse.reset();
+  for (let i = 0; i < lstproducts.length; i += 4) {
+    await lstproducts[i].hover().catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+  }
+
+  await waitAllResponse.waitDone(timeout).catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
+
+  return undefined;
 }
 
 exports.checkNeedLogin = checkNeedLogin;
 exports.login = login;
 exports.getProducts = getProducts;
+exports.waitAllProducts = waitAllProducts;

@@ -2,7 +2,7 @@ const log = require('../log');
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
-const {getProducts} = require('./utils');
+const {getProducts, waitAllProducts} = require('./utils');
 
 /**
  * procMainCategory2 - process main category2
@@ -82,6 +82,17 @@ async function procMainCategory2(
 
       await waitchgpage.waitDone(timeout);
       await waitAllResponse.waitDone(timeout);
+    }
+
+    const retWaitAllProducts = await waitAllProducts(
+        page,
+        waitAllResponse,
+        timeout
+    );
+    if (retWaitAllProducts) {
+      await page.close();
+
+      return {erroor: retWaitAllProducts};
     }
 
     const retp = await getProducts(page);

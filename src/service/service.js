@@ -1,6 +1,6 @@
 const services = require('../../proto/result_grpc_pb');
 const {loadConfig, checkConfig, isValidToken} = require('./cfg');
-const {startBrowser} = require('../browser');
+const {attachBrowser, startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');
 const {callExportArticle} = require('./exportarticle');
 const {callGetArticleList} = require('./getarticles');
@@ -26,7 +26,11 @@ async function startService(cfgfile) {
     return;
   }
 
-  browser = await startBrowser(cfg.headless, cfg.slowMo);
+  if (cfg.attach) {
+    browser = await attachBrowser(cfg.attach);
+  } else {
+    browser = await startBrowser(cfg.headless, cfg.slowMo);
+  }
   //   const page = await browser.newPage();
 
   const server = new grpc.Server();

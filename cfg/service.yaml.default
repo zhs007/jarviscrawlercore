@@ -7,5 +7,7 @@ headless: true
 
 slowMo: 10
 
+# attach: ws://localhost:61714/devtools/browser/60f70437-7dcf-4fb6-b864-3d4311c92494
+
 clientToken:
   - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3

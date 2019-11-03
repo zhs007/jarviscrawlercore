@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "alimama.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -445,6 +446,7 @@ enum CrawlerType {
     CT_STEEPANDCHEAP = 7;
     CT_JRJ = 8;
     CT_JD = 9;
+    CT_ALIMAMA = 10;
 }
 
 // RequestTranslate2 - request translate
@@ -994,6 +996,7 @@ message RequestCrawler {
         RequestSteepAndCheap steepandcheap = 107;
         RequestJRJ jrj = 108;
         RequestJD jd = 109;
+        RequestAlimama alimama = 110;
     }
 }
 
@@ -1012,6 +1015,7 @@ message ReplyCrawler {
         ReplySteepAndCheap steepandcheap = 107;
         ReplyJRJ jrj = 108;
         ReplyJD jd = 109;
+        ReplyAlimama alimama = 110;
     }
 }
 

@@ -31,4 +31,13 @@ async function startBrowser(headless, slowmo) {
   });
 }
 
+/**
+ * attachBrowser
+ * @param {string} host - host
+ */
+async function attachBrowser(host) {
+  return await puppeteer.connect({browserWSEndpoint: host});
+}
+
 exports.startBrowser = startBrowser;
+exports.attachBrowser = attachBrowser;

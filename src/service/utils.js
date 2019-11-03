@@ -106,6 +106,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setJrj(msg);
   } else if (crawlerType == messages.CrawlerType.CT_JD) {
     req.setJd(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_ALIMAMA) {
+    req.setAlimama(msg);
   }
 
   let isend = false;
@@ -262,6 +264,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_ALIMAMA) {
+        if (!reply.getAlimama()) {
+          cb('no alimama reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getAlimama());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -318,6 +334,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_JD) {
     reply.setJd(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_ALIMAMA) {
+    reply.setAlimama(val);
     reply.setCrawlertype(crawlerType);
   }
 }

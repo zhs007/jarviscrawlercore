@@ -1,6 +1,8 @@
 const log = require('../log');
+const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
-const {login, checkNeedLogin} = require('./utils');
+const {WaitFrameNavigated} = require('../waitframenavigated');
+const {getProducts, waitAllProducts} = require('./utils');
 
 /**
  * alimamaSearch - alimama search
@@ -14,9 +16,15 @@ async function alimamaSearch(browser, text, timeout) {
   const page = await browser.newPage();
 
   const url = 'https://pub.alimama.com/promo/search/index.htm';
-  checkNeedLogin(page, url);
+  // checkNeedLogin(page, url);
 
   const waitAllResponse = new WaitAllResponse(page);
+  const mainframe = await page.mainFrame();
+  const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
+    const cururl = frame.url();
+
+    return cururl.indexOf(url) == 0;
+  });
 
   await page
       .setViewport({
@@ -29,7 +37,7 @@ async function alimamaSearch(browser, text, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.setViewport', awaiterr);
+    log.error('alimamaSearch.setViewport', awaiterr);
 
     await page.close();
 
@@ -45,7 +53,7 @@ async function alimamaSearch(browser, text, timeout) {
       });
 
   if (awaiterr) {
-    log.error('jdActive.goto', awaiterr);
+    log.error('alimamaSearch.goto', awaiterr);
 
     await page.close();
 
@@ -54,9 +62,9 @@ async function alimamaSearch(browser, text, timeout) {
 
   const isok = await waitAllResponse.waitDone(timeout);
   if (!isok) {
-    const err = new Error('jdActive.waitDone timeout.');
+    const err = new Error('alimamaSearch.waitDone timeout.');
 
-    log.error('jdActive.waitDone ', err);
+    log.error('alimamaSearch.waitDone ', err);
 
     await page.close();
 
@@ -65,11 +73,90 @@ async function alimamaSearch(browser, text, timeout) {
 
   waitAllResponse.reset();
 
-  await login(page, 'aaa', 'bbb');
+  const lstinput = await page.$$('.input.search-input').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    log.error('alimamaSearch.$$(.input.search-input) ', awaiterr);
+
+    await page.close();
+
+    return {erroor: awaiterr};
+  }
+
+  if (lstinput.length <= 0) {
+    const err = new Error('alimamaSearch.$$(.input.search-input) non-input.');
+
+    log.error('alimamaSearch.$$(.input.search-input) ', err);
+
+    await page.close();
+
+    return {erroor: err};
+  }
+
+  await lstinput[0].hover();
+  await lstinput[0].type(text, {delay: 10});
+
+  // const lstbtn = await page.$$('.btn.btn-brand.search-btn').catch((err) => {
+  //   awaiterr = err;
+  // });
+  // if (awaiterr) {
+  //   log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', awaiterr);
+
+  //   await page.close();
+
+  //   return {erroor: awaiterr};
+  // }
+
+  // if (lstbtn.length <= 0) {
+  //   const err = new Error(
+  //       'alimamaSearch.$$(.btn.btn-brand.search-btn) non-input.'
+  //   );
+
+  //   log.error('alimamaSearch.$$(.btn.btn-brand.search-btn) ', err);
+
+  //   await page.close();
+
+  //   return {erroor: err};
+  // }
+
+  // await lstbtn[0].hover();
+  // await sleep(300 + Math.floor(Math.random() * 200));
+
+  waitchgpage.resetex();
+  waitAllResponse.reset();
+
+  await lstinput[0].type(String.fromCharCode(13));
+  // await lstbtn[0].click();
+
+  await waitchgpage.waitDone(timeout);
+  await waitAllResponse.waitDone(timeout);
+
+  const retWaitAllProducts = await waitAllProducts(
+      page,
+      waitAllResponse,
+      timeout
+  );
+  if (retWaitAllProducts) {
+    log.error('alimamaSearch.waitAllProducts ', retWaitAllProducts);
+
+    await page.close();
+
+    return {erroor: retWaitAllProducts};
+  }
+
+  const ret = await getProducts(page);
+  if (ret.error) {
+    log.error('alimamaSearch.getProducts ', ret.error);
+
+    await page.close();
+
+    return {erroor: ret.error};
+  }
 
   await page.close();
 
-  return {ret: ret};
+  return {ret: {text: text, products: ret.lst}};
 }
 
 exports.alimamaSearch = alimamaSearch;

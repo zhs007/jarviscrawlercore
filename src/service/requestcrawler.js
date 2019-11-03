@@ -7,6 +7,7 @@ const {callTechInAsia} = require('./plugins/techinasia');
 const {callSteepAndCheap} = require('./plugins/steepandcheap');
 const {callJRJ} = require('./plugins/jrj');
 const {callJD} = require('./plugins/jd');
+const {callAlimama} = require('./plugins/alimama');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -108,6 +109,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getJd();
 
     callJD(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_ALIMAMA) {
+    if (!call.request.hasAlimama()) {
+      replyError(call, 'no alimama');
+
+      return;
+    }
+
+    const param = call.request.getAlimama();
+
+    callAlimama(browser, cfg, call, param, call.request);
   }
 }
 

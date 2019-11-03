@@ -1,7 +1,7 @@
-const {startBrowser} = require('../browser');
+const {startBrowser, attachBrowser} = require('../browser');
 const {alimamaSearch} = require('./search');
-// const {jdActive} = require('./active');
-// const {jdActivePage} = require('./activepage');
+const {alimamaGetTop} = require('./gettop');
+const {alimamaKeepalive} = require('./keepalive');
 const log = require('../log');
 
 /**
@@ -16,6 +16,7 @@ async function execAlimama(program, version) {
       .option('-s, --str [str]', 'string')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
+      .option('-a, --attach [attach]', 'attach browser')
       .action(function(mode, options) {
         log.console('version is ', version);
 
@@ -53,14 +54,29 @@ async function execAlimama(program, version) {
         log.console('headless - ', headless);
 
         (async () => {
-          const browser = await startBrowser(headless);
+          let browser;
+          if (options.attach) {
+            browser = await attachBrowser(options.attach);
+          } else {
+            browser = await startBrowser(headless);
+          }
 
           if (mode == 'search') {
             const ret = await alimamaSearch(browser, options.str, timeout);
             log.console(JSON.stringify(ret));
+          } else if (mode == 'gettop') {
+            const ret = await alimamaGetTop(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'keepalive') {
+            const ret = await alimamaKeepalive(browser, timeout);
+            log.console(JSON.stringify(ret));
           }
 
-          await browser.close();
+          if (!options.attach) {
+            await browser.close();
+          }
+
+          process.exit(-1);
         })().catch((err) => {
           log.console('catch a err ', err);
 

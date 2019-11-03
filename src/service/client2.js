@@ -527,6 +527,37 @@ function jdActivePage(servAddr, url) {
   );
 }
 
+/**
+ * alimamaKeepalive
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function alimamaKeepalive(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_KEEPALIVE);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -557,4 +588,6 @@ function jdActivePage(servAddr, url) {
 
 // jdActive('127.0.0.1:7051', '3nTQQZ66AGtiwwtRcikGFnT1DVjX/index.html');
 // jdProduct('127.0.0.1:7051', '100006585530.html');
-jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');
+// jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');
+
+alimamaKeepalive('127.0.0.1:7051');

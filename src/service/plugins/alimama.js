@@ -53,7 +53,7 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_SEARCH, ret);
+          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_SEARCH, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 
@@ -73,7 +73,7 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_GETTOP, ret);
+          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_GETTOP, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 

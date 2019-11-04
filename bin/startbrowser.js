@@ -5,6 +5,9 @@ const axios = require('axios');
   const chrome = await chromeLauncher.launch({
     chromeFlags: [],
   });
+
+  console.log(`http://localhost:${chrome.port}/json/version`);
+
   const response = await axios.get(
       `http://localhost:${chrome.port}/json/version`
   );

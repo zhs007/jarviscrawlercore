@@ -363,29 +363,45 @@ async function getProducts(page) {
  */
 async function waitAllProducts(page, waitAllResponse, timeout) {
   let awaiterr = undefined;
-  let lstproducts = await page.$$('.common-product-box').catch((err) => {
-    awaiterr = err;
-  });
-  if (awaiterr) {
-    return awaiterr;
-  }
 
-  if (lstproducts.length == 0) {
-    lstproducts = await page.$$('.hot-product-box').catch((err) => {
+  let ct = 0;
+  let lstproducts;
+  while (true) {
+    lstproducts = await page.$$('.common-product-box').catch((err) => {
       awaiterr = err;
     });
     if (awaiterr) {
       return awaiterr;
     }
-  }
 
-  if (lstproducts.length == 0) {
-    lstproducts = await page.$$('.preSale-product-box').catch((err) => {
-      awaiterr = err;
-    });
-    if (awaiterr) {
-      return awaiterr;
+    if (lstproducts.length == 0) {
+      lstproducts = await page.$$('.hot-product-box').catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
     }
+
+    if (lstproducts.length == 0) {
+      lstproducts = await page.$$('.preSale-product-box').catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
+    }
+
+    if (lstproducts.length > 0) {
+      break;
+    }
+
+    if (ct >= timeout) {
+      return new Error('waitAllProducts timeout.');
+    }
+
+    await sleep(1000);
+    ct += 1000;
   }
 
   waitAllResponse.reset();

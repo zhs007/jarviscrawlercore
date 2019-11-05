@@ -325,7 +325,7 @@ async function alimamaGetTop(browser, timeout) {
 
   await page.close();
 
-  return {ret: lst};
+  return {ret: {lst: lst}};
 }
 
 exports.alimamaGetTop = alimamaGetTop;

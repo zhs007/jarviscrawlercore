@@ -1,3 +1,5 @@
+const {sleep} = require('./utils');
+
 /**
  * getElementPropertyString - get element property string
  * @param {object} ele - element
@@ -23,4 +25,28 @@ async function getElementPropertyString(ele, prop) {
   return {str: jsonval.toString()};
 }
 
+/**
+ * clearInput - clear input
+ * @param {object} ele - input element
+ * @return {Error} err - error
+ */
+async function clearInput(ele) {
+  let awaiterr;
+  await ele.focus();
+
+  while (ele.value && ele.value.length > 0) {
+    await page.keyboard.press('Backspace').catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    await sleep(10);
+  }
+
+  return undefined;
+}
+
+exports.clearInput = clearInput;
 exports.getElementPropertyString = getElementPropertyString;

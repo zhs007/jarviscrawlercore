@@ -561,7 +561,6 @@ function alimamaKeepalive(servAddr) {
 /**
  * alimamaGetTop
  * @param {string} servAddr - servAddr
- * @param {string} url - url
  */
 function alimamaGetTop(servAddr) {
   const client = new services.JarvisCrawlerServiceClient(
@@ -571,6 +570,38 @@ function alimamaGetTop(servAddr) {
 
   const request = new messages.RequestAlimama();
   request.setMode(messages.AlimamaMode.ALIMMM_GETTOP);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * alimamaSearch
+ * @param {string} servAddr - servAddr
+ * @param {string} text - text
+ */
+function alimamaSearch(servAddr, text) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_SEARCH);
+  request.setText(text);
 
   requestCrawler(
       client,
@@ -623,4 +654,5 @@ function alimamaGetTop(servAddr) {
 
 // alimamaKeepalive('127.0.0.1:7051');
 // alimamaKeepalive('10.211.55.4:7052');
-alimamaGetTop('127.0.0.1:7051');
+// alimamaGetTop('127.0.0.1:7051');
+alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');

@@ -25,11 +25,11 @@ function checkConfig(cfg) {
     return new Error('alimama.config undefined');
   }
 
-  if (!envcfg.username) {
+  if (!cfg.username) {
     return new Error('no alimama.config.username');
   }
 
-  if (!envcfg.password) {
+  if (!cfg.password) {
     return new Error('no alimama.config.password');
   }
 

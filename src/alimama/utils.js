@@ -1,10 +1,12 @@
 const {sleep, isElementVisible} = require('../utils');
+const {clearInput} = require('../eleutils');
 const {
   percentage2float,
   string2float,
   split2float,
   string2int,
 } = require('../stringutils');
+const fs = require('fs');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';
 
@@ -65,9 +67,30 @@ async function procNoCaptcha(page, frame) {
  */
 async function login(page, username, passwd) {
   if (page.url().indexOf(URLLogin) == 0) {
+    // const html = await page.content();
+    // fs.writeFileSync('./login.html', html);
+
+    // await sleep(3000);
+    await page.waitForSelector('iframe[name="taobaoLoginIfr"]');
     const frame = page
         .frames()
         .find((frame) => frame.name() === 'taobaoLoginIfr');
+    if (!frame) {
+      return new Error('alimama.login non-frame taobaoLoginIfr');
+    }
+    // console.log(frame.url());
+
+    // const frames = await page.frames();
+    // let frame;
+    // for (let i = 0; i < frames.length; ++i) {
+    //   if (frames[i].name() == 'taobaoLoginIfr') {
+    //     frame = frames[i];
+    //   }
+    // }
+
+    // if (!frame) {
+    //   frame = page.mainFrame();
+    // }
 
     const isneedchg2input = await frame.evaluate(() => {
       const lstb = document.getElementsByClassName('forget-pwd J_Quick2Static');
@@ -86,27 +109,26 @@ async function login(page, username, passwd) {
         await lstbtn[0].hover();
 
         await lstbtn[0].click();
-
-        const lstuname = await frame.$$('#TPL_username_1');
-        const lstpasswd = await frame.$$('#TPL_password_1');
-        const lstsubmit = await frame.$$('#J_SubmitStatic');
-        if (
-          lstuname.length > 0 &&
-          lstpasswd.length > 0 &&
-          lstsubmit.length > 0
-        ) {
-          await lstuname[0].hover();
-          await lstuname[0].type(username, {delay: 100});
-
-          await lstpasswd[0].hover();
-          await lstpasswd[0].type(passwd, {delay: 100});
-
-          await procNoCaptcha(page, frame);
-
-          console.log('end!');
-        }
       }
     }
+
+    const lstuname = await frame.$$('#TPL_username_1');
+    const lstpasswd = await frame.$$('#TPL_password_1');
+    const lstsubmit = await frame.$$('#J_SubmitStatic');
+    if (lstuname.length > 0 && lstpasswd.length > 0 && lstsubmit.length > 0) {
+      await lstuname[0].hover();
+      await clearInput(lstuname[0]);
+      await lstuname[0].type(username, {delay: 100});
+
+      await lstpasswd[0].hover();
+      await lstpasswd[0].type(passwd, {delay: 100});
+
+      await procNoCaptcha(page, frame);
+
+      await lstsubmit[0].click();
+    }
+
+    console.log('end!');
   }
 }
 

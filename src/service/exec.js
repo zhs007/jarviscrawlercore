@@ -28,9 +28,9 @@ async function serviceexec(program, version) {
         })().catch((err) => {
           log.console('catch a err ', err);
 
-          if (headless) {
-            process.exit(-1);
-          }
+          // if (headless) {
+          //   process.exit(-1);
+          // }
         });
       });
 }

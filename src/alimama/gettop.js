@@ -2,7 +2,12 @@ const log = require('../log');
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
-const {getProducts, waitAllProducts} = require('./utils');
+const {
+  getProducts,
+  waitAllProducts,
+  checkNeedLogin,
+  login,
+} = require('./utils');
 
 /**
  * procMainCategory2 - process main category2
@@ -232,15 +237,16 @@ async function procMainCategory(
 /**
  * alimamaGetTop - alimama get top products
  * @param {object} browser - browser
+ * @param {object} cfg - alimama config
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function alimamaGetTop(browser, timeout) {
+async function alimamaGetTop(browser, cfg, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
   const url = 'https://pub.alimama.com/promo/search/index.htm';
-  // checkNeedLogin(page, url);
+  checkNeedLogin(page, url);
 
   const waitAllResponse = new WaitAllResponse(page);
   const mainframe = await page.mainFrame();
@@ -296,6 +302,17 @@ async function alimamaGetTop(browser, timeout) {
   }
 
   waitAllResponse.reset();
+
+  if (cfg) {
+    const err = await login(page, cfg.username, cfg.password);
+    if (err) {
+      log.error('alimamaGetTop.login ', err);
+
+      await page.close();
+
+      return {erroor: err};
+    }
+  }
 
   const maxcategory = await page
       .$$eval('.pub-threeiI', (eles) => {

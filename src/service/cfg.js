@@ -14,9 +14,6 @@ function loadConfig(cfgfile) {
 
     if (cfg.alimamaconfig) {
       cfg.alimamacfg = alimamacfg.loadConfig(cfg.alimamaconfig);
-      if (cfg.alimamacfg != undefined) {
-        let err;
-      }
     }
 
     return cfg;
@@ -41,6 +38,13 @@ function checkConfig(cfg) {
 
   if (cfg.headless === undefined) {
     cfg.headless = true;
+  }
+
+  if (cfg.alimamacfg != undefined) {
+    const err = alimamacfg.checkConfig(cfg.alimamacfg);
+    if (err) {
+      return err;
+    }
   }
 
   return undefined;

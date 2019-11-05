@@ -4,7 +4,12 @@ const fs = require('fs');
 
 (async () => {
   const chrome = await chromeLauncher.launch({
-    chromeFlags: [],
+    chromeFlags: [
+      '--ignore-certificate-errors',
+      '--disable-infobars ',
+      '--disable-web-security',
+      '--disable-features=site-per-process',
+    ],
   });
 
   console.log(`http://localhost:${chrome.port}/json/version`);

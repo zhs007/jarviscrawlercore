@@ -2,21 +2,27 @@ const log = require('../log');
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
-const {getProducts, waitAllProducts} = require('./utils');
+const {
+  getProducts,
+  waitAllProducts,
+  checkNeedLogin,
+  login,
+} = require('./utils');
 
 /**
  * alimamaSearch - alimama search
  * @param {object} browser - browser
  * @param {string} text - text
+ * @param {object} cfg - config
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function alimamaSearch(browser, text, timeout) {
+async function alimamaSearch(browser, text, cfg, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
   const url = 'https://pub.alimama.com/promo/search/index.htm';
-  // checkNeedLogin(page, url);
+  checkNeedLogin(page, url);
 
   const waitAllResponse = new WaitAllResponse(page);
   const mainframe = await page.mainFrame();
@@ -69,6 +75,17 @@ async function alimamaSearch(browser, text, timeout) {
     await page.close();
 
     return {erroor: err};
+  }
+
+  if (cfg) {
+    const err = await login(page, cfg.username, cfg.password);
+    if (err) {
+      log.error('alimamaSearch.login ', err);
+
+      await page.close();
+
+      return {erroor: err};
+    }
   }
 
   waitAllResponse.reset();

@@ -43,7 +43,7 @@ function callAlimama(browser, cfg, call, param, request) {
           replyError(call, err.toString(), true);
         });
   } else if (param.getMode() == messages.AlimamaMode.ALIMMM_SEARCH) {
-    alimamaSearch(browser, param.getText(), timeout)
+    alimamaSearch(browser, param.getText(), cfg.alimamacfg, timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -53,7 +53,10 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_SEARCH, ret.ret);
+          const val = newReplyAlimama(
+              messages.AlimamaMode.ALIMMM_SEARCH,
+              ret.ret
+          );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 
@@ -63,7 +66,7 @@ function callAlimama(browser, cfg, call, param, request) {
           replyError(call, err.toString(), true);
         });
   } else if (param.getMode() == messages.AlimamaMode.ALIMMM_GETTOP) {
-    alimamaGetTop(browser, timeout)
+    alimamaGetTop(browser, cfg.alimamacfg, timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -73,7 +76,10 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_GETTOP, ret.ret);
+          const val = newReplyAlimama(
+              messages.AlimamaMode.ALIMMM_GETTOP,
+              ret.ret
+          );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 

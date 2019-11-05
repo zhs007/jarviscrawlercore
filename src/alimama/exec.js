@@ -62,10 +62,15 @@ async function execAlimama(program, version) {
           }
 
           if (mode == 'search') {
-            const ret = await alimamaSearch(browser, options.str, timeout);
+            const ret = await alimamaSearch(
+                browser,
+                options.str,
+                undefined,
+                timeout
+            );
             log.console(JSON.stringify(ret));
           } else if (mode == 'gettop') {
-            const ret = await alimamaGetTop(browser, timeout);
+            const ret = await alimamaGetTop(browser, undefined, timeout);
             log.console(JSON.stringify(ret));
           } else if (mode == 'keepalive') {
             const ret = await alimamaKeepalive(browser, timeout);

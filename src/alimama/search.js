@@ -1,5 +1,5 @@
 const log = require('../log');
-const {sleep} = require('../utils');
+const {sleep, closeAllPagesEx} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {
@@ -74,21 +74,34 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
     await page.close();
 
-    return {erroor: err};
-  }
-
-  if (cfg) {
-    const err = await login(page, cfg.username, cfg.password);
-    if (err) {
-      log.error('alimamaSearch.login ', err);
-
-      await page.close();
-
-      return {erroor: err};
-    }
+    return {error: err};
   }
 
   waitAllResponse.reset();
+
+  if (cfg) {
+    const loginret = await login(page, cfg.username, cfg.password);
+    if (loginret.err) {
+      log.error('alimamaSearch.login ', loginret.err);
+
+      await page.close();
+
+      return {error: loginret.err};
+    }
+
+    const isok = await waitAllResponse.waitDone(timeout);
+    if (!isok) {
+      const err = new Error('alimamaSearch.waitDone timeout.');
+
+      log.error('alimamaSearch.waitDone ', err);
+
+      await page.close();
+
+      return {error: err};
+    }
+
+    waitAllResponse.reset();
+  }
 
   const lstinput = await page.$$('.input.search-input').catch((err) => {
     awaiterr = err;
@@ -98,7 +111,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
     await page.close();
 
-    return {erroor: awaiterr};
+    return {error: awaiterr};
   }
 
   if (lstinput.length <= 0) {
@@ -108,7 +121,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
     await page.close();
 
-    return {erroor: err};
+    return {error: err};
   }
 
   await lstinput[0].hover();
@@ -122,7 +135,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
   //   await page.close();
 
-  //   return {erroor: awaiterr};
+  //   return {error: awaiterr};
   // }
 
   // if (lstbtn.length <= 0) {
@@ -134,7 +147,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
   //   await page.close();
 
-  //   return {erroor: err};
+  //   return {error: err};
   // }
 
   // await lstbtn[0].hover();
@@ -159,7 +172,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
     await page.close();
 
-    return {erroor: retWaitAllProducts};
+    return {error: retWaitAllProducts};
   }
 
   const ret = await getProducts(page);
@@ -168,10 +181,12 @@ async function alimamaSearch(browser, text, cfg, timeout) {
 
     await page.close();
 
-    return {erroor: ret.error};
+    return {error: ret.error};
   }
 
   await page.close();
+
+  await closeAllPagesEx(browser, 6);
 
   return {ret: {text: text, products: ret.lst}};
 }

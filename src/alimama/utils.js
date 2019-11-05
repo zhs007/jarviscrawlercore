@@ -1,4 +1,6 @@
-const {sleep, isElementVisible} = require('../utils');
+const {sleep} = require('../utils');
+const log = require('../log');
+const {isElementVisible} = require('../eleutils');
 const {clearInput} = require('../eleutils');
 const {
   percentage2float,
@@ -6,7 +8,7 @@ const {
   split2float,
   string2int,
 } = require('../stringutils');
-const fs = require('fs');
+// const fs = require('fs');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';
 
@@ -64,6 +66,7 @@ async function procNoCaptcha(page, frame) {
  * @param {object} page - page
  * @param {string} username - username
  * @param {string} passwd - passwd
+ * @return {object} ret - {error, islogin}
  */
 async function login(page, username, passwd) {
   if (page.url().indexOf(URLLogin) == 0) {
@@ -76,7 +79,7 @@ async function login(page, username, passwd) {
         .frames()
         .find((frame) => frame.name() === 'taobaoLoginIfr');
     if (!frame) {
-      return new Error('alimama.login non-frame taobaoLoginIfr');
+      return {error: new Error('alimama.login non-frame taobaoLoginIfr')};
     }
     // console.log(frame.url());
 
@@ -106,9 +109,15 @@ async function login(page, username, passwd) {
     if (isneedchg2input) {
       const lstbtn = await frame.$$('.forget-pwd.J_Quick2Static');
       if (lstbtn.length > 0) {
-        await lstbtn[0].hover();
+        if (isElementVisible(page, lstbtn[0])) {
+          await lstbtn[0].hover().catch((err) => {
+            log.error('alimama.login ', err);
+          });
 
-        await lstbtn[0].click();
+          await lstbtn[0].click().catch((err) => {
+            log.error('alimama.login ', err);
+          });
+        }
       }
     }
 
@@ -117,7 +126,7 @@ async function login(page, username, passwd) {
     const lstsubmit = await frame.$$('#J_SubmitStatic');
     if (lstuname.length > 0 && lstpasswd.length > 0 && lstsubmit.length > 0) {
       await lstuname[0].hover();
-      await clearInput(lstuname[0]);
+      await clearInput(page, lstuname[0]);
       await lstuname[0].type(username, {delay: 100});
 
       await lstpasswd[0].hover();
@@ -128,8 +137,12 @@ async function login(page, username, passwd) {
       await lstsubmit[0].click();
     }
 
-    console.log('end!');
+    console.log('alimama.login end!');
+
+    return {islogin: true};
   }
+
+  return {islogin: false};
 }
 
 /**

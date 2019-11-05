@@ -73,7 +73,7 @@ async function execAlimama(program, version) {
             const ret = await alimamaGetTop(browser, undefined, timeout);
             log.console(JSON.stringify(ret));
           } else if (mode == 'keepalive') {
-            const ret = await alimamaKeepalive(browser, timeout);
+            const ret = await alimamaKeepalive(browser, undefined, timeout);
             log.console(JSON.stringify(ret));
           }
 

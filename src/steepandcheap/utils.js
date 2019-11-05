@@ -1,4 +1,4 @@
-const {isElementVisible} = require('../utils');
+const {isElementVisible} = require('../eleutils');
 
 /**
  * closeEMailSignUpModal - close email-signup-modal

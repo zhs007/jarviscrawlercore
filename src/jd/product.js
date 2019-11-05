@@ -659,7 +659,7 @@ async function jdProduct(browser, url, timeout) {
 
     await page.close();
 
-    return {erroor: err};
+    return {error: err};
   }
 
   waitAllResponse.reset();

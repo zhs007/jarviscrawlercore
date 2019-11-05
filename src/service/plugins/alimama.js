@@ -20,7 +20,7 @@ function callAlimama(browser, cfg, call, param, request) {
   }
 
   if (param.getMode() == messages.AlimamaMode.ALIMMM_KEEPALIVE) {
-    alimamaKeepalive(browser, timeout)
+    alimamaKeepalive(browser, cfg.alimamacfg, timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);

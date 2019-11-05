@@ -554,6 +554,9 @@ function alimamaKeepalive(servAddr) {
         if (reply) {
           log.debug('reply:', JSON.stringify(reply.toObject()));
         }
+
+        alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+        // alimamaGetTop('127.0.0.1:7051');
       }
   );
 }
@@ -652,7 +655,7 @@ function alimamaSearch(servAddr, text) {
 // jdProduct('127.0.0.1:7051', '100006585530.html');
 // jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');
 
-// alimamaKeepalive('127.0.0.1:7051');
+alimamaKeepalive('127.0.0.1:7051');
 // alimamaKeepalive('10.211.55.4:7052');
 // alimamaGetTop('127.0.0.1:7051');
-alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
+// alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');

@@ -18,26 +18,26 @@ function loadConfig(cfgfile) {
 /**
  * check config
  * @param {object} cfg - config
- * @return {string} err - error string
+ * @return {Error} err - error
  */
 function checkConfig(cfg) {
   if (!cfg) {
-    return 'config undefined';
+    return new Error('config undefined');
   }
 
   if (!Array.isArray(cfg.website)) {
-    return 'no config.website';
+    return new Error('no config.website');
   }
 
   for (let i = 0; i < cfg.website.length; ++i) {
     const websitecfg = cfg.website[i];
 
     if (!websitecfg.name) {
-      return 'no website.name';
+      return new Error('no website.name');
     }
 
     if (!websitecfg.url) {
-      return 'no website.url in ' + websitecfg.name;
+      return new Error('no website.url in ' + websitecfg.name);
     }
   }
 

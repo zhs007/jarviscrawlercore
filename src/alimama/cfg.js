@@ -22,19 +22,15 @@ function loadConfig(cfgfile) {
  */
 function checkConfig(cfg) {
   if (!cfg) {
-    return new Error('config undefined');
-  }
-
-  if (!cfg.url) {
-    return new Error('no config.url');
+    return new Error('alimama.config undefined');
   }
 
   if (!cfg.username) {
-    return new Error('no config.username');
+    return new Error('no alimama.config.username');
   }
 
   if (!cfg.password) {
-    return new Error('no config.password');
+    return new Error('no alimama.config.password');
   }
 
   return undefined;

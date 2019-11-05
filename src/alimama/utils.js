@@ -1,10 +1,14 @@
-const {sleep, isElementVisible} = require('../utils');
+const {sleep} = require('../utils');
+const log = require('../log');
+const {isElementVisible} = require('../eleutils');
+const {clearInput} = require('../eleutils');
 const {
   percentage2float,
   string2float,
   split2float,
   string2int,
 } = require('../stringutils');
+// const fs = require('fs');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';
 
@@ -62,12 +66,34 @@ async function procNoCaptcha(page, frame) {
  * @param {object} page - page
  * @param {string} username - username
  * @param {string} passwd - passwd
+ * @return {object} ret - {error, islogin}
  */
 async function login(page, username, passwd) {
   if (page.url().indexOf(URLLogin) == 0) {
+    // const html = await page.content();
+    // fs.writeFileSync('./login.html', html);
+
+    // await sleep(3000);
+    await page.waitForSelector('iframe[name="taobaoLoginIfr"]');
     const frame = page
         .frames()
         .find((frame) => frame.name() === 'taobaoLoginIfr');
+    if (!frame) {
+      return {error: new Error('alimama.login non-frame taobaoLoginIfr')};
+    }
+    // console.log(frame.url());
+
+    // const frames = await page.frames();
+    // let frame;
+    // for (let i = 0; i < frames.length; ++i) {
+    //   if (frames[i].name() == 'taobaoLoginIfr') {
+    //     frame = frames[i];
+    //   }
+    // }
+
+    // if (!frame) {
+    //   frame = page.mainFrame();
+    // }
 
     const isneedchg2input = await frame.evaluate(() => {
       const lstb = document.getElementsByClassName('forget-pwd J_Quick2Static');
@@ -83,31 +109,40 @@ async function login(page, username, passwd) {
     if (isneedchg2input) {
       const lstbtn = await frame.$$('.forget-pwd.J_Quick2Static');
       if (lstbtn.length > 0) {
-        await lstbtn[0].hover();
+        if (isElementVisible(page, lstbtn[0])) {
+          await lstbtn[0].hover().catch((err) => {
+            log.error('alimama.login ', err);
+          });
 
-        await lstbtn[0].click();
-
-        const lstuname = await frame.$$('#TPL_username_1');
-        const lstpasswd = await frame.$$('#TPL_password_1');
-        const lstsubmit = await frame.$$('#J_SubmitStatic');
-        if (
-          lstuname.length > 0 &&
-          lstpasswd.length > 0 &&
-          lstsubmit.length > 0
-        ) {
-          await lstuname[0].hover();
-          await lstuname[0].type(username, {delay: 100});
-
-          await lstpasswd[0].hover();
-          await lstpasswd[0].type(passwd, {delay: 100});
-
-          await procNoCaptcha(page, frame);
-
-          console.log('end!');
+          await lstbtn[0].click().catch((err) => {
+            log.error('alimama.login ', err);
+          });
         }
       }
     }
+
+    const lstuname = await frame.$$('#TPL_username_1');
+    const lstpasswd = await frame.$$('#TPL_password_1');
+    const lstsubmit = await frame.$$('#J_SubmitStatic');
+    if (lstuname.length > 0 && lstpasswd.length > 0 && lstsubmit.length > 0) {
+      await lstuname[0].hover();
+      await clearInput(page, lstuname[0]);
+      await lstuname[0].type(username, {delay: 100});
+
+      await lstpasswd[0].hover();
+      await lstpasswd[0].type(passwd, {delay: 100});
+
+      await procNoCaptcha(page, frame);
+
+      await lstsubmit[0].click();
+    }
+
+    console.log('alimama.login end!');
+
+    return {islogin: true};
   }
+
+  return {islogin: false};
 }
 
 /**
@@ -363,29 +398,45 @@ async function getProducts(page) {
  */
 async function waitAllProducts(page, waitAllResponse, timeout) {
   let awaiterr = undefined;
-  let lstproducts = await page.$$('.common-product-box').catch((err) => {
-    awaiterr = err;
-  });
-  if (awaiterr) {
-    return awaiterr;
-  }
 
-  if (lstproducts.length == 0) {
-    lstproducts = await page.$$('.hot-product-box').catch((err) => {
+  let ct = 0;
+  let lstproducts;
+  while (true) {
+    lstproducts = await page.$$('.common-product-box').catch((err) => {
       awaiterr = err;
     });
     if (awaiterr) {
       return awaiterr;
     }
-  }
 
-  if (lstproducts.length == 0) {
-    lstproducts = await page.$$('.preSale-product-box').catch((err) => {
-      awaiterr = err;
-    });
-    if (awaiterr) {
-      return awaiterr;
+    if (lstproducts.length == 0) {
+      lstproducts = await page.$$('.hot-product-box').catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
     }
+
+    if (lstproducts.length == 0) {
+      lstproducts = await page.$$('.preSale-product-box').catch((err) => {
+        awaiterr = err;
+      });
+      if (awaiterr) {
+        return awaiterr;
+      }
+    }
+
+    if (lstproducts.length > 0) {
+      break;
+    }
+
+    if (ct >= timeout) {
+      return new Error('waitAllProducts timeout.');
+    }
+
+    await sleep(1000);
+    ct += 1000;
   }
 
   waitAllResponse.reset();

@@ -1,5 +1,6 @@
 const yaml = require('yaml-js');
 const fs = require('fs');
+const alimamacfg = require('../alimama/cfg');
 
 /**
  * load config
@@ -9,7 +10,13 @@ const fs = require('fs');
 function loadConfig(cfgfile) {
   const fd = fs.readFileSync(cfgfile);
   if (fd) {
-    return yaml.load(fd);
+    const cfg = yaml.load(fd);
+
+    if (cfg.alimamaconfig) {
+      cfg.alimamacfg = alimamacfg.loadConfig(cfg.alimamaconfig);
+    }
+
+    return cfg;
   }
 
   return undefined;
@@ -18,19 +25,26 @@ function loadConfig(cfgfile) {
 /**
  * check config
  * @param {object} cfg - config
- * @return {string} err - error string
+ * @return {Error} err - error
  */
 function checkConfig(cfg) {
   if (!cfg) {
-    return 'config undefined';
+    return new Error('config undefined');
   }
 
   if (!cfg.servAddr) {
-    return 'no config.servAddr';
+    return new Error('no config.servAddr');
   }
 
   if (cfg.headless === undefined) {
     cfg.headless = true;
+  }
+
+  if (cfg.alimamacfg != undefined) {
+    const err = alimamacfg.checkConfig(cfg.alimamacfg);
+    if (err) {
+      return err;
+    }
   }
 
   return undefined;

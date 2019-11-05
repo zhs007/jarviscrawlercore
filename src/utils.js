@@ -1563,30 +1563,6 @@ async function findFrame(page, funcIsFrame) {
 }
 
 /**
- * isElementVisible
- * @param {object} page - page
- * @param {object} ele - element
- * @return {bool} isvisible - is visible
- */
-async function isElementVisible(page, ele) {
-  const isVisibleHandle = await page.evaluateHandle((e) => {
-    const style = window.getComputedStyle(e);
-    return (
-      style &&
-      style.display !== 'none' &&
-      style.visibility !== 'hidden' &&
-      style.opacity !== '0'
-    );
-  }, ele);
-  const visible = await isVisibleHandle.jsonValue();
-  const box = await ele.boxModel();
-  if (visible && box) {
-    return true;
-  }
-  return false;
-}
-
-/**
  * clearLocalStorage
  * @param {object} page - page
  * @return {error} err - error
@@ -1674,6 +1650,55 @@ async function clearIndexedDB(page) {
   return awaiterr;
 }
 
+/**
+ * closeAllPages
+ * @param {object} browser - browser
+ * @return {error} err - error
+ */
+async function closeAllPages(browser) {
+  let awaiterr = undefined;
+  const pages = await browser.pages().catch((err) => {
+    awaiterr = err;
+  });
+  for (let i = 0; i < pages.length; ++i) {
+    if (pages[i].url() != 'about:blank') {
+      await pages[i].close().catch((err) => {
+        awaiterr = err;
+      });
+    }
+  }
+
+  return awaiterr;
+}
+
+/**
+ * closeAllPagesEx - close all pages if pages > nums
+ * @param {object} browser - browser
+ * @param {int} nums - nums
+ * @return {error} err - error
+ */
+async function closeAllPagesEx(browser, nums) {
+  let awaiterr = undefined;
+  const pages = await browser.pages().catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    return awaiterr;
+  }
+
+  if (pages.length > nums) {
+    for (let i = 0; i < pages.length; ++i) {
+      if (pages[i].url() != 'about:blank') {
+        await pages[i].close().catch((err) => {
+          awaiterr = err;
+        });
+      }
+    }
+  }
+
+  return awaiterr;
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -1709,8 +1734,9 @@ exports.findFrame = findFrame;
 exports.newReplyGeoIP = newReplyGeoIP;
 exports.newReplyTechInAsia = newReplyTechInAsia;
 exports.newReplySteepAndCheap = newReplySteepAndCheap;
-exports.isElementVisible = isElementVisible;
 exports.clearCookies = clearCookies;
 exports.clearSessionStorage = clearSessionStorage;
 exports.clearLocalStorage = clearLocalStorage;
 exports.clearIndexedDB = clearIndexedDB;
+exports.closeAllPages = closeAllPages;
+exports.closeAllPagesEx = closeAllPagesEx;

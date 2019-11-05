@@ -1,8 +1,13 @@
 const log = require('../log');
-const {sleep} = require('../utils');
+const {sleep, closeAllPagesEx} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
-const {getProducts, waitAllProducts} = require('./utils');
+const {
+  getProducts,
+  waitAllProducts,
+  checkNeedLogin,
+  login,
+} = require('./utils');
 
 /**
  * procMainCategory2 - process main category2
@@ -92,11 +97,11 @@ async function procMainCategory2(
     if (retWaitAllProducts) {
       await page.close();
 
-      return {erroor: retWaitAllProducts};
+      return {error: retWaitAllProducts};
     }
 
     const retp = await getProducts(page);
-    if (retp.erroor) {
+    if (retp.error) {
       return {error: retp.error};
     }
 
@@ -232,15 +237,16 @@ async function procMainCategory(
 /**
  * alimamaGetTop - alimama get top products
  * @param {object} browser - browser
+ * @param {object} cfg - alimama config
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function alimamaGetTop(browser, timeout) {
+async function alimamaGetTop(browser, cfg, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
   const url = 'https://pub.alimama.com/promo/search/index.htm';
-  // checkNeedLogin(page, url);
+  checkNeedLogin(page, url);
 
   const waitAllResponse = new WaitAllResponse(page);
   const mainframe = await page.mainFrame();
@@ -292,10 +298,34 @@ async function alimamaGetTop(browser, timeout) {
 
     await page.close();
 
-    return {erroor: err};
+    return {error: err};
   }
 
   waitAllResponse.reset();
+
+  if (cfg) {
+    const loginret = await login(page, cfg.username, cfg.password);
+    if (loginret.err) {
+      log.error('alimamaGetTop.login ', loginret.err);
+
+      await page.close();
+
+      return {error: loginret.err};
+    }
+
+    const isok = await waitAllResponse.waitDone(timeout);
+    if (!isok) {
+      const err = new Error('alimamaGetTop.waitDone timeout.');
+
+      log.error('alimamaGetTop.waitDone ', err);
+
+      await page.close();
+
+      return {error: err};
+    }
+
+    waitAllResponse.reset();
+  }
 
   const maxcategory = await page
       .$$eval('.pub-threeiI', (eles) => {
@@ -325,7 +355,9 @@ async function alimamaGetTop(browser, timeout) {
 
   await page.close();
 
-  return {ret: lst};
+  await closeAllPagesEx(browser, 6);
+
+  return {ret: {lst: lst}};
 }
 
 exports.alimamaGetTop = alimamaGetTop;

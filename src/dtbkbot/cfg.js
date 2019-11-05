@@ -18,34 +18,34 @@ function loadConfig(cfgfile) {
 /**
  * check config
  * @param {object} cfg - config
- * @return {string} err - error string
+ * @return {Error} err - error
  */
 function checkConfig(cfg) {
   if (!cfg) {
-    return 'config undefined';
+    return new Error('config undefined');
   }
 
   if (!Array.isArray(cfg.dtcfg)) {
-    return 'no config.dtcfg';
+    return new Error('no config.dtcfg');
   }
 
   for (let i = 0; i < cfg.dtcfg.length; ++i) {
     const envcfg = cfg.dtcfg[i];
 
     if (!envcfg.envname) {
-      return 'no config.envname';
+      return new Error('no config.envname');
     }
 
     if (!envcfg.url) {
-      return 'no config.url in ' + envcfg.envname;
+      return new Error('no config.url in ' + envcfg.envname);
     }
 
     if (!envcfg.username) {
-      return 'no config.username in ' + envcfg.envname;
+      return new Error('no config.username in ' + envcfg.envname);
     }
 
     if (!envcfg.password) {
-      return 'no config.password in ' + envcfg.envname;
+      return new Error('no config.password in ' + envcfg.envname);
     }
   }
 

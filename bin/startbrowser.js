@@ -1,9 +1,15 @@
 const chromeLauncher = require('chrome-launcher');
 const axios = require('axios');
+const fs = require('fs');
 
 (async () => {
   const chrome = await chromeLauncher.launch({
-    chromeFlags: [],
+    chromeFlags: [
+      '--ignore-certificate-errors',
+      '--disable-infobars ',
+      '--disable-web-security',
+      '--disable-features=site-per-process',
+    ],
   });
 
   console.log(`http://localhost:${chrome.port}/json/version`);
@@ -14,4 +20,5 @@ const axios = require('axios');
   const {webSocketDebuggerUrl} = response.data;
 
   console.log(webSocketDebuggerUrl);
+  fs.writeFileSync('./startbrowser.txt', webSocketDebuggerUrl);
 })();

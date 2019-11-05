@@ -554,6 +554,71 @@ function alimamaKeepalive(servAddr) {
         if (reply) {
           log.debug('reply:', JSON.stringify(reply.toObject()));
         }
+
+        alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+        // alimamaGetTop('127.0.0.1:7051');
+      }
+  );
+}
+
+/**
+ * alimamaGetTop
+ * @param {string} servAddr - servAddr
+ */
+function alimamaGetTop(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_GETTOP);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      }
+  );
+}
+
+/**
+ * alimamaSearch
+ * @param {string} servAddr - servAddr
+ * @param {string} text - text
+ */
+function alimamaSearch(servAddr, text) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_SEARCH);
+  request.setText(text);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
       }
   );
 }
@@ -591,3 +656,6 @@ function alimamaKeepalive(servAddr) {
 // jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');
 
 alimamaKeepalive('127.0.0.1:7051');
+// alimamaKeepalive('10.211.55.4:7052');
+// alimamaGetTop('127.0.0.1:7051');
+// alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');

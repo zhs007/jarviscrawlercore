@@ -65,5 +65,6 @@ cfg/service.yaml
 cfg/dt*bot.yaml
 cfg/crunchbase.yaml
 cfg/btcfg.yaml
+cfg/alimama.yaml
 output
 output/*

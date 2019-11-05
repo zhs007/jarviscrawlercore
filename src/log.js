@@ -50,6 +50,7 @@ function warn(info, obj) {
  */
 function error(info, err) {
   if (err != undefined) {
+    console.log(err);
     log('ERROR', info, {err: err.toString()});
   } else {
     log('ERROR', info, undefined);

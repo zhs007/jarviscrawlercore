@@ -30,6 +30,16 @@ message AlimamaProduct {
     float presaleProfit = 15;   // 订金减多少
 }
 
+// AliProduct - ali product
+message AliProduct {
+    string ID = 1;
+    AlimamaProduct product = 2;
+    repeated string tags = 3;
+    string img = 4;
+    int64 rankTimes = 5;
+    int64 rankTimes2 = 6;
+}
+
 // AlimamaTopProducts - alimama top products
 message AlimamaTopProducts {
     repeated string category = 1;

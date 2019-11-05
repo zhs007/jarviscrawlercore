@@ -18,23 +18,23 @@ function loadConfig(cfgfile) {
 /**
  * check config
  * @param {object} cfg - config
- * @return {string} err - error string
+ * @return {Error} err - error
  */
 function checkConfig(cfg) {
   if (!cfg) {
-    return 'config undefined';
+    return new Error('config undefined');
   }
 
   if (!cfg.url) {
-    return 'no config.url';
+    return new Error('no config.url');
   }
 
   if (!cfg.username) {
-    return 'no config.username';
+    return new Error('no config.username');
   }
 
   if (!cfg.password) {
-    return 'no config.password';
+    return new Error('no config.password');
   }
 
   return undefined;

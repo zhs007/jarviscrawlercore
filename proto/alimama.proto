@@ -55,6 +55,9 @@ message AlimamaTopInfo {
 message AlimamaProducts {
     string text = 1;
     repeated AlimamaProduct products = 2;
+    repeated string textAnd = 3;
+    repeated string textOr = 4;
+    repeated string textNot = 5;
 }
 
 // RequestAlimama - request alimama

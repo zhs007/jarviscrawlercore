@@ -4,6 +4,7 @@
 var grpc = require('grpc');
 var result_pb = require('./result_pb.js');
 var alimama_pb = require('./alimama_pb.js');
+var steepandcheap_pb = require('./steepandcheap_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {

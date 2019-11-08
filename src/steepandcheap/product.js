@@ -269,6 +269,62 @@ async function getAllReviews(page, waitAllResponse, reviewCount, timeout) {
 }
 
 /**
+ * getColorList2 - get color list v2
+ * @param {object} page - page
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {error, ret}
+ */
+async function getColorList2(page, timeout) {
+  let awaiterr = undefined;
+  const lst = await page
+      .$$eval('div[itemprop="offers"]', (eles) => {
+        const lst = [];
+
+        for (let i = 0; i < eles.length; ++i) {
+          const cd = {};
+          const ele = eles[i];
+          for (let j = 0; j < ele.children.length; ++j) {
+            if (
+              ele.children[j].tagName == 'META' &&
+            ele.children[j].getAttribute('itemprop') == 'price'
+            ) {
+              cd.price = ele.children[j].getAttribute('content');
+            } else if (ele.children[j].tagName == 'DIV') {
+              const elechild = ele.children[j];
+
+              for (let k = 0; k < elechild.children.length; ++k) {
+                if (
+                  elechild.children[k].tagName == 'META' &&
+                elechild.children[k].getAttribute('itemprop') == 'color'
+                ) {
+                  const str = elechild.children[k].getAttribute('content');
+                  const arr = str.split(',');
+                  if (arr.length == 2) {
+                    cd.color = arr[0].trim();
+                    cd.size = arr[1].trim();
+                  }
+                }
+              }
+            }
+          }
+
+          lst.push(cd);
+        }
+
+        return lst;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    return {error: err};
+  }
+
+  return {ret: lst};
+}
+
+/**
  * steepandcheapProduct - steepandcheap product
  * @param {object} browser - browser
  * @param {string} url - url
@@ -419,51 +475,62 @@ async function steepandcheapProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  let lastname = '';
-  const lstcolor = await page.$$('.buybox__color-item').catch((err) => {
-    awaiterr = err;
-  });
-  if (lstcolor.length > 0) {
-    ret.color = [];
+  // let lastname = '';
+  // const lstcolor = await page.$$('.buybox__color-item').catch((err) => {
+  //   awaiterr = err;
+  // });
+  // if (lstcolor.length > 0) {
+  //   ret.color = [];
 
-    for (let i = 0; i < lstcolor.length; ++i) {
-      await closeDialog(page);
+  //   for (let i = 0; i < lstcolor.length; ++i) {
+  //     await closeDialog(page);
 
-      await lstcolor[i].click();
+  //     await lstcolor[i].click();
 
-      const starttime = Date.now();
-      while (true) {
-        await sleep(1000);
+  //     const starttime = Date.now();
+  //     while (true) {
+  //       await sleep(1000);
 
-        const curname = await getColorName(page);
+  //       const curname = await getColorName(page);
 
-        if (curname != lastname) {
-          lastname = curname;
+  //       if (curname != lastname) {
+  //         lastname = curname;
 
-          break;
-        }
+  //         break;
+  //       }
 
-        const curt = Date.now();
-        if (curt > starttime + timeout) {
-          await page.close();
+  //       const curt = Date.now();
+  //       if (curt > starttime + timeout) {
+  //         await page.close();
 
-          return {error: 'steepandcheapProduct.getColor timeout'};
-        }
-      }
+  //         return {error: 'steepandcheapProduct.getColor timeout'};
+  //       }
+  //     }
 
-      const curcolor = {
-        color: lastname,
-      };
+  //     const curcolor = {
+  //       color: lastname,
+  //     };
 
-      const curret = await getSizeList(page);
-      if (curret) {
-        curcolor.size = curret.size;
-        curcolor.sizeValid = curret.sizeValid;
-      }
+  //     const curret = await getSizeList(page);
+  //     if (curret) {
+  //       curcolor.size = curret.size;
+  //       curcolor.sizeValid = curret.sizeValid;
+  //     }
 
-      ret.color.push(curcolor);
-    }
+  //     ret.color.push(curcolor);
+  //   }
+  // }
+
+  const offersret = await getColorList2(page, timeout);
+  if (offersret.error) {
+    log.error('steepandcheapProduct.getColorList2', offersret.error);
+
+    await page.close();
+
+    return {error: offersret.error.toString()};
   }
+
+  ret.offers = offersret.ret;
 
   const lsttabs = await page.$$('.pdp__recommendations').catch((err) => {
     awaiterr = err;

@@ -3,7 +3,7 @@ const messages = require('../../../proto/result_pb');
 const {steepandcheapProducts2} = require('../../steepandcheap/products2');
 const {steepandcheapProduct} = require('../../steepandcheap/product');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
-const {newReplySteepAndCheap} = require('../../utils');
+const {newReplySteepAndCheap} = require('../../proto.steepandcheap');
 
 /**
  * callSteepAndCheap - steepandcheap

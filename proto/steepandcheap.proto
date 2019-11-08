@@ -20,7 +20,13 @@ message SteepAndCheapColorSize {
     repeated string size = 2;
     repeated bool sizeValid = 3;
     repeated SteepAndCheapColorSizeData data = 4;
-    float price = 5;
+}
+
+// SteepAndCheapColorSize2 - Steep&Cheap color size v2
+message SteepAndCheapColorSize2 {
+    string color = 1;
+    string size = 2;
+    float price = 3;
 }
 
 // SteepAndCheapUser - Steep&Cheap user
@@ -90,6 +96,7 @@ message SteepAndCheapProduct {
     int64 lastUpdatedTime = 30;
     int64 minPrice = 31;
     int64 maxPrice = 32;
+    repeated SteepAndCheapColorSize2 offers = 33;
 }
 
 // SteepAndCheapProducts - Steep&Cheap products

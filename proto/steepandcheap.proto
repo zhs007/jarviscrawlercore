@@ -1,0 +1,132 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// SteepAndCheapSaleProductInfo - Steep&Cheap product infomation for sale
+message SteepAndCheapSaleProductInfo {
+    string saleCode = 1;
+    int32 rank = 2;
+    int32 score = 3;
+}
+
+// SteepAndCheapColorSizeData - Steep&Cheap color size data
+message SteepAndCheapColorSizeData {
+    string size = 1;
+    bool sizeValid = 2;
+}
+
+// SteepAndCheapColorSize - Steep&Cheap color size
+message SteepAndCheapColorSize {
+    string color = 1;
+    repeated string size = 2;
+    repeated bool sizeValid = 3;
+    repeated SteepAndCheapColorSizeData data = 4;
+}
+
+// SteepAndCheapColorSize2 - Steep&Cheap color size v2
+message SteepAndCheapColorSize2 {
+    string color = 1;
+    string size = 2;
+    float price = 3;
+}
+
+// SteepAndCheapUser - Steep&Cheap user
+message SteepAndCheapUser {
+    string name = 1;
+    string photo = 2;
+    string height = 3;
+    string weight = 4;
+}
+
+// SteepAndCheapReview - Steep&Cheap review
+message SteepAndCheapReview {
+    string title = 1;
+    int64 createTime = 2;
+    int32 rating = 3;
+    string familiarity = 4;
+    string fit = 5;
+    string sizeBought = 6;
+    repeated string imgs = 7;
+    string description = 8;
+    SteepAndCheapUser user = 9;
+}
+
+// SteepAndCheapHistory - Steep&Cheap history
+message SteepAndCheapHistory {
+    int64 updateTime = 1;
+    float price = 2;
+    float curPrice = 3;
+    int32 stockLevel = 4;
+    int32 reviews = 5;
+    float ratingValue = 6;
+    repeated SteepAndCheapColorSize color = 7;
+    string saleCode = 8;
+}
+
+// SteepAndCheapProduct - Steep&Cheap product
+message SteepAndCheapProduct {
+    string brandName = 1;
+    string skuid = 2;
+    repeated string productName = 3;
+    int32 stockLevel = 4;
+    float price = 5;
+    float curPrice = 6;
+    string url = 7;
+    int32 reviews = 8;
+    float ratingValue = 9;
+    string currency = 10;
+    bool isNew = 11;
+    repeated string category = 12;
+    repeated string imgs = 13;
+    repeated SteepAndCheapColorSize color = 14;
+    string material = 15;
+    string fit = 16;
+    string style = 17;
+    string ratingUPF = 18;
+    float claimedWeight = 19;
+    string weightUnit = 20;
+    repeated string recommendedUse = 21;
+    string manufacturerWarranty = 22;
+    string strWeight = 23;
+    string infomation = 24;
+    string sizeChart = 25;
+    repeated SteepAndCheapReview lstReview = 26;
+    repeated string linkProducts = 27;
+    repeated SteepAndCheapHistory lstHistory = 28;
+    repeated SteepAndCheapSaleProductInfo lstSale = 29;
+    int64 lastUpdatedTime = 30;
+    int64 minPrice = 31;
+    int64 maxPrice = 32;
+    repeated SteepAndCheapColorSize2 offers = 33;
+}
+
+// SteepAndCheapProducts - Steep&Cheap products
+message SteepAndCheapProducts {
+    int32 maxPage = 1;
+    repeated SteepAndCheapProduct products = 2;
+    string name = 3;
+}
+
+// SteepAndCheapMode - steep&cheap mode
+enum SteepAndCheapMode {
+    // SACM_PRODUCTS - products
+    SACM_PRODUCTS = 0;
+    // SACM_PRODUCT - product
+    SACM_PRODUCT = 1;
+}
+
+// RequestSteepAndCheap - request steep&cheap
+message RequestSteepAndCheap {
+    SteepAndCheapMode mode = 1;
+    string url = 2;
+    int32 page = 3;
+}
+
+// ReplySteepAndCheap - reply steep&cheap
+message ReplySteepAndCheap {
+    SteepAndCheapMode mode = 1;
+
+    oneof reply {
+        SteepAndCheapProducts products = 100;
+        SteepAndCheapProduct product = 101;
+    }    
+}

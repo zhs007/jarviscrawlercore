@@ -1275,7 +1275,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.AlimamaProducts.repeatedFields_ = [2];
+proto.jarviscrawlercore.AlimamaProducts.repeatedFields_ = [2,3,4,5];
 
 
 
@@ -1308,7 +1308,10 @@ proto.jarviscrawlercore.AlimamaProducts.toObject = function(includeInstance, msg
   var f, obj = {
     text: jspb.Message.getFieldWithDefault(msg, 1, ""),
     productsList: jspb.Message.toObjectList(msg.getProductsList(),
-    proto.jarviscrawlercore.AlimamaProduct.toObject, includeInstance)
+    proto.jarviscrawlercore.AlimamaProduct.toObject, includeInstance),
+    textandList: jspb.Message.getRepeatedField(msg, 3),
+    textorList: jspb.Message.getRepeatedField(msg, 4),
+    textnotList: jspb.Message.getRepeatedField(msg, 5)
   };
 
   if (includeInstance) {
@@ -1354,6 +1357,18 @@ proto.jarviscrawlercore.AlimamaProducts.deserializeBinaryFromReader = function(m
       reader.readMessage(value,proto.jarviscrawlercore.AlimamaProduct.deserializeBinaryFromReader);
       msg.addProducts(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTextand(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTextor(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTextnot(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1396,6 +1411,27 @@ proto.jarviscrawlercore.AlimamaProducts.serializeBinaryToWriter = function(messa
       2,
       f,
       proto.jarviscrawlercore.AlimamaProduct.serializeBinaryToWriter
+    );
+  }
+  f = message.getTextandList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      3,
+      f
+    );
+  }
+  f = message.getTextorList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
+    );
+  }
+  f = message.getTextnotList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      5,
+      f
     );
   }
 };
@@ -1444,6 +1480,93 @@ proto.jarviscrawlercore.AlimamaProducts.prototype.addProducts = function(opt_val
 
 proto.jarviscrawlercore.AlimamaProducts.prototype.clearProductsList = function() {
   this.setProductsList([]);
+};
+
+
+/**
+ * repeated string textAnd = 3;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getTextandList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setTextandList = function(value) {
+  jspb.Message.setField(this, 3, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.addTextand = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 3, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.AlimamaProducts.prototype.clearTextandList = function() {
+  this.setTextandList([]);
+};
+
+
+/**
+ * repeated string textOr = 4;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getTextorList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setTextorList = function(value) {
+  jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.addTextor = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.AlimamaProducts.prototype.clearTextorList = function() {
+  this.setTextorList([]);
+};
+
+
+/**
+ * repeated string textNot = 5;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getTextnotList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setTextnotList = function(value) {
+  jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.addTextnot = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.AlimamaProducts.prototype.clearTextnotList = function() {
+  this.setTextnotList([]);
 };
 
 

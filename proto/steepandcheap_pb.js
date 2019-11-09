@@ -1507,7 +1507,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.SteepAndCheapHistory.repeatedFields_ = [7];
+proto.jarviscrawlercore.SteepAndCheapHistory.repeatedFields_ = [7,9];
 
 
 
@@ -1546,7 +1546,9 @@ proto.jarviscrawlercore.SteepAndCheapHistory.toObject = function(includeInstance
     ratingvalue: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
     colorList: jspb.Message.toObjectList(msg.getColorList(),
     proto.jarviscrawlercore.SteepAndCheapColorSize.toObject, includeInstance),
-    salecode: jspb.Message.getFieldWithDefault(msg, 8, "")
+    salecode: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    offersList: jspb.Message.toObjectList(msg.getOffersList(),
+    proto.jarviscrawlercore.SteepAndCheapColorSize2.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -1615,6 +1617,11 @@ proto.jarviscrawlercore.SteepAndCheapHistory.deserializeBinaryFromReader = funct
     case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setSalecode(value);
+      break;
+    case 9:
+      var value = new proto.jarviscrawlercore.SteepAndCheapColorSize2;
+      reader.readMessage(value,proto.jarviscrawlercore.SteepAndCheapColorSize2.deserializeBinaryFromReader);
+      msg.addOffers(value);
       break;
     default:
       reader.skipField();
@@ -1700,6 +1707,14 @@ proto.jarviscrawlercore.SteepAndCheapHistory.serializeBinaryToWriter = function(
     writer.writeString(
       8,
       f
+    );
+  }
+  f = message.getOffersList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      9,
+      f,
+      proto.jarviscrawlercore.SteepAndCheapColorSize2.serializeBinaryToWriter
     );
   }
 };
@@ -1838,6 +1853,37 @@ proto.jarviscrawlercore.SteepAndCheapHistory.prototype.getSalecode = function() 
 /** @param {string} value */
 proto.jarviscrawlercore.SteepAndCheapHistory.prototype.setSalecode = function(value) {
   jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * repeated SteepAndCheapColorSize2 offers = 9;
+ * @return {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize2>}
+ */
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.getOffersList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize2>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.SteepAndCheapColorSize2, 9));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.SteepAndCheapColorSize2>} value */
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.setOffersList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 9, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.SteepAndCheapColorSize2=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.SteepAndCheapColorSize2}
+ */
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.addOffers = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.jarviscrawlercore.SteepAndCheapColorSize2, opt_index);
+};
+
+
+proto.jarviscrawlercore.SteepAndCheapHistory.prototype.clearOffersList = function() {
+  this.setOffersList([]);
 };
 
 

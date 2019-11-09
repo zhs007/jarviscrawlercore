@@ -58,8 +58,9 @@ message SteepAndCheapHistory {
     int32 stockLevel = 4;
     int32 reviews = 5;
     float ratingValue = 6;
-    repeated SteepAndCheapColorSize color = 7;
+    repeated SteepAndCheapColorSize color = 7 [deprecated = true];
     string saleCode = 8;
+    repeated SteepAndCheapColorSize2 offers = 9;
 }
 
 // SteepAndCheapProduct - Steep&Cheap product
@@ -77,7 +78,7 @@ message SteepAndCheapProduct {
     bool isNew = 11;
     repeated string category = 12;
     repeated string imgs = 13;
-    repeated SteepAndCheapColorSize color = 14;
+    repeated SteepAndCheapColorSize color = 14 [deprecated = true];
     string material = 15;
     string fit = 16;
     string style = 17;

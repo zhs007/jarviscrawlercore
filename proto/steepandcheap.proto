@@ -95,8 +95,8 @@ message SteepAndCheapProduct {
     repeated SteepAndCheapHistory lstHistory = 28;
     repeated SteepAndCheapSaleProductInfo lstSale = 29;
     int64 lastUpdatedTime = 30;
-    int64 minPrice = 31;
-    int64 maxPrice = 32;
+    float minPrice = 31;
+    float maxPrice = 32;
     repeated SteepAndCheapColorSize2 offers = 33;
 }
 

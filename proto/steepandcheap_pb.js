@@ -1975,8 +1975,8 @@ proto.jarviscrawlercore.SteepAndCheapProduct.toObject = function(includeInstance
     lstsaleList: jspb.Message.toObjectList(msg.getLstsaleList(),
     proto.jarviscrawlercore.SteepAndCheapSaleProductInfo.toObject, includeInstance),
     lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 30, 0),
-    minprice: jspb.Message.getFieldWithDefault(msg, 31, 0),
-    maxprice: jspb.Message.getFieldWithDefault(msg, 32, 0),
+    minprice: +jspb.Message.getFieldWithDefault(msg, 31, 0.0),
+    maxprice: +jspb.Message.getFieldWithDefault(msg, 32, 0.0),
     offersList: jspb.Message.toObjectList(msg.getOffersList(),
     proto.jarviscrawlercore.SteepAndCheapColorSize2.toObject, includeInstance)
   };
@@ -2140,11 +2140,11 @@ proto.jarviscrawlercore.SteepAndCheapProduct.deserializeBinaryFromReader = funct
       msg.setLastupdatedtime(value);
       break;
     case 31:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setMinprice(value);
       break;
     case 32:
-      var value = /** @type {number} */ (reader.readInt64());
+      var value = /** @type {number} */ (reader.readFloat());
       msg.setMaxprice(value);
       break;
     case 33:
@@ -2396,15 +2396,15 @@ proto.jarviscrawlercore.SteepAndCheapProduct.serializeBinaryToWriter = function(
     );
   }
   f = message.getMinprice();
-  if (f !== 0) {
-    writer.writeInt64(
+  if (f !== 0.0) {
+    writer.writeFloat(
       31,
       f
     );
   }
   f = message.getMaxprice();
-  if (f !== 0) {
-    writer.writeInt64(
+  if (f !== 0.0) {
+    writer.writeFloat(
       32,
       f
     );
@@ -3007,32 +3007,32 @@ proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setLastupdatedtime = func
 
 
 /**
- * optional int64 minPrice = 31;
+ * optional float minPrice = 31;
  * @return {number}
  */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getMinprice = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 31, 0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 31, 0.0));
 };
 
 
 /** @param {number} value */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setMinprice = function(value) {
-  jspb.Message.setProto3IntField(this, 31, value);
+  jspb.Message.setProto3FloatField(this, 31, value);
 };
 
 
 /**
- * optional int64 maxPrice = 32;
+ * optional float maxPrice = 32;
  * @return {number}
  */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.getMaxprice = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 32, 0));
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 32, 0.0));
 };
 
 
 /** @param {number} value */
 proto.jarviscrawlercore.SteepAndCheapProduct.prototype.setMaxprice = function(value) {
-  jspb.Message.setProto3IntField(this, 32, value);
+  jspb.Message.setProto3FloatField(this, 32, value);
 };
 
 

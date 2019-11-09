@@ -288,7 +288,10 @@ async function getColorList2(page, timeout) {
               ele.children[j].tagName == 'META' &&
             ele.children[j].getAttribute('itemprop') == 'price'
             ) {
-              cd.price = ele.children[j].getAttribute('content');
+              cd.price = ele.children[j]
+                  .getAttribute('content')
+                  .split(',')
+                  .join('');
             } else if (ele.children[j].tagName == 'DIV') {
               const elechild = ele.children[j];
 
@@ -454,6 +457,29 @@ async function steepandcheapProduct(browser, url, timeout) {
       ret.imgs[i] = validImageSrc(ret.imgs[i]);
     }
   }
+
+  ret.price = await page
+      .$$eval('.product-pricing__inactive.js-product-pricing__inactive', (eles) => {
+        if (eles.length > 0) {
+          const pricearr = eles[0].innerText.split('$', -1);
+          if (pricearr.length != 2) {
+            console.log('invalid price ' + eles[0].innerText);
+          } else {
+            try {
+              return parseFloat(
+                  pricearr[1].split(',').join('')
+              );
+            } catch (err) {
+              console.log('invalid price ' + eles[0].innerText);
+            }
+          }
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
 
   ret.skuid = await page
       .$$eval('.sku-id', (eles) => {

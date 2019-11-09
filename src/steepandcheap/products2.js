@@ -335,7 +335,9 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
                   console.log('invalid low price ' + lowprice[0].innerText);
                 } else {
                   try {
-                    curret.curPrice = parseFloat(lowpricearr[1]);
+                    curret.curPrice = parseFloat(
+                        lowpricearr[1].split(',').join('')
+                    );
                   } catch (err) {
                     console.log('invalid low price ' + lowprice[0].innerText);
                   }
@@ -351,7 +353,9 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
                   console.log('invalid high price ' + highprice[0].innerText);
                 } else {
                   try {
-                    curret.price = parseFloat(highpricearr[1]);
+                    curret.price = parseFloat(
+                        highpricearr[1].split(',').join('')
+                    );
                   } catch (err) {
                     console.log('invalid high price ' + highprice[0].innerText);
                   }

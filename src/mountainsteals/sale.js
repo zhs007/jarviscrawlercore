@@ -1,17 +1,19 @@
 const {sleep} = require('../utils');
+const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 
 /**
  * mountainstealsSale - mountainsteals sale
  * @param {object} browser - browser
  * @param {string} url - url
- * @param {number} pageid - pageid, is like 1, 2, 3
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function mountainstealsSale(browser, url, pageid, timeout) {
+async function mountainstealsSale(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  const waitAllResponse = new WaitAllResponse(page);
 
   await page
       .setViewport({
@@ -47,7 +49,42 @@ async function mountainstealsSale(browser, url, pageid, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  return {ret: {}};
+  const isdone = await waitAllResponse.waitDone(timeout);
+  if (!isdone) {
+    const err = new Error('mountainstealsSale.waitDone timeout');
+
+    log.error('mountainstealsSale.goto', err);
+
+    await page.close();
+
+    return {error: err.toString()};
+  }
+
+  const lst = await page
+      .$$eval(
+          '.prod-item.prod-item--three.prod-item--two-tablet.prod-item--one-mobile.prod-item--bdb.plp-search-item',
+          (eles) => {
+            const lst = [];
+
+            for (let i = 0; i < eles.length; ++i) {
+              const cu = eles[i].getElementsByTagName('a');
+              if (cu.length > 0) {
+                lst.push(cu[0].href);
+              }
+            }
+
+            return lst;
+          }
+      )
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    return {error: err};
+  }
+
+  return {ret: {products: lst}};
 }
 
 exports.mountainstealsSale = mountainstealsSale;

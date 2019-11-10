@@ -1,0 +1,28 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// MountainStealsMode - mountain steals mode
+enum MountainStealsMode {
+    // MSM_SALE - sale
+    MSM_SALE = 0;
+}
+
+// MountainStealsSale - mountain steals sale
+message MountainStealsSale {
+    repeated string url = 1;
+}
+
+// RequestMountainSteals - request mountain steals
+message RequestMountainSteals {
+    MountainStealsMode mode = 1;
+    string url = 2;
+}
+
+// ReplyMountainSteals - reply mountain steals
+message ReplyMountainSteals {
+    MountainStealsMode mode = 1;
+
+    oneof reply {
+        MountainStealsSale sale = 100;
+    }
+}

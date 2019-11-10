@@ -1,6 +1,7 @@
 syntax = "proto3";
 import "alimama.proto";
 import "steepandcheap.proto";
+import "mountainsteals.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type

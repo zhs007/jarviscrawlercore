@@ -49,13 +49,6 @@ async function execMountainSteals(program, version) {
           timeout = options.timeout;
         }
 
-        let page = 0;
-        if (options.page) {
-          try {
-            page = parseInt(options.page);
-          } catch (err) {}
-        }
-
         const headless = options.headless === 'true';
         log.console('headless - ', headless);
 
@@ -66,7 +59,6 @@ async function execMountainSteals(program, version) {
             const ret = await mountainstealsSale(
                 browser,
                 options.url,
-                page,
                 timeout
             );
             log.console(JSON.stringify(ret));

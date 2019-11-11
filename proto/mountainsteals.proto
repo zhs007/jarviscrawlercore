@@ -5,11 +5,41 @@ package jarviscrawlercore;
 enum MountainStealsMode {
     // MSM_SALE - sale
     MSM_SALE = 0;
+    // MSM_PRODUCT - product
+    MSM_PRODUCT = 1;
 }
 
 // MountainStealsSale - mountain steals sale
 message MountainStealsSale {
     repeated string url = 1;
+}
+
+// MountainStealsColorSize - mountain steals color size
+message MountainStealsColorSize {
+    string color = 1;
+    string size = 2;
+    float price = 3;
+    string img = 4;
+    string sku = 5;
+}
+
+// MountainStealsProduct - mountain steals product
+message MountainStealsProduct {
+    string code = 1;
+    string name = 2;
+    repeated string category = 3;
+    string brand = 4;
+    float rating = 5;
+    repeated MountainStealsColorSize colorSize = 6;
+    repeated string images = 7;
+    float price = 8;
+    float minPrice = 9;
+    float maxPrice = 10;
+    string details = 11;
+    string spec = 12;
+    repeated int32 ratingCount = 13;
+    map<string, float> mapRading = 14;
+    string sizeGiud = 15;
 }
 
 // RequestMountainSteals - request mountain steals
@@ -24,5 +54,6 @@ message ReplyMountainSteals {
 
     oneof reply {
         MountainStealsSale sale = 100;
+        MountainStealsProduct product = 101;
     }
 }

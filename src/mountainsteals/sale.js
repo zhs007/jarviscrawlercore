@@ -1,4 +1,5 @@
 const {sleep} = require('../utils');
+const {getURLCode} = require('./utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 
@@ -83,6 +84,12 @@ async function mountainstealsSale(browser, url, timeout) {
   if (awaiterr) {
     return {error: err};
   }
+
+  for (let i = 0; i < lst.length; ++i) {
+    lst[i] = getURLCode(lst[i]);
+  }
+
+  await page.close();
 
   return {ret: {products: lst}};
 }

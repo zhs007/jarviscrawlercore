@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {mountainstealsSale} = require('./sale');
+const {mountainstealsProduct} = require('./product');
 const log = require('../log');
 
 /**
@@ -56,7 +57,10 @@ async function execMountainSteals(program, version) {
           const browser = await startBrowser(headless);
 
           if (mode == 'sale') {
-            const ret = await mountainstealsSale(
+            const ret = await mountainstealsSale(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'product') {
+            const ret = await mountainstealsProduct(
                 browser,
                 options.url,
                 timeout

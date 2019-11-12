@@ -4,7 +4,7 @@
  * @param {string} furl - full url
  * @return {string} urlcode - urlcode
  */
-async function getURLCode(furl) {
+function getURLCode(furl) {
   const arr = furl.split('https://www.mountainsteals.com/product/');
   if (arr.length > 1) {
     return arr[1];

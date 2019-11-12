@@ -44,6 +44,32 @@ async function getColorName(page) {
 }
 
 /**
+ * isPageExpired - is page expired
+ * @param {object} page - page
+ * @return {bool} isexpired - is expired
+ */
+async function isPageExpired(page) {
+  let awaiterr;
+  const isexpired = await page
+      .$$eval('h1', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText == 'Sorry, the page may have expired.';
+        }
+
+        return false;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    return false;
+  }
+
+  return isexpired;
+}
+
+/**
  * getSizeList - get size list
  * @param {object} page - page
  * @return {object} ret - {size, sizeValid}
@@ -390,6 +416,13 @@ async function steepandcheapProduct(browser, url, timeout) {
   });
 
   if (awaiterr) {
+    const isexpired = await isPageExpired(page);
+    if (isexpired) {
+      awaiterr = new Error(
+          'noretry:pageexpired ' + 'https://www.steepandcheap.com/' + url
+      );
+    }
+
     log.error('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
 
     await page.close();
@@ -466,9 +499,7 @@ async function steepandcheapProduct(browser, url, timeout) {
             console.log('invalid price ' + eles[0].innerText);
           } else {
             try {
-              return parseFloat(
-                  pricearr[1].split(',').join('')
-              );
+              return parseFloat(pricearr[1].split(',').join(''));
             } catch (err) {
               console.log('invalid price ' + eles[0].innerText);
             }

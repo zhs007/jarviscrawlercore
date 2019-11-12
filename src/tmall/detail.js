@@ -1,6 +1,7 @@
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
+const {closeDialog} = require('./utils');
 
 /**
  * getTShopObj - get tshop object
@@ -83,6 +84,53 @@ async function tmallDetail(browser, url, timeout) {
     return {error: err.toString()};
   }
 
+  awaiterr = await closeDialog(page);
+  if (awaiterr) {
+    log.error('tmallDetail.closeDialog', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const ret = {};
+
+  const titleinfo = await page
+      .$$eval('.tb-detail-hd', (eles) => {
+        if (eles.length > 0) {
+          if (eles[0].children.length == 2) {
+            return {
+              title: eles[0].children[0].innerText,
+              newinfo: eles[0].children[1].innerText,
+            };
+          }
+
+          const lsth1 = eles[0].getElementsByTagName('h1');
+          if (lsth1.length > 0) {
+            return {
+              title: lsth1[0].innerText,
+            };
+          }
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('tmallDetail.$$eval .tb-detail-hd', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (titleinfo) {
+    ret.title = titleinfo.title;
+    ret.newinfo = titleinfo.newinfo;
+  }
+
   //   const ret = {};
   const skus = await page
       .$$eval('.tb-sku', (eles) => {
@@ -132,7 +180,77 @@ async function tmallDetail(browser, url, timeout) {
 
   console.log(skus);
 
+  const lstreviews = await page.$$('#J_Reviews');
+  if (lstreviews.length > 0) {
+    await lstreviews[0].hover();
+    await sleep(3000);
+  }
+
+  const reviewret = await page
+      .$$eval('#J_Reviews', (eles) => {
+        if (eles.length > 0) {
+          const reviewret = {};
+
+          const lsth4 = eles[0].getElementsByTagName('h4');
+          if (lsth4.length > 0) {
+            const lstem = lsth4[0].getElementsByTagName('em');
+            if (lstem.length > 0) {
+              reviewret.reviews = lstem[0].innerText;
+            }
+          }
+
+          const ratescore = eles[0].getElementsByClassName('rate-score');
+          if (ratescore.length > 0) {
+            const strong = ratescore[0].getElementsByTagName('strong');
+            if (strong.length > 0) {
+              reviewret.rating = strong[0].innerText;
+            }
+          }
+
+          const tags = eles[0].getElementsByClassName('tag-posi');
+          if (tags.length > 0) {
+            reviewret.tags = [];
+            for (let i = 0; i < tags.length; ++i) {
+              reviewret.tags.push(tags[i].innerText);
+            }
+          }
+
+          return reviewret;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('tmallDetail.$$eval #J_Reviews', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   const tshop = await getTShopObj(page);
+  if (tshop) {
+    if (tshop.itemDO) {
+      ret.brand = tshop.itemDO.brand;
+      ret.brandID = tshop.itemDO.brandId;
+      ret.categoryID = tshop.itemDO.categoryId;
+      ret.itemID = tshop.itemDO.itemId;
+    }
+
+    if (tshop.valItemInfo && tshop.valItemInfo.skuMap) {
+      const skumap = tshop.valItemInfo.skuMap;
+      for (let i = 0; i < skus.length; ++i) {
+        if (skumap[';' + skus[i].value + ';']) {
+          skus[i].price = skumap[';' + skus[i].value + ';'].price;
+          skus[i].skuid = skumap[';' + skus[i].value + ';'].skuId;
+          skus[i].stock = skumap[';' + skus[i].value + ';'].stock;
+        }
+      }
+    }
+  }
 
   await page.close();
 

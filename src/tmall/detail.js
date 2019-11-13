@@ -2,6 +2,7 @@ const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {closeDialog} = require('./utils');
+const {waitForFunction} = require('../waitutils');
 
 /**
  * getTShopObj - get tshop object
@@ -175,6 +176,7 @@ async function tmallDetail(browser, url, timeout) {
       const arr1 = arr[1].split('")');
       skus[i].img = arr1[0];
       skus[i].img = skus[i].img.replace('40x40q90', '600x600');
+      skus[i].img = 'https:' + skus[i].img;
     }
   }
 
@@ -183,7 +185,23 @@ async function tmallDetail(browser, url, timeout) {
   const lstreviews = await page.$$('#J_Reviews');
   if (lstreviews.length > 0) {
     await lstreviews[0].hover();
-    await sleep(3000);
+
+    awaiterr = await waitForFunction(page, '#J_Reviews', (eles) => {
+      if (eles.length > 0) {
+        const lsth4 = eles[0].getElementsByTagName('h4');
+        if (lsth4.length > 0) {
+          const lstem = lsth4[0].getElementsByTagName('em');
+          if (lstem.length > 0) {
+            return (
+              eles[0].getElementsByClassName('rate-score').length > 0 &&
+              eles[0].getElementsByClassName('rate-tag-box').length > 0
+            );
+          }
+        }
+      }
+
+      return false;
+    });
   }
 
   const reviewret = await page
@@ -231,6 +249,25 @@ async function tmallDetail(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  if (reviewret) {
+    ret.reviews = parseInt(reviewret.reviews);
+    ret.rating = parseFloat(reviewret.rating);
+
+    ret.reviewTags = [];
+    for (let i = 0; i < reviewret.tags.length; ++i) {
+      const arr = reviewret.tags[i].split('(');
+      if (arr.length == 2) {
+        const arr1 = arr[1].split(')');
+        if (arr1.length == 2) {
+          ret.reviewTags.push({
+            tag: arr[0],
+            times: parseInt(arr1[0]),
+          });
+        }
+      }
+    }
+  }
+
   const tshop = await getTShopObj(page);
   if (tshop) {
     if (tshop.itemDO) {
@@ -244,13 +281,15 @@ async function tmallDetail(browser, url, timeout) {
       const skumap = tshop.valItemInfo.skuMap;
       for (let i = 0; i < skus.length; ++i) {
         if (skumap[';' + skus[i].value + ';']) {
-          skus[i].price = skumap[';' + skus[i].value + ';'].price;
+          skus[i].price = parseFloat(skumap[';' + skus[i].value + ';'].price);
           skus[i].skuid = skumap[';' + skus[i].value + ';'].skuId;
           skus[i].stock = skumap[';' + skus[i].value + ';'].stock;
         }
       }
     }
   }
+
+  ret.skus = skus;
 
   await page.close();
 

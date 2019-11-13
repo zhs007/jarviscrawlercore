@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.3.41",
+  "version": "0.3.43",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -27,21 +27,21 @@
     "adm-zip": "^0.4.13",
     "axios": "^0.19.0",
     "chrome-launcher": "^0.12.0",
-    "commander": "^2.20.0",
-    "google-protobuf": "^3.9.1",
-    "grpc": "^1.22.2",
-    "jimp": "^0.6.4",
+    "commander": "^4.0.1",
+    "google-protobuf": "^3.10.0",
+    "grpc": "^1.24.2",
+    "jimp": "^0.8.5",
     "moment": "^2.24.0",
-    "puppeteer": "^1.19.0",
+    "puppeteer": "^2.0.0",
     "request": "^2.88.0",
-    "sharp": "^0.23.0",
+    "sharp": "^0.23.2",
     "yaml-js": "^0.2.3"
   },
   "devDependencies": {
-    "eslint": "^6.2.2",
-    "eslint-config-google": "^0.13.0",
+    "eslint": "^6.6.0",
+    "eslint-config-google": "^0.14.0",
     "eslint-plugin-prettier": "^3.1.1",
     "jest": "^24.9.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   }
 }

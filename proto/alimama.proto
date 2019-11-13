@@ -28,6 +28,8 @@ message AlimamaProduct {
     int32 salesVolume2 = 13;    // 销量，2小时销量，如果是预订，则是预订人数
     float presale = 14;         // 订金
     float presaleProfit = 15;   // 订金减多少
+    string host = 16;
+    string itemID = 17;
 }
 
 // AliProduct - ali product

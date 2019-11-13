@@ -556,7 +556,7 @@ function alimamaKeepalive(servAddr) {
         }
 
         alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
-        // alimamaGetTop('127.0.0.1:7051');
+      // alimamaGetTop('127.0.0.1:7051');
       }
   );
 }
@@ -623,6 +623,41 @@ function alimamaSearch(servAddr, text) {
   );
 }
 
+/**
+ * tmallProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function tmallProduct(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestTmall();
+  request.setMode(messages.TmallMode.TMM_PRODUCT);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TMALL,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -655,7 +690,9 @@ function alimamaSearch(servAddr, text) {
 // jdProduct('127.0.0.1:7051', '100006585530.html');
 // jdActivePage('127.0.0.1:7051', 'https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html');
 
-alimamaKeepalive('127.0.0.1:7051');
+// alimamaKeepalive('127.0.0.1:7051');
 // alimamaKeepalive('10.211.55.4:7052');
 // alimamaGetTop('127.0.0.1:7051');
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
+
+tmallProduct('127.0.0.1:7051', '525967713966');

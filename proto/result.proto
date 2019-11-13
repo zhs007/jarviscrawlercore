@@ -2,6 +2,7 @@ syntax = "proto3";
 import "alimama.proto";
 import "steepandcheap.proto";
 import "mountainsteals.proto";
+import "tmall.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -450,6 +451,7 @@ enum CrawlerType {
     CT_JD = 9;
     CT_ALIMAMA = 10;
     CT_MOUNTAINSTEALS = 11;
+    CT_TMALL = 12;
 }
 
 // RequestTranslate2 - request translate
@@ -881,6 +883,7 @@ message RequestCrawler {
         RequestJD jd = 109;
         RequestAlimama alimama = 110;
         RequestMountainSteals mountainsteals = 111;
+        RequestTmall tmall = 112;
     }
 }
 
@@ -901,6 +904,7 @@ message ReplyCrawler {
         ReplyJD jd = 109;
         ReplyAlimama alimama = 110;
         ReplyMountainSteals mountainsteals = 111;
+        ReplyTmall tmall = 112;
     }
 }
 

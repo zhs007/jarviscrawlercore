@@ -6,6 +6,7 @@ var result_pb = require('./result_pb.js');
 var alimama_pb = require('./alimama_pb.js');
 var steepandcheap_pb = require('./steepandcheap_pb.js');
 var mountainsteals_pb = require('./mountainsteals_pb.js');
+var tmall_pb = require('./tmall_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {

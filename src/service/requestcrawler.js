@@ -8,6 +8,7 @@ const {callSteepAndCheap} = require('./plugins/steepandcheap');
 const {callJRJ} = require('./plugins/jrj');
 const {callJD} = require('./plugins/jd');
 const {callAlimama} = require('./plugins/alimama');
+const {callTmall} = require('./plugins/tmall');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -119,6 +120,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getAlimama();
 
     callAlimama(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_TMALL) {
+    if (!call.request.hasTmall()) {
+      replyError(call, 'no tmall');
+
+      return;
+    }
+
+    const param = call.request.getTmall();
+
+    callTmall(browser, cfg, call, param, call.request);
   }
 }
 

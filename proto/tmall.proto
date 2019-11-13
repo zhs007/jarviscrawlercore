@@ -1,0 +1,52 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// TmallSKUInfo - tmall sku infomation
+message TmallSKUInfo {
+    string skuid = 1;
+    float price = 2;
+    string title = 3;
+    string img = 4;
+    int32 stock = 5;
+}
+
+// TmallReviewTag - tmall review tag
+message TmallReviewTag {
+    string tag = 1;
+    int32 times = 2;
+}
+
+// TmallProduct - tmall product
+message TmallProduct {
+    string itemID = 1;
+    repeated TmallSKUInfo skus = 2;
+    string brand = 3;
+    string brandID = 4;
+    string categoryID = 5;
+    string title = 6;
+    string newinfo = 7;
+    int32 reviews = 8;
+    float rating = 9;
+    repeated TmallReviewTag reviewTags = 10;
+}
+
+// TmallMode - tmall mode
+enum TmallMode {
+    // TMM_PRODUCT - product
+    TMM_PRODUCT = 0;
+}
+
+// RequestTmall - request tmall
+message RequestTmall {
+    TmallMode mode = 1;
+    string url = 2;
+}
+
+// ReplyTmall - reply tmall
+message ReplyTmall {
+    TmallMode mode = 1;
+
+    oneof reply {
+        TmallProduct product = 100;
+    }    
+}

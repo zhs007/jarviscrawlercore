@@ -1,5 +1,4 @@
 const {sleep} = require('./utils');
-const log = require('./log');
 
 /**
  * waitForFunction

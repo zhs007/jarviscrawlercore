@@ -110,6 +110,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setAlimama(msg);
   } else if (crawlerType == messages.CrawlerType.CT_TMALL) {
     req.setTmall(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_TAOBAO) {
+    req.setTaobao(msg);
   }
 
   let isend = false;
@@ -294,6 +296,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_TAOBAO) {
+        if (!reply.getTaobao()) {
+          cb('no taobao reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getTaobao());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -356,6 +372,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_TMALL) {
     reply.setTmall(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_TAOBAO) {
+    reply.setTaobao(val);
     reply.setCrawlertype(crawlerType);
   }
 }

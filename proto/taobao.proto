@@ -29,7 +29,7 @@ message TaobaoProduct {
     string title = 3;
     int32 reviews = 4;
     int64 lastUpdatedTime = 5;
-    map<string, string> attributes = 6;
+    repeated string attributes = 6;
     TaobaoShopInfo shop = 7;
     int32 salesVolume = 8;     // 月销量
 }

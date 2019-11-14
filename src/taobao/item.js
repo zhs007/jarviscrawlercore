@@ -294,6 +294,22 @@ async function taobaoItem(browser, itemid, timeout) {
       skus[i].img = arr1[0];
       skus[i].img = skus[i].img.replace('30x30', '600x600');
       skus[i].img = 'https:' + skus[i].img;
+
+      if (mapStock[';' + skus[i].value + ';']) {
+        skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
+      }
+
+      if (mapPrice[';' + skus[i].value + ';']) {
+        skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
+      }
+
+      if (skusret1 && skusret1.mapTitle[skus[i].value]) {
+        skus[i].title = skusret1.mapTitle[skus[i].value];
+      }
+
+      if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
+        skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
+      }
     }
   }
 
@@ -322,6 +338,34 @@ async function taobaoItem(browser, itemid, timeout) {
       .$$eval('#J_SellCounter', (eles) => {
         if (eles.length > 0) {
           return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItem.$$eval #J_SellCounter', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.attributes = await page
+      .$$eval('.attributes-list', (eles) => {
+        if (eles.length > 0) {
+          const lstli = eles[0].getElementsByTagName('li');
+          if (lstli.length > 0) {
+            const attributes = [];
+
+            for (let i = 0; i < lstli.length; ++i) {
+              attributes.push(lstli[i].innerText);
+            }
+
+            return attributes;
+          }
         }
 
         return undefined;
@@ -392,6 +436,29 @@ async function taobaoItem(browser, itemid, timeout) {
 
     return {error: awaiterr.toString()};
   }
+
+  if (shopinfo) {
+    if (shopinfo.lstlevel && shopinfo.lstscore) {
+      shopinfo.rateLevel = [];
+      for (let i = 0; i < shopinfo.lstlevel.length; ++i) {
+        if (shopinfo.lstlevel[i] == 'tb-rate-equal') {
+          shopinfo.rateLevel.push(0);
+        } else if (shopinfo.lstlevel[i] == 'tb-rate-lower') {
+          shopinfo.rateLevel.push(-1);
+        } else if (shopinfo.lstlevel[i] == 'tb-rate-higher') {
+          shopinfo.rateLevel.push(1);
+        }
+      }
+
+      shopinfo.rateScore = [];
+      for (let i = 0; i < shopinfo.lstscore.length; ++i) {
+        shopinfo.rateScore.push(parseFloat(shopinfo.lstscore[i]));
+      }
+    }
+  }
+
+  ret.shop = shopinfo;
+  ret.skus = skus;
 
   await page.close();
 

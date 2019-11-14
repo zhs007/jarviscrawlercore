@@ -658,7 +658,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TaobaoProduct.repeatedFields_ = [2];
+proto.jarviscrawlercore.TaobaoProduct.repeatedFields_ = [2,6];
 
 
 
@@ -695,7 +695,7 @@ proto.jarviscrawlercore.TaobaoProduct.toObject = function(includeInstance, msg) 
     title: jspb.Message.getFieldWithDefault(msg, 3, ""),
     reviews: jspb.Message.getFieldWithDefault(msg, 4, 0),
     lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    attributesMap: (f = msg.getAttributesMap()) ? f.toObject(includeInstance, undefined) : [],
+    attributesList: jspb.Message.getRepeatedField(msg, 6),
     shop: (f = msg.getShop()) && proto.jarviscrawlercore.TaobaoShopInfo.toObject(includeInstance, f),
     salesvolume: jspb.Message.getFieldWithDefault(msg, 8, 0)
   };
@@ -756,10 +756,8 @@ proto.jarviscrawlercore.TaobaoProduct.deserializeBinaryFromReader = function(msg
       msg.setLastupdatedtime(value);
       break;
     case 6:
-      var value = msg.getAttributesMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "");
-         });
+      var value = /** @type {string} */ (reader.readString());
+      msg.addAttributes(value);
       break;
     case 7:
       var value = new proto.jarviscrawlercore.TaobaoShopInfo;
@@ -835,9 +833,12 @@ proto.jarviscrawlercore.TaobaoProduct.serializeBinaryToWriter = function(message
       f
     );
   }
-  f = message.getAttributesMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(6, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
+  f = message.getAttributesList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      6,
+      f
+    );
   }
   f = message.getShop();
   if (f != null) {
@@ -949,20 +950,31 @@ proto.jarviscrawlercore.TaobaoProduct.prototype.setLastupdatedtime = function(va
 
 
 /**
- * map<string, string> attributes = 6;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
+ * repeated string attributes = 6;
+ * @return {!Array<string>}
  */
-proto.jarviscrawlercore.TaobaoProduct.prototype.getAttributesMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (
-      jspb.Message.getMapField(this, 6, opt_noLazyCreate,
-      null));
+proto.jarviscrawlercore.TaobaoProduct.prototype.getAttributesList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
 };
 
 
-proto.jarviscrawlercore.TaobaoProduct.prototype.clearAttributesMap = function() {
-  this.getAttributesMap().clear();
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TaobaoProduct.prototype.setAttributesList = function(value) {
+  jspb.Message.setField(this, 6, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.addAttributes = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 6, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoProduct.prototype.clearAttributesList = function() {
+  this.setAttributesList([]);
 };
 
 

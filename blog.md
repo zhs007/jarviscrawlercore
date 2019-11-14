@@ -1,5 +1,12 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-11-14
+
+taobao的页面，一般是 https://item.taobao.com/item.htm?id=592826167303 ，重点在 itemid 。
+
+taobao 和 tmall 页面布局差别很大，很多数据没有像 tmall 那样处理，sib.html 里，有具体 sku 的价格和库存数据。  
+然后 Hub.config.sku 里是另外一部分 sku 数据，2个合起来应该就够了。
+
 ### 2019-11-05
 
 今天遇到一个browser的bug，就是可能frames取不全，网上查了一下，有一个很详细的issue，就前不久刚发的，但那个在chrome下无效，因为一些别的原因，必须要用chrome。  

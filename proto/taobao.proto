@@ -1,0 +1,56 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// TaobaoSKUInfo - taobao sku infomation
+message TaobaoSKUInfo {
+    string skuid = 1;
+    float price = 2;
+    string title = 3;
+    string img = 4;
+    int32 stock = 5;
+}
+
+// TaobaoShopInfo - taobao shop infomation
+message TaobaoShopInfo {
+    string name = 1;
+    bool gold = 2;
+    string url = 3;
+    string rank = 4;    // cap/gold ...
+    int32 rating = 5;   // 3/4/5 ...
+    repeated int32 rateLevel = 6;   // 描述、服务、物流，-1表示低，0表示等于，1表示高
+    repeated float rateScore = 7;   // 描述、服务、物流，具体分数
+    string shopid = 8;
+}
+
+// TaobaoProduct - taobao product
+message TaobaoProduct {
+    string itemID = 1;
+    repeated TaobaoSKUInfo skus = 2;
+    string title = 3;
+    int32 reviews = 4;
+    int64 lastUpdatedTime = 5;
+    repeated string attributes = 6;
+    TaobaoShopInfo shop = 7;
+    int32 salesVolume = 8;     // 月销量
+}
+
+// TaobaoMode - taobao mode
+enum TaobaoMode {
+    // TBM_PRODUCT - product
+    TBM_PRODUCT = 0;
+}
+
+// RequestTaobao - request taobao
+message RequestTaobao {
+    TaobaoMode mode = 1;
+    string itemID = 2;
+}
+
+// ReplyTaobao - reply taobao
+message ReplyTaobao {
+    TaobaoMode mode = 1;
+
+    oneof reply {
+        TaobaoProduct product = 100;
+    }    
+}

@@ -501,7 +501,8 @@ proto.jarviscrawlercore.TmallProduct.toObject = function(includeInstance, msg) {
     reviews: jspb.Message.getFieldWithDefault(msg, 8, 0),
     rating: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
     reviewtagsList: jspb.Message.toObjectList(msg.getReviewtagsList(),
-    proto.jarviscrawlercore.TmallReviewTag.toObject, includeInstance)
+    proto.jarviscrawlercore.TmallReviewTag.toObject, includeInstance),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 11, 0)
   };
 
   if (includeInstance) {
@@ -579,6 +580,10 @@ proto.jarviscrawlercore.TmallProduct.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.TmallReviewTag;
       reader.readMessage(value,proto.jarviscrawlercore.TmallReviewTag.deserializeBinaryFromReader);
       msg.addReviewtags(value);
+      break;
+    case 11:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
       break;
     default:
       reader.skipField();
@@ -679,6 +684,13 @@ proto.jarviscrawlercore.TmallProduct.serializeBinaryToWriter = function(message,
       10,
       f,
       proto.jarviscrawlercore.TmallReviewTag.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      11,
+      f
     );
   }
 };
@@ -863,6 +875,21 @@ proto.jarviscrawlercore.TmallProduct.prototype.addReviewtags = function(opt_valu
 
 proto.jarviscrawlercore.TmallProduct.prototype.clearReviewtagsList = function() {
   this.setReviewtagsList([]);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 11;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallProduct.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 11, value);
 };
 
 

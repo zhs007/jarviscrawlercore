@@ -9,6 +9,7 @@ const {callJRJ} = require('./plugins/jrj');
 const {callJD} = require('./plugins/jd');
 const {callAlimama} = require('./plugins/alimama');
 const {callTmall} = require('./plugins/tmall');
+const {callTaobao} = require('./plugins/taobao');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -130,6 +131,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getTmall();
 
     callTmall(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_TAOBAO) {
+    if (!call.request.hasTaobao()) {
+      replyError(call, 'no taobao');
+
+      return;
+    }
+
+    const param = call.request.getTaobao();
+
+    callTaobao(browser, cfg, call, param, call.request);
   }
 }
 

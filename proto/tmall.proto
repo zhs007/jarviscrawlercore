@@ -28,6 +28,7 @@ message TmallProduct {
     int32 reviews = 8;
     float rating = 9;
     repeated TmallReviewTag reviewTags = 10;
+    int64 lastUpdatedTime = 11;
 }
 
 // TmallMode - tmall mode

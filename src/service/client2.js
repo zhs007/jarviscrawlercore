@@ -658,6 +658,41 @@ function tmallProduct(servAddr, url) {
   );
 }
 
+/**
+ * taobaoProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} itemid - itemid
+ */
+function taobaoProduct(servAddr, itemid) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure()
+  );
+
+  const request = new messages.RequestTaobao();
+  request.setMode(messages.TaobaoMode.TBM_PRODUCT);
+  request.setItemid(itemid);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TAOBAO,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      }
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -695,4 +730,5 @@ function tmallProduct(servAddr, url) {
 // alimamaGetTop('127.0.0.1:7051');
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
 
-tmallProduct('127.0.0.1:7051', '525967713966');
+// tmallProduct('127.0.0.1:7051', '525967713966');
+taobaoProduct('127.0.0.1:7051', '592826167303');

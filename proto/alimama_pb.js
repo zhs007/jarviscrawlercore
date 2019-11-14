@@ -87,7 +87,9 @@ proto.jarviscrawlercore.AlimamaProduct.toObject = function(includeInstance, msg)
     shopurl: jspb.Message.getFieldWithDefault(msg, 12, ""),
     salesvolume2: jspb.Message.getFieldWithDefault(msg, 13, 0),
     presale: +jspb.Message.getFieldWithDefault(msg, 14, 0.0),
-    presaleprofit: +jspb.Message.getFieldWithDefault(msg, 15, 0.0)
+    presaleprofit: +jspb.Message.getFieldWithDefault(msg, 15, 0.0),
+    host: jspb.Message.getFieldWithDefault(msg, 16, ""),
+    itemid: jspb.Message.getFieldWithDefault(msg, 17, "")
   };
 
   if (includeInstance) {
@@ -183,6 +185,14 @@ proto.jarviscrawlercore.AlimamaProduct.deserializeBinaryFromReader = function(ms
     case 15:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setPresaleprofit(value);
+      break;
+    case 16:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setHost(value);
+      break;
+    case 17:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setItemid(value);
       break;
     default:
       reader.skipField();
@@ -315,6 +325,20 @@ proto.jarviscrawlercore.AlimamaProduct.serializeBinaryToWriter = function(messag
   if (f !== 0.0) {
     writer.writeFloat(
       15,
+      f
+    );
+  }
+  f = message.getHost();
+  if (f.length > 0) {
+    writer.writeString(
+      16,
+      f
+    );
+  }
+  f = message.getItemid();
+  if (f.length > 0) {
+    writer.writeString(
+      17,
       f
     );
   }
@@ -557,6 +581,36 @@ proto.jarviscrawlercore.AlimamaProduct.prototype.getPresaleprofit = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.AlimamaProduct.prototype.setPresaleprofit = function(value) {
   jspb.Message.setProto3FloatField(this, 15, value);
+};
+
+
+/**
+ * optional string host = 16;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AlimamaProduct.prototype.getHost = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AlimamaProduct.prototype.setHost = function(value) {
+  jspb.Message.setProto3StringField(this, 16, value);
+};
+
+
+/**
+ * optional string itemID = 17;
+ * @return {string}
+ */
+proto.jarviscrawlercore.AlimamaProduct.prototype.getItemid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.AlimamaProduct.prototype.setItemid = function(value) {
+  jspb.Message.setProto3StringField(this, 17, value);
 };
 
 

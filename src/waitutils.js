@@ -35,4 +35,33 @@ async function waitForFunction(page, selector, func, offtime, timeout) {
   return new Error('waitForFunction ' + selector + ' timeout');
 }
 
+/**
+ * waitForLocalFunction
+ * @param {object} page - page
+ * @param {function} func - non-async function () bool
+ * @param {number} offtime - offtime ms
+ * @param {number} timeout - timeout ms
+ * @return {error} err - error
+ */
+async function waitForLocalFunction(page, func, offtime, timeout) {
+  let ct = 0;
+  while (true) {
+    const isdone = func();
+
+    if (isdone) {
+      return undefined;
+    }
+
+    if (ct > timeout) {
+      break;
+    }
+
+    await sleep(offtime);
+    ct += offtime;
+  }
+
+  return new Error('waitForFunction ' + selector + ' timeout');
+}
+
 exports.waitForFunction = waitForFunction;
+exports.waitForLocalFunction = waitForLocalFunction;

@@ -112,6 +112,18 @@ function newTaobaoProduct(obj) {
     result.setAttributesList(obj.attributes);
   }
 
+  if (Array.isArray(obj.pay) && obj.pay.length > 0) {
+    result.setPayList(obj.pay);
+  }
+
+  if (Array.isArray(obj.service) && obj.service.length > 0) {
+    result.setServiceList(obj.service);
+  }
+
+  if (obj.wl) {
+    result.setWl(obj.wl);
+  }
+
   return result;
 }
 

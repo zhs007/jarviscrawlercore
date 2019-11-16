@@ -51,9 +51,7 @@ async function taobaoItem(browser, itemid, timeout) {
   page.on('response', async (res) => {
     const url = res.url();
 
-    if (
-      url.indexOf('sib.htm') >= 0
-    ) {
+    if (url.indexOf('sib.htm') >= 0) {
       log.info('response', url);
 
       if (url.indexOf('onSibRequestSuccess') >= 0) {
@@ -172,15 +170,39 @@ async function taobaoItem(browser, itemid, timeout) {
 
   if (!hasprice && sibobj.data && sibobj.data.originalPrice) {
     for (const k in sibobj.data.originalPrice) {
-      if (
-        Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)
-      ) {
+      if (Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)) {
         if (k != 'def') {
           mapPrice[k] = sibobj.data.originalPrice[k].price;
 
           hasprice = true;
         }
       }
+    }
+  }
+
+  const pay = [];
+  if (
+    sibobj.data &&
+    sibobj.data.tradeContract &&
+    sibobj.data.tradeContract.pay
+  ) {
+    for (let i = 0; i < sibobj.data.tradeContract.pay.length; ++i) {
+      pay.push(
+          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u'))
+      );
+    }
+  }
+
+  const service = [];
+  if (
+    sibobj.data &&
+    sibobj.data.tradeContract &&
+    sibobj.data.tradeContract.service
+  ) {
+    for (let i = 0; i < sibobj.data.tradeContract.service.length; ++i) {
+      service.push(
+          unescape(sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u'))
+      );
     }
   }
 
@@ -459,6 +481,25 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  ret.wl = await page
+      .$$eval('#J_WlServiceTitle', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItem.$$eval #J_WlServiceTitle', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   if (shopinfo) {
     if (shopinfo.lstlevel && shopinfo.lstscore) {
       shopinfo.rateLevel = [];
@@ -481,6 +522,8 @@ async function taobaoItem(browser, itemid, timeout) {
 
   ret.shop = shopinfo;
   ret.skus = skus;
+  ret.pay = pay;
+  ret.service = service;
 
   await page.close();
 

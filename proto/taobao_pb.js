@@ -658,7 +658,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TaobaoProduct.repeatedFields_ = [2,6];
+proto.jarviscrawlercore.TaobaoProduct.repeatedFields_ = [2,6,9,10];
 
 
 
@@ -697,7 +697,10 @@ proto.jarviscrawlercore.TaobaoProduct.toObject = function(includeInstance, msg) 
     lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 5, 0),
     attributesList: jspb.Message.getRepeatedField(msg, 6),
     shop: (f = msg.getShop()) && proto.jarviscrawlercore.TaobaoShopInfo.toObject(includeInstance, f),
-    salesvolume: jspb.Message.getFieldWithDefault(msg, 8, 0)
+    salesvolume: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    payList: jspb.Message.getRepeatedField(msg, 9),
+    serviceList: jspb.Message.getRepeatedField(msg, 10),
+    wl: jspb.Message.getFieldWithDefault(msg, 11, "")
   };
 
   if (includeInstance) {
@@ -767,6 +770,18 @@ proto.jarviscrawlercore.TaobaoProduct.deserializeBinaryFromReader = function(msg
     case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setSalesvolume(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addPay(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addService(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setWl(value);
       break;
     default:
       reader.skipField();
@@ -852,6 +867,27 @@ proto.jarviscrawlercore.TaobaoProduct.serializeBinaryToWriter = function(message
   if (f !== 0) {
     writer.writeInt32(
       8,
+      f
+    );
+  }
+  f = message.getPayList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
+      f
+    );
+  }
+  f = message.getServiceList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      10,
+      f
+    );
+  }
+  f = message.getWl();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
       f
     );
   }
@@ -1020,6 +1056,79 @@ proto.jarviscrawlercore.TaobaoProduct.prototype.getSalesvolume = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.TaobaoProduct.prototype.setSalesvolume = function(value) {
   jspb.Message.setProto3IntField(this, 8, value);
+};
+
+
+/**
+ * repeated string pay = 9;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.getPayList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TaobaoProduct.prototype.setPayList = function(value) {
+  jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.addPay = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoProduct.prototype.clearPayList = function() {
+  this.setPayList([]);
+};
+
+
+/**
+ * repeated string service = 10;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.getServiceList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TaobaoProduct.prototype.setServiceList = function(value) {
+  jspb.Message.setField(this, 10, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.addService = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 10, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoProduct.prototype.clearServiceList = function() {
+  this.setServiceList([]);
+};
+
+
+/**
+ * optional string wl = 11;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.getWl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoProduct.prototype.setWl = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
 };
 
 

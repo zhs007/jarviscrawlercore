@@ -731,4 +731,4 @@ function taobaoProduct(servAddr, itemid) {
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
 
 // tmallProduct('127.0.0.1:7051', '525967713966');
-taobaoProduct('127.0.0.1:7051', '592826167303');
+taobaoProduct('127.0.0.1:7051', '598970217666');

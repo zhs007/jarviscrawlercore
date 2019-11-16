@@ -52,12 +52,15 @@ async function taobaoItem(browser, itemid, timeout) {
     const url = res.url();
 
     if (
-      url.indexOf('sib.htm') >= 0 &&
-      url.indexOf('onSibRequestSuccess') >= 0
+      url.indexOf('sib.htm') >= 0
     ) {
-      sibret = await res.buffer().catch((err) => {
-        log.error('taobaoItem.WaitAllResponse.buffer ' + err);
-      });
+      log.info('response', url);
+
+      if (url.indexOf('onSibRequestSuccess') >= 0) {
+        sibret = await res.buffer().catch((err) => {
+          log.error('taobaoItem.WaitAllResponse.buffer ' + err);
+        });
+      }
     }
   });
 
@@ -152,6 +155,7 @@ async function taobaoItem(browser, itemid, timeout) {
   }
 
   const mapPrice = {};
+  let hasprice = false;
   if (sibobj.data && sibobj.data.promotion && sibobj.data.promotion.promoData) {
     for (const k in sibobj.data.promotion.promoData) {
       if (
@@ -159,6 +163,22 @@ async function taobaoItem(browser, itemid, timeout) {
       ) {
         if (k != 'def') {
           mapPrice[k] = sibobj.data.promotion.promoData[k][0].price;
+
+          hasprice = true;
+        }
+      }
+    }
+  }
+
+  if (!hasprice && sibobj.data && sibobj.data.originalPrice) {
+    for (const k in sibobj.data.originalPrice) {
+      if (
+        Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)
+      ) {
+        if (k != 'def') {
+          mapPrice[k] = sibobj.data.originalPrice[k].price;
+
+          hasprice = true;
         }
       }
     }
@@ -294,22 +314,24 @@ async function taobaoItem(browser, itemid, timeout) {
       skus[i].img = arr1[0];
       skus[i].img = skus[i].img.replace('30x30', '600x600');
       skus[i].img = 'https:' + skus[i].img;
+    }
 
-      if (mapStock[';' + skus[i].value + ';']) {
-        skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
-      }
+    if (mapStock[';' + skus[i].value + ';']) {
+      skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
+    }
 
-      if (mapPrice[';' + skus[i].value + ';']) {
-        skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
-      }
+    if (mapPrice[';' + skus[i].value + ';']) {
+      skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
+    } else if (sibobj.data.price) {
+      skus[i].price = parseFloat(sibobj.data.price);
+    }
 
-      if (skusret1 && skusret1.mapTitle[skus[i].value]) {
-        skus[i].title = skusret1.mapTitle[skus[i].value];
-      }
+    if (skusret1 && skusret1.mapTitle[skus[i].value]) {
+      skus[i].title = skusret1.mapTitle[skus[i].value];
+    }
 
-      if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
-        skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
-      }
+    if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
+      skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
     }
   }
 

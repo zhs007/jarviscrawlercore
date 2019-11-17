@@ -194,7 +194,8 @@ async function tmallDetail(browser, url, timeout) {
           if (lstem.length > 0) {
             return (
               eles[0].getElementsByClassName('rate-score').length > 0 &&
-              eles[0].getElementsByClassName('rate-tag-box').length > 0
+              (eles[0].getElementsByClassName('rate-tag-box').length > 0 ||
+                eles[0].getElementsByClassName('rate-graph').length > 0)
             );
           }
         }
@@ -253,16 +254,18 @@ async function tmallDetail(browser, url, timeout) {
     ret.reviews = parseInt(reviewret.reviews);
     ret.rating = parseFloat(reviewret.rating);
 
-    ret.reviewTags = [];
-    for (let i = 0; i < reviewret.tags.length; ++i) {
-      const arr = reviewret.tags[i].split('(');
-      if (arr.length == 2) {
-        const arr1 = arr[1].split(')');
-        if (arr1.length == 2) {
-          ret.reviewTags.push({
-            tag: arr[0],
-            times: parseInt(arr1[0]),
-          });
+    if (reviewret.tags) {
+      ret.reviewTags = [];
+      for (let i = 0; i < reviewret.tags.length; ++i) {
+        const arr = reviewret.tags[i].split('(');
+        if (arr.length == 2) {
+          const arr1 = arr[1].split(')');
+          if (arr1.length == 2) {
+            ret.reviewTags.push({
+              tag: arr[0],
+              times: parseInt(arr1[0]),
+            });
+          }
         }
       }
     }

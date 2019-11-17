@@ -1,5 +1,5 @@
 const log = require('../log');
-const {sleep, closeAllPagesEx} = require('../utils');
+const {closeAllPagesEx} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {

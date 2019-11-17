@@ -1,7 +1,7 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
-const {closeDialog} = require('./utils');
+const {closeDialog, nocaptcha} = require('./utils');
 const {waitForLocalFunction} = require('../waitutils');
 
 /**
@@ -107,6 +107,23 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: err.toString()};
   }
 
+  const captcharet = await nocaptcha(page);
+  if (captcharet.error) {
+    log.error('taobaoItem.nocaptcha', captcharet.error);
+
+    await page.close();
+
+    return {error: captcharet.error.toString()};
+  }
+
+  if (captcharet.isnocaptcha) {
+    const ret = await taobaoItem(browser, itemid, timeout);
+
+    await page.close();
+
+    return ret;
+  }
+
   awaiterr = await closeDialog(page);
   if (awaiterr) {
     log.error('taobaoItem.closeDialog', awaiterr);
@@ -159,7 +176,7 @@ async function taobaoItem(browser, itemid, timeout) {
       if (
         Object.prototype.hasOwnProperty.call(sibobj.data.promotion.promoData, k)
       ) {
-        if (k != 'def') {
+        if (k != 'def' && Array.isArray(sibobj.data.promotion.promoData[k])) {
           mapPrice[k] = sibobj.data.promotion.promoData[k][0].price;
 
           hasprice = true;
@@ -201,7 +218,9 @@ async function taobaoItem(browser, itemid, timeout) {
   ) {
     for (let i = 0; i < sibobj.data.tradeContract.service.length; ++i) {
       service.push(
-          unescape(sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u'))
+          unescape(
+              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u')
+          )
       );
     }
   }
@@ -344,7 +363,7 @@ async function taobaoItem(browser, itemid, timeout) {
 
     if (mapPrice[';' + skus[i].value + ';']) {
       skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
-    } else if (sibobj.data.price) {
+    } else if (sibobj.data && sibobj.data.price) {
       skus[i].price = parseFloat(sibobj.data.price);
     }
 

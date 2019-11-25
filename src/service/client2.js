@@ -803,5 +803,5 @@ function mountainstealsSale(servAddr, url) {
 // tmallProduct('127.0.0.1:7051', '525967713966');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
-// mountainstealsProduct('127.0.0.1:7051', 'promo/msbf19');
-mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
+mountainstealsProduct('127.0.0.1:7051', 'smartwool-women-s-dasher-crew-sock_10384064');
+// mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');

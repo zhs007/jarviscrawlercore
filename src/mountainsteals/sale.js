@@ -26,7 +26,7 @@ async function getProducts(page, timeout) {
             }
 
             return lst;
-          }
+          },
       )
       .catch((err) => {
         awaiterr = err;
@@ -130,7 +130,7 @@ async function mountainstealsSale(browser, url, timeout) {
     if (awaiterr) {
       log.error(
           'mountainstealsSale.$$ .search-pagination-button.next-page',
-          awaiterr
+          awaiterr,
       );
 
       await page.close();

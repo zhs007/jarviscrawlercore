@@ -11,7 +11,8 @@ enum MountainStealsMode {
 
 // MountainStealsSale - mountain steals sale
 message MountainStealsSale {
-    repeated string url = 1;
+    repeated string products = 1;
+    string saleurl = 2;
 }
 
 // MountainStealsColorSize - mountain steals color size

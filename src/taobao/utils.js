@@ -81,7 +81,7 @@ async function nocaptcha(page) {
           const bbbox0 = await lstslide[0].boundingBox();
           const bbbox1 = await lstcoscale[0].boundingBox();
 
-          await holdBarMove(page, bbbox0, bbbox1, 300);
+          await holdBarMove(page, bbbox0, bbbox1, 500, Math.floor(1000 / 60));
 
           return {isnocaptcha: true};
         }

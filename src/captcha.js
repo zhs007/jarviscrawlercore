@@ -7,9 +7,10 @@ const log = require('./log');
  * @param {object} barBox - bar boundingbox
  * @param {object} rcBox - rect boundingbox
  * @param {int} time - move time in ms
+ * @param {int} offtime - offset time in ms
  * @return {error} err - error
  */
-async function holdBarMove(page, barBox, rcBox, time) {
+async function holdBarMove(page, barBox, rcBox, time, offtime) {
   const ex = Math.floor(rcBox.x + rcBox.width - Math.random() * 16 - 8);
   let bx = Math.floor(barBox.x + barBox.width / 2 + Math.random() * 16 - 8);
 
@@ -25,7 +26,7 @@ async function holdBarMove(page, barBox, rcBox, time) {
 
   const pixeltime = (ex - bx) / time;
 
-  const ot = Math.floor(time / 10);
+  let ot = offtime;
 
   while (bx < ex) {
     const cot = Math.floor((0.7 * Math.random() + 0.6) * ot);
@@ -37,11 +38,13 @@ async function holdBarMove(page, barBox, rcBox, time) {
         barBox.y + barBox.height / 2 + Math.random() * 16 - 8
     );
 
-    log.debug('holdBarMove move', {bx: bx, cy: cy});
+    log.debug('holdBarMove move', {bx: bx, cy: cy, ot: cot});
 
     await page.mouse.move(bx, cy);
 
     await sleep(cot);
+
+    ot = Math.floor(ot * 1.1);
   }
 
   await page.mouse.up();

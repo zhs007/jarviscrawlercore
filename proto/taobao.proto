@@ -31,7 +31,10 @@ message TaobaoProduct {
     int64 lastUpdatedTime = 5;
     repeated string attributes = 6;
     TaobaoShopInfo shop = 7;
-    int32 salesVolume = 8;     // 月销量
+    int32 salesVolume = 8;          // 月销量
+    repeated string pay = 9;        // 支付列表，譬如信用卡等
+    repeated string service = 10;   // 服务承诺列表，譬如7天无理由退换等
+    string wl = 11;                 // 物流服务
 }
 
 // TaobaoMode - taobao mode

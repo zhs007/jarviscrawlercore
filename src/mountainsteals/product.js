@@ -1,4 +1,4 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 
@@ -81,7 +81,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval #breadcrumb',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -114,7 +114,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval #product_name',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -141,7 +141,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval .RatingAddtlInfo',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -202,7 +202,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval div[itemprop="offers"]',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -228,7 +228,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval .alt-color-img-box',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -250,7 +250,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval #product-details',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -272,7 +272,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval #productSpecTechParent',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -298,7 +298,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval .bv-inline-histogram-ratings-bar',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -313,7 +313,7 @@ async function mountainstealsProduct(browser, url, timeout) {
           for (let i = 0; i < eles.length; ++i) {
             let n = undefined;
             const cn = eles[i].getElementsByClassName(
-                'bv-secondary-rating-summary-id bv-td'
+                'bv-secondary-rating-summary-id bv-td',
             );
             if (cn.length > 0) {
               n = cn[0].innerText;
@@ -332,7 +332,7 @@ async function mountainstealsProduct(browser, url, timeout) {
               }
             } else {
               const cv = eles[i].getElementsByClassName(
-                  'bv-secondary-rating-summary-rating'
+                  'bv-secondary-rating-summary-rating',
               );
               if (cv.length > 0) {
                 mapRating[n] = cv[0].innerText;
@@ -351,7 +351,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval .bv-secondary-rating-summary-bars-container',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -373,7 +373,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval #SizeGuide',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -395,7 +395,7 @@ async function mountainstealsProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'mountainstealsProduct.waitForSelector $$eval .po-link.po-size-link.js-po-link-selectColor',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -411,7 +411,7 @@ async function mountainstealsProduct(browser, url, timeout) {
     if (awaiterr) {
       log.error(
           'mountainstealsProduct.waitForSelector #color-select',
-          awaiterr
+          awaiterr,
       );
 
       await page.close();
@@ -427,7 +427,7 @@ async function mountainstealsProduct(browser, url, timeout) {
             for (let i = 0; i < items.length; ++i) {
               const cs = {};
               const lstcn = items[i].getElementsByClassName(
-                  'po-color-name js-color-name'
+                  'po-color-name js-color-name',
               );
               if (lstcn.length > 0) {
                 cs.colorname = lstcn[0].innerText;
@@ -451,7 +451,7 @@ async function mountainstealsProduct(browser, url, timeout) {
     if (awaiterr) {
       log.error(
           'mountainstealsProduct.waitForSelector $$eval #color-select',
-          awaiterr
+          awaiterr,
       );
 
       await page.close();

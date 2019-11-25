@@ -1,26 +1,26 @@
 const messages = require('../../../proto/result_pb');
-// const {steepandcheapProducts} = require('../../steepandcheap/products');
-const {steepandcheapProducts2} = require('../../steepandcheap/products2');
-const {steepandcheapProduct} = require('../../steepandcheap/product');
+const {mountainstealsProduct} = require('../../mountainsteals/product');
+const {mountainstealsSale} = require('../../mountainsteals/sale');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
-const {newReplySteepAndCheap} = require('../../proto.steepandcheap');
+const {newReplyMountainSteals} = require('../../proto.mountainsteals');
 
 /**
- * callSteepAndCheap - steepandcheap
+ * callMountainsteals - mountainsteals
  * @param {object} browser - browser
  * @param {object} cfg - cfg
  * @param {object} call - call
- * @param {object} param - RequestSteepAndCheap
+ * @param {object} param - RequestMountainsteals
  * @param {object} request - RequestCrawler
  */
-function callSteepAndCheap(browser, cfg, call, param, request) {
+function callMountainsteals(browser, cfg, call, param, request) {
   let timeout = 3 * 60 * 1000;
+
   if (request.getTimeout()) {
     timeout = request.getTimeout();
   }
 
-  if (param.getMode() == messages.SteepAndCheapMode.SACM_PRODUCTS) {
-    steepandcheapProducts2(browser, param.getUrl(), param.getPage(), timeout)
+  if (param.getMode() == messages.MountainStealsMode.MSM_SALE) {
+    mountainstealsSale(browser, param.getUrl(), timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -30,20 +30,20 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplySteepAndCheap(
-              messages.SteepAndCheapMode.SACM_PRODUCTS,
+          const val = newReplyMountainSteals(
+              messages.MountainStealsMode.MSM_SALE,
               ret.ret,
           );
 
-          setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
+          setReplyCrawler(reply, messages.CrawlerType.CT_MOUNTAINSTEALS, val);
 
           replyMsg(call, reply, true);
         })
         .catch((err) => {
           replyError(call, err.toString(), true);
         });
-  } else if (param.getMode() == messages.SteepAndCheapMode.SACM_PRODUCT) {
-    steepandcheapProduct(browser, param.getUrl(), timeout)
+  } else if (param.getMode() == messages.MountainStealsMode.MSM_PRODUCT) {
+    mountainstealsProduct(browser, param.getUrl(), timeout)
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);
@@ -53,12 +53,12 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplySteepAndCheap(
-              messages.SteepAndCheapMode.SACM_PRODUCT,
+          const val = newReplyMountainSteals(
+              messages.MountainStealsMode.MSM_PRODUCT,
               ret.ret,
           );
 
-          setReplyCrawler(reply, messages.CrawlerType.CT_STEEPANDCHEAP, val);
+          setReplyCrawler(reply, messages.CrawlerType.CT_MOUNTAINSTEALS, val);
 
           replyMsg(call, reply, true);
         })
@@ -70,4 +70,4 @@ function callSteepAndCheap(browser, cfg, call, param, request) {
   }
 }
 
-exports.callSteepAndCheap = callSteepAndCheap;
+exports.callMountainsteals = callMountainsteals;

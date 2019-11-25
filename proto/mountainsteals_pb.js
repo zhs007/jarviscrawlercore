@@ -71,7 +71,8 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.toObject = function(opt_inc
  */
 proto.jarviscrawlercore.MountainStealsSale.toObject = function(includeInstance, msg) {
   var f, obj = {
-    urlList: jspb.Message.getRepeatedField(msg, 1)
+    productsList: jspb.Message.getRepeatedField(msg, 1),
+    saleurl: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -110,7 +111,11 @@ proto.jarviscrawlercore.MountainStealsSale.deserializeBinaryFromReader = functio
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.addUrl(value);
+      msg.addProducts(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSaleurl(value);
       break;
     default:
       reader.skipField();
@@ -141,10 +146,17 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.serializeBinary = function(
  */
 proto.jarviscrawlercore.MountainStealsSale.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getUrlList();
+  f = message.getProductsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       1,
+      f
+    );
+  }
+  f = message.getSaleurl();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
       f
     );
   }
@@ -152,16 +164,16 @@ proto.jarviscrawlercore.MountainStealsSale.serializeBinaryToWriter = function(me
 
 
 /**
- * repeated string url = 1;
+ * repeated string products = 1;
  * @return {!Array<string>}
  */
-proto.jarviscrawlercore.MountainStealsSale.prototype.getUrlList = function() {
+proto.jarviscrawlercore.MountainStealsSale.prototype.getProductsList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 
 /** @param {!Array<string>} value */
-proto.jarviscrawlercore.MountainStealsSale.prototype.setUrlList = function(value) {
+proto.jarviscrawlercore.MountainStealsSale.prototype.setProductsList = function(value) {
   jspb.Message.setField(this, 1, value || []);
 };
 
@@ -170,13 +182,28 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.setUrlList = function(value
  * @param {string} value
  * @param {number=} opt_index
  */
-proto.jarviscrawlercore.MountainStealsSale.prototype.addUrl = function(value, opt_index) {
+proto.jarviscrawlercore.MountainStealsSale.prototype.addProducts = function(value, opt_index) {
   jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 
-proto.jarviscrawlercore.MountainStealsSale.prototype.clearUrlList = function() {
-  this.setUrlList([]);
+proto.jarviscrawlercore.MountainStealsSale.prototype.clearProductsList = function() {
+  this.setProductsList([]);
+};
+
+
+/**
+ * optional string saleurl = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.MountainStealsSale.prototype.getSaleurl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.MountainStealsSale.prototype.setSaleurl = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 

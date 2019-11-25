@@ -5,6 +5,7 @@ const {callAnalyzePage} = require('./plugins/analyzepage');
 const {callGeoIP} = require('./plugins/geoip');
 const {callTechInAsia} = require('./plugins/techinasia');
 const {callSteepAndCheap} = require('./plugins/steepandcheap');
+const {callMountainsteals} = require('./plugins/mountainsteals');
 const {callJRJ} = require('./plugins/jrj');
 const {callJD} = require('./plugins/jd');
 const {callAlimama} = require('./plugins/alimama');
@@ -141,6 +142,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getTaobao();
 
     callTaobao(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_MOUNTAINSTEALS) {
+    if (!call.request.hasMountainsteals()) {
+      replyError(call, 'no mountainsteals');
+
+      return;
+    }
+
+    const param = call.request.getMountainsteals();
+
+    callMountainsteals(browser, cfg, call, param, call.request);
   }
 }
 

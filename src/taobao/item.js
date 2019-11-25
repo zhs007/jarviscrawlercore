@@ -1,7 +1,7 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
-const {closeDialog} = require('./utils');
+const {closeDialog, nocaptcha} = require('./utils');
 const {waitForLocalFunction} = require('../waitutils');
 
 /**
@@ -51,13 +51,14 @@ async function taobaoItem(browser, itemid, timeout) {
   page.on('response', async (res) => {
     const url = res.url();
 
-    if (
-      url.indexOf('sib.htm') >= 0 &&
-      url.indexOf('onSibRequestSuccess') >= 0
-    ) {
-      sibret = await res.buffer().catch((err) => {
-        log.error('taobaoItem.WaitAllResponse.buffer ' + err);
-      });
+    if (url.indexOf('sib.htm') >= 0) {
+      log.info('response', url);
+
+      if (url.indexOf('onSibRequestSuccess') >= 0) {
+        sibret = await res.buffer().catch((err) => {
+          log.error('taobaoItem.WaitAllResponse.buffer ' + err);
+        });
+      }
     }
   });
 
@@ -106,6 +107,23 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: err.toString()};
   }
 
+  const captcharet = await nocaptcha(page);
+  if (captcharet.error) {
+    log.error('taobaoItem.nocaptcha', captcharet.error);
+
+    await page.close();
+
+    return {error: captcharet.error.toString()};
+  }
+
+  if (captcharet.isnocaptcha) {
+    const ret = await taobaoItem(browser, itemid, timeout);
+
+    await page.close();
+
+    return ret;
+  }
+
   awaiterr = await closeDialog(page);
   if (awaiterr) {
     log.error('taobaoItem.closeDialog', awaiterr);
@@ -152,15 +170,58 @@ async function taobaoItem(browser, itemid, timeout) {
   }
 
   const mapPrice = {};
+  let hasprice = false;
   if (sibobj.data && sibobj.data.promotion && sibobj.data.promotion.promoData) {
     for (const k in sibobj.data.promotion.promoData) {
       if (
         Object.prototype.hasOwnProperty.call(sibobj.data.promotion.promoData, k)
       ) {
-        if (k != 'def') {
+        if (k != 'def' && Array.isArray(sibobj.data.promotion.promoData[k])) {
           mapPrice[k] = sibobj.data.promotion.promoData[k][0].price;
+
+          hasprice = true;
         }
       }
+    }
+  }
+
+  if (!hasprice && sibobj.data && sibobj.data.originalPrice) {
+    for (const k in sibobj.data.originalPrice) {
+      if (Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)) {
+        if (k != 'def') {
+          mapPrice[k] = sibobj.data.originalPrice[k].price;
+
+          hasprice = true;
+        }
+      }
+    }
+  }
+
+  const pay = [];
+  if (
+    sibobj.data &&
+    sibobj.data.tradeContract &&
+    sibobj.data.tradeContract.pay
+  ) {
+    for (let i = 0; i < sibobj.data.tradeContract.pay.length; ++i) {
+      pay.push(
+          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u'))
+      );
+    }
+  }
+
+  const service = [];
+  if (
+    sibobj.data &&
+    sibobj.data.tradeContract &&
+    sibobj.data.tradeContract.service
+  ) {
+    for (let i = 0; i < sibobj.data.tradeContract.service.length; ++i) {
+      service.push(
+          unescape(
+              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u')
+          )
+      );
     }
   }
 
@@ -294,22 +355,24 @@ async function taobaoItem(browser, itemid, timeout) {
       skus[i].img = arr1[0];
       skus[i].img = skus[i].img.replace('30x30', '600x600');
       skus[i].img = 'https:' + skus[i].img;
+    }
 
-      if (mapStock[';' + skus[i].value + ';']) {
-        skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
-      }
+    if (mapStock[';' + skus[i].value + ';']) {
+      skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
+    }
 
-      if (mapPrice[';' + skus[i].value + ';']) {
-        skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
-      }
+    if (mapPrice[';' + skus[i].value + ';']) {
+      skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
+    } else if (sibobj.data && sibobj.data.price) {
+      skus[i].price = parseFloat(sibobj.data.price);
+    }
 
-      if (skusret1 && skusret1.mapTitle[skus[i].value]) {
-        skus[i].title = skusret1.mapTitle[skus[i].value];
-      }
+    if (skusret1 && skusret1.mapTitle[skus[i].value]) {
+      skus[i].title = skusret1.mapTitle[skus[i].value];
+    }
 
-      if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
-        skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
-      }
+    if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
+      skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
     }
   }
 
@@ -437,6 +500,25 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  ret.wl = await page
+      .$$eval('#J_WlServiceTitle', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItem.$$eval #J_WlServiceTitle', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   if (shopinfo) {
     if (shopinfo.lstlevel && shopinfo.lstscore) {
       shopinfo.rateLevel = [];
@@ -459,6 +541,8 @@ async function taobaoItem(browser, itemid, timeout) {
 
   ret.shop = shopinfo;
   ret.skus = skus;
+  ret.pay = pay;
+  ret.service = service;
 
   await page.close();
 

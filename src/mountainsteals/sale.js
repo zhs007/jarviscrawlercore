@@ -26,7 +26,7 @@ async function getProducts(page, timeout) {
             }
 
             return lst;
-          }
+          },
       )
       .catch((err) => {
         awaiterr = err;
@@ -58,7 +58,7 @@ async function mountainstealsSale(browser, url, timeout) {
   const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
     const url = frame.url();
 
-    return url.indexOf(baseurl) == 0;
+    return url.toLowerCase().indexOf(baseurl) == 0;
   });
 
   await page
@@ -130,7 +130,7 @@ async function mountainstealsSale(browser, url, timeout) {
     if (awaiterr) {
       log.error(
           'mountainstealsSale.$$ .search-pagination-button.next-page',
-          awaiterr
+          awaiterr,
       );
 
       await page.close();

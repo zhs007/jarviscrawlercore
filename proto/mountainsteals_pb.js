@@ -72,7 +72,8 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.toObject = function(opt_inc
 proto.jarviscrawlercore.MountainStealsSale.toObject = function(includeInstance, msg) {
   var f, obj = {
     productsList: jspb.Message.getRepeatedField(msg, 1),
-    saleurl: jspb.Message.getFieldWithDefault(msg, 2, "")
+    saleurl: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    code: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -117,6 +118,10 @@ proto.jarviscrawlercore.MountainStealsSale.deserializeBinaryFromReader = functio
       var value = /** @type {string} */ (reader.readString());
       msg.setSaleurl(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCode(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -157,6 +162,13 @@ proto.jarviscrawlercore.MountainStealsSale.serializeBinaryToWriter = function(me
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getCode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
       f
     );
   }
@@ -204,6 +216,21 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.getSaleurl = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.MountainStealsSale.prototype.setSaleurl = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string code = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.MountainStealsSale.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.MountainStealsSale.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

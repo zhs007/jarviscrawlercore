@@ -25,7 +25,7 @@ async function procMainCategory2(
     categoryIndex2,
     waitchgpage,
     waitAllResponse,
-    timeout
+    timeout,
 ) {
   const awaiterr = undefined;
   const lstcategory2 = await page
@@ -72,7 +72,7 @@ async function procMainCategory2(
       if (lstc.length <= categoryIndex2) {
         return {
           error: new Error(
-              'alimamaGetTop.procMainCategory2 invalid $$(.pub-threeiQ).'
+              'alimamaGetTop.procMainCategory2 invalid $$(.pub-threeiQ).',
           ),
         };
       }
@@ -92,7 +92,7 @@ async function procMainCategory2(
     const retWaitAllProducts = await waitAllProducts(
         page,
         waitAllResponse,
-        timeout
+        timeout,
     );
     if (retWaitAllProducts) {
       await page.close();
@@ -130,7 +130,7 @@ async function procMainCategory(
     categoryIndex,
     waitchgpage,
     waitAllResponse,
-    timeout
+    timeout,
 ) {
   let awaiterr = undefined;
   const lstcategory = await page
@@ -174,7 +174,7 @@ async function procMainCategory(
       if (lstc.length <= categoryIndex) {
         return {
           error: new Error(
-              'alimamaGetTop.procMainCategory invalid $$(.pub-threeiI).'
+              'alimamaGetTop.procMainCategory invalid $$(.pub-threeiI).',
           ),
         };
       }
@@ -216,7 +216,7 @@ async function procMainCategory(
           i,
           waitchgpage,
           waitAllResponse,
-          timeout
+          timeout,
       );
       if (cr.error) {
         return {error: cr.error};
@@ -342,7 +342,7 @@ async function alimamaGetTop(browser, cfg, timeout) {
         i,
         waitchgpage,
         waitAllResponse,
-        timeout
+        timeout,
     );
     if (cr.error) {
       return {error: cr.error};

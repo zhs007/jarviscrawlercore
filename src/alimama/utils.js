@@ -36,7 +36,7 @@ async function procNoCaptcha(page, frame) {
 
         await page.mouse.move(
             bx,
-            Math.floor(bbox.y + bbox.height / 2 + Math.random() * 10 - 5)
+            Math.floor(bbox.y + bbox.height / 2 + Math.random() * 10 - 5),
         );
 
         await sleep(Math.floor(100 + Math.random() * 50));
@@ -50,7 +50,7 @@ async function procNoCaptcha(page, frame) {
           // console.log('bx ', bx);
           await page.mouse.move(
               bx,
-              Math.floor(bbox.y + bbox.height / 2 + Math.random() * 10 - 5)
+              Math.floor(bbox.y + bbox.height / 2 + Math.random() * 10 - 5),
           );
           await sleep(30);
         }

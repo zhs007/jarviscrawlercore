@@ -22,7 +22,7 @@ async function execSteepAndCheap(program, version) {
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help',
           );
 
           return;
@@ -32,7 +32,7 @@ async function execSteepAndCheap(program, version) {
 
         if (mode == 'products' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help',
           );
 
           return;
@@ -40,7 +40,7 @@ async function execSteepAndCheap(program, version) {
 
         if (mode == 'products2' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help',
           );
 
           return;
@@ -48,7 +48,7 @@ async function execSteepAndCheap(program, version) {
 
         if (mode == 'product' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler steepandcheap --help'
+              'command wrong, please type ' + 'jarviscrawler steepandcheap --help',
           );
 
           return;
@@ -77,7 +77,7 @@ async function execSteepAndCheap(program, version) {
                 browser,
                 options.url,
                 page,
-                timeout
+                timeout,
             );
             log.console(JSON.stringify(ret));
           } else if (mode == 'products2') {
@@ -85,7 +85,7 @@ async function execSteepAndCheap(program, version) {
                 browser,
                 options.url,
                 page,
-                timeout
+                timeout,
             );
             log.console(JSON.stringify(ret));
           } else if (mode == 'product') {

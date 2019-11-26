@@ -56,35 +56,35 @@ async function getFirstProductURL(page) {
   return ret;
 }
 
-/**
- * getPageURL - get page url
- * @param {object} page - page
- * @param {number} pageid - pageid, is like 1, 2, 3
- * @return {object} ret - {error, url}
- */
-async function getPageURL(page, pageid) {
-  let awaiterr;
-  const url = await page
-      .evaluate((pageid) => {
-        const lstpages = document.getElementsByClassName('page-link');
-        if (lstpages.length > 0) {
-          const lsta = lstpages[pageid - 2].getElementsByTagName('a');
-          if (lsta.length > 0) {
-            return lsta[0].href;
-          }
-        }
+// /**
+//  * getPageURL - get page url
+//  * @param {object} page - page
+//  * @param {number} pageid - pageid, is like 1, 2, 3
+//  * @return {object} ret - {error, url}
+//  */
+// async function getPageURL(page, pageid) {
+//   let awaiterr;
+//   const url = await page
+//       .evaluate((pageid) => {
+//         const lstpages = document.getElementsByClassName('page-link');
+//         if (lstpages.length > 0) {
+//           const lsta = lstpages[pageid - 2].getElementsByTagName('a');
+//           if (lsta.length > 0) {
+//             return lsta[0].href;
+//           }
+//         }
 
-        return '';
-      }, pageid)
-      .catch((err) => {
-        awaiterr = err;
-      });
-  if (awaiterr) {
-    return {error: awaiterr};
-  }
+//         return '';
+//       }, pageid)
+//       .catch((err) => {
+//         awaiterr = err;
+//       });
+//   if (awaiterr) {
+//     return {error: awaiterr};
+//   }
 
-  return {url: url};
-}
+//   return {url: url};
+// }
 
 /**
  * getPageURLWithIndex - get page url
@@ -237,7 +237,7 @@ async function chgPage(page, pageid, baseurl, firsturl, timeout) {
 
       if (cpoi.pi >= 0 && cpoi.pi >= lstpages.length) {
         return new Error(
-            'chgPage invalid pi(' + cpoi.pi + ',' + lstpages.length + ')'
+            'chgPage invalid pi(' + cpoi.pi + ',' + lstpages.length + ')',
         );
       }
 
@@ -381,8 +381,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   //   url += '&page=' + (pageid - 1).toString();
   // }
 
-  const furl =
-    'https://www.steepandcheap.com/' + url + '?sort=-price';
+  const furl = 'https://www.steepandcheap.com/' + url + '?sort=-price';
 
   await page
       .goto(furl, {
@@ -427,7 +426,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
   if (awaiterr) {
     log.error(
         'steepandcheapProducts.waitForSelector .plp-products-wrap',
-        awaiterr
+        awaiterr,
     );
 
     await page.close();
@@ -478,7 +477,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
             }
 
             const lowprice = curele.getElementsByClassName(
-                'ui-pl-pricing-low-price'
+                'ui-pl-pricing-low-price',
             );
             if (lowprice.length > 0) {
               const lowpricearr = lowprice[0].innerText.split('$', -1);
@@ -494,7 +493,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
             }
 
             const highprice = curele.getElementsByClassName(
-                'ui-pl-pricing-high-price'
+                'ui-pl-pricing-high-price',
             );
             if (highprice.length > 0) {
               const highpricearr = highprice[0].innerText.split('$', -1);
@@ -513,7 +512,7 @@ async function steepandcheapProducts(browser, url, pageid, timeout) {
             if (ratingbase.length > 0) {
               try {
                 curret.ratingValue = parseInt(
-                    ratingbase[0].children[0].innerText
+                    ratingbase[0].children[0].innerText,
                 );
               } catch (err) {
                 console.log('invalid rating-base ' + ratingbase[0]);

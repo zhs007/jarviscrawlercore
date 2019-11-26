@@ -72,7 +72,9 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.toObject = function(opt_inc
 proto.jarviscrawlercore.MountainStealsSale.toObject = function(includeInstance, msg) {
   var f, obj = {
     productsList: jspb.Message.getRepeatedField(msg, 1),
-    saleurl: jspb.Message.getFieldWithDefault(msg, 2, "")
+    saleurl: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    code: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -117,6 +119,14 @@ proto.jarviscrawlercore.MountainStealsSale.deserializeBinaryFromReader = functio
       var value = /** @type {string} */ (reader.readString());
       msg.setSaleurl(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCode(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -157,6 +167,20 @@ proto.jarviscrawlercore.MountainStealsSale.serializeBinaryToWriter = function(me
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getCode();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
       f
     );
   }
@@ -204,6 +228,36 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.getSaleurl = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.MountainStealsSale.prototype.setSaleurl = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string code = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.MountainStealsSale.prototype.getCode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.MountainStealsSale.prototype.setCode = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.MountainStealsSale.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.MountainStealsSale.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -526,7 +580,8 @@ proto.jarviscrawlercore.MountainStealsProduct.toObject = function(includeInstanc
     spec: jspb.Message.getFieldWithDefault(msg, 12, ""),
     ratingcountList: jspb.Message.getRepeatedField(msg, 13),
     mapradingMap: (f = msg.getMapradingMap()) ? f.toObject(includeInstance, undefined) : [],
-    sizegiud: jspb.Message.getFieldWithDefault(msg, 15, "")
+    sizegiud: jspb.Message.getFieldWithDefault(msg, 15, ""),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 16, 0)
   };
 
   if (includeInstance) {
@@ -625,6 +680,10 @@ proto.jarviscrawlercore.MountainStealsProduct.deserializeBinaryFromReader = func
     case 15:
       var value = /** @type {string} */ (reader.readString());
       msg.setSizegiud(value);
+      break;
+    case 16:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
       break;
     default:
       reader.skipField();
@@ -755,6 +814,13 @@ proto.jarviscrawlercore.MountainStealsProduct.serializeBinaryToWriter = function
   if (f.length > 0) {
     writer.writeString(
       15,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      16,
       f
     );
   }
@@ -1044,6 +1110,21 @@ proto.jarviscrawlercore.MountainStealsProduct.prototype.getSizegiud = function()
 /** @param {string} value */
 proto.jarviscrawlercore.MountainStealsProduct.prototype.setSizegiud = function(value) {
   jspb.Message.setProto3StringField(this, 15, value);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 16;
+ * @return {number}
+ */
+proto.jarviscrawlercore.MountainStealsProduct.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.MountainStealsProduct.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 

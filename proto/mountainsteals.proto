@@ -13,6 +13,8 @@ enum MountainStealsMode {
 message MountainStealsSale {
     repeated string products = 1;
     string saleurl = 2;
+    string code = 3;
+    int64 lastUpdatedTime = 4;
 }
 
 // MountainStealsColorSize - mountain steals color size
@@ -41,6 +43,7 @@ message MountainStealsProduct {
     repeated int32 ratingCount = 13;
     map<string, float> mapRading = 14;
     string sizeGiud = 15;
+    int64 lastUpdatedTime = 16;
 }
 
 // RequestMountainSteals - request mountain steals

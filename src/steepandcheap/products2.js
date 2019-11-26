@@ -327,7 +327,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
               }
 
               const lowprice = curele.getElementsByClassName(
-                  'ui-pl-pricing-low-price'
+                  'ui-pl-pricing-low-price',
               );
               if (lowprice.length > 0) {
                 const lowpricearr = lowprice[0].innerText.split('$', -1);
@@ -336,7 +336,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
                 } else {
                   try {
                     curret.curPrice = parseFloat(
-                        lowpricearr[1].split(',').join('')
+                        lowpricearr[1].split(',').join(''),
                     );
                   } catch (err) {
                     console.log('invalid low price ' + lowprice[0].innerText);
@@ -345,7 +345,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
               }
 
               const highprice = curele.getElementsByClassName(
-                  'ui-pl-pricing-high-price'
+                  'ui-pl-pricing-high-price',
               );
               if (highprice.length > 0) {
                 const highpricearr = highprice[0].innerText.split('$', -1);
@@ -354,7 +354,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
                 } else {
                   try {
                     curret.price = parseFloat(
-                        highpricearr[1].split(',').join('')
+                        highpricearr[1].split(',').join(''),
                     );
                   } catch (err) {
                     console.log('invalid high price ' + highprice[0].innerText);
@@ -366,7 +366,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
               if (ratingbase.length > 0) {
                 try {
                   curret.ratingValue = parseInt(
-                      ratingbase[0].children[0].innerText
+                      ratingbase[0].children[0].innerText,
                   );
                 } catch (err) {
                   console.log('invalid rating-base ' + ratingbase[0]);

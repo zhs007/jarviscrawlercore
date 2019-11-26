@@ -12,4 +12,4 @@ parserOptions:
 rules: 
   max-len: 
   - 2
-  - {code: 120}
+  - {code: 120, comments: 180, ignoreStrings: true}

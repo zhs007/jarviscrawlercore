@@ -784,7 +784,10 @@ function mountainstealsSale(servAddr, url) {
 // techinasiaJob('127.0.0.1:7051', 'b6f2b504-e3b5-4f33-9732-5d0d59af828f');
 // techinasiaJobTags('127.0.0.1:7051', 'TYPE');
 // steepandcheapProducts('127.0.0.1:7051', 'rc/arcteryx-on-sale', 0);
-// steepandcheapProduct('127.0.0.1:7051', 'arc-teryx-rho-lt-zip-neck-top-womens?skid=ARC3698-HARCOR-XL&ti=UExQIFJ1bGUgQmFzZWQ6QXJjJ3Rlcnl4IE9uIFNhbGU6MzoxOg==');
+// steepandcheapProduct(
+//     '127.0.0.1:7051',
+//     'arc-teryx-rho-lt-zip-neck-top-womens?skid=ARC3698-HARCOR-XL&ti=UExQIFJ1bGUgQmFzZWQ6QXJjJ3Rlcnl4IE9uIFNhbGU6MzoxOg==',
+// );
 
 // jrjFunds('127.0.0.1:7051');
 // jrjFund('127.0.0.1:7051', '110011');
@@ -803,5 +806,32 @@ function mountainstealsSale(servAddr, url) {
 // tmallProduct('127.0.0.1:7051', '525967713966');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
-mountainstealsProduct('127.0.0.1:7051', 'smartwool-women-s-dasher-crew-sock_10384064');
+mountainstealsProduct(
+    '127.0.0.1:7051',
+    'smartwool-women-s-dasher-crew-sock_10384064',
+);
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
+
+exports.startTranslate2 = startTranslate2;
+exports.getCrunchBaseCompany = getCrunchBaseCompany;
+exports.analyzePage = analyzePage;
+exports.geoip = geoip;
+exports.techinasiaCompany = techinasiaCompany;
+exports.techinasiaJob = techinasiaJob;
+exports.techinasiaJobTags = techinasiaJobTags;
+exports.steepandcheapProducts = steepandcheapProducts;
+exports.steepandcheapProduct = steepandcheapProduct;
+exports.jrjFunds = jrjFunds;
+exports.jrjFund = jrjFund;
+exports.jrjFundManager = jrjFundManager;
+exports.jrjFundValue = jrjFundValue;
+exports.jdActive = jdActive;
+exports.jdProduct = jdProduct;
+exports.jdActivePage = jdActivePage;
+exports.alimamaKeepalive = alimamaKeepalive;
+exports.alimamaGetTop = alimamaGetTop;
+exports.alimamaSearch = alimamaSearch;
+exports.tmallProduct = tmallProduct;
+exports.taobaoProduct = taobaoProduct;
+exports.mountainstealsSale = mountainstealsSale;
+exports.mountainstealsProduct = mountainstealsProduct;

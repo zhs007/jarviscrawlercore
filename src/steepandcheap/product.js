@@ -17,31 +17,31 @@ function validImageSrc(src) {
   return src;
 }
 
-/**
- * getColorName - get color name
- * @param {object} page - page
- * @return {string} str - color name
- */
-async function getColorName(page) {
-  let awaiterr;
-  const name = await page
-      .$$eval('.buybox__title-color-name', (eles) => {
-        if (eles.length > 0) {
-          return eles[0].innerText;
-        }
+// /**
+//  * getColorName - get color name
+//  * @param {object} page - page
+//  * @return {string} str - color name
+//  */
+// async function getColorName(page) {
+//   let awaiterr;
+//   const name = await page
+//       .$$eval('.buybox__title-color-name', (eles) => {
+//         if (eles.length > 0) {
+//           return eles[0].innerText;
+//         }
 
-        return '';
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
+//         return '';
+//       })
+//       .catch((err) => {
+//         awaiterr = err;
+//       });
 
-  if (awaiterr) {
-    return '';
-  }
+//   if (awaiterr) {
+//     return '';
+//   }
 
-  return name;
-}
+//   return name;
+// }
 
 /**
  * isPageExpired - is page expired
@@ -69,52 +69,52 @@ async function isPageExpired(page) {
   return isexpired;
 }
 
-/**
- * getSizeList - get size list
- * @param {object} page - page
- * @return {object} ret - {size, sizeValid}
- */
-async function getSizeList(page) {
-  let awaiterr;
-  const obj = await page
-      .$$eval('.buybox__size-item', (eles) => {
-        if (eles.length > 0) {
-          const size = [];
-          const sizeValid = [];
+// /**
+//  * getSizeList - get size list
+//  * @param {object} page - page
+//  * @return {object} ret - {size, sizeValid}
+//  */
+// async function getSizeList(page) {
+//   let awaiterr;
+//   const obj = await page
+//       .$$eval('.buybox__size-item', (eles) => {
+//         if (eles.length > 0) {
+//           const size = [];
+//           const sizeValid = [];
 
-          for (let i = 0; i < eles.length; ++i) {
-            size.push(eles[i].innerText);
-            if (eles[i].children.length == 1) {
-              sizeValid.push(true);
-            } else {
-              const arr = eles[i].getElementsByClassName('buybox__cross-line');
-              if (arr.length > 0) {
-                if (arr[0].style.display == 'none') {
-                  sizeValid.push(true);
-                } else {
-                  sizeValid.push(false);
-                }
-              } else {
-                sizeValid.push(true);
-              }
-            }
-          }
+//           for (let i = 0; i < eles.length; ++i) {
+//             size.push(eles[i].innerText);
+//             if (eles[i].children.length == 1) {
+//               sizeValid.push(true);
+//             } else {
+//               const arr = eles[i].getElementsByClassName('buybox__cross-line');
+//               if (arr.length > 0) {
+//                 if (arr[0].style.display == 'none') {
+//                   sizeValid.push(true);
+//                 } else {
+//                   sizeValid.push(false);
+//                 }
+//               } else {
+//                 sizeValid.push(true);
+//               }
+//             }
+//           }
 
-          return {size: size, sizeValid: sizeValid};
-        }
+//           return {size: size, sizeValid: sizeValid};
+//         }
 
-        return undefined;
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
+//         return undefined;
+//       })
+//       .catch((err) => {
+//         awaiterr = err;
+//       });
 
-  if (awaiterr) {
-    return undefined;
-  }
+//   if (awaiterr) {
+//     return undefined;
+//   }
 
-  return obj;
-}
+//   return obj;
+// }
 
 /**
  * loadMoreReviews - load more reviews
@@ -281,7 +281,7 @@ async function getAllReviews(page, waitAllResponse, reviewCount, timeout) {
           page,
           waitAllResponse,
           reviewCount,
-          timeout
+          timeout,
       );
       if (awaiterr) {
         return awaiterr;
@@ -363,6 +363,7 @@ async function getColorList2(page, timeout) {
 async function steepandcheapProduct(browser, url, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+  const baseurl = 'https://www.steepandcheap.com/' + url;
 
   await page
       .setViewport({
@@ -382,6 +383,17 @@ async function steepandcheapProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  let noretry = false;
+  page.on('framenavigated', (f) => {
+    if (f == page.mainFrame()) {
+      if (f.url().indexOf(baseurl) == 0) {
+        return;
+      } else {
+        noretry = true;
+      }
+    }
+  });
+
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();
@@ -396,7 +408,7 @@ async function steepandcheapProduct(browser, url, timeout) {
 
   const waitAllResponse = new WaitAllResponse(page);
   await page
-      .goto('https://www.steepandcheap.com/' + url, {
+      .goto(baseurl, {
         timeout: timeout,
       })
       .catch((err) => {
@@ -416,11 +428,19 @@ async function steepandcheapProduct(browser, url, timeout) {
   });
 
   if (awaiterr) {
+    if (noretry) {
+      awaiterr = new Error('noretry:pagechange ' + baseurl);
+
+      log.error('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
     const isexpired = await isPageExpired(page);
     if (isexpired) {
-      awaiterr = new Error(
-          'noretry:pageexpired ' + 'https://www.steepandcheap.com/' + url
-      );
+      awaiterr = new Error('noretry:pageexpired ' + baseurl);
     }
 
     log.error('steepandcheapProduct.waitForSelector .the-wall', awaiterr);
@@ -749,7 +769,7 @@ async function steepandcheapProduct(browser, url, timeout) {
     if (awaiterr) {
       log.error(
           'steepandcheapProduct.waitForSelector article.review',
-          awaiterr
+          awaiterr,
       );
 
       // await page.close();
@@ -764,14 +784,14 @@ async function steepandcheapProduct(browser, url, timeout) {
               const curreview = {};
 
               const lsttitle = curele.getElementsByClassName(
-                  'user-content__title'
+                  'user-content__title',
               );
               if (lsttitle.length > 0) {
                 curreview.title = lsttitle[0].innerText;
               }
 
               const lstrating = curele.getElementsByClassName(
-                  'user-content__rating-stars'
+                  'user-content__rating-stars',
               );
               if (lstrating.length > 0) {
                 try {
@@ -780,13 +800,13 @@ async function steepandcheapProduct(browser, url, timeout) {
                 } catch (err) {
                   console.log(
                       'user-content__rating-stars className error. ' +
-                    lstrating[0].className
+                    lstrating[0].className,
                   );
                 }
               }
 
               const lstdetails = curele.getElementsByClassName(
-                  'product-review-details'
+                  'product-review-details',
               );
               if (lstdetails.length > 0) {
                 const lstspan = lstdetails[0].getElementsByTagName('span');
@@ -825,7 +845,7 @@ async function steepandcheapProduct(browser, url, timeout) {
                 curreview.user = {};
 
                 const lstphoto = lstuser[0].getElementsByClassName(
-                    'user-card__photo'
+                    'user-card__photo',
                 );
                 if (lstphoto.length > 0) {
                   if (lstphoto[0].src) {
@@ -836,21 +856,21 @@ async function steepandcheapProduct(browser, url, timeout) {
                 }
 
                 const lstname = lstuser[0].getElementsByClassName(
-                    'user-card__name'
+                    'user-card__name',
                 );
                 if (lstname.length > 0) {
                   curreview.user.name = lstname[0].innerText;
                 }
 
                 const lstheight = lstuser[0].getElementsByClassName(
-                    'user-card__height-value'
+                    'user-card__height-value',
                 );
                 if (lstheight.length > 0) {
                   curreview.user.height = lstheight[0].innerText;
                 }
 
                 const lstweight = lstuser[0].getElementsByClassName(
-                    'user-card__weight-value'
+                    'user-card__weight-value',
                 );
                 if (lstweight.length > 0) {
                   curreview.user.weight = lstweight[0].innerText;
@@ -902,7 +922,7 @@ async function steepandcheapProduct(browser, url, timeout) {
   if (awaiterr) {
     log.error(
         'steepandcheapProduct.waitForSelector .product ' + url + ' error ',
-        awaiterr
+        awaiterr,
     );
 
     // await page.close();

@@ -21,7 +21,7 @@ async function execMountainSteals(program, version) {
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
+              'command wrong, please type ' + 'jarviscrawler mountainsteals --help',
           );
 
           return;
@@ -31,7 +31,7 @@ async function execMountainSteals(program, version) {
 
         if (mode == 'sale' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
+              'command wrong, please type ' + 'jarviscrawler mountainsteals --help',
           );
 
           return;
@@ -39,7 +39,7 @@ async function execMountainSteals(program, version) {
 
         if (mode == 'product' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler mountainsteals --help'
+              'command wrong, please type ' + 'jarviscrawler mountainsteals --help',
           );
 
           return;
@@ -63,7 +63,7 @@ async function execMountainSteals(program, version) {
             const ret = await mountainstealsProduct(
                 browser,
                 options.url,
-                timeout
+                timeout,
             );
             log.console(JSON.stringify(ret));
           }

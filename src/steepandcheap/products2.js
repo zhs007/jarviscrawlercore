@@ -267,7 +267,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     };
   }
 
-  const maxpageret = await getMaxPages(page, timeout);
+  let maxpageret = await getMaxPages(page, timeout);
   if (maxpageret.error) {
     log.error('steepandcheapProducts2.getMaxPages ', maxpageret.error);
 
@@ -412,11 +412,11 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     if (ci < maxpageret.pages - 1) {
       const err = await nextPage(page, furl, firsturl, timeout);
       if (err) {
-        log.error('steepandcheapProducts2.nextPage', awaiterr);
+        log.error('steepandcheapProducts2.nextPage', err);
 
         await page.close();
 
-        return {error: awaiterr.toString()};
+        return {error: err.toString()};
       }
 
       const isok = await waitAllResponse.waitDone(timeout);
@@ -425,6 +425,8 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
       }
 
       waitAllResponse.reset();
+
+      maxpageret = await getMaxPages(page, timeout);
     }
   }
 

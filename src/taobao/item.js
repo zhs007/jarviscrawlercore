@@ -139,7 +139,7 @@ async function taobaoItem(browser, itemid, timeout) {
         return sibret != undefined;
       },
       1000,
-      timeout
+      timeout,
   );
   if (awaiterr) {
     log.error('taobaoItem.waitForLocalFunction', awaiterr);
@@ -205,7 +205,7 @@ async function taobaoItem(browser, itemid, timeout) {
   ) {
     for (let i = 0; i < sibobj.data.tradeContract.pay.length; ++i) {
       pay.push(
-          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u'))
+          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u')),
       );
     }
   }
@@ -219,8 +219,8 @@ async function taobaoItem(browser, itemid, timeout) {
     for (let i = 0; i < sibobj.data.tradeContract.service.length; ++i) {
       service.push(
           unescape(
-              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u')
-          )
+              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u'),
+          ),
       );
     }
   }
@@ -243,7 +243,7 @@ async function taobaoItem(browser, itemid, timeout) {
             if (
               Object.prototype.hasOwnProperty.call(
                   Hub.config.config.sku.valItemInfo.propertyMemoMap,
-                  k
+                  k,
               )
             ) {
               mapTitle[k] = Hub.config.config.sku.valItemInfo.propertyMemoMap[k];
@@ -267,7 +267,7 @@ async function taobaoItem(browser, itemid, timeout) {
             if (
               Object.prototype.hasOwnProperty.call(
                   Hub.config.config.sku.valItemInfo.skuMap,
-                  k
+                  k,
               )
             ) {
               mapID[k] = Hub.config.config.sku.valItemInfo.skuMap[k].skuId;
@@ -348,6 +348,34 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: awaiterr};
   }
 
+  const tbtxt = await page
+      .$$eval('.tb-txt', (eles) => {
+        if (eles.length > 0) {
+          const tbtxt = {};
+          for (let i = 0; i < eles.length; ++i) {
+            const cv = eles[i].dataset['value'];
+
+            if (cv) {
+              tbtxt[cv] = eles[i].innerText;
+            }
+          }
+
+          return tbtxt;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItem.$$eval .tb-txt', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr};
+  }
+
   for (let i = 0; i < skus.length; ++i) {
     const arr = skus[i].curimg.split('("');
     if (arr.length == 2) {
@@ -369,6 +397,10 @@ async function taobaoItem(browser, itemid, timeout) {
 
     if (skusret1 && skusret1.mapTitle[skus[i].value]) {
       skus[i].title = skusret1.mapTitle[skus[i].value];
+    }
+
+    if (tbtxt && tbtxt[skus[i].value]) {
+      skus[i].title = tbtxt[skus[i].value];
     }
 
     if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {

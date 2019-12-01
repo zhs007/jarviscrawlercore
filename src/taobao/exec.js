@@ -19,7 +19,7 @@ async function execTaobao(program, version) {
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler taobao --help'
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
           );
 
           return;
@@ -29,7 +29,7 @@ async function execTaobao(program, version) {
 
         if (mode == 'taobao' && !options.itemid) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler taobao --help'
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
           );
 
           return;

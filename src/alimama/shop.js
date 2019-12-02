@@ -59,7 +59,7 @@ async function getShopInfo(page, timeout) {
             const attrs = eles[i].attributes;
             for (let j = 0; j < attrs.length; ++j) {
               if (attrs[j].name == 'title') {
-                arr.push(attrs[i].value);
+                arr.push(attrs[j].value);
 
                 break;
               }
@@ -87,7 +87,7 @@ async function getShopInfo(page, timeout) {
 
           if (lstspan.length >= 2) {
             sellerSum.credit = lstspan[0].innerText;
-            const lstimgs = lstspan[0].getElementsByTagName('img');
+            const lstimgs = lstspan[1].getElementsByTagName('img');
             if (lstimgs.length > 0) {
               sellerSum.sellerSum = lstimgs[0].src;
             }
@@ -108,7 +108,11 @@ async function getShopInfo(page, timeout) {
 
   if (sellerSum) {
     if (sellerSum.credit) {
-      shopinfo.credit = sellerSum.credit;
+      try {
+        shopinfo.credit = parseInt(sellerSum.credit);
+      } catch (err) {
+        log.error('getShopInfo.parseInt(sellerSum.credit)', err);
+      }
     }
 
     if (sellerSum.sellerSum) {
@@ -135,6 +139,12 @@ async function getShopInfo(page, timeout) {
     return {error: awaiterr};
   }
 
+  try {
+    shopinfo.salesVolume = parseInt(shopinfo.salesVolume);
+  } catch (err) {
+    log.error('getShopInfo.parseInt(shopinfo.salesVolume)', err);
+  }
+
   const si = await page
       .$$eval('div.shop', (eles) => {
         if (eles.length == 2) {
@@ -144,24 +154,24 @@ async function getShopInfo(page, timeout) {
           if (lstspan.length == 4) {
             si.majorBusiness = lstspan[0].innerText;
             si.serviceVolume = [
-              lstspan[0].innerText,
               lstspan[1].innerText,
               lstspan[2].innerText,
+              lstspan[3].innerText,
             ];
           }
 
           const lstspan2 = eles[1].getElementsByTagName('span');
           if (lstspan2.length == 6) {
             si.serviceOther = [
-              lstspan[1].innerText,
-              lstspan[3].innerText,
-              lstspan[5].innerText,
+              lstspan2[1].innerText,
+              lstspan2[3].innerText,
+              lstspan2[5].innerText,
             ];
 
             si.serviceOther2 = [
-              lstspan[1].className,
-              lstspan[3].className,
-              lstspan[5].className,
+              lstspan2[1].className,
+              lstspan2[3].className,
+              lstspan2[5].className,
             ];
           }
 
@@ -193,6 +203,16 @@ async function getShopInfo(page, timeout) {
 
     if (si.serviceOther2) {
       shopinfo.serviceOther2 = si.serviceOther2;
+
+      for (let i = 0; i < shopinfo.serviceOther2.length; ++i) {
+        if (shopinfo.serviceOther2[i] == 'less2') {
+          const arr = shopinfo.serviceOther[i].split('%', -1);
+          shopinfo.serviceOther[i] = -parseFloat(arr[0]);
+        } else {
+          const arr = shopinfo.serviceOther[i].split('%', -1);
+          shopinfo.serviceOther[i] = parseFloat(arr[0]);
+        }
+      }
     }
   }
 

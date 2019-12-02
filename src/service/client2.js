@@ -592,6 +592,38 @@ function alimamaGetTop(servAddr) {
 }
 
 /**
+ * alimamaGetShop
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function alimamaGetShop(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_GETSHOP);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
  * alimamaSearch
  * @param {string} servAddr - servAddr
  * @param {string} text - text
@@ -802,14 +834,18 @@ function mountainstealsSale(servAddr, url) {
 // alimamaKeepalive('10.211.55.4:7052');
 // alimamaGetTop('127.0.0.1:7051');
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
+alimamaGetShop(
+    '127.0.0.1:7051',
+    'https://pub.alimama.com/myunion.htm?#!/promo/self/shop_detail?userNumberId=2783286164',
+);
 
 // tmallProduct('127.0.0.1:7051', '525967713966');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
-mountainstealsProduct(
-    '127.0.0.1:7051',
-    'smartwool-women-s-dasher-crew-sock_10384064',
-);
+// mountainstealsProduct(
+//     '127.0.0.1:7051',
+//     'smartwool-women-s-dasher-crew-sock_10384064',
+// );
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
 
 exports.startTranslate2 = startTranslate2;
@@ -831,6 +867,7 @@ exports.jdActivePage = jdActivePage;
 exports.alimamaKeepalive = alimamaKeepalive;
 exports.alimamaGetTop = alimamaGetTop;
 exports.alimamaSearch = alimamaSearch;
+exports.alimamaGetShop = alimamaGetShop;
 exports.tmallProduct = tmallProduct;
 exports.taobaoProduct = taobaoProduct;
 exports.mountainstealsSale = mountainstealsSale;

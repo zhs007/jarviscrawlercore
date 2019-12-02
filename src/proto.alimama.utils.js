@@ -131,6 +131,65 @@ function newAlimamaProducts(obj) {
 }
 
 /**
+ * new AlimamaShop with object
+ * @param {object} obj - AlimamaShop object
+ * @return {messages.AlimamaShop} result - AlimamaShop
+ */
+function newAlimamaShop(obj) {
+  const result = new messages.AlimamaShop();
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.shopID) {
+    result.setShopid(obj.shopID);
+  }
+
+  if (obj.boss) {
+    result.setBoss(obj.boss);
+  }
+
+  if (obj.credit) {
+    result.setCredit(obj.credit);
+  }
+
+  if (obj.address) {
+    result.setAddress(obj.address);
+  }
+
+  if (obj.sellerSum) {
+    result.setSellersum(obj.sellerSum);
+  }
+
+  if (obj.salesVolume) {
+    result.setSalesvolume(obj.salesVolume);
+  }
+
+  if (obj.majorBusiness) {
+    result.setMajorbusiness(obj.majorBusiness);
+  }
+
+  if (Array.isArray(obj.serviceVolume) && obj.serviceVolume.length > 0) {
+    result.setServicevolumeList(obj.serviceVolume);
+  }
+
+  if (Array.isArray(obj.serviceOther) && obj.serviceOther.length > 0) {
+    result.setServiceotherList(obj.serviceOther);
+  }
+
+  if (Array.isArray(obj.sellerTitle) && obj.sellerTitle.length > 0) {
+    result.setSellertitleList(obj.sellerTitle);
+  }
+
+  return result;
+}
+
+/**
  * new ReplyAlimama with object
  * @param {number} mode - messages.JDMode
  * @param {object} obj - AlimamaProducts or AlimamaTopInfo or undefined object
@@ -145,6 +204,8 @@ function newReplyAlimama(mode, obj) {
     result.setProducts(newAlimamaProducts(obj));
   } else if (mode == messages.AlimamaMode.ALIMMM_GETTOP) {
     result.setTopinfo(newAlimamaTopInfo(obj));
+  } else if (mode == messages.AlimamaMode.ALIMMM_GETSHOP) {
+    result.setShop(newAlimamaShop(obj));
   }
 
   return result;

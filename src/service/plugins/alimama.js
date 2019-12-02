@@ -89,7 +89,7 @@ function callAlimama(browser, cfg, call, param, request) {
         .catch((err) => {
           replyError(call, err.toString(), true);
         });
-  } else if (param.getMode() == messages.AlimamaMode.ALIMMM_SHOP) {
+  } else if (param.getMode() == messages.AlimamaMode.ALIMMM_GETSHOP) {
     alimamaGetShop(browser, param.getUrl(), cfg.alimamacfg, timeout)
         .then((ret) => {
           if (ret.error) {
@@ -100,7 +100,7 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_SHOP, ret.ret);
+          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_GETSHOP, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 

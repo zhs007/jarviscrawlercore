@@ -85,6 +85,7 @@ message AlimamaProducts {
 message RequestAlimama {
     AlimamaMode mode = 1;
     string text = 2;
+    string url = 3;
 }
 
 // ReplyAlimama - reply alimama
@@ -94,5 +95,6 @@ message ReplyAlimama {
     oneof reply {
         AlimamaProducts products = 100;
         AlimamaTopInfo topInfo = 101;
+        AlimamaShop shop = 102;
     }
 }

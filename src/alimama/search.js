@@ -165,7 +165,7 @@ async function alimamaSearch(browser, text, cfg, timeout) {
   const retWaitAllProducts = await waitAllProducts(
       page,
       waitAllResponse,
-      timeout
+      timeout,
   );
   if (retWaitAllProducts) {
     log.error('alimamaSearch.waitAllProducts ', retWaitAllProducts);

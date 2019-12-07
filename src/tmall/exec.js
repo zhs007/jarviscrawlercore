@@ -19,7 +19,7 @@ async function execTmall(program, version) {
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler tmall --help'
+              'command wrong, please type ' + 'jarviscrawler tmall --help',
           );
 
           return;
@@ -29,7 +29,7 @@ async function execTmall(program, version) {
 
         if (mode == 'detail' && !options.url) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler tmall --help'
+              'command wrong, please type ' + 'jarviscrawler tmall --help',
           );
 
           return;

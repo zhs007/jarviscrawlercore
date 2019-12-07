@@ -1,8 +1,8 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {closeDialog} = require('./utils');
-const {waitForFunction} = require('../waitutils');
+const {waitForLocalFunction, waitForFunction} = require('../waitutils');
 
 /**
  * getTShopObj - get tshop object
@@ -28,6 +28,31 @@ async function getTShopObj(page) {
 }
 
 /**
+ * getInitItemDetailObj - get InitItemDetail object
+ * @param {string} res - res
+ * @return {object} ret - InitItemDetail object
+ */
+function getInitItemDetailObj(res) {
+  // 返回的是utf8，所以直接toString，如果是utf16，则需要用 String.fromCharCode
+  res = res.toString(); // String.fromCharCode.apply(null, res);
+
+  res = res.replace(/\n/g, '');
+  res = res.replace(/\t/g, '');
+  const ret = /setMdskip\((.+?)\)/.exec(res);
+  if (ret[1]) {
+    try {
+      const retobj = JSON.parse(ret[1]);
+
+      return retobj;
+    } catch (err) {
+      log.error('getInitItemDetailObj ', err);
+    }
+  }
+
+  return undefined;
+}
+
+/**
  * tmallDetail - tmall detail
  * @param {object} browser - browser
  * @param {string} url - url
@@ -39,6 +64,19 @@ async function tmallDetail(browser, url, timeout) {
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
+
+  let inititemdetail;
+  page.on('response', async (res) => {
+    const url = res.url();
+
+    if (url.indexOf('https://mdskip.taobao.com/core/initItemDetail.htm') == 0) {
+      log.info('response', url);
+
+      inititemdetail = await res.buffer().catch((err) => {
+        log.error('tmallDetail.WaitAllResponse.buffer ' + err);
+      });
+    }
+  });
 
   await page
       .setViewport({
@@ -272,6 +310,34 @@ async function tmallDetail(browser, url, timeout) {
   }
 
   const tshop = await getTShopObj(page);
+
+  awaiterr = await waitForLocalFunction(
+      page,
+      () => {
+        return inititemdetail != undefined;
+      },
+      1000,
+      timeout,
+  );
+  if (awaiterr) {
+    log.error('tmallDetail.waitForLocalFunction', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const idobj = getInitItemDetailObj(inititemdetail);
+  if (idobj == undefined) {
+    awaiterr = new Error('getInitItemDetailObj err! ' + inititemdetail);
+
+    log.error('tmallDetail.getInitItemDetailObj', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   if (tshop) {
     if (tshop.itemDO) {
       ret.brand = tshop.itemDO.brand;
@@ -280,13 +346,67 @@ async function tmallDetail(browser, url, timeout) {
       ret.itemID = tshop.itemDO.itemId;
     }
 
+    if (
+      idobj &&
+      idobj.defaultModel &&
+      idobj.defaultModel.sellCountDO &&
+      idobj.defaultModel.sellCountDO.sellCount
+    ) {
+      ret.strSellCount = idobj.defaultModel.sellCountDO.sellCount;
+    }
+
     if (tshop.valItemInfo && tshop.valItemInfo.skuMap) {
       const skumap = tshop.valItemInfo.skuMap;
       for (let i = 0; i < skus.length; ++i) {
         if (skumap[';' + skus[i].value + ';']) {
-          skus[i].price = parseFloat(skumap[';' + skus[i].value + ';'].price);
+          skus[i].originalPrice = parseFloat(
+              skumap[';' + skus[i].value + ';'].price,
+          );
           skus[i].skuid = skumap[';' + skus[i].value + ';'].skuId;
           skus[i].stock = skumap[';' + skus[i].value + ';'].stock;
+        }
+
+        if (
+          idobj &&
+          idobj.defaultModel &&
+          idobj.defaultModel.deliveryDO &&
+          idobj.defaultModel.deliveryDO.deliverySkuMap &&
+          idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid]
+        ) {
+          try {
+            skus[i].wl =
+              idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].name;
+            skus[i].wlPrice = parseFloat(
+                idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money,
+            );
+          } catch (err) {
+            log.error(
+                'tmallDetail.parseFloat idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money',
+                awaiterr,
+            );
+          }
+        }
+
+        if (
+          idobj &&
+          idobj.defaultModel &&
+          idobj.defaultModel.itemPriceResultDO &&
+          idobj.defaultModel.itemPriceResultDO.priceInfo &&
+          idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
+        ) {
+          const cpi =
+            idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
+                .promotionList;
+          if (Array.isArray(cpi) && cpi.length > 0 && cpi[0].price) {
+            try {
+              skus[i].price = parseFloat(cpi[0].price);
+            } catch (err) {
+              log.error(
+                  'tmallDetail.parseFloat idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid].promotionList',
+                  awaiterr,
+              );
+            }
+          }
         }
       }
     }

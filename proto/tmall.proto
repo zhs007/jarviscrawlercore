@@ -8,6 +8,9 @@ message TmallSKUInfo {
     string title = 3;
     string img = 4;
     int32 stock = 5;
+    float originalPrice = 6;
+    string wl = 7;
+    float wlPrice = 8;
 }
 
 // TmallReviewTag - tmall review tag
@@ -29,6 +32,8 @@ message TmallProduct {
     float rating = 9;
     repeated TmallReviewTag reviewTags = 10;
     int64 lastUpdatedTime = 11;
+    int32 sellCount = 12;
+    string strSellCount = 13;
 }
 
 // TmallMode - tmall mode

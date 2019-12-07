@@ -1,6 +1,6 @@
-const {sleep} = require('../utils');
-const {WaitAllResponse} = require('../waitallresponse');
-const log = require('../log');
+// const {sleep} = require('../utils');
+// const {WaitAllResponse} = require('../waitallresponse');
+// const log = require('../log');
 
 /**
  * closeDialog - close dialog

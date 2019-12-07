@@ -1,5 +1,9 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-12-07
+
+http request返回一般是 buffer，在 nodejs里，如果是utf8编码的，可以直接 toString 得到string。但如果是unicode编码的，则需要转码，可以通过 String.fromCharCode 转码。
+
 ### 2019-11-14
 
 taobao的页面，一般是 https://item.taobao.com/item.htm?id=592826167303 ，重点在 itemid 。

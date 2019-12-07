@@ -68,7 +68,10 @@ proto.jarviscrawlercore.TmallSKUInfo.toObject = function(includeInstance, msg) {
     price: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
     title: jspb.Message.getFieldWithDefault(msg, 3, ""),
     img: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    stock: jspb.Message.getFieldWithDefault(msg, 5, 0)
+    stock: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    originalprice: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
+    wl: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    wlprice: +jspb.Message.getFieldWithDefault(msg, 8, 0.0)
   };
 
   if (includeInstance) {
@@ -124,6 +127,18 @@ proto.jarviscrawlercore.TmallSKUInfo.deserializeBinaryFromReader = function(msg,
     case 5:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setStock(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setOriginalprice(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setWl(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setWlprice(value);
       break;
     default:
       reader.skipField();
@@ -186,6 +201,27 @@ proto.jarviscrawlercore.TmallSKUInfo.serializeBinaryToWriter = function(message,
   if (f !== 0) {
     writer.writeInt32(
       5,
+      f
+    );
+  }
+  f = message.getOriginalprice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      6,
+      f
+    );
+  }
+  f = message.getWl();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getWlprice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      8,
       f
     );
   }
@@ -264,6 +300,51 @@ proto.jarviscrawlercore.TmallSKUInfo.prototype.getStock = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.TmallSKUInfo.prototype.setStock = function(value) {
   jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional float originalPrice = 6;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.getOriginalprice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 6, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.setOriginalprice = function(value) {
+  jspb.Message.setProto3FloatField(this, 6, value);
+};
+
+
+/**
+ * optional string wl = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.getWl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.setWl = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional float wlPrice = 8;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.getWlprice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 8, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallSKUInfo.prototype.setWlprice = function(value) {
+  jspb.Message.setProto3FloatField(this, 8, value);
 };
 
 
@@ -502,7 +583,9 @@ proto.jarviscrawlercore.TmallProduct.toObject = function(includeInstance, msg) {
     rating: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
     reviewtagsList: jspb.Message.toObjectList(msg.getReviewtagsList(),
     proto.jarviscrawlercore.TmallReviewTag.toObject, includeInstance),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 11, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    sellcount: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    strsellcount: jspb.Message.getFieldWithDefault(msg, 13, "")
   };
 
   if (includeInstance) {
@@ -584,6 +667,14 @@ proto.jarviscrawlercore.TmallProduct.deserializeBinaryFromReader = function(msg,
     case 11:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setSellcount(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrsellcount(value);
       break;
     default:
       reader.skipField();
@@ -690,6 +781,20 @@ proto.jarviscrawlercore.TmallProduct.serializeBinaryToWriter = function(message,
   if (f !== 0) {
     writer.writeInt64(
       11,
+      f
+    );
+  }
+  f = message.getSellcount();
+  if (f !== 0) {
+    writer.writeInt32(
+      12,
+      f
+    );
+  }
+  f = message.getStrsellcount();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
       f
     );
   }
@@ -890,6 +995,36 @@ proto.jarviscrawlercore.TmallProduct.prototype.getLastupdatedtime = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.TmallProduct.prototype.setLastupdatedtime = function(value) {
   jspb.Message.setProto3IntField(this, 11, value);
+};
+
+
+/**
+ * optional int32 sellCount = 12;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.getSellcount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallProduct.prototype.setSellcount = function(value) {
+  jspb.Message.setProto3IntField(this, 12, value);
+};
+
+
+/**
+ * optional string strSellCount = 13;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.getStrsellcount = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TmallProduct.prototype.setStrsellcount = function(value) {
+  jspb.Message.setProto3StringField(this, 13, value);
 };
 
 

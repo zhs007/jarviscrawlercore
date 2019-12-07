@@ -28,6 +28,18 @@ function newTmallSKUInfo(obj) {
     result.setStock(obj.stock);
   }
 
+  if (obj.originalPrice) {
+    result.setOriginalprice(obj.originalPrice);
+  }
+
+  if (obj.wl) {
+    result.setWl(obj.wl);
+  }
+
+  if (obj.wlPrice) {
+    result.setWlprice(obj.wlPrice);
+  }
+
   return result;
 }
 
@@ -100,6 +112,14 @@ function newTmallProduct(obj) {
     for (let i = 0; i < obj.reviewTags.length; ++i) {
       result.addReviewtags(newTmallReviewTag(obj.reviewTags[i], i));
     }
+  }
+
+  if (obj.sellCount) {
+    result.setSellcount(obj.sellCount);
+  }
+
+  if (obj.strSellCount) {
+    result.setStrsellcount(obj.strSellCount);
   }
 
   return result;

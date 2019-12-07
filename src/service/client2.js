@@ -834,12 +834,12 @@ function mountainstealsSale(servAddr, url) {
 // alimamaKeepalive('10.211.55.4:7052');
 // alimamaGetTop('127.0.0.1:7051');
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
-alimamaGetShop(
-    '127.0.0.1:7051',
-    'https://pub.alimama.com/myunion.htm?#!/promo/self/shop_detail?userNumberId=2783286164',
-);
+// alimamaGetShop(
+//     '127.0.0.1:7051',
+//     'https://pub.alimama.com/myunion.htm?#!/promo/self/shop_detail?userNumberId=2783286164',
+// );
 
-// tmallProduct('127.0.0.1:7051', '525967713966');
+tmallProduct('127.0.0.1:7051', '525967713966');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
 // mountainstealsProduct(

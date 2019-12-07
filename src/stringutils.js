@@ -62,7 +62,116 @@ function string2int(str) {
   }
 }
 
+/**
+ * getJSONStr
+ * @param {string} str - a string
+ * @param {int} starti - start index, space or {
+ * @return {object} ret - json string
+ */
+function getJSONStr(str, starti) {
+  let endi = starti;
+  let hasjson = false;
+
+  // 0-{}
+  // 1-""
+  // 2-''
+  // 3-[]
+  const arr = [];
+  let cs = -1;
+
+  while (endi < str.length) {
+    if (cs == -1) {
+      if (str.charAt(endi) == '{') {
+        arr.push(0);
+        cs = 0;
+      } else if (str.charAt(endi) == '"') {
+        arr.push(1);
+        cs = 1;
+      } else if (str.charAt(endi) == '\'') {
+        arr.push(2);
+        cs = 2;
+      } else if (str.charAt(endi) == '[') {
+        arr.push(3);
+        cs = 3;
+      }
+
+      endi++;
+    } else {
+      if (cs == 1) {
+        if (str.charAt(endi) == '"') {
+          arr.pop();
+          if (arr.length > 0) {
+            cs = arr[arr.length - 1];
+          }
+        }
+
+        endi++;
+      } else if (cs == 2) {
+        if (str.charAt(endi) == '\'') {
+          arr.pop();
+          if (arr.length > 0) {
+            cs = arr[arr.length - 1];
+          }
+        }
+
+        endi++;
+      } else if (cs == 0) {
+        if (str.charAt(endi) == '"') {
+          arr.push(1);
+          cs = 1;
+        } else if (str.charAt(endi) == '\'') {
+          arr.push(2);
+          cs = 2;
+        } else if (str.charAt(endi) == '{') {
+          arr.push(0);
+          cs = 0;
+        } else if (str.charAt(endi) == '}') {
+          arr.pop();
+          if (arr.length > 0) {
+            cs = arr[arr.length - 1];
+          } else {
+            hasjson = true;
+            endi++;
+            break;
+          }
+        }
+
+        endi++;
+      } else if (cs == 3) {
+        if (str.charAt(endi) == '"') {
+          arr.push(1);
+          cs = 1;
+        } else if (str.charAt(endi) == '\'') {
+          arr.push(2);
+          cs = 2;
+        } else if (str.charAt(endi) == '[') {
+          arr.push(3);
+          cs = 3;
+        } else if (str.charAt(endi) == ']') {
+          arr.pop();
+          if (arr.length > 0) {
+            cs = arr[arr.length - 1];
+          } else {
+            hasjson = true;
+            endi++;
+            break;
+          }
+        }
+
+        endi++;
+      }
+    }
+  }
+
+  if (!hasjson) {
+    return '';
+  }
+
+  return str.substring(starti, endi);
+}
+
 exports.percentage2float = percentage2float;
 exports.string2float = string2float;
 exports.split2float = split2float;
 exports.string2int = string2int;
+exports.getJSONStr = getJSONStr;

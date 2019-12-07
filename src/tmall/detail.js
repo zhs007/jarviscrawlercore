@@ -3,6 +3,7 @@ const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {closeDialog} = require('./utils');
 const {waitForLocalFunction, waitForFunction} = require('../waitutils');
+const {getJSONStr} = require('../stringutils');
 
 /**
  * getTShopObj - get tshop object
@@ -13,14 +14,17 @@ async function getTShopObj(page) {
   let html = await page.mainFrame().content();
   html = html.replace(/\n/g, '');
   html = html.replace(/\t/g, '');
-  const ret = /TShop.Setup\((.+?)\)/.exec(html);
-  if (ret[1]) {
-    try {
-      const retobj = JSON.parse(ret[1]);
+  const si = html.indexOf('TShop.Setup(');
+  if (si >= 0) {
+    const jstr = getJSONStr(html, si + 'TShop.Setup('.length);
+    if (jstr) {
+      try {
+        const retobj = JSON.parse(jstr);
 
-      return retobj;
-    } catch (err) {
-      log.error('getTShopObj ', err);
+        return retobj;
+      } catch (err) {
+        log.error('getTShopObj ', err);
+      }
     }
   }
 
@@ -38,10 +42,18 @@ function getInitItemDetailObj(res) {
 
   res = res.replace(/\n/g, '');
   res = res.replace(/\t/g, '');
-  const ret = /setMdskip\((.+?)\)/.exec(res);
-  if (ret[1]) {
+  let jstr;
+  let si = res.indexOf('setMdskip(');
+  if (si >= 0) {
+    jstr = getJSONStr(res, si + 'setMdskip('.length);
+  } else {
+    si = res.indexOf('onMdskip(');
+    jstr = getJSONStr(res, si + 'onMdskip('.length);
+  }
+
+  if (jstr) {
     try {
-      const retobj = JSON.parse(ret[1]);
+      const retobj = JSON.parse(jstr);
 
       return retobj;
     } catch (err) {

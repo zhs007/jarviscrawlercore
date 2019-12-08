@@ -90,6 +90,20 @@ async function tmallDetail(browser, url, timeout) {
     }
   });
 
+  let noretry = 0;
+  page.on('framenavigated', (f) => {
+    if (f == page.mainFrame()) {
+      if (
+        f
+            .url()
+            .indexOf('https://huodong.taobao.com/wow/malldetail/act/guide-tb?') ==
+        0
+      ) {
+        noretry = 1;
+      }
+    }
+  });
+
   await page
       .setViewport({
         width: 1280,
@@ -220,17 +234,19 @@ async function tmallDetail(browser, url, timeout) {
     return {error: awaiterr};
   }
 
-  for (let i = 0; i < skus.length; ++i) {
-    const arr = skus[i].curimg.split('("');
-    if (arr.length == 2) {
-      const arr1 = arr[1].split('")');
-      skus[i].img = arr1[0];
-      skus[i].img = skus[i].img.replace('40x40q90', '600x600');
-      skus[i].img = 'https:' + skus[i].img;
+  if (skus) {
+    for (let i = 0; i < skus.length; ++i) {
+      const arr = skus[i].curimg.split('("');
+      if (arr.length == 2) {
+        const arr1 = arr[1].split('")');
+        skus[i].img = arr1[0];
+        skus[i].img = skus[i].img.replace('40x40q90', '600x600');
+        skus[i].img = 'https:' + skus[i].img;
+      }
     }
   }
 
-  console.log(skus);
+  // console.log(skus);
 
   const lstreviews = await page.$$('#J_Reviews');
   if (lstreviews.length > 0) {
@@ -319,6 +335,24 @@ async function tmallDetail(browser, url, timeout) {
         }
       }
     }
+  }
+
+  if (noretry > 0) {
+    if (noretry == 1) {
+      awaiterr = new Error(
+          'noretry:needmobile ' + 'https://detail.tmall.com/item.htm?id=' + url,
+      );
+    } else {
+      awaiterr = new Error(
+          'noretry:' + noretry + ' https://detail.tmall.com/item.htm?id=' + url,
+      );
+    }
+
+    log.error('tmallDetail.noretry ', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
   const tshop = await getTShopObj(page);

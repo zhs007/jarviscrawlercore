@@ -11,6 +11,13 @@ message TmallSKUInfo {
     float originalPrice = 6;
     string wl = 7;
     float wlPrice = 8;
+    string wlStr = 9;
+}
+
+// TmallProductHistory - tmall sku infomation
+message TmallProductHistory {
+    repeated TmallSKUInfo skus = 1;
+    int64 lastUpdatedTime = 2;
 }
 
 // TmallReviewTag - tmall review tag
@@ -34,6 +41,7 @@ message TmallProduct {
     int64 lastUpdatedTime = 11;
     int32 sellCount = 12;
     string strSellCount = 13;
+    repeated TmallProductHistory lstHistory = 14;
 }
 
 // TmallMode - tmall mode

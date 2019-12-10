@@ -839,7 +839,8 @@ function mountainstealsSale(servAddr, url) {
 //     'https://pub.alimama.com/myunion.htm?#!/promo/self/shop_detail?userNumberId=2783286164',
 // );
 
-tmallProduct('127.0.0.1:7051', '525967713966');
+// tmallProduct('127.0.0.1:7051', '525967713966');
+tmallProduct('127.0.0.1:7051', '595765750524');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
 // mountainstealsProduct(

@@ -40,6 +40,10 @@ function newTmallSKUInfo(obj) {
     result.setWlprice(obj.wlPrice);
   }
 
+  if (obj.wlStr) {
+    result.setWlstr(obj.wlStr);
+  }
+
   return result;
 }
 

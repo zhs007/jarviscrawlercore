@@ -1,7 +1,7 @@
 // const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
-const {closeDialog} = require('./utils');
+const {closeDialog, procSKU} = require('./utils');
 const {waitForLocalFunction, waitForFunction} = require('../waitutils');
 const {getJSONStr} = require('../stringutils');
 
@@ -82,7 +82,7 @@ async function tmallDetail(browser, url, timeout) {
     const url = res.url();
 
     if (url.indexOf('https://mdskip.taobao.com/core/initItemDetail.htm') == 0) {
-      log.info('response', url);
+      // log.info('response', url);
 
       inititemdetail = await res.buffer().catch((err) => {
         log.error('tmallDetail.WaitAllResponse.buffer ' + err);
@@ -197,54 +197,6 @@ async function tmallDetail(browser, url, timeout) {
   }
 
   //   const ret = {};
-  const skus = await page
-      .$$eval('.tb-sku', (eles) => {
-        if (eles.length > 0) {
-          const skus = [];
-          const lis = eles[0].getElementsByTagName('li');
-          for (let i = 0; i < lis.length; ++i) {
-            const csku = {
-              title: lis[i].getAttribute('title'),
-              value: lis[i].dataset['value'],
-            };
-
-            if (csku.title && csku.value) {
-              const lsta = lis[i].getElementsByTagName('a');
-              if (lsta.length > 0) {
-                csku.curimg = lsta[0].style['background'];
-              }
-
-              skus.push(csku);
-            }
-          }
-
-          return skus;
-        }
-
-        return undefined;
-      })
-      .catch((err) => {
-        awaiterr = err;
-      });
-  if (awaiterr) {
-    log.error('tmallDetail.$$eval .tb-sku', awaiterr);
-
-    await page.close();
-
-    return {error: awaiterr};
-  }
-
-  if (skus) {
-    for (let i = 0; i < skus.length; ++i) {
-      const arr = skus[i].curimg.split('("');
-      if (arr.length == 2) {
-        const arr1 = arr[1].split('")');
-        skus[i].img = arr1[0];
-        skus[i].img = skus[i].img.replace('40x40q90', '600x600');
-        skus[i].img = 'https:' + skus[i].img;
-      }
-    }
-  }
 
   // console.log(skus);
 
@@ -384,6 +336,59 @@ async function tmallDetail(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  let skus = await page
+      .$$eval('.tb-sku', (eles) => {
+        if (eles.length > 0) {
+          const skus = [];
+          const lis = eles[0].getElementsByTagName('li');
+          for (let i = 0; i < lis.length; ++i) {
+            if (lis[i].dataset['value']) {
+              const csku = {
+                title: lis[i].getAttribute('title'),
+                value: lis[i].dataset['value'],
+              };
+
+              const lsta = lis[i].getElementsByTagName('a');
+              if (lsta.length > 0) {
+                csku.curimg = lsta[0].style['background'];
+
+                if (!csku.title) {
+                  csku.title = lsta[0].innerText;
+                }
+              }
+
+              skus.push(csku);
+            }
+          }
+
+          return skus;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('tmallDetail.$$eval .tb-sku', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr};
+  }
+
+  if (skus) {
+    for (let i = 0; i < skus.length; ++i) {
+      const arr = skus[i].curimg.split('("');
+      if (arr.length == 2) {
+        const arr1 = arr[1].split('")');
+        skus[i].img = arr1[0];
+        skus[i].img = skus[i].img.replace('40x40q90', '600x600');
+        skus[i].img = 'https:' + skus[i].img;
+      }
+    }
+  }
+
   if (tshop) {
     if (tshop.itemDO) {
       ret.brand = tshop.itemDO.brand;
@@ -401,61 +406,72 @@ async function tmallDetail(browser, url, timeout) {
       ret.strSellCount = idobj.defaultModel.sellCountDO.sellCount;
     }
 
-    if (tshop.valItemInfo && tshop.valItemInfo.skuMap) {
-      const skumap = tshop.valItemInfo.skuMap;
-      for (let i = 0; i < skus.length; ++i) {
-        if (skumap[';' + skus[i].value + ';']) {
-          skus[i].originalPrice = parseFloat(
-              skumap[';' + skus[i].value + ';'].price,
-          );
-          skus[i].skuid = skumap[';' + skus[i].value + ';'].skuId;
-          skus[i].stock = skumap[';' + skus[i].value + ';'].stock;
-        }
+    const skuret = procSKU(skus, tshop, idobj);
+    if (skuret.error) {
+      log.error('tmallDetail.procSKU', skuret.error);
 
-        if (
-          idobj &&
-          idobj.defaultModel &&
-          idobj.defaultModel.deliveryDO &&
-          idobj.defaultModel.deliveryDO.deliverySkuMap &&
-          idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid]
-        ) {
-          try {
-            skus[i].wl =
-              idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].name;
-            skus[i].wlPrice = parseFloat(
-                idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money,
-            );
-          } catch (err) {
-            log.error(
-                'tmallDetail.parseFloat idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money',
-                awaiterr,
-            );
-          }
-        }
+      await page.close();
 
-        if (
-          idobj &&
-          idobj.defaultModel &&
-          idobj.defaultModel.itemPriceResultDO &&
-          idobj.defaultModel.itemPriceResultDO.priceInfo &&
-          idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
-        ) {
-          const cpi =
-            idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
-                .promotionList;
-          if (Array.isArray(cpi) && cpi.length > 0 && cpi[0].price) {
-            try {
-              skus[i].price = parseFloat(cpi[0].price);
-            } catch (err) {
-              log.error(
-                  'tmallDetail.parseFloat idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid].promotionList',
-                  awaiterr,
-              );
-            }
-          }
-        }
-      }
+      return {error: awaiterr.toString()};
     }
+
+    skus = skuret.lstsku;
+
+    // if (tshop.valItemInfo && tshop.valItemInfo.skuMap) {
+    //   const skumap = tshop.valItemInfo.skuMap;
+    // for (let i = 0; i < skus.length; ++i) {
+    //   if (skumap[';' + skus[i].value + ';']) {
+    //     skus[i].originalPrice = parseFloat(
+    //         skumap[';' + skus[i].value + ';'].price,
+    //     );
+    //     skus[i].skuid = skumap[';' + skus[i].value + ';'].skuId;
+    //     skus[i].stock = skumap[';' + skus[i].value + ';'].stock;
+    //   }
+
+    //   if (
+    //     idobj &&
+    //     idobj.defaultModel &&
+    //     idobj.defaultModel.deliveryDO &&
+    //     idobj.defaultModel.deliveryDO.deliverySkuMap &&
+    //     idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid]
+    //   ) {
+    //     try {
+    //       skus[i].wl =
+    //         idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].name;
+    //       skus[i].wlPrice = parseFloat(
+    //           idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money,
+    //       );
+    //     } catch (err) {
+    //       log.error(
+    //           'tmallDetail.parseFloat idobj.defaultModel.deliveryDO.deliverySkuMap[skus[i].skuid].money',
+    //           awaiterr,
+    //       );
+    //     }
+    //   }
+
+    //   if (
+    //     idobj &&
+    //     idobj.defaultModel &&
+    //     idobj.defaultModel.itemPriceResultDO &&
+    //     idobj.defaultModel.itemPriceResultDO.priceInfo &&
+    //     idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
+    //   ) {
+    //     const cpi =
+    //       idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid]
+    //           .promotionList;
+    //     if (Array.isArray(cpi) && cpi.length > 0 && cpi[0].price) {
+    //       try {
+    //         skus[i].price = parseFloat(cpi[0].price);
+    //       } catch (err) {
+    //         log.error(
+    //             'tmallDetail.parseFloat idobj.defaultModel.itemPriceResultDO.priceInfo[skus[i].skuid].promotionList',
+    //             awaiterr,
+    //         );
+    //       }
+    //     }
+    //   }
+    // }
+    // }
   }
 
   ret.skus = skus;

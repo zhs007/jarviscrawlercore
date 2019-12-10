@@ -22,6 +22,12 @@ message TaobaoShopInfo {
     string shopid = 8;
 }
 
+// TaobaoProductHistory - taobao product history
+message TaobaoProductHistory {
+    repeated TaobaoSKUInfo skus = 1;
+    int64 lastUpdatedTime = 2;
+}
+
 // TaobaoProduct - taobao product
 message TaobaoProduct {
     string itemID = 1;
@@ -35,6 +41,7 @@ message TaobaoProduct {
     repeated string pay = 9;        // 支付列表，譬如信用卡等
     repeated string service = 10;   // 服务承诺列表，譬如7天无理由退换等
     string wl = 11;                 // 物流服务
+    repeated TaobaoProductHistory lstHistory = 12;
 }
 
 // TaobaoMode - taobao mode

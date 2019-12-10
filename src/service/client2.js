@@ -840,8 +840,10 @@ function mountainstealsSale(servAddr, url) {
 // );
 
 // tmallProduct('127.0.0.1:7051', '525967713966');
-tmallProduct('127.0.0.1:7051', '595765750524');
+// tmallProduct('127.0.0.1:7051', '595765750524');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
+
+taobaoProduct('127.0.0.1:7051', '23986840005');
 
 // mountainstealsProduct(
 //     '127.0.0.1:7051',

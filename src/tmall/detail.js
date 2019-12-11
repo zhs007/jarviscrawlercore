@@ -374,7 +374,7 @@ async function tmallDetail(browser, url, timeout) {
 
     await page.close();
 
-    return {error: awaiterr};
+    return {error: awaiterr.toString()};
   }
 
   if (skus) {
@@ -412,7 +412,7 @@ async function tmallDetail(browser, url, timeout) {
 
       await page.close();
 
-      return {error: awaiterr.toString()};
+      return {error: skuret.error.toString()};
     }
 
     skus = skuret.lstsku;

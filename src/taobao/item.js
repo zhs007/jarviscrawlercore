@@ -345,7 +345,7 @@ async function taobaoItem(browser, itemid, timeout) {
 
     await page.close();
 
-    return {error: awaiterr};
+    return {error: awaiterr.toString()};
   }
 
   const tbtxt = await page
@@ -373,7 +373,7 @@ async function taobaoItem(browser, itemid, timeout) {
 
     await page.close();
 
-    return {error: awaiterr};
+    return {error: awaiterr.toString()};
   }
 
   const skuret = procSKU(skus, tbtxt, skusret1, sibobj);
@@ -382,7 +382,7 @@ async function taobaoItem(browser, itemid, timeout) {
 
     await page.close();
 
-    return {error: skuret.error};
+    return {error: skuret.error.toString()};
   }
 
   skus = skuret.lstsku;

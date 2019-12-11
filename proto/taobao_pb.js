@@ -13,10 +13,12 @@ var global = Function('return this')();
 
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTaobao', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTaobao', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TaobaoItem', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TaobaoMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TaobaoProduct', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TaobaoProductHistory', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TaobaoSKUInfo', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TaobaoSearchResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TaobaoShopInfo', null, global);
 
 /**
@@ -1385,6 +1387,717 @@ proto.jarviscrawlercore.TaobaoProduct.prototype.clearLsthistoryList = function()
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.TaobaoItem = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TaobaoItem.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TaobaoItem, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TaobaoItem.displayName = 'proto.jarviscrawlercore.TaobaoItem';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TaobaoItem.repeatedFields_ = [10];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TaobaoItem.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TaobaoItem} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TaobaoItem.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    itemid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    img: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    url: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    shopname: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    shopid: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    shopurl: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    price: +jspb.Message.getFieldWithDefault(msg, 8, 0.0),
+    deal: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    iconsList: jspb.Message.getRepeatedField(msg, 10),
+    location: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    isad: jspb.Message.getFieldWithDefault(msg, 12, false),
+    strdeal: jspb.Message.getFieldWithDefault(msg, 13, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TaobaoItem}
+ */
+proto.jarviscrawlercore.TaobaoItem.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TaobaoItem;
+  return proto.jarviscrawlercore.TaobaoItem.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TaobaoItem} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TaobaoItem}
+ */
+proto.jarviscrawlercore.TaobaoItem.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setItemid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setImg(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setShopname(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setShopid(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setShopurl(value);
+      break;
+    case 8:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
+      break;
+    case 9:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setDeal(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addIcons(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setLocation(value);
+      break;
+    case 12:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsad(value);
+      break;
+    case 13:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStrdeal(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TaobaoItem.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TaobaoItem} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TaobaoItem.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getItemid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getImg();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getShopname();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
+  f = message.getShopid();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
+      f
+    );
+  }
+  f = message.getShopurl();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      8,
+      f
+    );
+  }
+  f = message.getDeal();
+  if (f !== 0) {
+    writer.writeInt32(
+      9,
+      f
+    );
+  }
+  f = message.getIconsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      10,
+      f
+    );
+  }
+  f = message.getLocation();
+  if (f.length > 0) {
+    writer.writeString(
+      11,
+      f
+    );
+  }
+  f = message.getIsad();
+  if (f) {
+    writer.writeBool(
+      12,
+      f
+    );
+  }
+  f = message.getStrdeal();
+  if (f.length > 0) {
+    writer.writeString(
+      13,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string itemID = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getItemid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setItemid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string title = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string img = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getImg = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setImg = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string url = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string shopname = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getShopname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setShopname = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
+};
+
+
+/**
+ * optional string shopid = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getShopid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setShopid = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string shopurl = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getShopurl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setShopurl = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional float price = 8;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 8, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 8, value);
+};
+
+
+/**
+ * optional int32 deal = 9;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getDeal = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setDeal = function(value) {
+  jspb.Message.setProto3IntField(this, 9, value);
+};
+
+
+/**
+ * repeated string icons = 10;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getIconsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setIconsList = function(value) {
+  jspb.Message.setField(this, 10, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.addIcons = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 10, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoItem.prototype.clearIconsList = function() {
+  this.setIconsList([]);
+};
+
+
+/**
+ * optional string location = 11;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getLocation = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setLocation = function(value) {
+  jspb.Message.setProto3StringField(this, 11, value);
+};
+
+
+/**
+ * optional bool isAD = 12;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getIsad = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 12, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setIsad = function(value) {
+  jspb.Message.setProto3BooleanField(this, 12, value);
+};
+
+
+/**
+ * optional string strDeal = 13;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoItem.prototype.getStrdeal = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoItem.prototype.setStrdeal = function(value) {
+  jspb.Message.setProto3StringField(this, 13, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.TaobaoSearchResult = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TaobaoSearchResult.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.TaobaoSearchResult, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TaobaoSearchResult.displayName = 'proto.jarviscrawlercore.TaobaoSearchResult';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.repeatedFields_ = [1];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TaobaoSearchResult.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TaobaoSearchResult} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    itemsList: jspb.Message.toObjectList(msg.getItemsList(),
+    proto.jarviscrawlercore.TaobaoItem.toObject, includeInstance),
+    text: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TaobaoSearchResult}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TaobaoSearchResult;
+  return proto.jarviscrawlercore.TaobaoSearchResult.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TaobaoSearchResult} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TaobaoSearchResult}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = new proto.jarviscrawlercore.TaobaoItem;
+      reader.readMessage(value,proto.jarviscrawlercore.TaobaoItem.deserializeBinaryFromReader);
+      msg.addItems(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TaobaoSearchResult.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TaobaoSearchResult} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getItemsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      1,
+      f,
+      proto.jarviscrawlercore.TaobaoItem.serializeBinaryToWriter
+    );
+  }
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * repeated TaobaoItem items = 1;
+ * @return {!Array<!proto.jarviscrawlercore.TaobaoItem>}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.getItemsList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.TaobaoItem>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.TaobaoItem, 1));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.TaobaoItem>} value */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.setItemsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 1, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.TaobaoItem=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.TaobaoItem}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.addItems = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.jarviscrawlercore.TaobaoItem, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.clearItemsList = function() {
+  this.setItemsList([]);
+};
+
+
+/**
+ * optional string text = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TaobaoSearchResult.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestTaobao = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -1422,7 +2135,8 @@ proto.jarviscrawlercore.RequestTaobao.prototype.toObject = function(opt_includeI
 proto.jarviscrawlercore.RequestTaobao.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    itemid: jspb.Message.getFieldWithDefault(msg, 2, "")
+    itemid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    text: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1467,6 +2181,10 @@ proto.jarviscrawlercore.RequestTaobao.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setItemid(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setText(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1510,6 +2228,13 @@ proto.jarviscrawlercore.RequestTaobao.serializeBinaryToWriter = function(message
       f
     );
   }
+  f = message.getText();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -1543,6 +2268,21 @@ proto.jarviscrawlercore.RequestTaobao.prototype.setItemid = function(value) {
 };
 
 
+/**
+ * optional string text = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestTaobao.prototype.getText = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestTaobao.prototype.setText = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -1569,14 +2309,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyTaobao.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.ReplyTaobao.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.ReplyTaobao.ReplyCase = {
   REPLY_NOT_SET: 0,
-  PRODUCT: 100
+  PRODUCT: 100,
+  SEARCHRESULT: 101
 };
 
 /**
@@ -1616,7 +2357,8 @@ proto.jarviscrawlercore.ReplyTaobao.prototype.toObject = function(opt_includeIns
 proto.jarviscrawlercore.ReplyTaobao.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    product: (f = msg.getProduct()) && proto.jarviscrawlercore.TaobaoProduct.toObject(includeInstance, f)
+    product: (f = msg.getProduct()) && proto.jarviscrawlercore.TaobaoProduct.toObject(includeInstance, f),
+    searchresult: (f = msg.getSearchresult()) && proto.jarviscrawlercore.TaobaoSearchResult.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1662,6 +2404,11 @@ proto.jarviscrawlercore.ReplyTaobao.deserializeBinaryFromReader = function(msg, 
       reader.readMessage(value,proto.jarviscrawlercore.TaobaoProduct.deserializeBinaryFromReader);
       msg.setProduct(value);
       break;
+    case 101:
+      var value = new proto.jarviscrawlercore.TaobaoSearchResult;
+      reader.readMessage(value,proto.jarviscrawlercore.TaobaoSearchResult.deserializeBinaryFromReader);
+      msg.setSearchresult(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1704,6 +2451,14 @@ proto.jarviscrawlercore.ReplyTaobao.serializeBinaryToWriter = function(message, 
       100,
       f,
       proto.jarviscrawlercore.TaobaoProduct.serializeBinaryToWriter
+    );
+  }
+  f = message.getSearchresult();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.TaobaoSearchResult.serializeBinaryToWriter
     );
   }
 };
@@ -1755,10 +2510,41 @@ proto.jarviscrawlercore.ReplyTaobao.prototype.hasProduct = function() {
 
 
 /**
+ * optional TaobaoSearchResult searchResult = 101;
+ * @return {?proto.jarviscrawlercore.TaobaoSearchResult}
+ */
+proto.jarviscrawlercore.ReplyTaobao.prototype.getSearchresult = function() {
+  return /** @type{?proto.jarviscrawlercore.TaobaoSearchResult} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.TaobaoSearchResult, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.TaobaoSearchResult|undefined} value */
+proto.jarviscrawlercore.ReplyTaobao.prototype.setSearchresult = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyTaobao.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyTaobao.prototype.clearSearchresult = function() {
+  this.setSearchresult(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyTaobao.prototype.hasSearchresult = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+/**
  * @enum {number}
  */
 proto.jarviscrawlercore.TaobaoMode = {
-  TBM_PRODUCT: 0
+  TBM_PRODUCT: 0,
+  TBM_SEARCH: 1
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

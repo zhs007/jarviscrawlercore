@@ -181,7 +181,9 @@ function procSKU(skus, tbtxt, skusret, sibobj) {
   }
 
   let lstsku = [];
-  if (lstskut.length == 1) {
+  if (lstskut.length == 0) {
+    return {lstsku: [], lstskut: []};
+  } else if (lstskut.length == 1) {
     lstsku = skus;
   } else if (lstskut.length == 2) {
     for (let i = 0; i < lstskut[0].skus.length; ++i) {

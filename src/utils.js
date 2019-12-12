@@ -397,7 +397,7 @@ function printDTGameResultErr(str, err) {
         err.getValue1() +
         ' strv0: ' +
         err.getStrval0() +
-        ' ]'
+        ' ]',
     );
   } else {
     log.error(str + ' [ errcode: ' + err.getErrcode() + ' ]');
@@ -624,7 +624,7 @@ function newCrunchBaseOrganization(obj) {
     for (let i = 0; i < obj.fundingrounds.length; ++i) {
       result.addFundingrounds(
           newCrunchBaseFundingRound(obj.fundingrounds[i]),
-          i
+          i,
       );
     }
     // result.setFoundersList(obj.fundingrounds);
@@ -1091,7 +1091,7 @@ async function mouseMove(page, x, y, cx, cy) {
             });
             document.body.dispatchEvent(e);
           },
-          {x: x, y: y, cx: cx, cy: cy}
+          {x: x, y: y, cx: cx, cy: cy},
       )
       .catch((err) => {
         log.error('mouseMove ' + err);
@@ -1113,7 +1113,7 @@ async function mouseMoveToEle(page, selector) {
     log.debug(bbox);
     await page.mouse.move(
         Math.floor(bbox.x + bbox.width / 2),
-        Math.floor(bbox.y + bbox.height / 2)
+        Math.floor(bbox.y + bbox.height / 2),
     );
   }
 }
@@ -1135,7 +1135,7 @@ async function mouseMoveToEleEx(page, selector, isThis) {
       log.debug(bbox);
       await page.mouse.move(
           Math.floor(bbox.x + bbox.width / 2),
-          Math.floor(bbox.y + bbox.height / 2)
+          Math.floor(bbox.y + bbox.height / 2),
       );
 
       return;
@@ -1166,7 +1166,7 @@ async function mouseMoveToFrameEleEx(page, selector, isFrame, isThis) {
           log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
+              Math.floor(bbox.y + bbox.height / 2),
           );
 
           return;
@@ -1191,7 +1191,7 @@ async function mouseClickEle(page, selector) {
     log.debug(bbox);
     await page.mouse.move(
         Math.floor(bbox.x + bbox.width / 2),
-        Math.floor(bbox.y + bbox.height / 2)
+        Math.floor(bbox.y + bbox.height / 2),
     );
     await page.mouse.down();
     await page.mouse.up();
@@ -1221,7 +1221,7 @@ async function mouseClickFrameEleEx(page, selector, isFrame, isThis) {
           log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
+              Math.floor(bbox.y + bbox.height / 2),
           );
           await page.mouse.down();
           await page.mouse.up();
@@ -1259,7 +1259,7 @@ async function mouseHoldFrameEleEx(page, selector, isFrame, isThis, timeHold) {
           log.debug(bbox);
           await page.mouse.move(
               Math.floor(bbox.x + bbox.width / 2),
-              Math.floor(bbox.y + bbox.height / 2)
+              Math.floor(bbox.y + bbox.height / 2),
           );
           await page.mouse.down();
           await sleep(timeHold);

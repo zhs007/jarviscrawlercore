@@ -7,10 +7,12 @@
 function log(type, info, obj) {
   if (!obj) {
     obj = {D: Date.now(), T: type, I: info};
-  } else {
+  } else if (typeof obj == 'object') {
     obj.D = Date.now();
     obj.T = type;
     obj.I = info;
+  } else {
+    obj = {D: Date.now(), T: type, I: info, O: obj};
   }
 
   console.log(JSON.stringify(obj));

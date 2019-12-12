@@ -1,3 +1,5 @@
+const log = require('./log');
+
 /**
  * percentage2float
  * @param {string} str - islike 98%
@@ -9,6 +11,8 @@ function percentage2float(str) {
     const f = parseFloat(arr[0]);
     return {num: f / 100};
   } catch (err) {
+    log.warn('percentage2float ' + str, err);
+
     return {error: err};
   }
 }
@@ -23,6 +27,24 @@ function string2float(str) {
     const f = parseFloat(str);
     return {num: f};
   } catch (err) {
+    log.warn('string2float ' + str, err);
+
+    return {error: err};
+  }
+}
+
+/**
+ * string2json
+ * @param {string} str - islike {"a":123}
+ * @return {object} ret - {error, obj}
+ */
+function string2json(str) {
+  try {
+    const obj = JSON.parse(str);
+    return {obj: obj};
+  } catch (err) {
+    log.warn('string2json ' + str, err);
+
     return {error: err};
   }
 }
@@ -42,8 +64,14 @@ function split2float(str, index, key) {
       return {num: f};
     }
 
-    return {error: new Error('split2float invalid index')};
+    const err = new Error('split2float invalid index');
+
+    log.warn('split2float ' + str + ' ' + index + ' ' + key, err);
+
+    return {error: err};
   } catch (err) {
+    log.warn('split2float ' + str + ' ' + index + ' ' + key, err);
+
     return {error: err};
   }
 }
@@ -58,6 +86,8 @@ function string2int(str) {
     const f = parseInt(str);
     return {num: f};
   } catch (err) {
+    log.warn('string2int ' + str, err);
+
     return {error: err};
   }
 }
@@ -174,4 +204,5 @@ exports.percentage2float = percentage2float;
 exports.string2float = string2float;
 exports.split2float = split2float;
 exports.string2int = string2int;
+exports.string2json = string2json;
 exports.getJSONStr = getJSONStr;

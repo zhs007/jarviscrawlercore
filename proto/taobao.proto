@@ -8,6 +8,7 @@ message TaobaoSKUInfo {
     string title = 3;
     string img = 4;
     int32 stock = 5;
+    string valueid = 6;
 }
 
 // TaobaoShopInfo - taobao shop infomation
@@ -20,6 +21,12 @@ message TaobaoShopInfo {
     repeated int32 rateLevel = 6;   // 描述、服务、物流，-1表示低，0表示等于，1表示高
     repeated float rateScore = 7;   // 描述、服务、物流，具体分数
     string shopid = 8;
+    string userid = 9;
+    int32 creditLevel = 10;
+    int32 allItemCount = 11;
+    int32 newItemCount = 12;
+    string strFans = 13;
+    float goodRatePercentage = 14;
 }
 
 // TaobaoProductHistory - taobao product history
@@ -42,6 +49,12 @@ message TaobaoProduct {
     repeated string service = 10;   // 服务承诺列表，譬如7天无理由退换等
     string wl = 11;                 // 物流服务
     repeated TaobaoProductHistory lstHistory = 12;
+    string rootCategoryID = 13;
+    string categoryID = 14;
+    string tbItemID = 15;
+    string brandValueID = 16;
+    int32 favCount = 17;
+    repeated string imgs = 18;
 }
 
 // TaobaoItem - taobao item
@@ -74,6 +87,8 @@ enum TaobaoMode {
     TBM_PRODUCT = 0;
     // TBM_SEARCH - search
     TBM_SEARCH = 1;
+    // TBM_MOBILEPRODUCT - mobile product
+    TBM_MOBILEPRODUCT = 2;
 }
 
 // RequestTaobao - request taobao
@@ -81,6 +96,7 @@ message RequestTaobao {
     TaobaoMode mode = 1;
     string itemID = 2;
     string text = 3;
+    string device = 4;
 }
 
 // ReplyTaobao - reply taobao

@@ -3,7 +3,7 @@ const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {closeDialog, procSKU} = require('./utils');
 const {waitForLocalFunction, waitForFunction} = require('../waitutils');
-const {getJSONStr} = require('../stringutils');
+const {getJSONStr} = require('../string.utils');
 
 /**
  * getTShopObj - get tshop object

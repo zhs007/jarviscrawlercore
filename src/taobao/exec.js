@@ -1,6 +1,7 @@
 const {startBrowser, attachBrowser} = require('../browser');
 const {taobaoItem} = require('./item');
 const {taobaoSearch} = require('./search');
+const {taobaoItemMobile} = require('./itemmobile');
 const log = require('../log');
 
 /**
@@ -17,6 +18,7 @@ async function execTaobao(program, version) {
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-a, --attach [attach]', 'attach browser')
+      .option('-d, --device [device]', 'device')
       .action(function(mode, options) {
         log.console('version is ', version);
 
@@ -37,6 +39,12 @@ async function execTaobao(program, version) {
 
           return;
         } else if (mode == 'search' && !options.searchstring) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
+          );
+
+          return;
+        } else if (mode == 'itemmobile' && (!options.itemid || !options.device)) {
           log.console(
               'command wrong, please type ' + 'jarviscrawler taobao --help',
           );
@@ -67,6 +75,15 @@ async function execTaobao(program, version) {
             const ret = await taobaoSearch(
                 browser,
                 options.searchstring,
+                timeout,
+            );
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'itemmobile') {
+            const ret = await taobaoItemMobile(
+                browser,
+                options.itemid,
+                options.device,
+                options.device,
                 timeout,
             );
             log.console(JSON.stringify(ret));

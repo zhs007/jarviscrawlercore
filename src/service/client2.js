@@ -726,6 +726,43 @@ function taobaoProduct(servAddr, itemid) {
 }
 
 /**
+ * taobaoMobileProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} itemid - itemid
+ * @param {string} device - device
+ */
+function taobaoMobileProduct(servAddr, itemid, device) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestTaobao();
+  request.setMode(messages.TaobaoMode.TBM_MOBILEPRODUCT);
+  request.setItemid(itemid);
+  request.setDevice(device);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TAOBAO,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      },
+  );
+}
+
+/**
  * taobaoSearch
  * @param {string} servAddr - servAddr
  * @param {string} text - text
@@ -879,7 +916,8 @@ function mountainstealsSale(servAddr, url) {
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
 // taobaoProduct('127.0.0.1:7051', '23986840005');
-taobaoSearch('127.0.0.1:7051', 'TOMY 火车');
+// taobaoSearch('127.0.0.1:7051', 'TOMY 火车');
+taobaoMobileProduct('127.0.0.1:7051', '23986840005', '');
 
 // mountainstealsProduct(
 //     '127.0.0.1:7051',
@@ -910,5 +948,6 @@ exports.alimamaGetShop = alimamaGetShop;
 exports.tmallProduct = tmallProduct;
 exports.taobaoProduct = taobaoProduct;
 exports.taobaoSearch = taobaoSearch;
+exports.taobaoMobileProduct = taobaoMobileProduct;
 exports.mountainstealsSale = mountainstealsSale;
 exports.mountainstealsProduct = mountainstealsProduct;

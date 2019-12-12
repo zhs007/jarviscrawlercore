@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {tmallDetail} = require('./detail');
+const {tmallDetailMobile} = require('./detailmobile');
 const log = require('../log');
 
 /**
@@ -14,6 +15,7 @@ async function execTmall(program, version) {
       .option('-u, --url [url]', 'url')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
+      .option('-d, --device [device]', 'device')
       .action(function(mode, options) {
         log.console('version is ', version);
 
@@ -28,6 +30,12 @@ async function execTmall(program, version) {
         log.console('mode - ', mode);
 
         if (mode == 'detail' && !options.url) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler tmall --help',
+          );
+
+          return;
+        } else if (mode == 'detailmobile' && (!options.url || !options.device)) {
           log.console(
               'command wrong, please type ' + 'jarviscrawler tmall --help',
           );
@@ -48,6 +56,15 @@ async function execTmall(program, version) {
 
           if (mode == 'detail') {
             const ret = await tmallDetail(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'detailmobile') {
+            const ret = await tmallDetailMobile(
+                browser,
+                options.url,
+                options.device,
+                options.device,
+                timeout,
+            );
             log.console(JSON.stringify(ret));
           }
 

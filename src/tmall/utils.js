@@ -224,5 +224,42 @@ function procSKU(skus, tshop, idobj) {
   return {lstsku: lstsku, lstskut: lstskut};
 }
 
+/**
+ * fixSKU - fix sku
+ * @param {object} sku - sku
+ * @return {object} sku - sku
+ */
+function fixSKU(sku) {
+  if (sku.img && sku.img.indexOf('//') == 0) {
+    sku.img = 'https:' + sku.img;
+  }
+
+  return sku;
+}
+
+/**
+ * fixProduct - fix product
+ * @param {object} product - product
+ * @return {object} product - product
+ */
+function fixProduct(product) {
+  if (Array.isArray(product.imgs) && product.imgs.length > 0) {
+    for (let i = 0; i < product.imgs.length; ++i) {
+      if (product.imgs[i] && product.imgs[i].indexOf('//') == 0) {
+        product.imgs[i] = 'https:' + product.imgs[i];
+      }
+    }
+  }
+
+  if (Array.isArray(product.skus) && product.skus.length > 0) {
+    for (let i = 0; i < product.skus.length; ++i) {
+      product.skus[i] = fixSKU(product.skus[i]);
+    }
+  }
+
+  return product;
+}
+
 exports.closeDialog = closeDialog;
 exports.procSKU = procSKU;
+exports.fixProduct = fixProduct;

@@ -26,6 +26,24 @@ message TmallReviewTag {
     int32 times = 2;
 }
 
+// TmallShopInfo - tmall shop infomation
+message TmallShopInfo {
+    string name = 1;
+    bool gold = 2;
+    string url = 3;
+    string rank = 4;    // cap/gold ...
+    int32 rating = 5;   // 3/4/5 ...
+    repeated int32 rateLevel = 6;   // 描述、服务、物流，-1表示低，0表示等于，1表示高
+    repeated float rateScore = 7;   // 描述、服务、物流，具体分数
+    string shopid = 8;
+    string userid = 9;
+    int32 creditLevel = 10;
+    int32 allItemCount = 11;
+    int32 newItemCount = 12;
+    string strFans = 13;
+    float goodRatePercentage = 14;
+}
+
 // TmallProduct - tmall product
 message TmallProduct {
     string itemID = 1;
@@ -42,18 +60,27 @@ message TmallProduct {
     int32 sellCount = 12;
     string strSellCount = 13;
     repeated TmallProductHistory lstHistory = 14;
+    string rootCategoryID = 15;
+    string tbItemID = 16;
+    string brandValueID = 17;
+    int32 favCount = 18;
+    repeated string imgs = 19;
+    TmallShopInfo shop = 20;
 }
 
 // TmallMode - tmall mode
 enum TmallMode {
     // TMM_PRODUCT - product
     TMM_PRODUCT = 0;
+    // TMM_MOBILEPRODUCT - mobile product
+    TMM_MOBILEPRODUCT = 1;
 }
 
 // RequestTmall - request tmall
 message RequestTmall {
     TmallMode mode = 1;
     string url = 2;
+    string device = 3;
 }
 
 // ReplyTmall - reply tmall

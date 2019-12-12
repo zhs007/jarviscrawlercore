@@ -1,4 +1,5 @@
 const {holdBarMove} = require('../captcha.js');
+const log = require('../log');
 
 /**
  * closeDialog - close dialog
@@ -151,9 +152,10 @@ function procSKU(skus, tbtxt, skusret, sibobj) {
 
         cursku.skus.push(skus[i]);
       } else {
-        return {
-          error: new Error('taobao.procSKU() invalid skus[i].value.split'),
-        };
+        log.warn('taobao.procSKU() invalid skus[i].value.split ' + skus[i].value);
+        // return {
+        //   error: new Error('taobao.procSKU() invalid skus[i].value.split'),
+        // };
       }
     } else {
       return {error: new Error('taobao.procSKU() invalid skus[i].value')};

@@ -1,6 +1,6 @@
 // const {sleep} = require('../utils');
 // const {WaitAllResponse} = require('../waitallresponse');
-// const log = require('../log');
+const log = require('../log');
 
 /**
  * closeDialog - close dialog
@@ -87,9 +87,10 @@ function procSKU(skus, tshop, idobj) {
 
         cursku.skus.push(skus[i]);
       } else {
-        return {
-          error: new Error('tmall.procSKU() invalid skus[i].value.split'),
-        };
+        log.warn('tmall.procSKU() invalid skus[i].value.split ' + skus[i].value);
+        // return {
+        //   error: new Error('tmall.procSKU() invalid skus[i].value.split'),
+        // };
       }
     } else {
       return {error: new Error('tmall.procSKU() invalid skus[i].value')};

@@ -28,6 +28,22 @@ function newTmallSKUInfo(obj) {
     result.setStock(obj.stock);
   }
 
+  if (obj.originalPrice) {
+    result.setOriginalprice(obj.originalPrice);
+  }
+
+  if (obj.wl) {
+    result.setWl(obj.wl);
+  }
+
+  if (obj.wlPrice) {
+    result.setWlprice(obj.wlPrice);
+  }
+
+  if (obj.wlStr) {
+    result.setWlstr(obj.wlStr);
+  }
+
   return result;
 }
 
@@ -45,6 +61,73 @@ function newTmallReviewTag(obj) {
 
   if (obj.times) {
     result.setTimes(obj.times);
+  }
+
+  return result;
+}
+
+/**
+ * new TmallShopInfo with object
+ * @param {object} obj - TmallShopInfo object
+ * @return {messages.TmallShopInfo} result - TmallShopInfo
+ */
+function newTmallShopInfo(obj) {
+  const result = new messages.TmallShopInfo();
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.gold) {
+    result.setGold(obj.gold);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.rank) {
+    result.setRank(obj.rank);
+  }
+
+  if (obj.rating) {
+    result.setRating(obj.rating);
+  }
+
+  if (Array.isArray(obj.rateLevel) && obj.rateLevel.length > 0) {
+    result.setRatelevelList(obj.rateLevel);
+  }
+
+  if (Array.isArray(obj.rateScore) && obj.rateScore.length > 0) {
+    result.setRatescoreList(obj.rateScore);
+  }
+
+  if (obj.shopid) {
+    result.setShopid(obj.shopid);
+  }
+
+  if (obj.userid) {
+    result.setUserid(obj.userid);
+  }
+
+  if (obj.creditLevel) {
+    result.setCreditlevel(obj.creditLevel);
+  }
+
+  if (obj.allItemCount) {
+    result.setAllitemcount(obj.allItemCount);
+  }
+
+  if (obj.newItemCount) {
+    result.setNewitemcount(obj.newItemCount);
+  }
+
+  if (obj.strFans) {
+    result.setStrfans(obj.strFans);
+  }
+
+  if (obj.goodRatePercentage) {
+    result.setGoodratepercentage(obj.goodRatePercentage);
   }
 
   return result;
@@ -102,6 +185,38 @@ function newTmallProduct(obj) {
     }
   }
 
+  if (obj.sellCount) {
+    result.setSellcount(obj.sellCount);
+  }
+
+  if (obj.strSellCount) {
+    result.setStrsellcount(obj.strSellCount);
+  }
+
+  if (obj.rootCategoryID) {
+    result.setRootcategoryid(obj.rootCategoryID);
+  }
+
+  if (obj.tbItemID) {
+    result.setTbitemid(obj.tbItemID);
+  }
+
+  if (obj.brandValueID) {
+    result.setBrandvalueid(obj.brandValueID);
+  }
+
+  if (obj.favCount) {
+    result.setFavcount(obj.favCount);
+  }
+
+  if (Array.isArray(obj.imgs) && obj.imgs.length > 0) {
+    result.setImgsList(obj.imgs);
+  }
+
+  if (obj.shop) {
+    result.setShop(newTmallShopInfo(obj.shop));
+  }
+
   return result;
 }
 
@@ -116,7 +231,10 @@ function newReplyTmall(mode, obj) {
 
   result.setMode(mode);
 
-  if (mode == messages.TmallMode.TMM_PRODUCT) {
+  if (
+    mode == messages.TmallMode.TMM_PRODUCT ||
+    mode == messages.TmallMode.TMM_MOBILEPRODUCT
+  ) {
     result.setProduct(newTmallProduct(obj));
   }
 

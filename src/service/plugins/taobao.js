@@ -1,5 +1,7 @@
 const messages = require('../../../proto/result_pb');
 const {taobaoItem} = require('../../taobao/item');
+const {taobaoItemMobile} = require('../../taobao/itemmobile');
+const {taobaoSearch} = require('../../taobao/search');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 const {newReplyTaobao} = require('../../proto.taobao.utils');
 
@@ -19,6 +21,52 @@ function callTaobao(browser, cfg, call, param, request) {
 
   if (param.getMode() == messages.TaobaoMode.TBM_PRODUCT) {
     taobaoItem(browser, param.getItemid(), timeout)
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyTaobao(messages.TaobaoMode.TBM_PRODUCT, ret.ret);
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_TAOBAO, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else if (param.getMode() == messages.TaobaoMode.TBM_SEARCH) {
+    taobaoSearch(browser, param.getText(), timeout)
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyTaobao(messages.TaobaoMode.TBM_SEARCH, ret.ret);
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_TAOBAO, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else if (param.getMode() == messages.TaobaoMode.TBM_MOBILEPRODUCT) {
+    taobaoItemMobile(
+        browser,
+        param.getItemid(),
+        param.getDevice(),
+        cfg.defaultmobiledevice,
+        timeout,
+    )
         .then((ret) => {
           if (ret.error) {
             replyError(call, ret.error, true);

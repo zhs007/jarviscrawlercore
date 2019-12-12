@@ -1,5 +1,7 @@
-const {startBrowser} = require('../browser');
+const {startBrowser, attachBrowser} = require('../browser');
 const {taobaoItem} = require('./item');
+const {taobaoSearch} = require('./search');
+const {taobaoItemMobile} = require('./itemmobile');
 const log = require('../log');
 
 /**
@@ -12,14 +14,17 @@ async function execTaobao(program, version) {
       .command('taobao [mode]')
       .description('taobao')
       .option('-i, --itemid [itemid]', 'itemid')
+      .option('-s, --searchstring [searchstring]', 'searchstring')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
+      .option('-a, --attach [attach]', 'attach browser')
+      .option('-d, --device [device]', 'device')
       .action(function(mode, options) {
         log.console('version is ', version);
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler taobao --help'
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
           );
 
           return;
@@ -27,9 +32,21 @@ async function execTaobao(program, version) {
 
         log.console('mode - ', mode);
 
-        if (mode == 'taobao' && !options.itemid) {
+        if (mode == 'item' && !options.itemid) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler taobao --help'
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
+          );
+
+          return;
+        } else if (mode == 'search' && !options.searchstring) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
+          );
+
+          return;
+        } else if (mode == 'itemmobile' && (!options.itemid || !options.device)) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler taobao --help',
           );
 
           return;
@@ -44,14 +61,39 @@ async function execTaobao(program, version) {
         log.console('headless - ', headless);
 
         (async () => {
-          const browser = await startBrowser(headless);
+          let browser;
+          if (options.attach) {
+            browser = await attachBrowser(options.attach);
+          } else {
+            browser = await startBrowser(headless);
+          }
 
           if (mode == 'item') {
             const ret = await taobaoItem(browser, options.itemid, timeout);
             log.console(JSON.stringify(ret));
+          } else if (mode == 'search') {
+            const ret = await taobaoSearch(
+                browser,
+                options.searchstring,
+                timeout,
+            );
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'itemmobile') {
+            const ret = await taobaoItemMobile(
+                browser,
+                options.itemid,
+                options.device,
+                options.device,
+                timeout,
+            );
+            log.console(JSON.stringify(ret));
           }
 
-          await browser.close();
+          if (!options.attach) {
+            await browser.close();
+          }
+
+          process.exit(-1);
         })().catch((err) => {
           log.console('catch a err ', err);
 

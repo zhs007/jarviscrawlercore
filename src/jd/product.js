@@ -678,7 +678,7 @@ async function jdProduct(browser, url, timeout) {
           const lstitems = eles[0].getElementsByClassName('item');
           for (let i = 0; i < lstitems.length; ++i) {
             const lstbrand = lstitems[i].getElementsByClassName(
-                'J-crumb-br crumb-br EDropdown'
+                'J-crumb-br crumb-br EDropdown',
             );
             if (lstbrand.length > 0) {
               breadcrumbsret.brand = lstitems[i].innerText;

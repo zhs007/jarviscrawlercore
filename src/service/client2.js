@@ -592,6 +592,38 @@ function alimamaGetTop(servAddr) {
 }
 
 /**
+ * alimamaGetShop
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function alimamaGetShop(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestAlimama();
+  request.setMode(messages.AlimamaMode.ALIMMM_GETSHOP);
+  request.setUrl(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_ALIMAMA,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
  * alimamaSearch
  * @param {string} servAddr - servAddr
  * @param {string} text - text
@@ -659,6 +691,43 @@ function tmallProduct(servAddr, url) {
 }
 
 /**
+ * tmallMobileProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ * @param {string} device - device
+ */
+function tmallMobileProduct(servAddr, url, device) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestTmall();
+  request.setMode(messages.TmallMode.TMM_MOBILEPRODUCT);
+  request.setUrl(url);
+  request.setDevice(device);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TMALL,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      },
+  );
+}
+
+/**
  * taobaoProduct
  * @param {string} servAddr - servAddr
  * @param {string} itemid - itemid
@@ -672,6 +741,78 @@ function taobaoProduct(servAddr, itemid) {
   const request = new messages.RequestTaobao();
   request.setMode(messages.TaobaoMode.TBM_PRODUCT);
   request.setItemid(itemid);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TAOBAO,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      },
+  );
+}
+
+/**
+ * taobaoMobileProduct
+ * @param {string} servAddr - servAddr
+ * @param {string} itemid - itemid
+ * @param {string} device - device
+ */
+function taobaoMobileProduct(servAddr, itemid, device) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestTaobao();
+  request.setMode(messages.TaobaoMode.TBM_MOBILEPRODUCT);
+  request.setItemid(itemid);
+  request.setDevice(device);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_TAOBAO,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+
+      // alimamaSearch('127.0.0.1:7051', 'montbell 羽绒服 女');
+      // alimamaGetTop('127.0.0.1:7051');
+      },
+  );
+}
+
+/**
+ * taobaoSearch
+ * @param {string} servAddr - servAddr
+ * @param {string} text - text
+ */
+function taobaoSearch(servAddr, text) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestTaobao();
+  request.setMode(messages.TaobaoMode.TBM_SEARCH);
+  request.setText(text);
 
   requestCrawler(
       client,
@@ -802,14 +943,24 @@ function mountainstealsSale(servAddr, url) {
 // alimamaKeepalive('10.211.55.4:7052');
 // alimamaGetTop('127.0.0.1:7051');
 // alimamaSearch('127.0.0.1:7051', '土拨鼠 羽绒服 女');
+// alimamaGetShop(
+//     '127.0.0.1:7051',
+//     'https://pub.alimama.com/myunion.htm?#!/promo/self/shop_detail?userNumberId=2783286164',
+// );
 
 // tmallProduct('127.0.0.1:7051', '525967713966');
+// tmallProduct('127.0.0.1:7051', '595765750524');
+tmallMobileProduct('127.0.0.1:7051', '595765750524', '');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
-mountainstealsProduct(
-    '127.0.0.1:7051',
-    'smartwool-women-s-dasher-crew-sock_10384064',
-);
+// taobaoProduct('127.0.0.1:7051', '23986840005');
+// taobaoSearch('127.0.0.1:7051', 'TOMY 火车');
+// taobaoMobileProduct('127.0.0.1:7051', '23986840005', '');
+
+// mountainstealsProduct(
+//     '127.0.0.1:7051',
+//     'smartwool-women-s-dasher-crew-sock_10384064',
+// );
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
 
 exports.startTranslate2 = startTranslate2;
@@ -831,7 +982,11 @@ exports.jdActivePage = jdActivePage;
 exports.alimamaKeepalive = alimamaKeepalive;
 exports.alimamaGetTop = alimamaGetTop;
 exports.alimamaSearch = alimamaSearch;
+exports.alimamaGetShop = alimamaGetShop;
 exports.tmallProduct = tmallProduct;
+exports.tmallMobileProduct = tmallMobileProduct;
 exports.taobaoProduct = taobaoProduct;
+exports.taobaoSearch = taobaoSearch;
+exports.taobaoMobileProduct = taobaoMobileProduct;
 exports.mountainstealsSale = mountainstealsSale;
 exports.mountainstealsProduct = mountainstealsProduct;

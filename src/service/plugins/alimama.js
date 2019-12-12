@@ -2,6 +2,7 @@ const messages = require('../../../proto/result_pb');
 const {alimamaKeepalive} = require('../../alimama/keepalive');
 const {alimamaSearch} = require('../../alimama/search');
 const {alimamaGetTop} = require('../../alimama/gettop');
+const {alimamaGetShop} = require('../../alimama/shop');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 const {newReplyAlimama} = require('../../proto.alimama.utils');
 
@@ -32,7 +33,7 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const val = newReplyAlimama(
               messages.AlimamaMode.ALIMMM_KEEPALIVE,
-              undefined
+              undefined,
           );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
@@ -55,7 +56,7 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const val = newReplyAlimama(
               messages.AlimamaMode.ALIMMM_SEARCH,
-              ret.ret
+              ret.ret,
           );
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
@@ -78,8 +79,28 @@ function callAlimama(browser, cfg, call, param, request) {
 
           const val = newReplyAlimama(
               messages.AlimamaMode.ALIMMM_GETTOP,
-              ret.ret
+              ret.ret,
           );
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else if (param.getMode() == messages.AlimamaMode.ALIMMM_GETSHOP) {
+    alimamaGetShop(browser, param.getUrl(), cfg.alimamacfg, timeout)
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyAlimama(messages.AlimamaMode.ALIMMM_GETSHOP, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_ALIMAMA, val);
 

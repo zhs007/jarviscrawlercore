@@ -8,6 +8,7 @@ message TaobaoSKUInfo {
     string title = 3;
     string img = 4;
     int32 stock = 5;
+    string valueid = 6;
 }
 
 // TaobaoShopInfo - taobao shop infomation
@@ -20,6 +21,18 @@ message TaobaoShopInfo {
     repeated int32 rateLevel = 6;   // 描述、服务、物流，-1表示低，0表示等于，1表示高
     repeated float rateScore = 7;   // 描述、服务、物流，具体分数
     string shopid = 8;
+    string userid = 9;
+    int32 creditLevel = 10;
+    int32 allItemCount = 11;
+    int32 newItemCount = 12;
+    string strFans = 13;
+    float goodRatePercentage = 14;
+}
+
+// TaobaoProductHistory - taobao product history
+message TaobaoProductHistory {
+    repeated TaobaoSKUInfo skus = 1;
+    int64 lastUpdatedTime = 2;
 }
 
 // TaobaoProduct - taobao product
@@ -35,18 +48,55 @@ message TaobaoProduct {
     repeated string pay = 9;        // 支付列表，譬如信用卡等
     repeated string service = 10;   // 服务承诺列表，譬如7天无理由退换等
     string wl = 11;                 // 物流服务
+    repeated TaobaoProductHistory lstHistory = 12;
+    string rootCategoryID = 13;
+    string categoryID = 14;
+    string tbItemID = 15;
+    string brandValueID = 16;
+    int32 favCount = 17;
+    repeated string imgs = 18;
+}
+
+// TaobaoItem - taobao item
+message TaobaoItem {
+    string itemID = 1;
+    string title = 2;
+    string img = 3;
+    string url = 4;
+    string shopname = 5;
+    string shopid = 6;
+    string shopurl = 7;
+    float price = 8;
+    int32 deal = 9;
+    repeated string icons = 10;
+    string location = 11;
+    bool isAD = 12;
+    string strDeal = 13;
+}
+
+// TaobaoSearchResult - taobao search result
+message TaobaoSearchResult {
+    repeated TaobaoItem items = 1;
+    string text = 2;
+    int64 lastUpdatedTime = 3;
 }
 
 // TaobaoMode - taobao mode
 enum TaobaoMode {
     // TBM_PRODUCT - product
     TBM_PRODUCT = 0;
+    // TBM_SEARCH - search
+    TBM_SEARCH = 1;
+    // TBM_MOBILEPRODUCT - mobile product
+    TBM_MOBILEPRODUCT = 2;
 }
 
 // RequestTaobao - request taobao
 message RequestTaobao {
     TaobaoMode mode = 1;
     string itemID = 2;
+    string text = 3;
+    string device = 4;
 }
 
 // ReplyTaobao - reply taobao
@@ -55,5 +105,6 @@ message ReplyTaobao {
 
     oneof reply {
         TaobaoProduct product = 100;
+        TaobaoSearchResult searchResult = 101;
     }    
 }

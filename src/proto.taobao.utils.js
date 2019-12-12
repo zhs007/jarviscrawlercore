@@ -28,6 +28,10 @@ function newTaobaoSKUInfo(obj) {
     result.setStock(obj.stock);
   }
 
+  if (obj.valueid) {
+    result.setValueid(obj.valueid);
+  }
+
   return result;
 }
 
@@ -69,6 +73,30 @@ function newTaobaoShopInfo(obj) {
 
   if (obj.shopid) {
     result.setShopid(obj.shopid);
+  }
+
+  if (obj.userid) {
+    result.setUserid(obj.userid);
+  }
+
+  if (obj.creditLevel) {
+    result.setCreditlevel(obj.creditLevel);
+  }
+
+  if (obj.allItemCount) {
+    result.setAllitemcount(obj.allItemCount);
+  }
+
+  if (obj.newItemCount) {
+    result.setNewitemcount(obj.newItemCount);
+  }
+
+  if (obj.strFans) {
+    result.setStrfans(obj.strFans);
+  }
+
+  if (obj.goodRatePercentage) {
+    result.setGoodratepercentage(obj.goodRatePercentage);
   }
 
   return result;
@@ -124,6 +152,110 @@ function newTaobaoProduct(obj) {
     result.setWl(obj.wl);
   }
 
+  if (obj.rootCategoryID) {
+    result.setRootcategoryid(obj.rootCategoryID);
+  }
+
+  if (obj.categoryID) {
+    result.setCategoryid(obj.categoryID);
+  }
+
+  if (obj.tbItemID) {
+    result.setTbitemid(obj.tbItemID);
+  }
+
+  if (obj.brandValueID) {
+    result.setBrandvalueid(obj.brandValueID);
+  }
+
+  if (obj.favCount) {
+    result.setFavcount(obj.favCount);
+  }
+
+  if (Array.isArray(obj.imgs) && obj.imgs.length > 0) {
+    result.setImgsList(obj.imgs);
+  }
+
+  return result;
+}
+
+/**
+ * new TaobaoItem with object
+ * @param {object} obj - TaobaoItem object
+ * @return {messages.TaobaoItem} result - TaobaoItem
+ */
+function newTaobaoItem(obj) {
+  const result = new messages.TaobaoItem();
+
+  if (obj.itemID) {
+    result.setItemid(obj.itemID);
+  }
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.img) {
+    result.setImg(obj.img);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.shopname) {
+    result.setShopname(obj.shopname);
+  }
+
+  if (obj.shopid) {
+    result.setShopid(obj.shopid);
+  }
+
+  if (obj.shopurl) {
+    result.setShopurl(obj.shopurl);
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (obj.deal) {
+    result.setDeal(obj.deal);
+  }
+
+  if (Array.isArray(obj.icons) && obj.icons.length > 0) {
+    result.setIconsList(obj.icons);
+  }
+
+  if (obj.isAD) {
+    result.setIsad(obj.isAD);
+  }
+
+  if (obj.strDeal) {
+    result.setStrdeal(obj.strDeal);
+  }
+
+  return result;
+}
+
+/**
+ * new TaobaoSearchResult with object
+ * @param {object} obj - TaobaoSearchResult object
+ * @return {messages.TaobaoSearchResult} result - TaobaoSearchResult
+ */
+function newTaobaoSearchResult(obj) {
+  const result = new messages.TaobaoSearchResult();
+
+  if (Array.isArray(obj.items) && obj.items.length > 0) {
+    for (let i = 0; i < obj.items.length; ++i) {
+      result.addItems(newTaobaoItem(obj.items[i], i));
+    }
+  }
+
+  if (obj.text) {
+    result.setText(obj.text);
+  }
+
   return result;
 }
 
@@ -138,8 +270,13 @@ function newReplyTaobao(mode, obj) {
 
   result.setMode(mode);
 
-  if (mode == messages.TaobaoMode.TBM_PRODUCT) {
+  if (
+    mode == messages.TaobaoMode.TBM_PRODUCT ||
+    mode == messages.TaobaoMode.TBM_MOBILEPRODUCT
+  ) {
     result.setProduct(newTaobaoProduct(obj));
+  } else if (mode == messages.TaobaoMode.TBM_SEARCH) {
+    result.setSearchresult(newTaobaoSearchResult(obj));
   }
 
   return result;

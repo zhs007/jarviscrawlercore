@@ -1,6 +1,7 @@
 const {startBrowser, attachBrowser} = require('../browser');
 const {alimamaSearch} = require('./search');
 const {alimamaGetTop} = require('./gettop');
+const {alimamaGetShop} = require('./shop');
 const {alimamaKeepalive} = require('./keepalive');
 const log = require('../log');
 
@@ -14,6 +15,7 @@ async function execAlimama(program, version) {
       .command('alimama [mode]')
       .description('alimama')
       .option('-s, --str [str]', 'string')
+      .option('-u, --url [url]', 'url')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-a, --attach [attach]', 'attach browser')
@@ -22,7 +24,7 @@ async function execAlimama(program, version) {
 
         if (!mode) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler alimama --help'
+              'command wrong, please type ' + 'jarviscrawler alimama --help',
           );
 
           return;
@@ -32,7 +34,15 @@ async function execAlimama(program, version) {
 
         if (mode == 'search' && !options.str) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler alimama --help'
+              'command wrong, please type ' + 'jarviscrawler alimama --help',
+          );
+
+          return;
+        }
+
+        if (mode == 'shop' && !options.url) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler alimama --help',
           );
 
           return;
@@ -66,7 +76,7 @@ async function execAlimama(program, version) {
                 browser,
                 options.str,
                 undefined,
-                timeout
+                timeout,
             );
             log.console(JSON.stringify(ret));
           } else if (mode == 'gettop') {
@@ -74,6 +84,14 @@ async function execAlimama(program, version) {
             log.console(JSON.stringify(ret));
           } else if (mode == 'keepalive') {
             const ret = await alimamaKeepalive(browser, undefined, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'shop') {
+            const ret = await alimamaGetShop(
+                browser,
+                options.url,
+                undefined,
+                timeout,
+            );
             log.console(JSON.stringify(ret));
           }
 

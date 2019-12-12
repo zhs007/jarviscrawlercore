@@ -5,7 +5,8 @@
  */
 function base64ArrayBuffer(arrayBuffer) {
   let base64 = '';
-  const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const encodings =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
   const bytes = new Uint8Array(arrayBuffer);
   const byteLength = bytes.byteLength;
@@ -112,8 +113,10 @@ function getElementWithText(selector, text) {
  */
 function clearArticleElement(body) {
   for (let i = 0; i < body.childNodes.length; ) {
-    if (body.childNodes[i].className != 'article-head' &&
-    body.childNodes[i].className != 'article-body') {
+    if (
+      body.childNodes[i].className != 'article-head' &&
+      body.childNodes[i].className != 'article-body'
+    ) {
       body.childNodes[i].remove();
     } else {
       ++i;

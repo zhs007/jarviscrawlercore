@@ -1,7 +1,7 @@
 // const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
-const {closeDialog, nocaptcha} = require('./utils');
+const {closeDialog, nocaptcha, procSKU} = require('./utils');
 const {waitForLocalFunction} = require('../waitutils');
 
 /**
@@ -52,7 +52,7 @@ async function taobaoItem(browser, itemid, timeout) {
     const url = res.url();
 
     if (url.indexOf('sib.htm') >= 0) {
-      log.info('response', url);
+      // log.info('response', url);
 
       if (url.indexOf('onSibRequestSuccess') >= 0) {
         sibret = await res.buffer().catch((err) => {
@@ -139,7 +139,7 @@ async function taobaoItem(browser, itemid, timeout) {
         return sibret != undefined;
       },
       1000,
-      timeout
+      timeout,
   );
   if (awaiterr) {
     log.error('taobaoItem.waitForLocalFunction', awaiterr);
@@ -160,42 +160,42 @@ async function taobaoItem(browser, itemid, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  const mapStock = {};
-  if (sibobj.data && sibobj.data.dynStock && sibobj.data.dynStock.sku) {
-    for (const k in sibobj.data.dynStock.sku) {
-      if (Object.prototype.hasOwnProperty.call(sibobj.data.dynStock.sku, k)) {
-        mapStock[k] = sibobj.data.dynStock.sku[k].stock;
-      }
-    }
-  }
+  // const mapStock = {};
+  // if (sibobj.data && sibobj.data.dynStock && sibobj.data.dynStock.sku) {
+  //   for (const k in sibobj.data.dynStock.sku) {
+  //     if (Object.prototype.hasOwnProperty.call(sibobj.data.dynStock.sku, k)) {
+  //       mapStock[k] = sibobj.data.dynStock.sku[k].stock;
+  //     }
+  //   }
+  // }
 
-  const mapPrice = {};
-  let hasprice = false;
-  if (sibobj.data && sibobj.data.promotion && sibobj.data.promotion.promoData) {
-    for (const k in sibobj.data.promotion.promoData) {
-      if (
-        Object.prototype.hasOwnProperty.call(sibobj.data.promotion.promoData, k)
-      ) {
-        if (k != 'def' && Array.isArray(sibobj.data.promotion.promoData[k])) {
-          mapPrice[k] = sibobj.data.promotion.promoData[k][0].price;
+  // const mapPrice = {};
+  // let hasprice = false;
+  // if (sibobj.data && sibobj.data.promotion && sibobj.data.promotion.promoData) {
+  //   for (const k in sibobj.data.promotion.promoData) {
+  //     if (
+  //       Object.prototype.hasOwnProperty.call(sibobj.data.promotion.promoData, k)
+  //     ) {
+  //       if (k != 'def' && Array.isArray(sibobj.data.promotion.promoData[k])) {
+  //         mapPrice[k] = sibobj.data.promotion.promoData[k][0].price;
 
-          hasprice = true;
-        }
-      }
-    }
-  }
+  //         hasprice = true;
+  //       }
+  //     }
+  //   }
+  // }
 
-  if (!hasprice && sibobj.data && sibobj.data.originalPrice) {
-    for (const k in sibobj.data.originalPrice) {
-      if (Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)) {
-        if (k != 'def') {
-          mapPrice[k] = sibobj.data.originalPrice[k].price;
+  // if (!hasprice && sibobj.data && sibobj.data.originalPrice) {
+  //   for (const k in sibobj.data.originalPrice) {
+  //     if (Object.prototype.hasOwnProperty.call(sibobj.data.originalPrice, k)) {
+  //       if (k != 'def') {
+  //         mapPrice[k] = sibobj.data.originalPrice[k].price;
 
-          hasprice = true;
-        }
-      }
-    }
-  }
+  //         hasprice = true;
+  //       }
+  //     }
+  //   }
+  // }
 
   const pay = [];
   if (
@@ -205,7 +205,7 @@ async function taobaoItem(browser, itemid, timeout) {
   ) {
     for (let i = 0; i < sibobj.data.tradeContract.pay.length; ++i) {
       pay.push(
-          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u'))
+          unescape(sibobj.data.tradeContract.pay[i].title.replace(/\u/g, '%u')),
       );
     }
   }
@@ -219,8 +219,8 @@ async function taobaoItem(browser, itemid, timeout) {
     for (let i = 0; i < sibobj.data.tradeContract.service.length; ++i) {
       service.push(
           unescape(
-              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u')
-          )
+              sibobj.data.tradeContract.service[i].title.replace(/\u/g, '%u'),
+          ),
       );
     }
   }
@@ -243,7 +243,7 @@ async function taobaoItem(browser, itemid, timeout) {
             if (
               Object.prototype.hasOwnProperty.call(
                   Hub.config.config.sku.valItemInfo.propertyMemoMap,
-                  k
+                  k,
               )
             ) {
               mapTitle[k] = Hub.config.config.sku.valItemInfo.propertyMemoMap[k];
@@ -267,7 +267,7 @@ async function taobaoItem(browser, itemid, timeout) {
             if (
               Object.prototype.hasOwnProperty.call(
                   Hub.config.config.sku.valItemInfo.skuMap,
-                  k
+                  k,
               )
             ) {
               mapID[k] = Hub.config.config.sku.valItemInfo.skuMap[k].skuId;
@@ -312,7 +312,7 @@ async function taobaoItem(browser, itemid, timeout) {
   }
 
   //   const ret = {};
-  const skus = await page
+  let skus = await page
       .$$eval('.tb-skin', (eles) => {
         if (eles.length > 0) {
           const skus = [];
@@ -345,38 +345,81 @@ async function taobaoItem(browser, itemid, timeout) {
 
     await page.close();
 
-    return {error: awaiterr};
+    return {error: awaiterr.toString()};
   }
 
-  for (let i = 0; i < skus.length; ++i) {
-    const arr = skus[i].curimg.split('("');
-    if (arr.length == 2) {
-      const arr1 = arr[1].split('")');
-      skus[i].img = arr1[0];
-      skus[i].img = skus[i].img.replace('30x30', '600x600');
-      skus[i].img = 'https:' + skus[i].img;
-    }
+  const tbtxt = await page
+      .$$eval('.tb-txt', (eles) => {
+        if (eles.length > 0) {
+          const tbtxt = {};
+          for (let i = 0; i < eles.length; ++i) {
+            const cv = eles[i].dataset['value'];
 
-    if (mapStock[';' + skus[i].value + ';']) {
-      skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
-    }
+            if (cv) {
+              tbtxt[cv] = eles[i].innerText;
+            }
+          }
 
-    if (mapPrice[';' + skus[i].value + ';']) {
-      skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
-    } else if (sibobj.data && sibobj.data.price) {
-      skus[i].price = parseFloat(sibobj.data.price);
-    }
+          return tbtxt;
+        }
 
-    if (skusret1 && skusret1.mapTitle[skus[i].value]) {
-      skus[i].title = skusret1.mapTitle[skus[i].value];
-    }
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItem.$$eval .tb-txt', awaiterr);
 
-    if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
-      skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
-    }
+    await page.close();
+
+    return {error: awaiterr.toString()};
   }
 
-  console.log(skus);
+  const skuret = procSKU(skus, tbtxt, skusret1, sibobj);
+  if (skuret.error) {
+    log.error('taobaoItem.procSKU', skuret.error);
+
+    await page.close();
+
+    return {error: skuret.error.toString()};
+  }
+
+  skus = skuret.lstsku;
+
+  // for (let i = 0; i < skus.length; ++i) {
+  //   const arr = skus[i].curimg.split('("');
+  //   if (arr.length == 2) {
+  //     const arr1 = arr[1].split('")');
+  //     skus[i].img = arr1[0];
+  //     skus[i].img = skus[i].img.replace('30x30', '600x600');
+  //     skus[i].img = 'https:' + skus[i].img;
+  //   }
+
+  //   if (mapStock[';' + skus[i].value + ';']) {
+  //     skus[i].stock = parseInt(mapStock[';' + skus[i].value + ';']);
+  //   }
+
+  //   if (mapPrice[';' + skus[i].value + ';']) {
+  //     skus[i].price = parseFloat(mapPrice[';' + skus[i].value + ';']);
+  //   } else if (sibobj.data && sibobj.data.price) {
+  //     skus[i].price = parseFloat(sibobj.data.price);
+  //   }
+
+  //   if (skusret1 && skusret1.mapTitle[skus[i].value]) {
+  //     skus[i].title = skusret1.mapTitle[skus[i].value];
+  //   }
+
+  //   if (tbtxt && tbtxt[skus[i].value]) {
+  //     skus[i].title = tbtxt[skus[i].value];
+  //   }
+
+  //   if (skusret1 && skusret1.mapID[';' + skus[i].value + ';']) {
+  //     skus[i].skuid = skusret1.mapID[';' + skus[i].value + ';'];
+  //   }
+  // }
+
+  // console.log(skus);
 
   ret.reviews = await page
       .$$eval('#J_RateCounter', (eles) => {

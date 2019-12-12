@@ -7,7 +7,7 @@ const {
   string2float,
   split2float,
   string2int,
-} = require('../stringutils');
+} = require('../string.utils');
 // const fs = require('fs');
 
 const URLLogin = 'https://www.alimama.com/member/login.htm';

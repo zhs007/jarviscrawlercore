@@ -16,6 +16,7 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestTmall', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallProduct', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallProductHistory', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.TmallProperty', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallReviewTag', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallSKUInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TmallShopInfo', null, global);
@@ -620,7 +621,8 @@ proto.jarviscrawlercore.TmallReviewTag.prototype.toObject = function(opt_include
 proto.jarviscrawlercore.TmallReviewTag.toObject = function(includeInstance, msg) {
   var f, obj = {
     tag: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    times: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    times: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    type: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -665,6 +667,10 @@ proto.jarviscrawlercore.TmallReviewTag.deserializeBinaryFromReader = function(ms
       var value = /** @type {number} */ (reader.readInt32());
       msg.setTimes(value);
       break;
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setType(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -708,6 +714,13 @@ proto.jarviscrawlercore.TmallReviewTag.serializeBinaryToWriter = function(messag
       f
     );
   }
+  f = message.getType();
+  if (f !== 0) {
+    writer.writeInt32(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -738,6 +751,21 @@ proto.jarviscrawlercore.TmallReviewTag.prototype.getTimes = function() {
 /** @param {number} value */
 proto.jarviscrawlercore.TmallReviewTag.prototype.setTimes = function(value) {
   jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional int32 type = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallReviewTag.prototype.getType = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallReviewTag.prototype.setType = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
 };
 
 
@@ -1282,6 +1310,229 @@ proto.jarviscrawlercore.TmallShopInfo.prototype.setGoodratepercentage = function
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.TmallProperty = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.TmallProperty, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.TmallProperty.displayName = 'proto.jarviscrawlercore.TmallProperty';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.TmallProperty.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.TmallProperty} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TmallProperty.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    rootindex: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    rootname: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    key: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    value: jspb.Message.getFieldWithDefault(msg, 4, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.TmallProperty}
+ */
+proto.jarviscrawlercore.TmallProperty.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.TmallProperty;
+  return proto.jarviscrawlercore.TmallProperty.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.TmallProperty} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.TmallProperty}
+ */
+proto.jarviscrawlercore.TmallProperty.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRootindex(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRootname(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setKey(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setValue(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.TmallProperty.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.TmallProperty} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.TmallProperty.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getRootindex();
+  if (f !== 0) {
+    writer.writeInt32(
+      1,
+      f
+    );
+  }
+  f = message.getRootname();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getKey();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getValue();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional int32 rootIndex = 1;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.getRootindex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallProperty.prototype.setRootindex = function(value) {
+  jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional string rootName = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.getRootname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TmallProperty.prototype.setRootname = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string key = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.getKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TmallProperty.prototype.setKey = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string value = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TmallProperty.prototype.getValue = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TmallProperty.prototype.setValue = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.TmallProduct = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.TmallProduct.repeatedFields_, null);
 };
@@ -1294,7 +1545,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TmallProduct.repeatedFields_ = [2,10,14,19];
+proto.jarviscrawlercore.TmallProduct.repeatedFields_ = [2,10,14,19,21];
 
 
 
@@ -1347,7 +1598,9 @@ proto.jarviscrawlercore.TmallProduct.toObject = function(includeInstance, msg) {
     brandvalueid: jspb.Message.getFieldWithDefault(msg, 17, ""),
     favcount: jspb.Message.getFieldWithDefault(msg, 18, 0),
     imgsList: jspb.Message.getRepeatedField(msg, 19),
-    shop: (f = msg.getShop()) && proto.jarviscrawlercore.TmallShopInfo.toObject(includeInstance, f)
+    shop: (f = msg.getShop()) && proto.jarviscrawlercore.TmallShopInfo.toObject(includeInstance, f),
+    propsList: jspb.Message.toObjectList(msg.getPropsList(),
+    proto.jarviscrawlercore.TmallProperty.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -1467,6 +1720,11 @@ proto.jarviscrawlercore.TmallProduct.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.TmallShopInfo;
       reader.readMessage(value,proto.jarviscrawlercore.TmallShopInfo.deserializeBinaryFromReader);
       msg.setShop(value);
+      break;
+    case 21:
+      var value = new proto.jarviscrawlercore.TmallProperty;
+      reader.readMessage(value,proto.jarviscrawlercore.TmallProperty.deserializeBinaryFromReader);
+      msg.addProps(value);
       break;
     default:
       reader.skipField();
@@ -1639,6 +1897,14 @@ proto.jarviscrawlercore.TmallProduct.serializeBinaryToWriter = function(message,
       20,
       f,
       proto.jarviscrawlercore.TmallShopInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getPropsList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      21,
+      f,
+      proto.jarviscrawlercore.TmallProperty.serializeBinaryToWriter
     );
   }
 };
@@ -2018,6 +2284,37 @@ proto.jarviscrawlercore.TmallProduct.prototype.clearShop = function() {
  */
 proto.jarviscrawlercore.TmallProduct.prototype.hasShop = function() {
   return jspb.Message.getField(this, 20) != null;
+};
+
+
+/**
+ * repeated TmallProperty props = 21;
+ * @return {!Array<!proto.jarviscrawlercore.TmallProperty>}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.getPropsList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.TmallProperty>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.TmallProperty, 21));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.TmallProperty>} value */
+proto.jarviscrawlercore.TmallProduct.prototype.setPropsList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 21, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.TmallProperty=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.TmallProperty}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.addProps = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 21, opt_value, proto.jarviscrawlercore.TmallProperty, opt_index);
+};
+
+
+proto.jarviscrawlercore.TmallProduct.prototype.clearPropsList = function() {
+  this.setPropsList([]);
 };
 
 

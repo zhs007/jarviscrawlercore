@@ -63,6 +63,37 @@ function newTmallReviewTag(obj) {
     result.setTimes(obj.times);
   }
 
+  if (obj.type) {
+    result.setType(obj.type);
+  }
+
+  return result;
+}
+
+/**
+ * new TmallProperty with object
+ * @param {object} obj - TmallProperty object
+ * @return {messages.TmallProperty} result - TmallProperty
+ */
+function newTmallProperty(obj) {
+  const result = new messages.TmallProperty();
+
+  if (obj.rootIndex) {
+    result.setRootindex(obj.rootIndex);
+  }
+
+  if (obj.rootName) {
+    result.setRootname(obj.rootName);
+  }
+
+  if (obj.key) {
+    result.setKey(obj.key);
+  }
+
+  if (obj.value) {
+    result.setValue(obj.value);
+  }
+
   return result;
 }
 
@@ -215,6 +246,12 @@ function newTmallProduct(obj) {
 
   if (obj.shop) {
     result.setShop(newTmallShopInfo(obj.shop));
+  }
+
+  if (Array.isArray(obj.props) && obj.props.length > 0) {
+    for (let i = 0; i < obj.props.length; ++i) {
+      result.addProps(newTmallProperty(obj.props[i], i));
+    }
   }
 
   return result;

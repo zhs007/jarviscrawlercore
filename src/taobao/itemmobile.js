@@ -9,6 +9,8 @@ const {
   parseSKU,
   parseItem,
   parseSeller,
+  parseProps,
+  parseReviewTags,
 } = require('../m.taobao.utils');
 
 /**
@@ -127,6 +129,9 @@ async function taobaoItemMobile(browser, itemid, device, cfgdevice, timeout) {
   if (detailobj.obj) {
     parseItem(detailobj.obj, ret);
     parseSeller(detailobj.obj, ret);
+    parseProps(detailobj.obj, ret);
+    parseReviewTags(detailobj.obj, ret);
+
     const skuret = parseSKU(detailobj.obj);
     if (skuret.error) {
       awaiterr = skuret.error;

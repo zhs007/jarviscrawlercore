@@ -391,7 +391,89 @@ function parseSKU(obj) {
   }
 }
 
+/**
+ * parseProps - parse props
+ * @param {object} obj - object
+ * @param {string} ret - ret
+ */
+function parseProps(obj, ret) {
+  if (
+    obj.data &&
+    obj.data.props &&
+    Array.isArray(obj.data.props.groupProps) &&
+    obj.data.props.groupProps.length > 0
+  ) {
+    ret.props = [];
+    for (let i = 0; i < obj.data.props.groupProps.length; ++i) {
+      const cgp = obj.data.props.groupProps[i];
+
+      for (const k in cgp) {
+        if (Object.prototype.hasOwnProperty.call(cgp, k)) {
+          for (let j = 0; j < cgp[k].length; ++j) {
+            const cp = cgp[k][j];
+
+            for (const k1 in cp) {
+              if (Object.prototype.hasOwnProperty.call(cp, k1)) {
+                const curprop = {
+                  rootIndex: i,
+                  rootName: k,
+                  key: k1,
+                  value: cp[k1],
+                };
+
+                ret.props.push(curprop);
+
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * parseReviewTags - parse reviewTags
+ * @param {object} obj - object
+ * @param {string} ret - ret
+ */
+function parseReviewTags(obj, ret) {
+  if (
+    obj.data &&
+    obj.data.rate &&
+    Array.isArray(obj.data.rate.keywords) &&
+    obj.data.rate.keywords.length > 0
+  ) {
+    ret.reviewTags = [];
+    for (let i = 0; i < obj.data.rate.keywords.length; ++i) {
+      const ck = obj.data.rate.keywords[i];
+      const currt = {
+        tag: ck.word,
+      };
+
+      const ckc = string2int(ck.count);
+      if (ckc.error) {
+        log.warn('parseReviewTags.string2int count', ckc.error);
+      } else {
+        currt.times = ckc.num;
+      }
+
+      const ckt = string2int(ck.type);
+      if (ckt.error) {
+        log.warn('parseReviewTags.string2int type', ckt.error);
+      } else {
+        currt.type = ckt.num;
+      }
+
+      ret.reviewTags.push(currt);
+    }
+  }
+}
+
 exports.parseGetDetailResult = parseGetDetailResult;
 exports.parseSKU = parseSKU;
 exports.parseItem = parseItem;
 exports.parseSeller = parseSeller;
+exports.parseProps = parseProps;
+exports.parseReviewTags = parseReviewTags;

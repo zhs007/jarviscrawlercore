@@ -35,6 +35,21 @@ message TaobaoProductHistory {
     int64 lastUpdatedTime = 2;
 }
 
+// TaobaoProperty - taobao property
+message TaobaoProperty {
+    int32 rootIndex = 1;
+    string rootName = 2;
+    string key = 3;
+    string value = 4;
+}
+
+// TaobaoReviewTag - taobao review tag
+message TaobaoReviewTag {
+    string tag = 1;
+    int32 times = 2;
+    int32 type = 3;
+}
+
 // TaobaoProduct - taobao product
 message TaobaoProduct {
     string itemID = 1;
@@ -55,6 +70,8 @@ message TaobaoProduct {
     string brandValueID = 16;
     int32 favCount = 17;
     repeated string imgs = 18;
+    repeated TaobaoProperty props = 19;
+    repeated TaobaoReviewTag reviewTags = 20;
 }
 
 // TaobaoItem - taobao item

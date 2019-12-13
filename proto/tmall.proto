@@ -24,6 +24,7 @@ message TmallProductHistory {
 message TmallReviewTag {
     string tag = 1;
     int32 times = 2;
+    int32 type = 3;
 }
 
 // TmallShopInfo - tmall shop infomation
@@ -42,6 +43,14 @@ message TmallShopInfo {
     int32 newItemCount = 12;
     string strFans = 13;
     float goodRatePercentage = 14;
+}
+
+// TmallProperty - tmall property
+message TmallProperty {
+    int32 rootIndex = 1;
+    string rootName = 2;
+    string key = 3;
+    string value = 4;
 }
 
 // TmallProduct - tmall product
@@ -66,6 +75,7 @@ message TmallProduct {
     int32 favCount = 18;
     repeated string imgs = 19;
     TmallShopInfo shop = 20;
+    repeated TmallProperty props = 21;
 }
 
 // TmallMode - tmall mode

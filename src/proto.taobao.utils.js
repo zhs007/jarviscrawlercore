@@ -36,6 +36,56 @@ function newTaobaoSKUInfo(obj) {
 }
 
 /**
+ * new TaobaoReviewTag with object
+ * @param {object} obj - TaobaoReviewTag object
+ * @return {messages.TaobaoReviewTag} result - TaobaoReviewTag
+ */
+function newTaobaoReviewTag(obj) {
+  const result = new messages.TaobaoReviewTag();
+
+  if (obj.tag) {
+    result.setTag(obj.tag);
+  }
+
+  if (obj.times) {
+    result.setTimes(obj.times);
+  }
+
+  if (obj.type) {
+    result.setType(obj.type);
+  }
+
+  return result;
+}
+
+/**
+ * new TaobaoProperty with object
+ * @param {object} obj - TaobaoProperty object
+ * @return {messages.TaobaoProperty} result - TaobaoProperty
+ */
+function newTaobaoProperty(obj) {
+  const result = new messages.TaobaoProperty();
+
+  if (obj.rootIndex) {
+    result.setRootindex(obj.rootIndex);
+  }
+
+  if (obj.rootName) {
+    result.setRootname(obj.rootName);
+  }
+
+  if (obj.key) {
+    result.setKey(obj.key);
+  }
+
+  if (obj.value) {
+    result.setValue(obj.value);
+  }
+
+  return result;
+}
+
+/**
  * new TaobaoShopInfo with object
  * @param {object} obj - TaobaoShopInfo object
  * @return {messages.TaobaoShopInfo} result - TaobaoShopInfo
@@ -174,6 +224,18 @@ function newTaobaoProduct(obj) {
 
   if (Array.isArray(obj.imgs) && obj.imgs.length > 0) {
     result.setImgsList(obj.imgs);
+  }
+
+  if (Array.isArray(obj.reviewTags) && obj.reviewTags.length > 0) {
+    for (let i = 0; i < obj.reviewTags.length; ++i) {
+      result.addReviewtags(newTaobaoReviewTag(obj.reviewTags[i], i));
+    }
+  }
+
+  if (Array.isArray(obj.props) && obj.props.length > 0) {
+    for (let i = 0; i < obj.props.length; ++i) {
+      result.addProps(newTaobaoProperty(obj.props[i], i));
+    }
   }
 
   return result;

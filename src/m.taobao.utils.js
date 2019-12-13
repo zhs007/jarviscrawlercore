@@ -1,11 +1,11 @@
-const log = require('../log');
-const {parseJSONP} = require('../jsonp.utils');
+const log = require('./log');
+const {parseJSONP} = require('./jsonp.utils');
 const {
   string2int,
   percentage2float,
   string2json,
   string2float,
-} = require('../string.utils');
+} = require('./string.utils');
 
 /**
  * parseGetDetailResult - parse getdetail result
@@ -32,6 +32,133 @@ function parseGetDetailResult(result, url) {
     log.warn('parseGetDetailResult', err);
 
     return {error: new Error('parseGetDetailResult ' + err)};
+  }
+}
+
+/**
+ * parseItem - parse item
+ * @param {object} obj - object
+ * @param {string} ret - ret
+ */
+function parseItem(obj, ret) {
+  if (obj.data && obj.data.item) {
+    const curitem = obj.data.item;
+
+    if (curitem.title) {
+      ret.title = curitem.title;
+    }
+
+    if (curitem.commentCount) {
+      const cc = string2int(curitem.commentCount);
+      if (cc.error) {
+        log.warn('parseItem.string2int commentCount', cc.error);
+      } else {
+        ret.reviews = cc.num;
+      }
+    }
+
+    if (curitem.itemId) {
+      ret.tbItemID = curitem.itemId;
+    }
+
+    if (curitem.rootCategoryId) {
+      ret.rootCategoryID = curitem.rootCategoryId;
+    }
+
+    if (curitem.categoryId) {
+      ret.categoryID = curitem.categoryId;
+    }
+
+    if (curitem.brandValueId) {
+      ret.brandValueID = curitem.brandValueId;
+    }
+
+    if (curitem.favcount) {
+      const fc = string2int(curitem.favcount);
+      if (fc.error) {
+        log.warn('parseItem.string2int favcount', fc.error);
+      } else {
+        ret.favCount = fc.num;
+      }
+    }
+
+    if (curitem.images) {
+      ret.imgs = curitem.images;
+    }
+  }
+}
+
+/**
+ * parseSeller - parse seller
+ * @param {object} obj - object
+ * @param {string} ret - ret
+ */
+function parseSeller(obj, ret) {
+  if (obj.data && obj.data.seller) {
+    const seller = obj.data.seller;
+    ret.shop = {};
+
+    if (seller.shopName) {
+      ret.shop.name = seller.shopName;
+    }
+
+    if (seller.shopId) {
+      ret.shop.shopid = seller.shopId;
+    }
+
+    if (seller.userId) {
+      ret.shop.userid = seller.userId;
+    }
+
+    if (seller.creditLevel) {
+      const cl = string2int(seller.creditLevel);
+      if (cl.error) {
+        log.warn('parseSeller.string2int seller.creditLevel', cl.error);
+      } else {
+        ret.shop.creditLevel = cl.num;
+      }
+    }
+
+    if (seller.allItemCount) {
+      const aic = string2int(seller.allItemCount);
+      if (aic.error) {
+        log.warn('parseSeller.string2int seller.allItemCount', aic.error);
+      } else {
+        ret.shop.allItemCount = aic.num;
+      }
+    }
+
+    if (seller.newItemCount) {
+      const nic = string2int(seller.newItemCount);
+      if (nic.error) {
+        log.warn('parseSeller.string2int seller.newItemCount', nic.error);
+      } else {
+        ret.shop.newItemCount = nic.num;
+      }
+    }
+
+    if (seller.fans) {
+      ret.shop.strFans = seller.fans;
+    }
+
+    if (seller.goodRatePercentage) {
+      const grp = percentage2float(seller.goodRatePercentage);
+      if (grp.error) {
+        log.warn(
+            'parseSeller.percentage2float seller.goodRatePercentage',
+            grp.error,
+        );
+      } else {
+        ret.shop.goodRatePercentage = grp.num;
+      }
+    }
+
+    // bool gold = 2;
+    // string url = 3;
+    // string rank = 4;    // cap/gold ...
+    // int32 rating = 5;   // 3/4/5 ...
+    // repeated int32 rateLevel = 6;   // 描述、服务、物流，-1表示低，0表示等于，1表示高
+    // repeated float rateScore = 7;   // 描述、服务、物流，具体分数
   }
 }
 
@@ -266,3 +393,5 @@ function parseSKU(obj) {
 
 exports.parseGetDetailResult = parseGetDetailResult;
 exports.parseSKU = parseSKU;
+exports.parseItem = parseItem;
+exports.parseSeller = parseSeller;

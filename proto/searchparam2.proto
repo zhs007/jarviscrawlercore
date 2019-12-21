@@ -1,0 +1,24 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// SearchParam2Type - SearchParam2Type
+enum SearchParam2Type {
+	// SP2T_None - none
+	SP2T_None = 0;
+	// SP2T_And - and
+	SP2T_And = 1;
+	// SP2T_Or - or
+	SP2T_Or = 2;
+	// SP2T_Exclude - exclude
+	SP2T_Exclude = 3;
+	// SP2T_Combination - combination
+	SP2T_Combination = 4;
+}
+
+// SearchParam2 - Search Param v2
+message SearchParam2 {
+	string text = 1;
+	SearchParam2Type type = 2;
+	SearchParam2Type childType = 3;
+	repeated SearchParam2 children = 4;
+}

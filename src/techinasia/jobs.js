@@ -140,7 +140,7 @@ async function selectTag(page, maintag, subtag, timeout) {
 
                 return false;
               },
-              {timeout: timeout}
+              {timeout: timeout},
           )
           .catch((err) => {
             awaiterr = err;

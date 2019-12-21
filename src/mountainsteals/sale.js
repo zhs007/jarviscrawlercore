@@ -58,7 +58,7 @@ async function mountainstealsSale(browser, url, timeout) {
   const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
     const url = frame.url();
 
-    return url.toLowerCase().indexOf(baseurl) == 0;
+    return url.toLowerCase().indexOf(baseurl.toLowerCase()) == 0;
   });
 
   await page

@@ -11,6 +11,8 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var searchparam2_pb = require('./searchparam2_pb.js');
+goog.object.extend(proto, searchparam2_pb);
 goog.exportSymbol('proto.jarviscrawlercore.AliProduct', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AlimamaMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AlimamaProduct', null, global);
@@ -1881,7 +1883,8 @@ proto.jarviscrawlercore.AlimamaProducts.toObject = function(includeInstance, msg
     proto.jarviscrawlercore.AlimamaProduct.toObject, includeInstance),
     textandList: jspb.Message.getRepeatedField(msg, 3),
     textorList: jspb.Message.getRepeatedField(msg, 4),
-    textnotList: jspb.Message.getRepeatedField(msg, 5)
+    textnotList: jspb.Message.getRepeatedField(msg, 5),
+    sp2: (f = msg.getSp2()) && searchparam2_pb.SearchParam2.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1938,6 +1941,11 @@ proto.jarviscrawlercore.AlimamaProducts.deserializeBinaryFromReader = function(m
     case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.addTextnot(value);
+      break;
+    case 6:
+      var value = new searchparam2_pb.SearchParam2;
+      reader.readMessage(value,searchparam2_pb.SearchParam2.deserializeBinaryFromReader);
+      msg.setSp2(value);
       break;
     default:
       reader.skipField();
@@ -2002,6 +2010,14 @@ proto.jarviscrawlercore.AlimamaProducts.serializeBinaryToWriter = function(messa
     writer.writeRepeatedString(
       5,
       f
+    );
+  }
+  f = message.getSp2();
+  if (f != null) {
+    writer.writeMessage(
+      6,
+      f,
+      searchparam2_pb.SearchParam2.serializeBinaryToWriter
     );
   }
 };
@@ -2137,6 +2153,36 @@ proto.jarviscrawlercore.AlimamaProducts.prototype.addTextnot = function(value, o
 
 proto.jarviscrawlercore.AlimamaProducts.prototype.clearTextnotList = function() {
   this.setTextnotList([]);
+};
+
+
+/**
+ * optional SearchParam2 sp2 = 6;
+ * @return {?proto.jarviscrawlercore.SearchParam2}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.getSp2 = function() {
+  return /** @type{?proto.jarviscrawlercore.SearchParam2} */ (
+    jspb.Message.getWrapperField(this, searchparam2_pb.SearchParam2, 6));
+};
+
+
+/** @param {?proto.jarviscrawlercore.SearchParam2|undefined} value */
+proto.jarviscrawlercore.AlimamaProducts.prototype.setSp2 = function(value) {
+  jspb.Message.setWrapperField(this, 6, value);
+};
+
+
+proto.jarviscrawlercore.AlimamaProducts.prototype.clearSp2 = function() {
+  this.setSp2(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.AlimamaProducts.prototype.hasSp2 = function() {
+  return jspb.Message.getField(this, 6) != null;
 };
 
 

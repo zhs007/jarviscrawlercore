@@ -1,4 +1,5 @@
 syntax = "proto3";
+import "searchparam2.proto";
 package jarviscrawlercore;
 
 // AlimamaMode - alimama mode
@@ -79,6 +80,7 @@ message AlimamaProducts {
     repeated string textAnd = 3;
     repeated string textOr = 4;
     repeated string textNot = 5;
+    SearchParam2 sp2 = 6;
 }
 
 // RequestAlimama - request alimama

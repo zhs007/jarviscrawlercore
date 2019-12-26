@@ -110,7 +110,7 @@ async function getTag(page, ele, timeout) {
 
             return false;
           },
-          {timeout: timeout}
+          {timeout: timeout},
       )
       .catch((err) => {
         awaiterr = err;
@@ -322,7 +322,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
         page,
         lstcontainer[2],
         maintag,
-        timeout
+        timeout,
     );
     if (gfcret.error) {
       log.error('techinasiaJobsType.getFromContainer ', awaiterr);
@@ -371,7 +371,7 @@ async function techinasiaJobTag(browser, maintag, timeout) {
           page,
           lstcontainer[0],
           maintag,
-          timeout
+          timeout,
       );
       if (gfcret.error) {
         log.error('techinasiaJobsType.getFromContainer ', awaiterr);

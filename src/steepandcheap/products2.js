@@ -230,6 +230,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  const baseurl = 'https://www.steepandcheap.com/' + url;
   const furl = 'https://www.steepandcheap.com/' + url + '?sort=-price';
 
   const waitAllResponse = new WaitAllResponse(page);
@@ -410,7 +411,7 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     lst.push(...ret);
 
     if (ci < maxpageret.pages - 1) {
-      const err = await nextPage(page, furl, firsturl, timeout);
+      const err = await nextPage(page, baseurl, firsturl, timeout);
       if (err) {
         log.error('steepandcheapProducts2.nextPage', err);
 

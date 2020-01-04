@@ -1,5 +1,17 @@
 # JarvisCrawlerCore Development Log
 
+### 2019-12-26
+
+折腾过2次windows下的项目安装，前面一次是自己的虚拟机上，因为以前装过vs，所以除了网络问题外，没遇到别的什么问题，这次是在一台服务器上，node-gyp稍折腾了下，一定要参考node-gyp的文档，先把prebuild环境装好，其实也就是一个命令行的事情。
+
+然后麻烦在于国内网络对aws限制很死，而github很多资源都放aws上，aws好像会临时给你生成一下下载通道，超过时间就下载不到了。
+
+hosts这些也都不行，我是找台机器下载好，然后把文件复制到npm的cache里面把问题解决掉的。
+
+这次主要是sharp有一个libvips的依赖，在 C:\Users\Administrator\AppData\Roaming\npm-cache\_libvips 下有个文件，下载地址在这里 https://github.com/lovell/sharp-libvips/releases/download/v8.8.1/libvips-8.8.1-win32-x64.tar.gz 下载完覆盖进去就好了。
+
+期待 github 入华。
+
 ### 2019-12-07
 
 http request返回一般是 buffer，在 nodejs里，如果是utf8编码的，可以直接 toString 得到string。但如果是unicode编码的，则需要转码，可以通过 String.fromCharCode 转码。

@@ -471,9 +471,43 @@ function parseReviewTags(obj, ret) {
   }
 }
 
+/**
+ * findCurrentRelatedItem - find current relatedItem
+ * @param {array} relatedItems - relatedItems
+ * @return {object} relatedItem - current relatedItem
+ */
+function findCurrentRelatedItem(relatedItems) {
+  if (Array.isArray(relatedItems) && relatedItems.length > 0) {
+    for (let i = 0; i < relatedItems.length; ++i) {
+      if (relatedItems[i].isCurrent) {
+        return relatedItems[i];
+      }
+    }
+  }
+
+  return undefined;
+}
+
+/**
+ * procRelatedItem - proc relatedItem
+ * @param {array} relatedItems - relatedItems
+ */
+function procRelatedItem(relatedItems) {
+  if (Array.isArray(relatedItems) && relatedItems.length > 0) {
+    for (let i = 0; i < relatedItems.length; ++i) {
+      if (relatedItems[i].url) {
+        const urlret = new URL(relatedItems[i].url);
+        relatedItems[i].itemID = urlret.searchParams.get('id');
+      }
+    }
+  }
+}
+
 exports.parseGetDetailResult = parseGetDetailResult;
 exports.parseSKU = parseSKU;
 exports.parseItem = parseItem;
 exports.parseSeller = parseSeller;
 exports.parseProps = parseProps;
 exports.parseReviewTags = parseReviewTags;
+exports.findCurrentRelatedItem = findCurrentRelatedItem;
+exports.procRelatedItem = procRelatedItem;

@@ -9,6 +9,7 @@ message TaobaoSKUInfo {
     string img = 4;
     int32 stock = 5;
     string valueid = 6;
+    string itemid = 7;
 }
 
 // TaobaoShopInfo - taobao shop infomation
@@ -50,6 +51,13 @@ message TaobaoReviewTag {
     int32 type = 3;
 }
 
+message TaobaoRelatedItem {
+    string itemID = 1;
+    string url = 2;
+    string name = 3;
+    bool isCurrent = 4;
+}
+
 // TaobaoProduct - taobao product
 message TaobaoProduct {
     string itemID = 1;
@@ -73,6 +81,7 @@ message TaobaoProduct {
     repeated TaobaoProperty props = 19;
     repeated TaobaoReviewTag reviewTags = 20;
     float price = 21;
+    repeated TaobaoRelatedItem relatedItems = 22;
 }
 
 // TaobaoItem - taobao item

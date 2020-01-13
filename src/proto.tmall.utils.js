@@ -44,6 +44,37 @@ function newTmallSKUInfo(obj) {
     result.setWlstr(obj.wlStr);
   }
 
+  if (obj.itemid) {
+    result.setItemid(obj.itemid);
+  }
+
+  return result;
+}
+
+/**
+ * new TmallRelatedItem with object
+ * @param {object} obj - TmallRelatedItem object
+ * @return {messages.TmallRelatedItem} result - TmallRelatedItem
+ */
+function newTmallRelatedItem(obj) {
+  const result = new messages.TmallRelatedItem();
+
+  if (obj.itemID) {
+    result.setItemid(obj.itemID);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.isCurrent) {
+    result.setIscurrent(obj.isCurrent);
+  }
+
   return result;
 }
 
@@ -251,6 +282,16 @@ function newTmallProduct(obj) {
   if (Array.isArray(obj.props) && obj.props.length > 0) {
     for (let i = 0; i < obj.props.length; ++i) {
       result.addProps(newTmallProperty(obj.props[i], i));
+    }
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (Array.isArray(obj.relatedItems) && obj.relatedItems.length > 0) {
+    for (let i = 0; i < obj.relatedItems.length; ++i) {
+      result.addRelateditems(newTmallRelatedItem(obj.relatedItems[i], i));
     }
   }
 

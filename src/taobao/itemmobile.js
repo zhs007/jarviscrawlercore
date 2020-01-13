@@ -12,6 +12,7 @@ const {
   parseProps,
   parseReviewTags,
 } = require('../m.taobao.utils');
+const {string2float} = require('../string.utils');
 
 /**
  * taobaoItemMobile - taobao item mobile
@@ -126,6 +127,40 @@ async function taobaoItemMobile(browser, itemid, device, cfgdevice, timeout) {
     itemID: itemid,
   };
 
+  ret.price = await page
+      .$$eval('.o-t-price', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('taobaoItemMobile.$$eval .o-t-price', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (ret.price) {
+    retprice = string2float(ret.price);
+    if (retprice.error) {
+      awaiterr = retprice.error;
+
+      log.error('taobaoItemMobile.string2float', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    ret.price = retprice.num;
+  }
+
   if (detailobj.obj) {
     parseItem(detailobj.obj, ret);
     parseSeller(detailobj.obj, ret);
@@ -141,6 +176,19 @@ async function taobaoItemMobile(browser, itemid, device, cfgdevice, timeout) {
       await page.close();
 
       return {error: awaiterr.toString()};
+    }
+
+    if (skuret.skus == undefined) {
+      const cursku = {
+        price: ret.price,
+        title: ret.title,
+      };
+
+      if (Array.isArray(ret.imgs) && ret.imgs.length > 0) {
+        cursku.img = ret.imgs[0];
+      }
+
+      ret.skus = [cursku];
     }
 
     ret.skus = skuret.skus;

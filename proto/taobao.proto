@@ -72,6 +72,7 @@ message TaobaoProduct {
     repeated string imgs = 18;
     repeated TaobaoProperty props = 19;
     repeated TaobaoReviewTag reviewTags = 20;
+    float price = 21;
 }
 
 // TaobaoItem - taobao item

@@ -32,6 +32,37 @@ function newTaobaoSKUInfo(obj) {
     result.setValueid(obj.valueid);
   }
 
+  if (obj.itemid) {
+    result.setItemid(obj.itemid);
+  }
+
+  return result;
+}
+
+/**
+ * new TaobaoRelatedItem with object
+ * @param {object} obj - TaobaoRelatedItem object
+ * @return {messages.TaobaoRelatedItem} result - TaobaoRelatedItem
+ */
+function newTaobaoRelatedItem(obj) {
+  const result = new messages.TaobaoRelatedItem();
+
+  if (obj.itemID) {
+    result.setItemid(obj.itemID);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.isCurrent) {
+    result.setIscurrent(obj.isCurrent);
+  }
+
   return result;
 }
 
@@ -235,6 +266,16 @@ function newTaobaoProduct(obj) {
   if (Array.isArray(obj.props) && obj.props.length > 0) {
     for (let i = 0; i < obj.props.length; ++i) {
       result.addProps(newTaobaoProperty(obj.props[i], i));
+    }
+  }
+
+  if (obj.price) {
+    result.setPrice(obj.price);
+  }
+
+  if (Array.isArray(obj.relatedItems) && obj.relatedItems.length > 0) {
+    for (let i = 0; i < obj.relatedItems.length; ++i) {
+      result.addRelateditems(newTaobaoRelatedItem(obj.relatedItems[i], i));
     }
   }
 

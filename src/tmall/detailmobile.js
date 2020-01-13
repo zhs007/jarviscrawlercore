@@ -11,6 +11,8 @@ const {
   parseSeller,
   parseProps,
   parseReviewTags,
+  findCurrentRelatedItem,
+  procRelatedItem,
 } = require('../m.taobao.utils');
 const {string2float} = require('../string.utils');
 
@@ -182,6 +184,41 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
     ret.price = retprice.num;
   }
 
+  ret.relatedItems = await page
+      .$$eval('ul.related-list', (eles) => {
+        if (eles.length > 0) {
+          const lst = [];
+          const lsta = eles[0].getElementsByTagName('a');
+
+          for (let i = 0; i < lsta.length; ++i) {
+            const curitem = {url: lsta[i].href, name: lsta[i].innerText};
+            if (lsta[i].className == 'current') {
+              curitem.isCurrent = true;
+            }
+
+            lst.push(curitem);
+          }
+
+          return lst;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('tmallDetailMobile.$$eval ul.related-list', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (ret.relatedItems) {
+    procRelatedItem(ret.relatedItems);
+  }
+
   if (detailobj.obj) {
     parseItem(detailobj.obj, ret);
     parseSeller(detailobj.obj, ret);
@@ -203,10 +240,16 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
       const cursku = {
         price: ret.price,
         title: ret.title,
+        itemid: itemid,
       };
 
       if (Array.isArray(ret.imgs) && ret.imgs.length > 0) {
         cursku.img = ret.imgs[0];
+      }
+
+      const relatedItem = findCurrentRelatedItem(ret.relatedItems);
+      if (relatedItem) {
+        cursku.title = relatedItem.name;
       }
 
       ret.skus = [cursku];

@@ -12,6 +12,7 @@ message TmallSKUInfo {
     string wl = 7;
     float wlPrice = 8;
     string wlStr = 9;
+    string itemid = 10;
 }
 
 // TmallProductHistory - tmall sku infomation
@@ -53,6 +54,13 @@ message TmallProperty {
     string value = 4;
 }
 
+message TmallRelatedItem {
+    string itemID = 1;
+    string url = 2;
+    string name = 3;
+    bool isCurrent = 4;
+}
+
 // TmallProduct - tmall product
 message TmallProduct {
     string itemID = 1;
@@ -77,6 +85,7 @@ message TmallProduct {
     TmallShopInfo shop = 20;
     repeated TmallProperty props = 21;
     float price = 22;
+    repeated TmallRelatedItem relatedItems = 23;
 }
 
 // TmallMode - tmall mode

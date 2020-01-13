@@ -188,11 +188,11 @@ function parseSKU(obj) {
     if (obj && obj.data && obj.data.skuBase) {
       const skubase = obj.data.skuBase;
       if (!(Array.isArray(skubase.skus) && skubase.skus.length > 0)) {
-        const err = new Error('parseSKU invalid skubase.skus');
+        // const err = new Error('parseSKU invalid skubase.skus');
 
-        log.warn('parseSKU skubase.skus', err);
+        log.warn('parseSKU invalid skubase.skus');
 
-        return {error: err};
+        return {};
       }
 
       const strmock = obj.data.mockData;

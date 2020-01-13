@@ -1520,7 +1520,8 @@ proto.jarviscrawlercore.TaobaoProduct.toObject = function(includeInstance, msg) 
     propsList: jspb.Message.toObjectList(msg.getPropsList(),
     proto.jarviscrawlercore.TaobaoProperty.toObject, includeInstance),
     reviewtagsList: jspb.Message.toObjectList(msg.getReviewtagsList(),
-    proto.jarviscrawlercore.TaobaoReviewTag.toObject, includeInstance)
+    proto.jarviscrawlercore.TaobaoReviewTag.toObject, includeInstance),
+    price: +jspb.Message.getFieldWithDefault(msg, 21, 0.0)
   };
 
   if (includeInstance) {
@@ -1641,6 +1642,10 @@ proto.jarviscrawlercore.TaobaoProduct.deserializeBinaryFromReader = function(msg
       var value = new proto.jarviscrawlercore.TaobaoReviewTag;
       reader.readMessage(value,proto.jarviscrawlercore.TaobaoReviewTag.deserializeBinaryFromReader);
       msg.addReviewtags(value);
+      break;
+    case 21:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
       break;
     default:
       reader.skipField();
@@ -1814,6 +1819,13 @@ proto.jarviscrawlercore.TaobaoProduct.serializeBinaryToWriter = function(message
       20,
       f,
       proto.jarviscrawlercore.TaobaoReviewTag.serializeBinaryToWriter
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      21,
+      f
     );
   }
 };
@@ -2251,6 +2263,21 @@ proto.jarviscrawlercore.TaobaoProduct.prototype.addReviewtags = function(opt_val
 
 proto.jarviscrawlercore.TaobaoProduct.prototype.clearReviewtagsList = function() {
   this.setReviewtagsList([]);
+};
+
+
+/**
+ * optional float price = 21;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TaobaoProduct.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 21, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TaobaoProduct.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 21, value);
 };
 
 

@@ -1600,7 +1600,8 @@ proto.jarviscrawlercore.TmallProduct.toObject = function(includeInstance, msg) {
     imgsList: jspb.Message.getRepeatedField(msg, 19),
     shop: (f = msg.getShop()) && proto.jarviscrawlercore.TmallShopInfo.toObject(includeInstance, f),
     propsList: jspb.Message.toObjectList(msg.getPropsList(),
-    proto.jarviscrawlercore.TmallProperty.toObject, includeInstance)
+    proto.jarviscrawlercore.TmallProperty.toObject, includeInstance),
+    price: +jspb.Message.getFieldWithDefault(msg, 22, 0.0)
   };
 
   if (includeInstance) {
@@ -1725,6 +1726,10 @@ proto.jarviscrawlercore.TmallProduct.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.TmallProperty;
       reader.readMessage(value,proto.jarviscrawlercore.TmallProperty.deserializeBinaryFromReader);
       msg.addProps(value);
+      break;
+    case 22:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setPrice(value);
       break;
     default:
       reader.skipField();
@@ -1905,6 +1910,13 @@ proto.jarviscrawlercore.TmallProduct.serializeBinaryToWriter = function(message,
       21,
       f,
       proto.jarviscrawlercore.TmallProperty.serializeBinaryToWriter
+    );
+  }
+  f = message.getPrice();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      22,
+      f
     );
   }
 };
@@ -2315,6 +2327,21 @@ proto.jarviscrawlercore.TmallProduct.prototype.addProps = function(opt_value, op
 
 proto.jarviscrawlercore.TmallProduct.prototype.clearPropsList = function() {
   this.setPropsList([]);
+};
+
+
+/**
+ * optional float price = 22;
+ * @return {number}
+ */
+proto.jarviscrawlercore.TmallProduct.prototype.getPrice = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 22, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.TmallProduct.prototype.setPrice = function(value) {
+  jspb.Message.setProto3FloatField(this, 22, value);
 };
 
 

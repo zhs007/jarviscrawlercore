@@ -76,6 +76,7 @@ message TmallProduct {
     repeated string imgs = 19;
     TmallShopInfo shop = 20;
     repeated TmallProperty props = 21;
+    float price = 22;
 }
 
 // TmallMode - tmall mode

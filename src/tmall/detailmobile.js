@@ -6,7 +6,7 @@ const {waitForLocalFunction} = require('../waitutils');
 const {fixProduct} = require('./utils');
 const {
   parseGetDetailResult,
-  parseSKU,
+  parseSKU2,
   parseItem,
   parseSeller,
   parseProps,
@@ -225,11 +225,26 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
     parseProps(detailobj.obj, ret);
     parseReviewTags(detailobj.obj, ret);
 
-    const skuret = parseSKU(detailobj.obj);
+    const mddata = await page
+        .evaluate(async () => {
+          return window._DATA_Mdskip;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+    if (awaiterr) {
+      log.error('tmallDetailMobile.evaluate window._DATA_Mdskip', awaiterr);
+
+      await page.close();
+
+      return {error: awaiterr.toString()};
+    }
+
+    const skuret = parseSKU2(detailobj.obj, mddata);
     if (skuret.error) {
       awaiterr = skuret.error;
 
-      log.error('tmallDetailMobile.parseSKU', awaiterr);
+      log.error('tmallDetailMobile.parseSKU2', awaiterr);
 
       await page.close();
 

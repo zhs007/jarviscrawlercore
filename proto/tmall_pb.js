@@ -820,7 +820,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TmallShopInfo.repeatedFields_ = [6,7];
+proto.jarviscrawlercore.TmallShopInfo.repeatedFields_ = [6,7,15];
 
 
 
@@ -864,7 +864,8 @@ proto.jarviscrawlercore.TmallShopInfo.toObject = function(includeInstance, msg) 
     allitemcount: jspb.Message.getFieldWithDefault(msg, 11, 0),
     newitemcount: jspb.Message.getFieldWithDefault(msg, 12, 0),
     strfans: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    goodratepercentage: +jspb.Message.getFieldWithDefault(msg, 14, 0.0)
+    goodratepercentage: +jspb.Message.getFieldWithDefault(msg, 14, 0.0),
+    rateoffsetList: jspb.Message.getRepeatedFloatingPointField(msg, 15)
   };
 
   if (includeInstance) {
@@ -956,6 +957,10 @@ proto.jarviscrawlercore.TmallShopInfo.deserializeBinaryFromReader = function(msg
     case 14:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setGoodratepercentage(value);
+      break;
+    case 15:
+      var value = /** @type {!Array<number>} */ (reader.readPackedFloat());
+      msg.setRateoffsetList(value);
       break;
     default:
       reader.skipField();
@@ -1081,6 +1086,13 @@ proto.jarviscrawlercore.TmallShopInfo.serializeBinaryToWriter = function(message
   if (f !== 0.0) {
     writer.writeFloat(
       14,
+      f
+    );
+  }
+  f = message.getRateoffsetList();
+  if (f.length > 0) {
+    writer.writePackedFloat(
+      15,
       f
     );
   }
@@ -1324,6 +1336,35 @@ proto.jarviscrawlercore.TmallShopInfo.prototype.getGoodratepercentage = function
 /** @param {number} value */
 proto.jarviscrawlercore.TmallShopInfo.prototype.setGoodratepercentage = function(value) {
   jspb.Message.setProto3FloatField(this, 14, value);
+};
+
+
+/**
+ * repeated float rateOffset = 15;
+ * @return {!Array<number>}
+ */
+proto.jarviscrawlercore.TmallShopInfo.prototype.getRateoffsetList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedFloatingPointField(this, 15));
+};
+
+
+/** @param {!Array<number>} value */
+proto.jarviscrawlercore.TmallShopInfo.prototype.setRateoffsetList = function(value) {
+  jspb.Message.setField(this, 15, value || []);
+};
+
+
+/**
+ * @param {number} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TmallShopInfo.prototype.addRateoffset = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 15, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TmallShopInfo.prototype.clearRateoffsetList = function() {
+  this.setRateoffsetList([]);
 };
 
 

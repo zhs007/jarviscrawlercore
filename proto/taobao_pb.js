@@ -350,7 +350,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TaobaoShopInfo.repeatedFields_ = [6,7];
+proto.jarviscrawlercore.TaobaoShopInfo.repeatedFields_ = [6,7,15];
 
 
 
@@ -394,7 +394,8 @@ proto.jarviscrawlercore.TaobaoShopInfo.toObject = function(includeInstance, msg)
     allitemcount: jspb.Message.getFieldWithDefault(msg, 11, 0),
     newitemcount: jspb.Message.getFieldWithDefault(msg, 12, 0),
     strfans: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    goodratepercentage: +jspb.Message.getFieldWithDefault(msg, 14, 0.0)
+    goodratepercentage: +jspb.Message.getFieldWithDefault(msg, 14, 0.0),
+    rateoffsetList: jspb.Message.getRepeatedFloatingPointField(msg, 15)
   };
 
   if (includeInstance) {
@@ -486,6 +487,10 @@ proto.jarviscrawlercore.TaobaoShopInfo.deserializeBinaryFromReader = function(ms
     case 14:
       var value = /** @type {number} */ (reader.readFloat());
       msg.setGoodratepercentage(value);
+      break;
+    case 15:
+      var value = /** @type {!Array<number>} */ (reader.readPackedFloat());
+      msg.setRateoffsetList(value);
       break;
     default:
       reader.skipField();
@@ -611,6 +616,13 @@ proto.jarviscrawlercore.TaobaoShopInfo.serializeBinaryToWriter = function(messag
   if (f !== 0.0) {
     writer.writeFloat(
       14,
+      f
+    );
+  }
+  f = message.getRateoffsetList();
+  if (f.length > 0) {
+    writer.writePackedFloat(
+      15,
       f
     );
   }
@@ -854,6 +866,35 @@ proto.jarviscrawlercore.TaobaoShopInfo.prototype.getGoodratepercentage = functio
 /** @param {number} value */
 proto.jarviscrawlercore.TaobaoShopInfo.prototype.setGoodratepercentage = function(value) {
   jspb.Message.setProto3FloatField(this, 14, value);
+};
+
+
+/**
+ * repeated float rateOffset = 15;
+ * @return {!Array<number>}
+ */
+proto.jarviscrawlercore.TaobaoShopInfo.prototype.getRateoffsetList = function() {
+  return /** @type {!Array<number>} */ (jspb.Message.getRepeatedFloatingPointField(this, 15));
+};
+
+
+/** @param {!Array<number>} value */
+proto.jarviscrawlercore.TaobaoShopInfo.prototype.setRateoffsetList = function(value) {
+  jspb.Message.setField(this, 15, value || []);
+};
+
+
+/**
+ * @param {number} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TaobaoShopInfo.prototype.addRateoffset = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 15, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TaobaoShopInfo.prototype.clearRateoffsetList = function() {
+  this.setRateoffsetList([]);
 };
 
 
@@ -1520,7 +1561,8 @@ proto.jarviscrawlercore.TaobaoRelatedItem.toObject = function(includeInstance, m
   var f, obj = {
     itemid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     url: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 3, "")
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    iscurrent: jspb.Message.getFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -1568,6 +1610,10 @@ proto.jarviscrawlercore.TaobaoRelatedItem.deserializeBinaryFromReader = function
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
+      break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIscurrent(value);
       break;
     default:
       reader.skipField();
@@ -1619,6 +1665,13 @@ proto.jarviscrawlercore.TaobaoRelatedItem.serializeBinaryToWriter = function(mes
       f
     );
   }
+  f = message.getIscurrent();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -1664,6 +1717,23 @@ proto.jarviscrawlercore.TaobaoRelatedItem.prototype.getName = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.TaobaoRelatedItem.prototype.setName = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional bool isCurrent = 4;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.TaobaoRelatedItem.prototype.getIscurrent = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 4, false));
+};
+
+
+/** @param {boolean} value */
+proto.jarviscrawlercore.TaobaoRelatedItem.prototype.setIscurrent = function(value) {
+  jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

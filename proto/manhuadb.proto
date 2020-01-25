@@ -1,5 +1,4 @@
 syntax = "proto3";
-import "searchparam2.proto";
 package jarviscrawlercore;
 
 // ManhuaDBMode - manhuadb mode
@@ -10,7 +9,7 @@ enum ManhuaDBMode {
 
 // ManhuaDBBook - manhuadb book
 message ManhuaDBBook {
-    string name = 1;
+    string title = 1;
     string url = 2;
 }
 

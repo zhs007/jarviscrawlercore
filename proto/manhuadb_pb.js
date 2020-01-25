@@ -11,8 +11,6 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var searchparam2_pb = require('./searchparam2_pb.js');
-goog.object.extend(proto, searchparam2_pb);
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBBook', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBManhua', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBMode', null, global);
@@ -65,7 +63,7 @@ proto.jarviscrawlercore.ManhuaDBBook.prototype.toObject = function(opt_includeIn
  */
 proto.jarviscrawlercore.ManhuaDBBook.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    title: jspb.Message.getFieldWithDefault(msg, 1, ""),
     url: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
@@ -105,7 +103,7 @@ proto.jarviscrawlercore.ManhuaDBBook.deserializeBinaryFromReader = function(msg,
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
+      msg.setTitle(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -140,7 +138,7 @@ proto.jarviscrawlercore.ManhuaDBBook.prototype.serializeBinary = function() {
  */
 proto.jarviscrawlercore.ManhuaDBBook.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getName();
+  f = message.getTitle();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -158,16 +156,16 @@ proto.jarviscrawlercore.ManhuaDBBook.serializeBinaryToWriter = function(message,
 
 
 /**
- * optional string name = 1;
+ * optional string title = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.ManhuaDBBook.prototype.getName = function() {
+proto.jarviscrawlercore.ManhuaDBBook.prototype.getTitle = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.ManhuaDBBook.prototype.setName = function(value) {
+proto.jarviscrawlercore.ManhuaDBBook.prototype.setTitle = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 

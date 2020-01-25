@@ -15,16 +15,33 @@ message ManhuaDBBook {
 
 // ManhuaDBManhua - manhuadb manhua
 message ManhuaDBManhua {
-    string manhuaid = 1;
+    string comicid = 1;
     string name = 2;
     repeated ManhuaDBBook books = 3;
+}
+
+// ManhuaDBPage - manhuadb page
+message ManhuaDBPage {
+    string url = 1;
+    int32 pageIndex = 2;
+    bytes data = 3;
+}
+
+// ManhuaDBBookInfo - manhuadb book
+message ManhuaDBBookInfo {
+    string comicid = 1;
+    string bookid = 2;
+    repeated ManhuaDBPage pages = 3;
+    int32 pageNums = 4;
 }
 
 
 // RequestManhuaDB - request manhuadb
 message RequestManhuaDB {
     ManhuaDBMode mode = 1;
-    string manhuaid = 2;
+    string comicid = 2;
+    string bookid = 3;
+    int32 pageIndex = 4;
 }
 
 // ReplyManhuaDB - reply manhuadb
@@ -33,5 +50,6 @@ message ReplyManhuaDB {
 
     oneof reply {
         ManhuaDBManhua manhua = 100;
+        ManhuaDBBookInfo book = 101;
     }
 }

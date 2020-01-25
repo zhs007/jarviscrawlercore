@@ -1,4 +1,4 @@
-// const {sleep} = require('../utils');
+const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 // const {closeDialog, procSKU} = require('./utils');
@@ -6,28 +6,33 @@ const log = require('../log');
 // const {getJSONStr} = require('../string.utils');
 
 /**
- * manhuadbManhua - manhuadb manhua
+ * manhuadbBook - manhuadb book
  * @param {object} browser - browser
  * @param {string} comicid - comicid
+ * @param {string} bookid - bookid
+ * @param {string} pageindex - pageindex
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function manhuadbManhua(browser, comicid, timeout) {
+async function manhuadbBook(browser, comicid, bookid, pageindex, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
   const waitAllResponse = new WaitAllResponse(page);
 
+  let imgbuf;
   //   let inititemdetail;
-  //   page.on('response', async (res) => {
-  //     const url = res.url();
+  page.on('response', async (res) => {
+    let url = await res.url();
 
-  //     if (url.indexOf('https://mdskip.taobao.com/core/initItemDetail.htm') == 0) {
-  //       inititemdetail = await res.buffer().catch((err) => {
-  //         log.error('tmallDetail.WaitAllResponse.buffer ' + err);
-  //       });
-  //     }
-  //   });
+    url = url.toLowerCase();
+    const arr = url.split('.');
+    if (arr[arr.length - 1] == 'jpg') {
+      imgbuf = await res.buffer().catch((err) => {
+        log.error('manhuadbBook.WaitAllResponse.buffer ' + err);
+      });
+    }
+  });
 
   //   let noretry = 0;
   //   page.on('framenavigated', (f) => {
@@ -54,14 +59,21 @@ async function manhuadbManhua(browser, comicid, timeout) {
       });
 
   if (awaiterr) {
-    log.error('manhuadbManhua.setViewport', awaiterr);
+    log.error('manhuadbBook.setViewport', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
-  const baseurl = 'https://www.manhuadb.com/manhua/' + comicid;
+  const baseurl =
+    'https://www.manhuadb.com/manhua/' +
+    comicid +
+    '/' +
+    bookid +
+    '_p' +
+    pageindex +
+    '.html';
 
   await page
       .goto(baseurl, {
@@ -72,7 +84,7 @@ async function manhuadbManhua(browser, comicid, timeout) {
       });
 
   if (awaiterr) {
-    log.error('manhuadbManhua.goto', awaiterr);
+    log.error('manhuadbBook.goto', awaiterr);
 
     await page.close();
 
@@ -81,9 +93,9 @@ async function manhuadbManhua(browser, comicid, timeout) {
 
   const isdone = await waitAllResponse.waitDone(timeout);
   if (!isdone) {
-    const err = new Error('manhuadbManhua.waitDone timeout');
+    const err = new Error('manhuadbBook.waitDone timeout');
 
-    log.error('manhuadbManhua.goto', err);
+    log.error('manhuadbBook.goto', err);
 
     await page.close();
 
@@ -92,43 +104,57 @@ async function manhuadbManhua(browser, comicid, timeout) {
 
   const ret = {};
 
-  ret.books = await page
-      .$$eval('#comic-book-list', (eles) => {
+  ret.pageNums = await page
+      .$$eval('select', (eles) => {
         if (eles.length > 0) {
-          const lstol = eles[0].getElementsByTagName('ol');
-          if (lstol.length > 0) {
-            const lsta = lstol[0].getElementsByTagName('a');
-            if (lsta.length > 0) {
-              const lst = [];
-
-              for (let i = 0; i < lsta.length; ++i) {
-                lst.push({
-                  title: lsta[i].title,
-                  url: lsta[i].href,
-                });
-              }
-
-              return lst;
-            }
-          }
+          return eles[0].length;
         }
 
-        return undefined;
+        return 0;
       })
       .catch((err) => {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('manhuadbManhua.$$eval #comic-book-list', awaiterr);
+    log.error('manhuadbBook.$$eval select', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
+  const imgurl = await page
+      .$$eval('.img-fluid.show-pic', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].src;
+        }
+
+        return 0;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuadbBook.$$eval select', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  while (true) {
+    if (imgbuf != undefined) {
+      break;
+    }
+
+    await sleep(1000);
+  }
+
+  ret.pages = [{url: imgurl, pageIndex: pageindex, data: imgbuf}];
+
   await page.close();
 
   return {ret: ret};
 }
 
-exports.manhuadbManhua = manhuadbManhua;
+exports.manhuadbBook = manhuadbBook;

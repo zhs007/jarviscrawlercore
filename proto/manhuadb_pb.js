@@ -12,8 +12,10 @@ var goog = jspb;
 var global = Function('return this')();
 
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBBook', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBBookInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBManhua', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBMode', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.ManhuaDBPage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyManhuaDB', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestManhuaDB', null, global);
 
@@ -239,7 +241,7 @@ proto.jarviscrawlercore.ManhuaDBManhua.prototype.toObject = function(opt_include
  */
 proto.jarviscrawlercore.ManhuaDBManhua.toObject = function(includeInstance, msg) {
   var f, obj = {
-    manhuaid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    comicid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     booksList: jspb.Message.toObjectList(msg.getBooksList(),
     proto.jarviscrawlercore.ManhuaDBBook.toObject, includeInstance)
@@ -281,7 +283,7 @@ proto.jarviscrawlercore.ManhuaDBManhua.deserializeBinaryFromReader = function(ms
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setManhuaid(value);
+      msg.setComicid(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -321,7 +323,7 @@ proto.jarviscrawlercore.ManhuaDBManhua.prototype.serializeBinary = function() {
  */
 proto.jarviscrawlercore.ManhuaDBManhua.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getManhuaid();
+  f = message.getComicid();
   if (f.length > 0) {
     writer.writeString(
       1,
@@ -347,16 +349,16 @@ proto.jarviscrawlercore.ManhuaDBManhua.serializeBinaryToWriter = function(messag
 
 
 /**
- * optional string manhuaid = 1;
+ * optional string comicid = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.ManhuaDBManhua.prototype.getManhuaid = function() {
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.getComicid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.ManhuaDBManhua.prototype.setManhuaid = function(value) {
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.setComicid = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -418,6 +420,475 @@ proto.jarviscrawlercore.ManhuaDBManhua.prototype.clearBooksList = function() {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.jarviscrawlercore.ManhuaDBPage = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.jarviscrawlercore.ManhuaDBPage, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ManhuaDBPage.displayName = 'proto.jarviscrawlercore.ManhuaDBPage';
+}
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ManhuaDBPage.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ManhuaDBPage} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ManhuaDBPage.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    url: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    pageindex: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    data: msg.getData_asB64()
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ManhuaDBPage}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ManhuaDBPage;
+  return proto.jarviscrawlercore.ManhuaDBPage.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ManhuaDBPage} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ManhuaDBPage}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPageindex(value);
+      break;
+    case 3:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setData(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ManhuaDBPage.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ManhuaDBPage} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ManhuaDBPage.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPageindex();
+  if (f !== 0) {
+    writer.writeInt32(
+      2,
+      f
+    );
+  }
+  f = message.getData_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string url = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional int32 pageIndex = 2;
+ * @return {number}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.getPageindex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.setPageindex = function(value) {
+  jspb.Message.setProto3IntField(this, 2, value);
+};
+
+
+/**
+ * optional bytes data = 3;
+ * @return {!(string|Uint8Array)}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.getData = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/**
+ * optional bytes data = 3;
+ * This is a type-conversion wrapper around `getData()`
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.getData_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getData()));
+};
+
+
+/**
+ * optional bytes data = 3;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getData()`
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.getData_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getData()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.jarviscrawlercore.ManhuaDBPage.prototype.setData = function(value) {
+  jspb.Message.setProto3BytesField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.ManhuaDBBookInfo.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.ManhuaDBBookInfo, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.ManhuaDBBookInfo.displayName = 'proto.jarviscrawlercore.ManhuaDBBookInfo';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.repeatedFields_ = [3];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.ManhuaDBBookInfo.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.ManhuaDBBookInfo} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    comicid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    bookid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    pagesList: jspb.Message.toObjectList(msg.getPagesList(),
+    proto.jarviscrawlercore.ManhuaDBPage.toObject, includeInstance),
+    pagenums: jspb.Message.getFieldWithDefault(msg, 4, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.ManhuaDBBookInfo}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.ManhuaDBBookInfo;
+  return proto.jarviscrawlercore.ManhuaDBBookInfo.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.ManhuaDBBookInfo} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.ManhuaDBBookInfo}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setComicid(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBookid(value);
+      break;
+    case 3:
+      var value = new proto.jarviscrawlercore.ManhuaDBPage;
+      reader.readMessage(value,proto.jarviscrawlercore.ManhuaDBPage.deserializeBinaryFromReader);
+      msg.addPages(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPagenums(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.ManhuaDBBookInfo.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.ManhuaDBBookInfo} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getComicid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getBookid();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getPagesList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      3,
+      f,
+      proto.jarviscrawlercore.ManhuaDBPage.serializeBinaryToWriter
+    );
+  }
+  f = message.getPagenums();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string comicid = 1;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.getComicid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.setComicid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string bookid = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.getBookid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.setBookid = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * repeated ManhuaDBPage pages = 3;
+ * @return {!Array<!proto.jarviscrawlercore.ManhuaDBPage>}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.getPagesList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.ManhuaDBPage>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.ManhuaDBPage, 3));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.ManhuaDBPage>} value */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.setPagesList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 3, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.ManhuaDBPage=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.ManhuaDBPage}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.addPages = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 3, opt_value, proto.jarviscrawlercore.ManhuaDBPage, opt_index);
+};
+
+
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.clearPagesList = function() {
+  this.setPagesList([]);
+};
+
+
+/**
+ * optional int32 pageNums = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.getPagenums = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.ManhuaDBBookInfo.prototype.setPagenums = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.jarviscrawlercore.RequestManhuaDB = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -455,7 +926,9 @@ proto.jarviscrawlercore.RequestManhuaDB.prototype.toObject = function(opt_includ
 proto.jarviscrawlercore.RequestManhuaDB.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    manhuaid: jspb.Message.getFieldWithDefault(msg, 2, "")
+    comicid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    bookid: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    pageindex: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -498,7 +971,15 @@ proto.jarviscrawlercore.RequestManhuaDB.deserializeBinaryFromReader = function(m
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setManhuaid(value);
+      msg.setComicid(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setBookid(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPageindex(value);
       break;
     default:
       reader.skipField();
@@ -536,10 +1017,24 @@ proto.jarviscrawlercore.RequestManhuaDB.serializeBinaryToWriter = function(messa
       f
     );
   }
-  f = message.getManhuaid();
+  f = message.getComicid();
   if (f.length > 0) {
     writer.writeString(
       2,
+      f
+    );
+  }
+  f = message.getBookid();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getPageindex();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
       f
     );
   }
@@ -562,17 +1057,47 @@ proto.jarviscrawlercore.RequestManhuaDB.prototype.setMode = function(value) {
 
 
 /**
- * optional string manhuaid = 2;
+ * optional string comicid = 2;
  * @return {string}
  */
-proto.jarviscrawlercore.RequestManhuaDB.prototype.getManhuaid = function() {
+proto.jarviscrawlercore.RequestManhuaDB.prototype.getComicid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.RequestManhuaDB.prototype.setManhuaid = function(value) {
+proto.jarviscrawlercore.RequestManhuaDB.prototype.setComicid = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string bookid = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestManhuaDB.prototype.getBookid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestManhuaDB.prototype.setBookid = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 pageIndex = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.RequestManhuaDB.prototype.getPageindex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.RequestManhuaDB.prototype.setPageindex = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
@@ -602,14 +1127,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyManhuaDB.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.ReplyManhuaDB.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.ReplyManhuaDB.ReplyCase = {
   REPLY_NOT_SET: 0,
-  MANHUA: 100
+  MANHUA: 100,
+  BOOK: 101
 };
 
 /**
@@ -649,7 +1175,8 @@ proto.jarviscrawlercore.ReplyManhuaDB.prototype.toObject = function(opt_includeI
 proto.jarviscrawlercore.ReplyManhuaDB.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    manhua: (f = msg.getManhua()) && proto.jarviscrawlercore.ManhuaDBManhua.toObject(includeInstance, f)
+    manhua: (f = msg.getManhua()) && proto.jarviscrawlercore.ManhuaDBManhua.toObject(includeInstance, f),
+    book: (f = msg.getBook()) && proto.jarviscrawlercore.ManhuaDBBookInfo.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -695,6 +1222,11 @@ proto.jarviscrawlercore.ReplyManhuaDB.deserializeBinaryFromReader = function(msg
       reader.readMessage(value,proto.jarviscrawlercore.ManhuaDBManhua.deserializeBinaryFromReader);
       msg.setManhua(value);
       break;
+    case 101:
+      var value = new proto.jarviscrawlercore.ManhuaDBBookInfo;
+      reader.readMessage(value,proto.jarviscrawlercore.ManhuaDBBookInfo.deserializeBinaryFromReader);
+      msg.setBook(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -737,6 +1269,14 @@ proto.jarviscrawlercore.ReplyManhuaDB.serializeBinaryToWriter = function(message
       100,
       f,
       proto.jarviscrawlercore.ManhuaDBManhua.serializeBinaryToWriter
+    );
+  }
+  f = message.getBook();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.ManhuaDBBookInfo.serializeBinaryToWriter
     );
   }
 };
@@ -784,6 +1324,36 @@ proto.jarviscrawlercore.ReplyManhuaDB.prototype.clearManhua = function() {
  */
 proto.jarviscrawlercore.ReplyManhuaDB.prototype.hasManhua = function() {
   return jspb.Message.getField(this, 100) != null;
+};
+
+
+/**
+ * optional ManhuaDBBookInfo book = 101;
+ * @return {?proto.jarviscrawlercore.ManhuaDBBookInfo}
+ */
+proto.jarviscrawlercore.ReplyManhuaDB.prototype.getBook = function() {
+  return /** @type{?proto.jarviscrawlercore.ManhuaDBBookInfo} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ManhuaDBBookInfo, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ManhuaDBBookInfo|undefined} value */
+proto.jarviscrawlercore.ReplyManhuaDB.prototype.setBook = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyManhuaDB.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyManhuaDB.prototype.clearBook = function() {
+  this.setBook(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyManhuaDB.prototype.hasBook = function() {
+  return jspb.Message.getField(this, 101) != null;
 };
 
 

@@ -1,0 +1,38 @@
+syntax = "proto3";
+import "searchparam2.proto";
+package jarviscrawlercore;
+
+// ManhuaDBMode - manhuadb mode
+enum ManhuaDBMode {
+    // MHDB_MANHUA - manhua
+    MHDB_MANHUA = 0;
+}
+
+// ManhuaDBBook - manhuadb book
+message ManhuaDBBook {
+    string name = 1;
+    string url = 2;
+}
+
+// ManhuaDBManhua - manhuadb manhua
+message ManhuaDBManhua {
+    string manhuaid = 1;
+    string name = 2;
+    repeated ManhuaDBBook books = 3;
+}
+
+
+// RequestManhuaDB - request manhuadb
+message RequestManhuaDB {
+    ManhuaDBMode mode = 1;
+    string manhuaid = 2;
+}
+
+// ReplyManhuaDB - reply manhuadb
+message ReplyManhuaDB {
+    ManhuaDBMode mode = 1;
+
+    oneof reply {
+        ManhuaDBManhua manhua = 100;
+    }
+}

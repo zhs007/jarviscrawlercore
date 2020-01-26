@@ -16,7 +16,16 @@ async function manhuadbManhua(browser, comicid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
+  await page.setRequestInterception(true);
   const waitAllResponse = new WaitAllResponse(page);
+
+  page.on('request', (req) => {
+    if (req.resourceType() === 'image') {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
 
   //   let inititemdetail;
   //   page.on('response', async (res) => {
@@ -105,6 +114,7 @@ async function manhuadbManhua(browser, comicid, timeout) {
                 lst.push({
                   title: lsta[i].title,
                   url: lsta[i].href,
+                  name: lsta[i].innerText,
                 });
               }
 

@@ -11,6 +11,7 @@ enum ManhuaDBMode {
 message ManhuaDBBook {
     string title = 1;
     string url = 2;
+    string name = 3;
 }
 
 // ManhuaDBManhua - manhuadb manhua

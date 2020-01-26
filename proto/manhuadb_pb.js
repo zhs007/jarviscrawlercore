@@ -66,7 +66,8 @@ proto.jarviscrawlercore.ManhuaDBBook.prototype.toObject = function(opt_includeIn
 proto.jarviscrawlercore.ManhuaDBBook.toObject = function(includeInstance, msg) {
   var f, obj = {
     title: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    url: jspb.Message.getFieldWithDefault(msg, 2, "")
+    url: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -111,6 +112,10 @@ proto.jarviscrawlercore.ManhuaDBBook.deserializeBinaryFromReader = function(msg,
       var value = /** @type {string} */ (reader.readString());
       msg.setUrl(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setName(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -154,6 +159,13 @@ proto.jarviscrawlercore.ManhuaDBBook.serializeBinaryToWriter = function(message,
       f
     );
   }
+  f = message.getName();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
 };
 
 
@@ -184,6 +196,21 @@ proto.jarviscrawlercore.ManhuaDBBook.prototype.getUrl = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.ManhuaDBBook.prototype.setUrl = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string name = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.getName = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.setName = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

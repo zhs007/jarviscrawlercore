@@ -1,4 +1,4 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 // const {closeDialog, procSKU} = require('./utils');
@@ -18,21 +18,30 @@ async function manhuadbBook(browser, comicid, bookid, pageindex, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
+  await page.setRequestInterception(true);
   const waitAllResponse = new WaitAllResponse(page);
 
-  let imgbuf;
-  //   let inititemdetail;
-  page.on('response', async (res) => {
-    let url = await res.url();
-
-    url = url.toLowerCase();
-    const arr = url.split('.');
-    if (arr[arr.length - 1] == 'jpg') {
-      imgbuf = await res.buffer().catch((err) => {
-        log.error('manhuadbBook.WaitAllResponse.buffer ' + err);
-      });
+  page.on('request', (req) => {
+    if (req.resourceType() === 'image') {
+      req.abort();
+    } else {
+      req.continue();
     }
   });
+
+  // let imgbuf;
+  // //   let inititemdetail;
+  // page.on('response', async (res) => {
+  //   let url = await res.url();
+
+  //   url = url.toLowerCase();
+  //   const arr = url.split('.');
+  //   if (arr[arr.length - 1] == 'jpg') {
+  //     imgbuf = await res.buffer().catch((err) => {
+  //       log.error('manhuadbBook.WaitAllResponse.buffer ' + err);
+  //     });
+  //   }
+  // });
 
   //   let noretry = 0;
   //   page.on('framenavigated', (f) => {
@@ -66,14 +75,20 @@ async function manhuadbBook(browser, comicid, bookid, pageindex, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  const baseurl =
-    'https://www.manhuadb.com/manhua/' +
-    comicid +
-    '/' +
-    bookid +
-    '_p' +
-    pageindex +
-    '.html';
+  let baseurl;
+  if (pageindex == 1) {
+    baseurl =
+      'https://www.manhuadb.com/manhua/' + comicid + '/' + bookid + '.html';
+  } else {
+    baseurl =
+      'https://www.manhuadb.com/manhua/' +
+      comicid +
+      '/' +
+      bookid +
+      '_p' +
+      pageindex +
+      '.html';
+  }
 
   await page
       .goto(baseurl, {
@@ -142,15 +157,15 @@ async function manhuadbBook(browser, comicid, bookid, pageindex, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  while (true) {
-    if (imgbuf != undefined) {
-      break;
-    }
+  // while (true) {
+  //   if (imgbuf != undefined) {
+  //     break;
+  //   }
 
-    await sleep(1000);
-  }
+  //   await sleep(1000);
+  // }
 
-  ret.pages = [{url: imgurl, pageIndex: pageindex, data: imgbuf}];
+  ret.pages = [{url: imgurl, pageIndex: pageindex}];
 
   await page.close();
 

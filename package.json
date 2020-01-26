@@ -1,10 +1,10 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.3.96",
+  "version": "0.3.97",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest"
   },
   "repository": {
     "type": "git",

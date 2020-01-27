@@ -62,6 +62,24 @@ async function downloadComic(isdebug, comicid, rootpath) {
 }
 
 /**
+ * checkBook - check book
+ * @param {string} rootpath - rootpath
+ * @param {int} pagenums - pagenums
+ * @return {array} lstpageindex - list for pageindex
+ */
+function checkBook(rootpath, pagenums) {
+  const lst = [];
+  for (let i = 1; i <= pagenums; ++i) {
+    const fn = path.join(rootpath, i + '.jpg');
+    if (!fs.existsSync(fn)) {
+      lst.push(i);
+    }
+  }
+
+  return lst;
+}
+
+/**
  * downloadBook - download book
  * @param {object} browser - browser
  * @param {string} comicid - comicid
@@ -80,6 +98,7 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
 
   let ret;
   const lst = [];
+  let lastpi;
   while (true) {
     ret = await manhuadbBook(browser, comicid, bookid, 1, timeout);
     if (ret.error) {
@@ -90,43 +109,36 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
       continue;
     }
 
-    dl.addTask(
-        ret.ret.pages[0].url,
-        (buf, param) => {
-          fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
-        },
-        {rootpath: rootpath, pi: 1},
-    );
+    lastpi = checkBook(rootpath, ret.ret.pageNums);
 
-    lst.push(ret.ret.pages[0].url);
+    if (lastpi[0] == 1) {
+      dl.addTask(
+          ret.ret.pages[0].url,
+          (buf, param) => {
+            fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
+          },
+          {rootpath: rootpath, pi: 1},
+      );
+
+      lst.push(ret.ret.pages[0].url);
+    }
 
     break;
   }
 
-  // const lsterr = [];
-  // let downloadnums = 0;
-  // download(ret.ret.pages[0].url).then((cdret) => {
-  //   if (cdret.error) {
-  //     log.error(
-  //         'downloadBook.download ' + ret.ret.pages[0].url + ' error ',
-  //         cdret.error,
-  //     );
+  for (let i = 0; i < lastpi.length; ++i) {
+    if (lastpi[i] == 1) {
+      continue;
+    }
 
-  //     lsterr.push(ret.ret.pages[0].url);
-
-  //     return;
-  //   }
-
-  //   fs.writeFileSync(path.join(rootpath, '1.jpg'), cdret.buf);
-  //   downloadnums++;
-  // });
-
-  // lst.push(ret.ret.pages[0].url);
-  // fs.writeFileSync(path.join(rootpath, '1.jpg'), ret.pages[0].data);
-
-  for (let i = 2; i <= ret.ret.pageNums; ++i) {
     while (true) {
-      const curret = await manhuadbBook(browser, comicid, bookid, i, timeout);
+      const curret = await manhuadbBook(
+          browser,
+          comicid,
+          bookid,
+          lastpi[i],
+          timeout,
+      );
       if (curret.error) {
         log.error('downloadBook.manhuadbBook error', curret.error);
 
@@ -140,28 +152,13 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
           (buf, param) => {
             fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
           },
-          {rootpath: rootpath, pi: i},
+          {rootpath: rootpath, pi: lastpi[i]},
       );
 
       lst.push(curret.ret.pages[0].url);
 
       break;
     }
-
-    // download(curret.ret.pages[0].url).then((ret) => {
-    //   if (ret.error) {
-    //     log.error(
-    //         'downloadBook.download ' + curret.pages[0].url + ' error ',
-    //         ret.error,
-    //     );
-    //   }
-
-    //   fs.writeFileSync(path.join(rootpath, i + '.jpg'), ret.buf);
-    //   downloadnums++;
-    // });
-
-    // lst.push(curret.ret.pages[0].url);
-    // fs.writeFileSync(path.join(rootpath, i + '.jpg'), curret.pages[0].data);
   }
 
   return undefined;

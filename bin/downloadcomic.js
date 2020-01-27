@@ -18,11 +18,13 @@ program
 
       (async () => {
         await downloadComic(isdebug, comicid, output);
+
+        process.exit(-1);
       })().catch((err) => {
         log.console('catch a err ', err);
-      });
 
-      process.exit(-1);
+        process.exit(-1);
+      });
     });
 
 program.parse(process.argv);

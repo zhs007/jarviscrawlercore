@@ -55,7 +55,7 @@ async function downloadComic(isdebug, comicid, rootpath) {
       break;
     }
 
-    sleep(1000);
+    await sleep(1000);
   }
 
   return undefined;

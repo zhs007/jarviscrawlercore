@@ -20,9 +20,9 @@ program
         await downloadComic(isdebug, comicid, output);
       })().catch((err) => {
         log.console('catch a err ', err);
-
-        process.exit(-1);
       });
+
+      process.exit(-1);
     });
 
 program.parse(process.argv);

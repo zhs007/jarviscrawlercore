@@ -28,6 +28,7 @@ message TaobaoShopInfo {
     int32 newItemCount = 12;
     string strFans = 13;
     float goodRatePercentage = 14;
+    repeated float rateOffset = 15;
 }
 
 // TaobaoProductHistory - taobao product history

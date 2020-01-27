@@ -392,6 +392,228 @@ function parseSKU(obj) {
 }
 
 /**
+ * parseSKU2 - parse sku
+ * @param {object} obj - obj
+ * @param {object} mddata - is like _DATA_Mdskip
+ * @return {object} ret - {error, skus}
+ */
+function parseSKU2(obj, mddata) {
+  try {
+    if (obj && obj.data && obj.data.skuBase) {
+      const skubase = obj.data.skuBase;
+      if (!(Array.isArray(skubase.skus) && skubase.skus.length > 0)) {
+        // const err = new Error('parseSKU2 invalid skubase.skus');
+
+        log.warn('parseSKU2 invalid skubase.skus');
+
+        return {};
+      }
+
+      let mapsku = {};
+      if (mddata && mddata.skuCore && mddata.skuCore.sku2info) {
+        mapsku = mddata.skuCore.sku2info;
+      } else {
+        const strmock = obj.data.mockData;
+        if (strmock) {
+          const mock = string2json(strmock);
+          if (mock.error) {
+            log.warn('parseSKU2 string2json obj.data.mockData', mock.error);
+          } else if (
+            mock.obj &&
+            mock.obj.skuCore &&
+            mock.obj.skuCore.sku2info
+          ) {
+            mapsku = mock.obj.skuCore.sku2info;
+          } else {
+            const err = new Error('parseSKU2 no skuCore.sku2info');
+
+            log.warn('parseSKU2 skuCore.sku2info', err);
+          }
+        }
+      }
+
+      if (Array.isArray(skubase.props) && skubase.props.length > 0) {
+        if (skubase.props.length == 1) {
+          if (
+            skubase.props[0] &&
+            Array.isArray(skubase.props[0].values) &&
+            skubase.props[0].values.length > 0
+          ) {
+            const skus = [];
+            for (let i = 0; i < skubase.props[0].values.length; ++i) {
+              const sku = {};
+              const cv = skubase.props[0].values[i];
+
+              if (cv.name) {
+                sku.title = cv.name;
+              }
+
+              if (cv.vid) {
+                sku.valueid = skubase.props[0].pid + ':' + cv.vid;
+              }
+
+              if (cv.image) {
+                sku.img = cv.image;
+              }
+
+              const skuid = findInSKUs(skubase.skus, sku.valueid);
+              if (skuid) {
+                sku.skuid = skuid;
+              }
+
+              if (
+                mapsku[skuid] &&
+                mapsku[skuid].price &&
+                mapsku[skuid].price.priceText
+              ) {
+                const pt = string2float(mapsku[skuid].price.priceText);
+                if (pt.error) {
+                  log.warn(
+                      'parseSKU2 string2float mapsku[skuid].price.priceText',
+                      pt.error,
+                  );
+                } else {
+                  sku.price = pt.num;
+                }
+              }
+
+              // const skuidr = string2int(skuid);
+              // if (skuidr.error) {
+              //   log.warn('parseSKU2 string2int skuid', skuidr.error);
+              // } else {
+              //   if (
+              //     mapsku[skuidr.num] &&
+              //     mapsku[skuidr.num].price &&
+              //     mapsku[skuidr.num].price.priceText
+              //   ) {
+              //     const pt = string2float(mapsku[skuidr.num].priceText);
+              //     if (pt.error) {
+              //       log.warn(
+              //           'parseSKU2 string2float mapsku[skuid].priceText',
+              //           pt.error,
+              //       );
+              //     } else {
+              //       ret.price = pt.num;
+              //     }
+              //   }
+              // }
+
+              skus.push(sku);
+
+              // int32 stock = 5;
+            }
+
+            return {skus: skus};
+          } else {
+            const err = new Error('parseSKU2 invalid skubase.props[0].values');
+
+            log.warn('parseSKU2', err);
+
+            return {error: err};
+          }
+        } else if (skubase.props.length == 2) {
+          if (
+            skubase.props[0] &&
+            Array.isArray(skubase.props[0].values) &&
+            skubase.props[0].values.length > 0 &&
+            skubase.props[1] &&
+            Array.isArray(skubase.props[1].values) &&
+            skubase.props[1].values.length > 0
+          ) {
+            const skus = [];
+            for (let i = 0; i < skubase.props[0].values.length; ++i) {
+              for (let j = 0; j < skubase.props[1].values.length; ++j) {
+                const sku = {
+                  title: '',
+                  valueid: '',
+                };
+                const cv0 = skubase.props[0].values[i];
+                const cv1 = skubase.props[1].values[j];
+
+                if (cv0.name) {
+                  sku.title += cv0.name;
+                }
+
+                if (cv1.name) {
+                  sku.title += cv1.name;
+                }
+
+                if (cv0.vid) {
+                  sku.valueid += skubase.props[0].pid + ':' + cv0.vid;
+                }
+
+                if (cv1.vid) {
+                  if (sku.valueid != '') {
+                    sku.valueid += ';';
+                  }
+
+                  sku.valueid += skubase.props[1].pid + ':' + cv1.vid;
+                }
+
+                if (cv0.image) {
+                  sku.img = cv0.image;
+                }
+
+                if (cv1.image) {
+                  sku.img = cv1.image;
+                }
+
+                const skuid = findInSKUs(skubase.skus, sku.valueid);
+                if (skuid) {
+                  sku.skuid = skuid;
+                }
+
+                if (
+                  mapsku[skuid] &&
+                  mapsku[skuid].price &&
+                  mapsku[skuid].price.priceText
+                ) {
+                  const pt = string2float(mapsku[skuid].price.priceText);
+                  if (pt.error) {
+                    log.warn(
+                        'parseSKU2 string2float mapsku[skuid].price.priceText',
+                        pt.error,
+                    );
+                  } else {
+                    sku.price = pt.num;
+                  }
+                }
+
+                skus.push(sku);
+
+                // int32 stock = 5;
+              }
+            }
+
+            return {skus: skus};
+          } else {
+            const err = new Error(
+                'parseSKU2 invalid skubase.props[0].values skubase.props[1].values',
+            );
+
+            log.warn('parseSKU2', err);
+
+            return {error: err};
+          }
+        } else {
+          const err = new Error(
+              'parseSKU2 invalid skubase.props.length ' + skubase.props.length,
+          );
+
+          log.warn('parseSKU2', err);
+
+          return {error: err};
+        }
+      }
+    }
+  } catch (err) {
+    log.warn('parseSKU2', err);
+
+    return {error: err};
+  }
+}
+
+/**
  * parseProps - parse props
  * @param {object} obj - object
  * @param {string} ret - ret
@@ -505,6 +727,7 @@ function procRelatedItem(relatedItems) {
 
 exports.parseGetDetailResult = parseGetDetailResult;
 exports.parseSKU = parseSKU;
+exports.parseSKU2 = parseSKU2;
 exports.parseItem = parseItem;
 exports.parseSeller = parseSeller;
 exports.parseProps = parseProps;

@@ -6,7 +6,7 @@ const {waitForLocalFunction} = require('../waitutils');
 const {fixProduct} = require('./utils');
 const {
   parseGetDetailResult,
-  parseSKU2,
+  parseSKU,
   parseItem,
   parseSeller,
   parseProps,
@@ -17,15 +17,16 @@ const {
 const {string2float} = require('../string.utils');
 
 /**
- * tmallDetailMobile - taobao item mobile
+ * taobaoShopMobile - taobao item mobile
  * @param {object} browser - browser
- * @param {string} itemid - itemid
+ * @param {string} userid - userid
+ * @param {string} shopid - shopid
  * @param {string} device - device
  * @param {string} cfgdevice - device in configuration
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
+async function taobaoShopMobile(browser, userid, shopid, device, cfgdevice, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -36,7 +37,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
 
   awaiterr = await chgPageDevice(page, curdevice);
   if (awaiterr) {
-    log.error('tmallDetailMobile.chgPageDevice', awaiterr);
+    log.error('taobaoItemMobile.chgPageDevice', awaiterr);
 
     await page.close();
 
@@ -66,13 +67,13 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
       log.info('response ok', url);
 
       getdetailret = await res.buffer().catch((err) => {
-        log.error('tmallDetailMobile.WaitAllResponse.buffer ' + err);
+        log.error('taobaoItemMobile.WaitAllResponse.buffer ' + err);
       });
     }
   });
 
   await page
-      .goto('https://detail.m.tmall.com/item.htm?id=' + itemid, {
+      .goto('https://h5.m.taobao.com/awp/core/detail.htm?id=' + itemid, {
         timeout: timeout,
       })
       .catch((err) => {
@@ -80,7 +81,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
       });
 
   if (awaiterr) {
-    log.error('tmallDetailMobile.goto', awaiterr);
+    log.error('taobaoItemMobile.goto', awaiterr);
 
     await page.close();
 
@@ -89,9 +90,9 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
 
   const isdone = await waitAllResponse.waitDone(timeout);
   if (!isdone) {
-    const err = new Error('tmallDetailMobile.waitDone timeout');
+    const err = new Error('taobaoItemMobile.waitDone timeout');
 
-    log.error('tmallDetailMobile.goto', err);
+    log.error('taobaoItemMobile.goto', err);
 
     await page.close();
 
@@ -107,7 +108,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
       timeout,
   );
   if (awaiterr) {
-    log.error('tmallDetailMobile.waitForLocalFunction', awaiterr);
+    log.error('taobaoItemMobile.waitForLocalFunction', awaiterr);
 
     await page.close();
 
@@ -118,7 +119,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
   if (detailobj.error) {
     awaiterr = detailobj.error;
 
-    log.error('tmallDetailMobile.parseGetDetailResult', awaiterr);
+    log.error('taobaoItemMobile.parseGetDetailResult', awaiterr);
 
     await page.close();
 
@@ -130,7 +131,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
   };
 
   ret.price = await page
-      .$$eval('.price', (eles) => {
+      .$$eval('.o-t-price', (eles) => {
         if (eles.length > 0) {
           return eles[0].innerText;
         }
@@ -141,32 +142,11 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tmallDetailMobile.$$eval .price', awaiterr);
+    log.error('taobaoItemMobile.$$eval .o-t-price', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
-  }
-
-  if (ret.price == undefined) {
-    ret.price = await page
-        .$$eval('span.num', (eles) => {
-          if (eles.length > 0) {
-            return eles[0].innerText;
-          }
-
-          return undefined;
-        })
-        .catch((err) => {
-          awaiterr = err;
-        });
-    if (awaiterr) {
-      log.error('tmallDetailMobile.$$eval span.num', awaiterr);
-
-      await page.close();
-
-      return {error: awaiterr.toString()};
-    }
   }
 
   if (ret.price) {
@@ -174,7 +154,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
     if (retprice.error) {
       awaiterr = retprice.error;
 
-      log.error('tmallDetailMobile.string2float', awaiterr);
+      log.error('taobaoItemMobile.string2float', awaiterr);
 
       await page.close();
 
@@ -208,7 +188,7 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tmallDetailMobile.$$eval ul.related-list', awaiterr);
+    log.error('taobaoDetailMobile.$$eval ul.related-list', awaiterr);
 
     await page.close();
 
@@ -225,26 +205,11 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
     parseProps(detailobj.obj, ret);
     parseReviewTags(detailobj.obj, ret);
 
-    const mddata = await page
-        .evaluate(async () => {
-          return window._DATA_Mdskip;
-        })
-        .catch((err) => {
-          awaiterr = err;
-        });
-    if (awaiterr) {
-      log.error('tmallDetailMobile.evaluate window._DATA_Mdskip', awaiterr);
-
-      await page.close();
-
-      return {error: awaiterr.toString()};
-    }
-
-    const skuret = parseSKU2(detailobj.obj, mddata);
+    const skuret = parseSKU(detailobj.obj);
     if (skuret.error) {
       awaiterr = skuret.error;
 
-      log.error('tmallDetailMobile.parseSKU2', awaiterr);
+      log.error('taobaoItemMobile.parseSKU', awaiterr);
 
       await page.close();
 
@@ -255,7 +220,6 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
       const cursku = {
         price: ret.price,
         title: ret.title,
-        itemid: itemid,
       };
 
       if (Array.isArray(ret.imgs) && ret.imgs.length > 0) {
@@ -285,4 +249,4 @@ async function tmallDetailMobile(browser, itemid, device, cfgdevice, timeout) {
   return {ret: fixProduct(ret)};
 }
 
-exports.tmallDetailMobile = tmallDetailMobile;
+exports.taobaoShopMobile = taobaoShopMobile;

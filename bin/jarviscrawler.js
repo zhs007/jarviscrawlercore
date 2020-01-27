@@ -27,6 +27,7 @@ const {execJRJ} = require('../src/jrj/exec');
 const {execAlimama} = require('../src/alimama/exec');
 const {execTmall} = require('../src/tmall/exec');
 const {execTaobao} = require('../src/taobao/exec');
+const {execManhuaDB} = require('../src/manhuadb/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -51,7 +52,7 @@ program
 
       if (!url || !options.output) {
         log.console(
-            'command wrong, please type ' + 'jarviscrawler exparticle --help'
+            'command wrong, please type ' + 'jarviscrawler exparticle --help',
         );
 
         return;
@@ -111,7 +112,7 @@ program
             options.jpgquality,
             jquery,
             images,
-            debugmode
+            debugmode,
         );
 
         if (!debugmode) {
@@ -136,7 +137,7 @@ program
 
       if (!url || !options.output) {
         log.console(
-            'command wrong, please type ' + 'jarviscrawler tracing --help'
+            'command wrong, please type ' + 'jarviscrawler tracing --help',
         );
 
         return;
@@ -168,7 +169,7 @@ program
 
       if (!cfgfile) {
         log.console(
-            'command wrong, please type ' + 'jarviscrawler confluencebot --help'
+            'command wrong, please type ' + 'jarviscrawler confluencebot --help',
         );
 
         return;
@@ -251,7 +252,7 @@ program
 
       if (!url || !options.output) {
         log.console(
-            'command wrong, please type ' + 'jarviscrawler exparticle --help'
+            'command wrong, please type ' + 'jarviscrawler exparticle --help',
         );
 
         return;
@@ -327,7 +328,7 @@ program
 
       if (!options.gamecode) {
         log.console(
-            'command wrong, please type ' + 'jarviscrawler playngo --help'
+            'command wrong, please type ' + 'jarviscrawler playngo --help',
         );
 
         return;
@@ -366,5 +367,6 @@ execJD(program, VERSION);
 execAlimama(program, VERSION);
 execTmall(program, VERSION);
 execTaobao(program, VERSION);
+execManhuaDB(program, VERSION);
 
 program.parse(process.argv);

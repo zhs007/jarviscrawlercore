@@ -63,6 +63,11 @@ async function downloadComic(isdebug, comicid, roottype, rootpath) {
     await sleep(1000);
   }
 
+  fs.writeFileSync(
+      path.join(rootpath, comicid + '.json'),
+      JSON.stringify(manhuaret.ret),
+  );
+
   return undefined;
 }
 

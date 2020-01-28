@@ -76,6 +76,33 @@ async function manhuadbManhua(browser, comicid, timeout) {
 
   const ret = {};
 
+  const lstrootname = await page
+      .$$eval('#myTab', (eles) => {
+        if (eles.length > 0) {
+          const lsta = eles[0].getElementsByTagName('a');
+          if (lsta.length > 0) {
+            const lst = [];
+            for (let k = 0; k < lsta.length; ++k) {
+              lst.push(lsta[k].innerText);
+            }
+
+            return lst;
+          }
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuadbManhua.$$eval #comic-book-list', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   ret.books = await page
       .$$eval('#comic-book-list', (eles) => {
         if (eles.length > 0) {
@@ -90,6 +117,7 @@ async function manhuadbManhua(browser, comicid, timeout) {
                     title: lsta[i].title,
                     url: lsta[i].href,
                     name: lsta[i].innerText,
+                    rootType: k,
                   });
                 }
               }
@@ -110,6 +138,12 @@ async function manhuadbManhua(browser, comicid, timeout) {
     await page.close();
 
     return {error: awaiterr.toString()};
+  }
+
+  if (ret.books && lstrootname) {
+    for (let i = 0; i < ret.books.length; ++i) {
+      ret.books[i].rootName = lstrootname[ret.books[i].rootType];
+    }
   }
 
   await page.close();

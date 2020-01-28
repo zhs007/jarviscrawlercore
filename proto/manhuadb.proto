@@ -12,6 +12,8 @@ message ManhuaDBBook {
     string title = 1;
     string url = 2;
     string name = 3;
+    int32 rootType = 4;
+    string rootName = 5;
 }
 
 // ManhuaDBManhua - manhuadb manhua

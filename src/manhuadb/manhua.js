@@ -27,31 +27,6 @@ async function manhuadbManhua(browser, comicid, timeout) {
     }
   });
 
-  //   let inititemdetail;
-  //   page.on('response', async (res) => {
-  //     const url = res.url();
-
-  //     if (url.indexOf('https://mdskip.taobao.com/core/initItemDetail.htm') == 0) {
-  //       inititemdetail = await res.buffer().catch((err) => {
-  //         log.error('tmallDetail.WaitAllResponse.buffer ' + err);
-  //       });
-  //     }
-  //   });
-
-  //   let noretry = 0;
-  //   page.on('framenavigated', (f) => {
-  //     if (f == page.mainFrame()) {
-  //       if (
-  //         f
-  //             .url()
-  //             .indexOf('https://huodong.taobao.com/wow/malldetail/act/guide-tb?') ==
-  //         0
-  //       ) {
-  //         noretry = 1;
-  //       }
-  //     }
-  //   });
-
   await page
       .setViewport({
         width: 1280,
@@ -101,25 +76,17 @@ async function manhuadbManhua(browser, comicid, timeout) {
 
   const ret = {};
 
-  ret.books = await page
-      .$$eval('#comic-book-list', (eles) => {
+  const lstrootname = await page
+      .$$eval('#myTab', (eles) => {
         if (eles.length > 0) {
-          const lstol = eles[0].getElementsByTagName('ol');
-          if (lstol.length > 0) {
-            const lsta = lstol[0].getElementsByTagName('a');
-            if (lsta.length > 0) {
-              const lst = [];
-
-              for (let i = 0; i < lsta.length; ++i) {
-                lst.push({
-                  title: lsta[i].title,
-                  url: lsta[i].href,
-                  name: lsta[i].innerText,
-                });
-              }
-
-              return lst;
+          const lsta = eles[0].getElementsByTagName('a');
+          if (lsta.length > 0) {
+            const lst = [];
+            for (let k = 0; k < lsta.length; ++k) {
+              lst.push(lsta[k].innerText);
             }
+
+            return lst;
           }
         }
 
@@ -134,6 +101,49 @@ async function manhuadbManhua(browser, comicid, timeout) {
     await page.close();
 
     return {error: awaiterr.toString()};
+  }
+
+  ret.books = await page
+      .$$eval('#comic-book-list', (eles) => {
+        if (eles.length > 0) {
+          const lstol = eles[0].getElementsByTagName('ol');
+          if (lstol.length > 0) {
+            const lst = [];
+            for (let k = 0; k < lstol.length; ++k) {
+              const lsta = lstol[k].getElementsByTagName('a');
+              if (lsta.length > 0) {
+                for (let i = 0; i < lsta.length; ++i) {
+                  lst.push({
+                    title: lsta[i].title,
+                    url: lsta[i].href,
+                    name: lsta[i].innerText,
+                    rootType: k,
+                  });
+                }
+              }
+            }
+
+            return lst;
+          }
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuadbManhua.$$eval #comic-book-list', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (ret.books && lstrootname) {
+    for (let i = 0; i < ret.books.length; ++i) {
+      ret.books[i].rootName = lstrootname[ret.books[i].rootType];
+    }
   }
 
   await page.close();

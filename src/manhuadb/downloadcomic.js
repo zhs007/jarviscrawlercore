@@ -12,10 +12,11 @@ const path = require('path');
  * downloadComic - download comic
  * @param {boolean} isdebug - is debug mode
  * @param {string} comicid - comicid
+ * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @return {error} err - error
  */
-async function downloadComic(isdebug, comicid, rootpath) {
+async function downloadComic(isdebug, comicid, roottype, rootpath) {
   try {
     fs.mkdirSync(rootpath);
   } catch (err) {
@@ -36,6 +37,10 @@ async function downloadComic(isdebug, comicid, rootpath) {
   })();
 
   for (let i = 0; i < manhuaret.ret.books.length; ++i) {
+    if (roottype >= 0 && roottype != manhuaret.ret.books[i].rootType) {
+      continue;
+    }
+
     const curret = parseBookURL(manhuaret.ret.books[i].url);
     const curbookret = await downloadBook(
         browser,

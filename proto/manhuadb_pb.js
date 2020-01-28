@@ -67,7 +67,9 @@ proto.jarviscrawlercore.ManhuaDBBook.toObject = function(includeInstance, msg) {
   var f, obj = {
     title: jspb.Message.getFieldWithDefault(msg, 1, ""),
     url: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 3, "")
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    roottype: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    rootname: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -115,6 +117,14 @@ proto.jarviscrawlercore.ManhuaDBBook.deserializeBinaryFromReader = function(msg,
     case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
+      break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRoottype(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setRootname(value);
       break;
     default:
       reader.skipField();
@@ -166,6 +176,20 @@ proto.jarviscrawlercore.ManhuaDBBook.serializeBinaryToWriter = function(message,
       f
     );
   }
+  f = message.getRoottype();
+  if (f !== 0) {
+    writer.writeInt32(
+      4,
+      f
+    );
+  }
+  f = message.getRootname();
+  if (f.length > 0) {
+    writer.writeString(
+      5,
+      f
+    );
+  }
 };
 
 
@@ -211,6 +235,36 @@ proto.jarviscrawlercore.ManhuaDBBook.prototype.getName = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.ManhuaDBBook.prototype.setName = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 rootType = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.getRoottype = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.setRoottype = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional string rootName = 5;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.getRootname = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ManhuaDBBook.prototype.setRootname = function(value) {
+  jspb.Message.setProto3StringField(this, 5, value);
 };
 
 

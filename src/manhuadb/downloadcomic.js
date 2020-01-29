@@ -1,7 +1,7 @@
 const {startBrowser} = require('../browser');
 const {manhuadbManhua} = require('./manhua');
 const {manhuadbBook} = require('./book');
-const {parseBookURL} = require('./utils');
+const {parseBookURL, isValidURL} = require('./utils');
 const log = require('../log');
 const {DownloadList} = require('../request');
 const {sleep} = require('../utils');
@@ -122,6 +122,16 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
     lastpi = checkBook(rootpath, ret.ret.pageNums);
 
     if (lastpi[0] == 1) {
+      if (!isValidURL(ret.ret.pages[0].url)) {
+        log.error('downloadBook.manhuadbBook isValidURL', {
+          url: ret.ret.pages[0].url,
+        });
+
+        await sleep(30 * 1000);
+
+        continue;
+      }
+
       dl.addTask(
           ret.ret.pages[0].url,
           (buf, param) => {
@@ -151,6 +161,16 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
       );
       if (curret.error) {
         log.error('downloadBook.manhuadbBook error', curret.error);
+
+        await sleep(30 * 1000);
+
+        continue;
+      }
+
+      if (!isValidURL(curret.ret.pages[0].url)) {
+        log.error('downloadBook.manhuadbBook isValidURL', {
+          url: curret.ret.pages[0].url,
+        });
 
         await sleep(30 * 1000);
 

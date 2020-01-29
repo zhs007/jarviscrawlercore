@@ -12,4 +12,21 @@ function parseBookURL(bookurl) {
   return ret;
 }
 
+/**
+ * isValidURL - is a valid url
+ * @param {string} url - url
+ * @return {boolean} isvalid - is valid url
+ */
+function isValidURL(url) {
+  try {
+    const urlo = new URL(url);
+    if (urlo) {
+      return true;
+    }
+  } catch (err) {}
+
+  return false;
+}
+
 exports.parseBookURL = parseBookURL;
+exports.isValidURL = isValidURL;

@@ -27,9 +27,15 @@ async function downloadComic(isdebug, comicid, roottype, rootpath) {
   const timeout = 30 * 1000;
   const dl = new DownloadList();
 
-  const manhuaret = await manhuadbManhua(browser, comicid, timeout);
-  if (manhuaret.error) {
-    log.error('downloadComic error ', manhuaret.error);
+  while (true) {
+    const manhuaret = await manhuadbManhua(browser, comicid, timeout);
+    if (manhuaret.error) {
+      log.error('downloadComic error ', manhuaret.error);
+
+      await sleep(30 * 1000);
+    } else {
+      break;
+    }
   }
 
   (async () => {

@@ -56,7 +56,7 @@ async function manhuadbManhua(browser, comicid, timeout) {
       });
 
   if (awaiterr) {
-    log.error('manhuadbManhua.goto', awaiterr);
+    log.error('manhuadbManhua.goto ' + baseurl, awaiterr);
 
     await page.close();
 
@@ -67,7 +67,7 @@ async function manhuadbManhua(browser, comicid, timeout) {
   if (!isdone) {
     const err = new Error('manhuadbManhua.waitDone timeout');
 
-    log.error('manhuadbManhua.goto', err);
+    log.error('manhuadbManhua.waitDone ' + baseurl, err);
 
     await page.close();
 

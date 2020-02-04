@@ -20,6 +20,14 @@ function download(url, timeout) {
             return;
           }
 
+          if (response.statusCode != 200) {
+            resolve({
+              error: new Error(response.statusCode),
+            });
+
+            return;
+          }
+
           err = error;
         })
         .on('data', (data) => {

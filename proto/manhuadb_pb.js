@@ -291,7 +291,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.ManhuaDBManhua.repeatedFields_ = [3];
+proto.jarviscrawlercore.ManhuaDBManhua.repeatedFields_ = [3,4];
 
 
 
@@ -325,7 +325,8 @@ proto.jarviscrawlercore.ManhuaDBManhua.toObject = function(includeInstance, msg)
     comicid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     name: jspb.Message.getFieldWithDefault(msg, 2, ""),
     booksList: jspb.Message.toObjectList(msg.getBooksList(),
-    proto.jarviscrawlercore.ManhuaDBBook.toObject, includeInstance)
+    proto.jarviscrawlercore.ManhuaDBBook.toObject, includeInstance),
+    authorsList: jspb.Message.getRepeatedField(msg, 4)
   };
 
   if (includeInstance) {
@@ -374,6 +375,10 @@ proto.jarviscrawlercore.ManhuaDBManhua.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.ManhuaDBBook;
       reader.readMessage(value,proto.jarviscrawlercore.ManhuaDBBook.deserializeBinaryFromReader);
       msg.addBooks(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addAuthors(value);
       break;
     default:
       reader.skipField();
@@ -424,6 +429,13 @@ proto.jarviscrawlercore.ManhuaDBManhua.serializeBinaryToWriter = function(messag
       3,
       f,
       proto.jarviscrawlercore.ManhuaDBBook.serializeBinaryToWriter
+    );
+  }
+  f = message.getAuthorsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      4,
+      f
     );
   }
 };
@@ -487,6 +499,35 @@ proto.jarviscrawlercore.ManhuaDBManhua.prototype.addBooks = function(opt_value, 
 
 proto.jarviscrawlercore.ManhuaDBManhua.prototype.clearBooksList = function() {
   this.setBooksList([]);
+};
+
+
+/**
+ * repeated string authors = 4;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.getAuthorsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 4));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.setAuthorsList = function(value) {
+  jspb.Message.setField(this, 4, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.addAuthors = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 4, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.ManhuaDBManhua.prototype.clearAuthorsList = function() {
+  this.setAuthorsList([]);
 };
 
 

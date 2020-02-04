@@ -21,6 +21,7 @@ message ManhuaDBManhua {
     string comicid = 1;
     string name = 2;
     repeated ManhuaDBBook books = 3;
+    repeated string authors = 4;
 }
 
 // ManhuaDBPage - manhuadb page

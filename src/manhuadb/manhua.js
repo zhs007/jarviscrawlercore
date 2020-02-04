@@ -76,6 +76,49 @@ async function manhuadbManhua(browser, comicid, timeout) {
 
   const ret = {};
 
+  ret.name = await page
+      .$$eval('.comic-title', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].innerText;
+        }
+
+        return '';
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuadbManhua.$$eval .comic-title', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.authors = await page
+      .$$eval('.comic-creator', (eles) => {
+        if (eles.length > 0) {
+          const lst = [];
+          for (let i = 0; i < eles.length; ++i) {
+            lst.push(eles[i].innerText);
+          }
+
+          return lst;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuadbManhua.$$eval .comic-title', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   const lstrootname = await page
       .$$eval('#myTab', (eles) => {
         if (eles.length > 0) {

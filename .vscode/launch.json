@@ -1,0 +1,243 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "service",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["startservice", "./cfg/service.yaml"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "service1",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["startservice", "./cfg/service1.yaml"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "analyze",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["analyze", "page", "-u", "https://ada.heyalgo.io/qBuheOnCEJrhGWVaF52EU8oQ6pozDVI1qAeWSTuAcA8.html", "-d", "10"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "geoip",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["geoip", "116.211.92.243", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tinypng",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tinypng", "test002.jpg", "-h", "false", "-o", "tinypng.jpg"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "techinasia.company",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["techinasia", "company", "-h", "false", "-c", "oneberry-technologies"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "techinasia.job",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["techinasia", "job", "-h", "false", "-j", "b6f2b504-e3b5-4f33-9732-5d0d59af828f"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "techinasia.jobs",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["techinasia", "jobs", "-h", "false", "-n", "100", "-m", "LOCATION", "-s", "Remote"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "techinasia.jobtag",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["techinasia", "jobtag", "-h", "false", "-m", "TYPE"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "steepandsheap.products",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["steepandcheap", "products", "-h", "false", "-u", "rc/mens-insulation-on-sale", "-p", "6"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "steepandsheap.products2",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["steepandcheap", "products2", "-h", "false", "-u", "new-arrivals", "-p", "1"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "steepandsheap.product",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["steepandcheap", "product", "-h", "false", "-u", "adidas-outdoor-terrex-cc-boat-sleek-parley-water-shoe-womens?skid=ADA0097-BLAWH-S6"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.funds",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "funds", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.fund",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fund", "-h", "false", "-c", "110011"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.fundvalue",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fundvalue", "-h", "false", "-c", "110011", "-y", "2019"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.fundmanager",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fundmanager", "-h", "false", "-c", "110011"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "mountainsteals.sale",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["mountainsteals", "sale", "-h", "false", "-u", "promo/MSLASTCHANCE"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "mountainsteals.product",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["mountainsteals", "product", "-h", "false", "-u", "the-north-face-women-s-apex-bionic-2-jacket_10316935"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jd.product",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jd", "product", "-h", "false", "-u", "100002085778.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jd.product1",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jd", "product", "-h", "false", "-u", "100008446596.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jd.product2",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jd", "product", "-h", "false", "-u", "28938922242.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jd.active",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jd", "active", "-h", "false", "-u", "3d5iGhD1sMjhdXiwMtqFpCm1By1T/index.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jd.activepage",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jd", "activepage", "-h", "false", "-u", "https://h5.m.jd.com/pc/dev/391BqWHzwykzEcW9DR3zTek4PC8h/index.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "alimama.search",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["alimama", "search", "-h", "false", "-s", "始祖鸟 羽绒服", "-a", "ws://localhost:61714/devtools/browser/60f70437-7dcf-4fb6-b864-3d4311c92494"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "alimama.gettop",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["alimama", "gettop", "-h", "false", "-a", "ws://localhost:61714/devtools/browser/60f70437-7dcf-4fb6-b864-3d4311c92494"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tmall.detail",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmall", "detail", "-h", "false", "-u", "525967713966"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tmall.detailmobile",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmall", "detailmobile", "-h", "false", "-u", "20418824961", "-d", "iPhone X"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "taobao.item",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["taobao", "item", "-h", "false", "-i", "592826167303"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "taobao.search",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["taobao", "search", "-h", "false", "-s", "智米加湿器", "-a", "ws://localhost:58717/devtools/browser/4a3ce68d-91b8-4368-ac5e-a7d59c45cee7"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "taobao.itemmobile",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["taobao", "itemmobile", "-h", "false", "-i", "608003283477", "-d", "iPhone X"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "manhuadb.manhua",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["manhuadb", "manhua", "-h", "false", "-c", "135"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "manhuadb.book",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["manhuadb", "book", "-h", "false", "-c", "154", "-b", "522_5654", "-p", "2"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "startbrowser",
+            "program": "${workspaceFolder}/bin/startbrowser.js",
+            "args": []
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "downloadcomic",
+            "program": "${workspaceFolder}/bin/downloadcomic.js",
+            "args": ["downloadcomic", "154", "-o", "./comic/154", "-t", "0"]
+        }
+    ]
+}

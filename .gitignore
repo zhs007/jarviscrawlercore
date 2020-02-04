@@ -59,7 +59,7 @@ typings/
 
 # next.js build output
 .next
-.vscode
+# .vscode
 cfg/dtconfluence.yaml
 cfg/service.yaml
 cfg/dt*bot.yaml

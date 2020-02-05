@@ -1,4 +1,5 @@
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * techinasiaJob - techinasia jobs
@@ -10,6 +11,8 @@ const log = require('../log');
 async function techinasiaJob(browser, jobid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await disableDownloadOthers(page);
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();

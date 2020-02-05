@@ -1,6 +1,7 @@
 // const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 // const {closeDialog, procSKU} = require('./utils');
 // const {waitForLocalFunction, waitForFunction} = require('../waitutils');
 // const {getJSONStr} = require('../string.utils');
@@ -18,16 +19,17 @@ async function manhuadbBook(browser, comicid, bookid, pageindex, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
-  await page.setRequestInterception(true);
+  await disableDownloadOthers(page);
+  // await page.setRequestInterception(true);
   const waitAllResponse = new WaitAllResponse(page);
 
-  page.on('request', (req) => {
-    if (req.resourceType() === 'image') {
-      req.abort();
-    } else {
-      req.continue();
-    }
-  });
+  // page.on('request', (req) => {
+  //   if (req.resourceType() === 'image') {
+  //     req.abort();
+  //   } else {
+  //     req.continue();
+  //   }
+  // });
 
   // let imgbuf;
   // //   let inititemdetail;

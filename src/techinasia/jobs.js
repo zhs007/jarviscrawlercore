@@ -3,6 +3,7 @@ const {WaitAllResponse} = require('../waitallresponse');
 const {sleep} = require('../utils');
 const {resetPage} = require('./utils');
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * getMainTagElement - get main tag element
@@ -191,6 +192,8 @@ async function selectTag(page, maintag, subtag, timeout) {
 async function techinasiaJobs(browser, jobnums, maintag, subtag, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await disableDownloadOthers(page);
 
   await page
       .setViewport({

@@ -1,6 +1,7 @@
 const {sleep} = require('../utils');
 const {resetPage} = require('./utils');
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * getMainClassName - get main class name
@@ -251,6 +252,8 @@ async function getFromContainer(page, container, maintag, timeout) {
 async function techinasiaJobTag(browser, maintag, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await disableDownloadOthers(page);
 
   await page
       .setViewport({

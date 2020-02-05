@@ -1,5 +1,6 @@
 const {sleep} = require('../utils');
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * getPageType - get page type
@@ -59,6 +60,8 @@ async function getPageType(page, timeout) {
 async function techinasiaCompany(browser, company, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
+
+  await disableDownloadOthers(page);
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {
   //   const rt = req.resourceType();

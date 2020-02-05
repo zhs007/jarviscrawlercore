@@ -1,7 +1,8 @@
-const {sleep} = require('../utils');
-const {WaitURLResponse} = require('../waiturlresponse');
+// const {sleep} = require('../utils');
+// const {WaitURLResponse} = require('../waiturlresponse');
 const {WaitDomContentLoaded} = require('../waitfordomcontentloaded');
 const log = require('../log');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * douban search
@@ -14,7 +15,19 @@ const log = require('../log');
 async function search(browser, type, str, debugmode) {
   const page = await browser.newPage();
 
-  const waitURL = new WaitURLResponse(page);
+  await disableDownloadOthers(page);
+  // await page.setRequestInterception(true);
+  // // const waitAllResponse = new WaitAllResponse(page);
+
+  // page.on('request', (req) => {
+  //   if (req.resourceType() === 'image') {
+  //     req.abort();
+  //   } else {
+  //     req.continue();
+  //   }
+  // });
+
+  // const waitURL = new WaitURLResponse(page);
   const waitdomloaded = new WaitDomContentLoaded(page);
 
   await waitdomloaded.wait(async () => {

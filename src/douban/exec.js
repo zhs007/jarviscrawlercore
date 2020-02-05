@@ -20,7 +20,7 @@ async function doubanexec(program, version) {
 
         if (!mode) {
           log.debug(
-              'command wrong, please type ' + 'jarviscrawler douban --help'
+              'command wrong, please type ' + 'jarviscrawler douban --help',
           );
 
           return;

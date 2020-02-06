@@ -1,0 +1,42 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// DoubanMode - douban mode
+enum DoubanMode {
+    // DBM_SEARCH - search
+    DBM_SEARCH = 0;
+}
+
+// DoubanBook - douban book
+message DoubanBook {
+    string title = 1;
+    string url = 2;
+}
+
+// DoubanSearchSubject - douban search subject
+message DoubanSearchSubject {
+    string title = 1;
+    string url = 2;
+}
+
+// DoubanSearch - douban search
+message DoubanSearch {
+    string text = 1;
+    repeated DoubanSearchSubject subjects = 2;
+    string searchType = 3;
+}
+
+// RequestDouban - request douban
+message RequestDouban {
+    DoubanMode mode = 1;
+    string text = 2;
+}
+
+// ReplyDouban - reply douban
+message ReplyDouban {
+    DoubanMode mode = 1;
+
+    oneof reply {
+        DoubanSearch search = 100;
+    }
+}

@@ -5,6 +5,7 @@ import "mountainsteals.proto";
 import "tmall.proto";
 import "taobao.proto";
 import "manhuadb.proto";
+import "douban.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -456,6 +457,7 @@ enum CrawlerType {
     CT_TMALL = 12;
     CT_TAOBAO = 13;
     CT_MANHUADB = 15;
+    CT_DOUBAN = 16;
 }
 
 // RequestTranslate2 - request translate
@@ -890,6 +892,7 @@ message RequestCrawler {
         RequestTmall tmall = 112;
         RequestTaobao taobao = 113;
         RequestManhuaDB manhuadb = 115;
+        RequestDouban douban = 116;
     }
 }
 
@@ -913,6 +916,7 @@ message ReplyCrawler {
         ReplyTmall tmall = 112;
         ReplyTaobao taobao = 113;
         ReplyManhuaDB manhuadb = 115;
+        ReplyDouban douban = 116;
     }
 }
 

@@ -15,6 +15,7 @@ async function doubanexec(program, version) {
       .option('-d, --debug [isdebug]', 'debug mode')
       .option('-s, --search [search]', 'search string')
       .option('-t, --type [type]', 'type')
+      .option('-m, --timeout [timeout]', 'time out')
       .action(function(mode, options) {
         log.console('version is ', version);
 
@@ -34,10 +35,15 @@ async function doubanexec(program, version) {
         const debugmode = options.debug === 'true';
         log.console('debug - ', debugmode);
 
+        let timeout = 3 * 60 * 1000;
+        if (typeof options.timeout == 'number') {
+          timeout = options.timeout;
+        }
+
         (async () => {
           const browser = await startBrowser(headless);
 
-          await search(browser, options.type, options.search, debugmode);
+          await search(browser, options.type, options.search, debugmode, timeout);
 
           if (!debugmode) {
             await browser.close();

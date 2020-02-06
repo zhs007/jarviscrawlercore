@@ -228,6 +228,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "douban.search",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

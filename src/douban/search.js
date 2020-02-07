@@ -1,6 +1,4 @@
 const {sleep} = require('../utils');
-// const {WaitURLResponse} = require('../waiturlresponse');
-// const {WaitDomContentLoaded} = require('../waitfordomcontentloaded');
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
 const {WaitAllResponse} = require('../waitallresponse');
@@ -30,7 +28,6 @@ async function search(browser, type, str, debugmode, timeout) {
   }
 
   await disableDownloadOthers(page);
-  // await page.setRequestInterception(true);
   const waitAllResponse = new WaitAllResponse(page);
   const mainframe = await page.mainFrame();
   const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {
@@ -56,36 +53,6 @@ async function search(browser, type, str, debugmode, timeout) {
 
     return {error: awaiterr.toString()};
   }
-
-  // page.on('request', (req) => {
-  //   if (req.resourceType() === 'image') {
-  //     req.abort();
-  //   } else {
-  //     req.continue();
-  //   }
-  // });
-
-  // const waitURL = new WaitURLResponse(page);
-  // const waitdomloaded = new WaitDomContentLoaded(page);
-
-  // await waitdomloaded.wait(async () => {
-  //   if (type == 'movie') {
-  //     await page.goto('https://movie.douban.com/').catch((err) => {
-  //       log.error('douban.search.goto', err);
-  //     });
-  //   } else {
-  //     await page.goto('https://www.douban.com/').catch((err) => {
-  //       log.error('douban.search.goto', err);
-  //     });
-  //   }
-  // }, 3 * 60 * 1000);
-
-  // let baseurl = 'https://www.douban.com/';
-  // if (type == 'movie') {
-  //   baseurl = 'https://movie.douban.com/';
-  // } else if (type == 'book') {
-  //   baseurl = 'https://book.douban.com/';
-  // }
 
   await page
       .goto(baseurl, {
@@ -114,14 +81,6 @@ async function search(browser, type, str, debugmode, timeout) {
     return {error: err.toString()};
   }
 
-  // while (true) {
-  //   if (isloaded) {
-  //     break;
-  //   }
-
-  //   await sleep(1000);
-  // }
-
   await page.$eval('.inp', (ele) => {
     const inputSearch = ele.getElementsByTagName('input');
     if (inputSearch.length > 0) {
@@ -138,9 +97,7 @@ async function search(browser, type, str, debugmode, timeout) {
     }
   });
 
-  // await waitdomloaded.wait(async () => {
   await page.click('.searchbtn');
-  // }, 3 * 60 * 1000);
 
   isdone = await waitchgpage.waitDone(timeout);
   if (!isdone) {
@@ -163,12 +120,6 @@ async function search(browser, type, str, debugmode, timeout) {
 
     return {error: err.toString()};
   }
-
-  // waitURL.wait4URL(
-  //     'https://movie.douban.com/subject_search?search_text',
-  //     () => {},
-  //     3 * 60 * 1000
-  // );
 
   awaiterr = await waitForFunction(page, '.item-root', (eles) => {
     return eles.length > 0;

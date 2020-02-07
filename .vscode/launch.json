@@ -235,6 +235,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "douban.book",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["douban", "book", "-h", "false", "-i", "1922024"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {search} = require('./search');
+const {book} = require('./book');
 const log = require('../log');
 
 /**
@@ -15,6 +16,7 @@ async function doubanexec(program, version) {
       .option('-d, --debug [isdebug]', 'debug mode')
       .option('-s, --search [search]', 'search string')
       .option('-t, --type [type]', 'type')
+      .option('-i, --id [id]', 'id')
       .option('-m, --timeout [timeout]', 'time out')
       .action(function(mode, options) {
         log.console('version is ', version);
@@ -40,10 +42,42 @@ async function doubanexec(program, version) {
           timeout = options.timeout;
         }
 
+        if (mode == 'search') {
+          if (!options.search) {
+            log.debug(
+                'command wrong, please type ' + 'jarviscrawler douban --help',
+            );
+
+            return;
+          }
+        } else if (mode == 'book') {
+          if (!options.id) {
+            log.debug(
+                'command wrong, please type ' + 'jarviscrawler douban --help',
+            );
+
+            return;
+          }
+        }
+
         (async () => {
           const browser = await startBrowser(headless);
 
-          await search(browser, options.type, options.search, debugmode, timeout);
+          if (mode == 'search') {
+            const ret = await search(
+                browser,
+                options.type,
+                options.search,
+                debugmode,
+                timeout,
+            );
+
+            log.debug('douban.search', ret);
+          } else if (mode == 'book') {
+            const ret = await book(browser, options.id, timeout);
+
+            log.debug('douban.book', ret);
+          }
 
           if (!debugmode) {
             await browser.close();

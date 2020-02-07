@@ -113,7 +113,7 @@ async function book(browser, id, timeout) {
     return undefined;
   });
 
-  ret.dbscore = await page.$$eval('.ll.rating_num', (eles) => {
+  ret.score = await page.$$eval('.ll.rating_num', (eles) => {
     if (eles.length > 0) {
       return eles[0].innerText;
     }

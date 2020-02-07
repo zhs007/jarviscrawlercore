@@ -5,31 +5,51 @@ package jarviscrawlercore;
 enum DoubanMode {
     // DBM_SEARCH - search
     DBM_SEARCH = 0;
+    // DBM_BOOK - book
+    DBM_BOOK = 1;
+}
+
+// DoubanType - douban type
+enum DoubanType {
+    // DBT_BOOK - book
+    DBT_BOOK = 0;
+}
+
+// DoubanSubject - douban subject
+message DoubanSubject {
+    string title = 1;
+    string url = 2;
+    DoubanType doubanType = 3;
+    string id = 4;
+}
+
+// DoubanSearch - douban search
+message DoubanSearch {
+    string text = 1;
+    repeated DoubanSubject subjects = 2;
+    DoubanType doubanType = 3;
 }
 
 // DoubanBook - douban book
 message DoubanBook {
     string title = 1;
     string url = 2;
-}
-
-// DoubanSearchSubject - douban search subject
-message DoubanSearchSubject {
-    string title = 1;
-    string url = 2;
-}
-
-// DoubanSearch - douban search
-message DoubanSearch {
-    string text = 1;
-    repeated DoubanSearchSubject subjects = 2;
-    string searchType = 3;
+    string id = 3;
+    string cover = 4;
+    repeated string authors = 5;
+    float score = 6;
+    int32 ratingNums = 7;
+    string intro = 8;
+    repeated DoubanSubject lstLink = 9;
+    repeated string tags = 10;
 }
 
 // RequestDouban - request douban
 message RequestDouban {
     DoubanMode mode = 1;
     string text = 2;
+    string id = 3;
+    DoubanType doubanType = 4;
 }
 
 // ReplyDouban - reply douban
@@ -38,5 +58,6 @@ message ReplyDouban {
 
     oneof reply {
         DoubanSearch search = 100;
+        DoubanBook book = 101;
     }
 }

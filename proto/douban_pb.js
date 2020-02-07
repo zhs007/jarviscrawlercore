@@ -14,7 +14,8 @@ var global = Function('return this')();
 goog.exportSymbol('proto.jarviscrawlercore.DoubanBook', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DoubanMode', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.DoubanSearch', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DoubanSearchSubject', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.DoubanSubject', null, global);
+goog.exportSymbol('proto.jarviscrawlercore.DoubanType', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyDouban', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestDouban', null, global);
 
@@ -28,12 +29,12 @@ goog.exportSymbol('proto.jarviscrawlercore.RequestDouban', null, global);
  * @extends {jspb.Message}
  * @constructor
  */
-proto.jarviscrawlercore.DoubanBook = function(opt_data) {
+proto.jarviscrawlercore.DoubanSubject = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.jarviscrawlercore.DoubanBook, jspb.Message);
+goog.inherits(proto.jarviscrawlercore.DoubanSubject, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DoubanBook.displayName = 'proto.jarviscrawlercore.DoubanBook';
+  proto.jarviscrawlercore.DoubanSubject.displayName = 'proto.jarviscrawlercore.DoubanSubject';
 }
 
 
@@ -48,8 +49,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.jarviscrawlercore.DoubanBook.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DoubanBook.toObject(opt_includeInstance, this);
+proto.jarviscrawlercore.DoubanSubject.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.DoubanSubject.toObject(opt_includeInstance, this);
 };
 
 
@@ -58,14 +59,16 @@ proto.jarviscrawlercore.DoubanBook.prototype.toObject = function(opt_includeInst
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DoubanBook} msg The msg instance to transform.
+ * @param {!proto.jarviscrawlercore.DoubanSubject} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.jarviscrawlercore.DoubanBook.toObject = function(includeInstance, msg) {
+proto.jarviscrawlercore.DoubanSubject.toObject = function(includeInstance, msg) {
   var f, obj = {
     title: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    url: jspb.Message.getFieldWithDefault(msg, 2, "")
+    url: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    doubantype: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    id: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -79,23 +82,23 @@ proto.jarviscrawlercore.DoubanBook.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DoubanBook}
+ * @return {!proto.jarviscrawlercore.DoubanSubject}
  */
-proto.jarviscrawlercore.DoubanBook.deserializeBinary = function(bytes) {
+proto.jarviscrawlercore.DoubanSubject.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DoubanBook;
-  return proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.jarviscrawlercore.DoubanSubject;
+  return proto.jarviscrawlercore.DoubanSubject.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DoubanBook} msg The message object to deserialize into.
+ * @param {!proto.jarviscrawlercore.DoubanSubject} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DoubanBook}
+ * @return {!proto.jarviscrawlercore.DoubanSubject}
  */
-proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader = function(msg, reader) {
+proto.jarviscrawlercore.DoubanSubject.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -110,6 +113,14 @@ proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader = function(msg, r
       var value = /** @type {string} */ (reader.readString());
       msg.setUrl(value);
       break;
+    case 3:
+      var value = /** @type {!proto.jarviscrawlercore.DoubanType} */ (reader.readEnum());
+      msg.setDoubantype(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -123,9 +134,9 @@ proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader = function(msg, r
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.jarviscrawlercore.DoubanBook.prototype.serializeBinary = function() {
+proto.jarviscrawlercore.DoubanSubject.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter(this, writer);
+  proto.jarviscrawlercore.DoubanSubject.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -133,11 +144,11 @@ proto.jarviscrawlercore.DoubanBook.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DoubanBook} message
+ * @param {!proto.jarviscrawlercore.DoubanSubject} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter = function(message, writer) {
+proto.jarviscrawlercore.DoubanSubject.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getTitle();
   if (f.length > 0) {
@@ -153,172 +164,17 @@ proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter = function(message, w
       f
     );
   }
-};
-
-
-/**
- * optional string title = 1;
- * @return {string}
- */
-proto.jarviscrawlercore.DoubanBook.prototype.getTitle = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DoubanBook.prototype.setTitle = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string url = 2;
- * @return {string}
- */
-proto.jarviscrawlercore.DoubanBook.prototype.getUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DoubanBook.prototype.setUrl = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.DoubanSearchSubject = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.jarviscrawlercore.DoubanSearchSubject, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DoubanSearchSubject.displayName = 'proto.jarviscrawlercore.DoubanSearchSubject';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DoubanSearchSubject.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DoubanSearchSubject} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DoubanSearchSubject.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    title: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    url: jspb.Message.getFieldWithDefault(msg, 2, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DoubanSearchSubject}
- */
-proto.jarviscrawlercore.DoubanSearchSubject.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DoubanSearchSubject;
-  return proto.jarviscrawlercore.DoubanSearchSubject.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DoubanSearchSubject} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DoubanSearchSubject}
- */
-proto.jarviscrawlercore.DoubanSearchSubject.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setTitle(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUrl(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DoubanSearchSubject.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DoubanSearchSubject} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DoubanSearchSubject.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getTitle();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
+  f = message.getDoubantype();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      3,
       f
     );
   }
-  f = message.getUrl();
+  f = message.getId();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      4,
       f
     );
   }
@@ -329,13 +185,13 @@ proto.jarviscrawlercore.DoubanSearchSubject.serializeBinaryToWriter = function(m
  * optional string title = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.getTitle = function() {
+proto.jarviscrawlercore.DoubanSubject.prototype.getTitle = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.setTitle = function(value) {
+proto.jarviscrawlercore.DoubanSubject.prototype.setTitle = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -344,14 +200,44 @@ proto.jarviscrawlercore.DoubanSearchSubject.prototype.setTitle = function(value)
  * optional string url = 2;
  * @return {string}
  */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.getUrl = function() {
+proto.jarviscrawlercore.DoubanSubject.prototype.getUrl = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.DoubanSearchSubject.prototype.setUrl = function(value) {
+proto.jarviscrawlercore.DoubanSubject.prototype.setUrl = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional DoubanType doubanType = 3;
+ * @return {!proto.jarviscrawlercore.DoubanType}
+ */
+proto.jarviscrawlercore.DoubanSubject.prototype.getDoubantype = function() {
+  return /** @type {!proto.jarviscrawlercore.DoubanType} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.DoubanType} value */
+proto.jarviscrawlercore.DoubanSubject.prototype.setDoubantype = function(value) {
+  jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+/**
+ * optional string id = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DoubanSubject.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DoubanSubject.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -411,8 +297,8 @@ proto.jarviscrawlercore.DoubanSearch.toObject = function(includeInstance, msg) {
   var f, obj = {
     text: jspb.Message.getFieldWithDefault(msg, 1, ""),
     subjectsList: jspb.Message.toObjectList(msg.getSubjectsList(),
-    proto.jarviscrawlercore.DoubanSearchSubject.toObject, includeInstance),
-    searchtype: jspb.Message.getFieldWithDefault(msg, 3, "")
+    proto.jarviscrawlercore.DoubanSubject.toObject, includeInstance),
+    doubantype: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -454,13 +340,13 @@ proto.jarviscrawlercore.DoubanSearch.deserializeBinaryFromReader = function(msg,
       msg.setText(value);
       break;
     case 2:
-      var value = new proto.jarviscrawlercore.DoubanSearchSubject;
-      reader.readMessage(value,proto.jarviscrawlercore.DoubanSearchSubject.deserializeBinaryFromReader);
+      var value = new proto.jarviscrawlercore.DoubanSubject;
+      reader.readMessage(value,proto.jarviscrawlercore.DoubanSubject.deserializeBinaryFromReader);
       msg.addSubjects(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setSearchtype(value);
+      var value = /** @type {!proto.jarviscrawlercore.DoubanType} */ (reader.readEnum());
+      msg.setDoubantype(value);
       break;
     default:
       reader.skipField();
@@ -503,12 +389,12 @@ proto.jarviscrawlercore.DoubanSearch.serializeBinaryToWriter = function(message,
     writer.writeRepeatedMessage(
       2,
       f,
-      proto.jarviscrawlercore.DoubanSearchSubject.serializeBinaryToWriter
+      proto.jarviscrawlercore.DoubanSubject.serializeBinaryToWriter
     );
   }
-  f = message.getSearchtype();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getDoubantype();
+  if (f !== 0.0) {
+    writer.writeEnum(
       3,
       f
     );
@@ -532,28 +418,28 @@ proto.jarviscrawlercore.DoubanSearch.prototype.setText = function(value) {
 
 
 /**
- * repeated DoubanSearchSubject subjects = 2;
- * @return {!Array<!proto.jarviscrawlercore.DoubanSearchSubject>}
+ * repeated DoubanSubject subjects = 2;
+ * @return {!Array<!proto.jarviscrawlercore.DoubanSubject>}
  */
 proto.jarviscrawlercore.DoubanSearch.prototype.getSubjectsList = function() {
-  return /** @type{!Array<!proto.jarviscrawlercore.DoubanSearchSubject>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DoubanSearchSubject, 2));
+  return /** @type{!Array<!proto.jarviscrawlercore.DoubanSubject>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DoubanSubject, 2));
 };
 
 
-/** @param {!Array<!proto.jarviscrawlercore.DoubanSearchSubject>} value */
+/** @param {!Array<!proto.jarviscrawlercore.DoubanSubject>} value */
 proto.jarviscrawlercore.DoubanSearch.prototype.setSubjectsList = function(value) {
   jspb.Message.setRepeatedWrapperField(this, 2, value);
 };
 
 
 /**
- * @param {!proto.jarviscrawlercore.DoubanSearchSubject=} opt_value
+ * @param {!proto.jarviscrawlercore.DoubanSubject=} opt_value
  * @param {number=} opt_index
- * @return {!proto.jarviscrawlercore.DoubanSearchSubject}
+ * @return {!proto.jarviscrawlercore.DoubanSubject}
  */
 proto.jarviscrawlercore.DoubanSearch.prototype.addSubjects = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.jarviscrawlercore.DoubanSearchSubject, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.jarviscrawlercore.DoubanSubject, opt_index);
 };
 
 
@@ -563,17 +449,456 @@ proto.jarviscrawlercore.DoubanSearch.prototype.clearSubjectsList = function() {
 
 
 /**
- * optional string searchType = 3;
+ * optional DoubanType doubanType = 3;
+ * @return {!proto.jarviscrawlercore.DoubanType}
+ */
+proto.jarviscrawlercore.DoubanSearch.prototype.getDoubantype = function() {
+  return /** @type {!proto.jarviscrawlercore.DoubanType} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.DoubanType} value */
+proto.jarviscrawlercore.DoubanSearch.prototype.setDoubantype = function(value) {
+  jspb.Message.setProto3EnumField(this, 3, value);
+};
+
+
+
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.jarviscrawlercore.DoubanBook = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.DoubanBook.repeatedFields_, null);
+};
+goog.inherits(proto.jarviscrawlercore.DoubanBook, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  proto.jarviscrawlercore.DoubanBook.displayName = 'proto.jarviscrawlercore.DoubanBook';
+}
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.jarviscrawlercore.DoubanBook.repeatedFields_ = [5,9,10];
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto suitable for use in Soy templates.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
+ * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
+ *     for transitional soy proto support: http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.toObject = function(opt_includeInstance) {
+  return proto.jarviscrawlercore.DoubanBook.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Whether to include the JSPB
+ *     instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.jarviscrawlercore.DoubanBook} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.DoubanBook.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    title: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    url: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    cover: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    authorsList: jspb.Message.getRepeatedField(msg, 5),
+    score: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
+    ratingnums: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    intro: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    lstlinkList: jspb.Message.toObjectList(msg.getLstlinkList(),
+    proto.jarviscrawlercore.DoubanSubject.toObject, includeInstance),
+    tagsList: jspb.Message.getRepeatedField(msg, 10)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.jarviscrawlercore.DoubanBook}
+ */
+proto.jarviscrawlercore.DoubanBook.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.jarviscrawlercore.DoubanBook;
+  return proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.jarviscrawlercore.DoubanBook} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.jarviscrawlercore.DoubanBook}
+ */
+proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTitle(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCover(value);
+      break;
+    case 5:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addAuthors(value);
+      break;
+    case 6:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setScore(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setRatingnums(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setIntro(value);
+      break;
+    case 9:
+      var value = new proto.jarviscrawlercore.DoubanSubject;
+      reader.readMessage(value,proto.jarviscrawlercore.DoubanSubject.deserializeBinaryFromReader);
+      msg.addLstlink(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTags(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.jarviscrawlercore.DoubanBook} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getTitle();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getCover();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
+  f = message.getAuthorsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      5,
+      f
+    );
+  }
+  f = message.getScore();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      6,
+      f
+    );
+  }
+  f = message.getRatingnums();
+  if (f !== 0) {
+    writer.writeInt32(
+      7,
+      f
+    );
+  }
+  f = message.getIntro();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
+  f = message.getLstlinkList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      9,
+      f,
+      proto.jarviscrawlercore.DoubanSubject.serializeBinaryToWriter
+    );
+  }
+  f = message.getTagsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      10,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string title = 1;
  * @return {string}
  */
-proto.jarviscrawlercore.DoubanSearch.prototype.getSearchtype = function() {
+proto.jarviscrawlercore.DoubanBook.prototype.getTitle = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setTitle = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string url = 2;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string id = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /** @param {string} value */
-proto.jarviscrawlercore.DoubanSearch.prototype.setSearchtype = function(value) {
+proto.jarviscrawlercore.DoubanBook.prototype.setId = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional string cover = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getCover = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setCover = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * repeated string authors = 5;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getAuthorsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setAuthorsList = function(value) {
+  jspb.Message.setField(this, 5, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.addAuthors = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanBook.prototype.clearAuthorsList = function() {
+  this.setAuthorsList([]);
+};
+
+
+/**
+ * optional float score = 6;
+ * @return {number}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getScore = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 6, 0.0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setScore = function(value) {
+  jspb.Message.setProto3FloatField(this, 6, value);
+};
+
+
+/**
+ * optional int32 ratingNums = 7;
+ * @return {number}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getRatingnums = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setRatingnums = function(value) {
+  jspb.Message.setProto3IntField(this, 7, value);
+};
+
+
+/**
+ * optional string intro = 8;
+ * @return {string}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getIntro = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setIntro = function(value) {
+  jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * repeated DoubanSubject lstLink = 9;
+ * @return {!Array<!proto.jarviscrawlercore.DoubanSubject>}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getLstlinkList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.DoubanSubject>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DoubanSubject, 9));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.DoubanSubject>} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setLstlinkList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 9, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.DoubanSubject=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.DoubanSubject}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.addLstlink = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 9, opt_value, proto.jarviscrawlercore.DoubanSubject, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanBook.prototype.clearLstlinkList = function() {
+  this.setLstlinkList([]);
+};
+
+
+/**
+ * repeated string tags = 10;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getTagsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setTagsList = function(value) {
+  jspb.Message.setField(this, 10, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.addTags = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 10, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanBook.prototype.clearTagsList = function() {
+  this.setTagsList([]);
 };
 
 
@@ -625,7 +950,9 @@ proto.jarviscrawlercore.RequestDouban.prototype.toObject = function(opt_includeI
 proto.jarviscrawlercore.RequestDouban.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    text: jspb.Message.getFieldWithDefault(msg, 2, "")
+    text: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    id: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    doubantype: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -670,6 +997,14 @@ proto.jarviscrawlercore.RequestDouban.deserializeBinaryFromReader = function(msg
       var value = /** @type {string} */ (reader.readString());
       msg.setText(value);
       break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setId(value);
+      break;
+    case 4:
+      var value = /** @type {!proto.jarviscrawlercore.DoubanType} */ (reader.readEnum());
+      msg.setDoubantype(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -713,6 +1048,20 @@ proto.jarviscrawlercore.RequestDouban.serializeBinaryToWriter = function(message
       f
     );
   }
+  f = message.getId();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getDoubantype();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      4,
+      f
+    );
+  }
 };
 
 
@@ -746,6 +1095,36 @@ proto.jarviscrawlercore.RequestDouban.prototype.setText = function(value) {
 };
 
 
+/**
+ * optional string id = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.RequestDouban.prototype.getId = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.RequestDouban.prototype.setId = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional DoubanType doubanType = 4;
+ * @return {!proto.jarviscrawlercore.DoubanType}
+ */
+proto.jarviscrawlercore.RequestDouban.prototype.getDoubantype = function() {
+  return /** @type {!proto.jarviscrawlercore.DoubanType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {!proto.jarviscrawlercore.DoubanType} value */
+proto.jarviscrawlercore.RequestDouban.prototype.setDoubantype = function(value) {
+  jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -772,14 +1151,15 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyDouban.oneofGroups_ = [[100]];
+proto.jarviscrawlercore.ReplyDouban.oneofGroups_ = [[100,101]];
 
 /**
  * @enum {number}
  */
 proto.jarviscrawlercore.ReplyDouban.ReplyCase = {
   REPLY_NOT_SET: 0,
-  SEARCH: 100
+  SEARCH: 100,
+  BOOK: 101
 };
 
 /**
@@ -819,7 +1199,8 @@ proto.jarviscrawlercore.ReplyDouban.prototype.toObject = function(opt_includeIns
 proto.jarviscrawlercore.ReplyDouban.toObject = function(includeInstance, msg) {
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    search: (f = msg.getSearch()) && proto.jarviscrawlercore.DoubanSearch.toObject(includeInstance, f)
+    search: (f = msg.getSearch()) && proto.jarviscrawlercore.DoubanSearch.toObject(includeInstance, f),
+    book: (f = msg.getBook()) && proto.jarviscrawlercore.DoubanBook.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -865,6 +1246,11 @@ proto.jarviscrawlercore.ReplyDouban.deserializeBinaryFromReader = function(msg, 
       reader.readMessage(value,proto.jarviscrawlercore.DoubanSearch.deserializeBinaryFromReader);
       msg.setSearch(value);
       break;
+    case 101:
+      var value = new proto.jarviscrawlercore.DoubanBook;
+      reader.readMessage(value,proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader);
+      msg.setBook(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -907,6 +1293,14 @@ proto.jarviscrawlercore.ReplyDouban.serializeBinaryToWriter = function(message, 
       100,
       f,
       proto.jarviscrawlercore.DoubanSearch.serializeBinaryToWriter
+    );
+  }
+  f = message.getBook();
+  if (f != null) {
+    writer.writeMessage(
+      101,
+      f,
+      proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter
     );
   }
 };
@@ -958,10 +1352,48 @@ proto.jarviscrawlercore.ReplyDouban.prototype.hasSearch = function() {
 
 
 /**
+ * optional DoubanBook book = 101;
+ * @return {?proto.jarviscrawlercore.DoubanBook}
+ */
+proto.jarviscrawlercore.ReplyDouban.prototype.getBook = function() {
+  return /** @type{?proto.jarviscrawlercore.DoubanBook} */ (
+    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.DoubanBook, 101));
+};
+
+
+/** @param {?proto.jarviscrawlercore.DoubanBook|undefined} value */
+proto.jarviscrawlercore.ReplyDouban.prototype.setBook = function(value) {
+  jspb.Message.setOneofWrapperField(this, 101, proto.jarviscrawlercore.ReplyDouban.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyDouban.prototype.clearBook = function() {
+  this.setBook(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyDouban.prototype.hasBook = function() {
+  return jspb.Message.getField(this, 101) != null;
+};
+
+
+/**
  * @enum {number}
  */
 proto.jarviscrawlercore.DoubanMode = {
-  DBM_SEARCH: 0
+  DBM_SEARCH: 0,
+  DBM_BOOK: 1
+};
+
+/**
+ * @enum {number}
+ */
+proto.jarviscrawlercore.DoubanType = {
+  DBT_BOOK: 0
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

@@ -96,7 +96,25 @@ function newReplyDouban(mode, obj) {
   return result;
 }
 
+/**
+ * new RequestDouban for Search
+ * @param {string} strType - string for DoubanType
+ * @param {string} text - text for search
+ * @return {messages.RequestDouban} result - RequestDouban
+ */
+function newRequestDoubanSearch(strType, text) {
+  const result = new messages.RequestDouban();
+
+  result.setMode(messages.DoubanMode.DBM_SEARCH);
+  result.setText(text);
+  result.setDoubantype(str2doubanType(strType));
+
+  return result;
+}
+
 exports.newReplyDouban = newReplyDouban;
+
+exports.newRequestDoubanSearch = newRequestDoubanSearch;
 
 exports.doubanType2str = doubanType2str;
 exports.str2doubanType = str2doubanType;

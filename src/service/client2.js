@@ -2,6 +2,7 @@ const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
 const {requestCrawler} = require('./utils');
 const log = require('../log');
+const {newRequestDoubanSearch} = require('../douban/index');
 
 const grpc = require('grpc');
 
@@ -916,10 +917,12 @@ function doubanSearch(servAddr, type, text) {
       grpc.credentials.createInsecure(),
   );
 
-  const request = new messages.RequestDouban();
-  request.setMode(messages.DoubanMode.DBM_SEARCH);
-  request.setText(text);
-  request.setDoubantype(type);
+  // const request = new messages.RequestDouban();
+  // request.setMode(messages.DoubanMode.DBM_SEARCH);
+  // request.setText(text);
+  // request.setDoubantype(type);
+
+  const request = newRequestDoubanSearch(type, text);
 
   requestCrawler(
       client,
@@ -997,7 +1000,7 @@ function doubanSearch(servAddr, type, text) {
 // );
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
 
-doubanSearch('127.0.0.1:7052', messages.DoubanType.DBT_BOOK, '剑风传奇');
+doubanSearch('127.0.0.1:7052', 'book', '剑风传奇');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;

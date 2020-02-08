@@ -125,7 +125,7 @@ function deserialize_jarviscrawlercore_RequestTranslate(buffer_arg) {
 // JarvisCrawlerService - JarvisCrawler service
 var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
   // translate - translate text
-  translate: {
+translate: {
     path: '/jarviscrawlercore.JarvisCrawlerService/translate',
     requestStream: false,
     responseStream: false,
@@ -137,7 +137,7 @@ var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
     responseDeserialize: deserialize_jarviscrawlercore_ReplyTranslate,
   },
   // exportArticle - export article
-  exportArticle: {
+exportArticle: {
     path: '/jarviscrawlercore.JarvisCrawlerService/exportArticle',
     requestStream: false,
     responseStream: true,
@@ -149,7 +149,7 @@ var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
     responseDeserialize: deserialize_jarviscrawlercore_ReplyArticle,
   },
   // getArticles - get articles
-  getArticles: {
+getArticles: {
     path: '/jarviscrawlercore.JarvisCrawlerService/getArticles',
     requestStream: false,
     responseStream: false,
@@ -161,7 +161,7 @@ var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
     responseDeserialize: deserialize_jarviscrawlercore_ReplyArticles,
   },
   // getDTData - get DT data
-  getDTData: {
+getDTData: {
     path: '/jarviscrawlercore.JarvisCrawlerService/getDTData',
     requestStream: false,
     responseStream: false,
@@ -173,7 +173,7 @@ var JarvisCrawlerServiceService = exports.JarvisCrawlerServiceService = {
     responseDeserialize: deserialize_jarviscrawlercore_ReplyDTData,
   },
   // requestCrawler - request crawler
-  requestCrawler: {
+requestCrawler: {
     path: '/jarviscrawlercore.JarvisCrawlerService/requestCrawler',
     requestStream: false,
     responseStream: true,

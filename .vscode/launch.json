@@ -252,6 +252,13 @@
             "name": "downloadcomic",
             "program": "${workspaceFolder}/bin/downloadcomic.js",
             "args": ["downloadcomic", "154", "-o", "./comic/154", "-t", "0"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "client2",
+            "program": "${workspaceFolder}/src/service/client2.js",
+            "args": []
         }
     ]
 }

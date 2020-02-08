@@ -152,13 +152,13 @@ async function search(browser, type, str, debugmode, timeout) {
     return lst;
   });
 
-  log.debug(lst);
+  // log.debug(lst);
 
   if (!debugmode) {
     await page.close();
   }
 
-  return {lst: lst};
+  return {ret: {subjects: lst}};
 }
 
 exports.search = search;

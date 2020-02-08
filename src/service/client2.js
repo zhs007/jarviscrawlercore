@@ -904,6 +904,40 @@ function mountainstealsSale(servAddr, url) {
   );
 }
 
+/**
+ * doubanSearch
+ * @param {string} servAddr - servAddr
+ * @param {string} type - type
+ * @param {string} text - text
+ */
+function doubanSearch(servAddr, type, text) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = new messages.RequestDouban();
+  request.setMode(messages.DoubanMode.DBM_SEARCH);
+  request.setText(text);
+  request.setDoubantype(type);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_DOUBAN,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -950,7 +984,7 @@ function mountainstealsSale(servAddr, url) {
 
 // tmallProduct('127.0.0.1:7051', '525967713966');
 // tmallProduct('127.0.0.1:7051', '595765750524');
-tmallMobileProduct('127.0.0.1:7051', '595765750524', '');
+// tmallMobileProduct('127.0.0.1:7051', '595765750524', '');
 // taobaoProduct('127.0.0.1:7051', '607627559703');
 
 // taobaoProduct('127.0.0.1:7051', '23986840005');
@@ -962,6 +996,8 @@ tmallMobileProduct('127.0.0.1:7051', '595765750524', '');
 //     'smartwool-women-s-dasher-crew-sock_10384064',
 // );
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
+
+doubanSearch('127.0.0.1:7052', messages.DoubanType.DBT_BOOK, '剑风传奇');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -990,3 +1026,4 @@ exports.taobaoSearch = taobaoSearch;
 exports.taobaoMobileProduct = taobaoMobileProduct;
 exports.mountainstealsSale = mountainstealsSale;
 exports.mountainstealsProduct = mountainstealsProduct;
+exports.doubanSearch = doubanSearch;

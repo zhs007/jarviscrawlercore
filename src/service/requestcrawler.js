@@ -11,6 +11,7 @@ const {callJD} = require('./plugins/jd');
 const {callAlimama} = require('./plugins/alimama');
 const {callTmall} = require('./plugins/tmall');
 const {callTaobao} = require('./plugins/taobao');
+const {callDouban} = require('./plugins/douban');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -152,6 +153,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getMountainsteals();
 
     callMountainsteals(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_DOUBAN) {
+    if (!call.request.hasDouban()) {
+      replyError(call, 'no douban');
+
+      return;
+    }
+
+    const param = call.request.getDouban();
+
+    callDouban(browser, cfg, call, param, call.request);
   }
 }
 

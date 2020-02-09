@@ -114,6 +114,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setTaobao(msg);
   } else if (crawlerType == messages.CrawlerType.CT_MOUNTAINSTEALS) {
     req.setMountainsteals(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_DOUBAN) {
+    req.setDouban(msg);
   }
 
   let isend = false;
@@ -326,6 +328,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_DOUBAN) {
+        if (!reply.getDouban()) {
+          cb('no douban reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getDouban());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -394,6 +410,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_MOUNTAINSTEALS) {
     reply.setMountainsteals(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_DOUBAN) {
+    reply.setDouban(val);
     reply.setCrawlertype(crawlerType);
   }
 }

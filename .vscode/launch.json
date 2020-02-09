@@ -228,6 +228,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "douban.search",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "douban.book",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["douban", "book", "-h", "false", "-i", "1922024"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []
@@ -238,6 +252,13 @@
             "name": "downloadcomic",
             "program": "${workspaceFolder}/bin/downloadcomic.js",
             "args": ["downloadcomic", "154", "-o", "./comic/154", "-t", "0"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "client2",
+            "program": "${workspaceFolder}/src/service/client2.js",
+            "args": []
         }
     ]
 }

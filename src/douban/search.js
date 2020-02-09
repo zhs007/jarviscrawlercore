@@ -154,7 +154,7 @@ async function search(browser, type, str, debugmode, timeout) {
   });
 
   for (let i = 0; i < lst.length; ++i) {
-    ret[i].id = getSubobjectID(lst[i].url);
+    lst[i].id = getSubobjectID(lst[i].url);
   }
 
   // log.debug(lst);

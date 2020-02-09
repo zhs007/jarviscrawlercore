@@ -2,6 +2,8 @@
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
 const {WaitAllResponse} = require('../waitallresponse');
+const {string2float, string2int} = require('../string.utils');
+const {getSubobjectID} = require('./utils');
 // const {WaitFrameNavigated} = require('../waitframenavigated');
 // const {waitForFunction} = require('../waitutils');
 
@@ -147,8 +149,8 @@ async function book(browser, id, timeout) {
       for (let i = 0; i < lstdl.length; ++i) {
         if (lstdl[i].className != 'clear') {
           const lsta = lstdl[i].getElementsByTagName('a');
-          if (lsta.length > 0) {
-            lst.push(lsta[0].href);
+          if (lsta.length > 1) {
+            lst.push({url: lsta[1].href, title: lsta[1].innerText});
           }
         }
       }
@@ -171,6 +173,30 @@ async function book(browser, id, timeout) {
   });
 
   await page.close();
+
+  if (ret.score) {
+    const scoreret = string2float(ret.score);
+    if (scoreret.error) {
+      return {error: 'string2float(ret.score) ' + scoreret.error.toString()};
+    }
+
+    ret.score = scoreret.num;
+  }
+
+  if (ret.ratingNums) {
+    const siret = string2int(ret.ratingNums);
+    if (siret.error) {
+      return {error: 'string2int(ret.ratingNums) ' + siret.error.toString()};
+    }
+
+    ret.ratingNums = siret.num;
+  }
+
+  if (ret.lstLink) {
+    for (let i = 0; i < ret.lstLink.length; ++i) {
+      ret.lstLink[i].id = getSubobjectID(ret.lstLink[i].url);
+    }
+  }
 
   return {ret: ret};
 }

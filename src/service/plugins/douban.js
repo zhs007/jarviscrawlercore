@@ -1,6 +1,7 @@
 const messages = require('../../../proto/result_pb');
 const {
   search,
+  book,
   doubanType2str,
   newReplyDouban,
 } = require('../../douban/index');
@@ -39,6 +40,30 @@ function callDouban(browser, cfg, call, param, request) {
           const reply = new messages.ReplyCrawler();
 
           const val = newReplyDouban(messages.DoubanMode.DBM_SEARCH, ret.ret);
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_DOUBAN, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else if (param.getMode() == messages.DoubanMode.DBM_BOOK) {
+    book(
+        browser,
+        param.getId(),
+        timeout,
+    )
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyDouban(messages.DoubanMode.DBM_BOOK, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_DOUBAN, val);
 

@@ -4,6 +4,7 @@ const {
   doubanType2str,
   newReplyDouban,
   newRequestDoubanSearch,
+  newRequestDoubanBook,
 } = require('./proto.utils');
 
 exports.search = search;
@@ -13,3 +14,4 @@ exports.doubanType2str = doubanType2str;
 exports.newReplyDouban = newReplyDouban;
 
 exports.newRequestDoubanSearch = newRequestDoubanSearch;
+exports.newRequestDoubanBook = newRequestDoubanBook;

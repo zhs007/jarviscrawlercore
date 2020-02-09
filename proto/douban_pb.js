@@ -486,7 +486,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.DoubanBook.repeatedFields_ = [5,9,10];
+proto.jarviscrawlercore.DoubanBook.repeatedFields_ = [5,9,10,11];
 
 
 
@@ -527,7 +527,9 @@ proto.jarviscrawlercore.DoubanBook.toObject = function(includeInstance, msg) {
     intro: jspb.Message.getFieldWithDefault(msg, 8, ""),
     lstlinkList: jspb.Message.toObjectList(msg.getLstlinkList(),
     proto.jarviscrawlercore.DoubanSubject.toObject, includeInstance),
-    tagsList: jspb.Message.getRepeatedField(msg, 10)
+    tagsList: jspb.Message.getRepeatedField(msg, 10),
+    othertitleList: jspb.Message.getRepeatedField(msg, 11),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 12, 0)
   };
 
   if (includeInstance) {
@@ -604,6 +606,14 @@ proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader = function(msg, r
     case 10:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addOthertitle(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
       break;
     default:
       reader.skipField();
@@ -702,6 +712,20 @@ proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter = function(message, w
   if (f.length > 0) {
     writer.writeRepeatedString(
       10,
+      f
+    );
+  }
+  f = message.getOthertitleList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      11,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      12,
       f
     );
   }
@@ -899,6 +923,50 @@ proto.jarviscrawlercore.DoubanBook.prototype.addTags = function(value, opt_index
 
 proto.jarviscrawlercore.DoubanBook.prototype.clearTagsList = function() {
   this.setTagsList([]);
+};
+
+
+/**
+ * repeated string otherTitle = 11;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getOthertitleList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 11));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setOthertitleList = function(value) {
+  jspb.Message.setField(this, 11, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.addOthertitle = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 11, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanBook.prototype.clearOthertitleList = function() {
+  this.setOthertitleList([]);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 12;
+ * @return {number}
+ */
+proto.jarviscrawlercore.DoubanBook.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.DoubanBook.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 

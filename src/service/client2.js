@@ -2,7 +2,10 @@ const messages = require('../../proto/result_pb');
 const services = require('../../proto/result_grpc_pb');
 const {requestCrawler} = require('./utils');
 const log = require('../log');
-const {newRequestDoubanSearch} = require('../douban/index');
+const {
+  newRequestDoubanSearch,
+  newRequestDoubanBook,
+} = require('../douban/index');
 
 const grpc = require('grpc');
 
@@ -941,6 +944,36 @@ function doubanSearch(servAddr, type, text) {
   );
 }
 
+/**
+ * doubanBook
+ * @param {string} servAddr - servAddr
+ * @param {string} id - id
+ */
+function doubanBook(servAddr, id) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestDoubanBook(id);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_DOUBAN,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1000,7 +1033,8 @@ function doubanSearch(servAddr, type, text) {
 // );
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
 
-doubanSearch('127.0.0.1:7052', 'book', '剑风传奇');
+// doubanSearch('127.0.0.1:7052', 'book', '剑风传奇');
+doubanBook('127.0.0.1:7052', '1922024');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1030,3 +1064,4 @@ exports.taobaoMobileProduct = taobaoMobileProduct;
 exports.mountainstealsSale = mountainstealsSale;
 exports.mountainstealsProduct = mountainstealsProduct;
 exports.doubanSearch = doubanSearch;
+exports.doubanBook = doubanBook;

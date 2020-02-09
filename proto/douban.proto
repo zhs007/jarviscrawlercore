@@ -42,6 +42,8 @@ message DoubanBook {
     string intro = 8;
     repeated DoubanSubject lstLink = 9;
     repeated string tags = 10;
+    repeated string otherTitle = 11;
+    int64 lastUpdatedTime = 12;
 }
 
 // RequestDouban - request douban

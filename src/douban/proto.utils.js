@@ -79,6 +79,63 @@ function newDoubanSearch(obj) {
 }
 
 /**
+ * new newDoubanBook with object
+ * @param {object} obj - DoubanBook
+ * @return {messages.DoubanBook} result - DoubanBook
+ */
+function newDoubanBook(obj) {
+  const result = new messages.DoubanBook();
+
+  if (obj.title) {
+    result.setTitle(obj.title);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  if (obj.id) {
+    result.setId(obj.id);
+  }
+
+  if (obj.cover) {
+    result.setCover(obj.cover);
+  }
+
+  if (Array.isArray(obj.authors) && obj.authors.length > 0) {
+    result.setAuthorsList(obj.authors);
+  }
+
+  if (obj.score) {
+    result.setScore(obj.score);
+  }
+
+  if (obj.ratingNums) {
+    result.setRatingnums(obj.ratingNums);
+  }
+
+  if (obj.intro) {
+    result.setIntro(obj.intro);
+  }
+
+  if (Array.isArray(obj.lstLink) && obj.lstLink.length > 0) {
+    for (let i = 0; i < obj.lstLink.length; ++i) {
+      result.addLstlink(newDoubanSubject(obj.lstLink[i], i));
+    }
+  }
+
+  if (Array.isArray(obj.tags) && obj.tags.length > 0) {
+    result.setTagsList(obj.tags);
+  }
+
+  if (Array.isArray(obj.otherTitle) && obj.otherTitle.length > 0) {
+    result.setOthertitleList(obj.otherTitle);
+  }
+
+  return result;
+}
+
+/**
  * new newReplyDouban with object
  * @param {number} mode - messages.DoubanMode
  * @param {object} obj - DoubanSearch | DoubanBook
@@ -91,6 +148,8 @@ function newReplyDouban(mode, obj) {
 
   if (mode == messages.DoubanMode.DBM_SEARCH) {
     result.setSearch(newDoubanSearch(obj));
+  } else if (mode == messages.DoubanMode.DBM_BOOK) {
+    result.setBook(newDoubanBook(obj));
   }
 
   return result;
@@ -112,9 +171,24 @@ function newRequestDoubanSearch(strType, text) {
   return result;
 }
 
+/**
+ * new RequestDouban for Book
+ * @param {string} id - id
+ * @return {messages.RequestDouban} result - RequestDouban
+ */
+function newRequestDoubanBook(id) {
+  const result = new messages.RequestDouban();
+
+  result.setMode(messages.DoubanMode.DBM_BOOK);
+  result.setId(id);
+
+  return result;
+}
+
 exports.newReplyDouban = newReplyDouban;
 
 exports.newRequestDoubanSearch = newRequestDoubanSearch;
+exports.newRequestDoubanBook = newRequestDoubanBook;
 
 exports.doubanType2str = doubanType2str;
 exports.str2doubanType = str2doubanType;

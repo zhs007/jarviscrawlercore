@@ -4,6 +4,7 @@ const {disableDownloadOthers} = require('../page.utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {WaitFrameNavigated} = require('../waitframenavigated');
 const {waitForFunction} = require('../waitutils');
+const {getSubobjectID} = require('./utils');
 
 /**
  * douban search
@@ -151,6 +152,10 @@ async function search(browser, type, str, debugmode, timeout) {
 
     return lst;
   });
+
+  for (let i = 0; i < lst.length; ++i) {
+    ret[i].id = getSubobjectID(lst[i].url);
+  }
 
   // log.debug(lst);
 

@@ -5,6 +5,10 @@ package jarviscrawlercore;
 enum ManhuaDBMode {
     // MHDB_MANHUA - manhua
     MHDB_MANHUA = 0;
+    // MHDB_BOOK - book
+    MHDB_BOOK = 1;
+    // MHDB_AUTHOR - author
+    MHDB_AUTHOR = 2;
 }
 
 // ManhuaDBBook - manhuadb book
@@ -22,6 +26,17 @@ message ManhuaDBManhua {
     string name = 2;
     repeated ManhuaDBBook books = 3;
     repeated string authors = 4;
+    string url = 5;
+    string cover = 6;
+}
+
+// ManhuaDBAuthor - manhuadb author
+message ManhuaDBAuthor {
+    string name = 1;
+    repeated string otherName = 2;
+    string detail = 3;
+    repeated ManhuaDBManhua manhua = 4;
+    string authorid = 5;
 }
 
 // ManhuaDBPage - manhuadb page
@@ -46,6 +61,7 @@ message RequestManhuaDB {
     string comicid = 2;
     string bookid = 3;
     int32 pageIndex = 4;
+    string authorid = 5;
 }
 
 // ReplyManhuaDB - reply manhuadb
@@ -55,5 +71,6 @@ message ReplyManhuaDB {
     oneof reply {
         ManhuaDBManhua manhua = 100;
         ManhuaDBBookInfo book = 101;
+        ManhuaDBAuthor author = 102;
     }
 }

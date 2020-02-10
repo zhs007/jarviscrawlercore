@@ -228,6 +228,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "manhuadb.author",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["manhuadb", "author", "-h", "false", "-a", "472"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "douban.search",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]

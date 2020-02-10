@@ -6,6 +6,7 @@ const {
   newRequestDoubanSearch,
   newRequestDoubanBook,
 } = require('../douban/index');
+const {newRequestManhuadbAuthor} = require('../manhuadb/index');
 
 const grpc = require('grpc');
 
@@ -974,6 +975,36 @@ function doubanBook(servAddr, id) {
   );
 }
 
+/**
+ * manhuadbAuthor
+ * @param {string} servAddr - servAddr
+ * @param {string} authorid - authorid
+ */
+function manhuadbAuthor(servAddr, authorid) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestManhuadbAuthor(authorid);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_MANHUADB,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1034,7 +1065,8 @@ function doubanBook(servAddr, id) {
 // mountainstealsSale('127.0.0.1:7051', 'promo/msbf19');
 
 // doubanSearch('127.0.0.1:7052', 'book', '剑风传奇');
-doubanBook('127.0.0.1:7052', '1922024');
+// doubanBook('127.0.0.1:7052', '1922024');
+manhuadbAuthor('127.0.0.1:7052', '472');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1065,3 +1097,4 @@ exports.mountainstealsSale = mountainstealsSale;
 exports.mountainstealsProduct = mountainstealsProduct;
 exports.doubanSearch = doubanSearch;
 exports.doubanBook = doubanBook;
+exports.manhuadbAuthor = manhuadbAuthor;

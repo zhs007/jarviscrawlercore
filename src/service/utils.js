@@ -116,6 +116,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setMountainsteals(msg);
   } else if (crawlerType == messages.CrawlerType.CT_DOUBAN) {
     req.setDouban(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_MANHUADB) {
+    req.setManhuadb(msg);
   }
 
   let isend = false;
@@ -342,6 +344,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_MANHUADB) {
+        if (!reply.getManhuadb()) {
+          cb('no manhuadb reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getManhuadb());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -413,6 +429,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_DOUBAN) {
     reply.setDouban(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_MANHUADB) {
+    reply.setManhuadb(val);
     reply.setCrawlertype(crawlerType);
   }
 }

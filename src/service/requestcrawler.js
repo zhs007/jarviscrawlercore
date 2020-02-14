@@ -174,6 +174,8 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getManhuadb();
 
     callManhuadb(browser, cfg, call, param, call.request);
+  } else {
+    replyError(call, 'no plugin');
   }
 }
 

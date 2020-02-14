@@ -31,5 +31,28 @@ async function disableDownloadOthers(page) {
   });
 }
 
+/**
+ * disableDownloadOthersEx - disable download all image/media/font
+ * @param {object} page - page
+ * @param {function} funcIsCancel - bool isCancel(req)
+ */
+async function disableDownloadOthersEx(page, funcIsCancel) {
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    const rt = req.resourceType();
+    if (rt === 'image' || rt == 'media' || rt == 'font') {
+      req.abort();
+    } else {
+      if (funcIsCancel(req)) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    }
+  });
+}
+
 exports.disableDownloadImgs = disableDownloadImgs;
 exports.disableDownloadOthers = disableDownloadOthers;
+exports.disableDownloadOthersEx = disableDownloadOthersEx;

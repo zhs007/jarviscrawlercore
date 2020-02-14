@@ -46,6 +46,19 @@ message DoubanBook {
     int64 lastUpdatedTime = 12;
 }
 
+// DoubanComic - douban comic
+message DoubanComic {
+    string title = 1;
+    repeated string covers = 2;
+    repeated string authors = 3;
+    float score = 4;
+    int32 ratingNums = 5;
+    string intro = 6;
+    repeated string tags = 7;
+    int64 lastUpdatedTime = 8;
+    repeated DoubanBook books = 9;
+}
+
 // RequestDouban - request douban
 message RequestDouban {
     DoubanMode mode = 1;

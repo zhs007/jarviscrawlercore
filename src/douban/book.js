@@ -1,6 +1,6 @@
 // const {sleep} = require('../utils');
 const log = require('../log');
-const {disableDownloadOthers} = require('../page.utils');
+const {disableDownloadOthersEx} = require('../page.utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const {string2float, string2int} = require('../string.utils');
 const {getSubobjectID} = require('./utils');
@@ -20,7 +20,15 @@ async function book(browser, id, timeout) {
 
   const baseurl = 'https://book.douban.com/subject/' + id + '/';
 
-  await disableDownloadOthers(page);
+  await disableDownloadOthersEx(page, (req)=>{
+    const url = req.url();
+    if (url.indexOf('rtb.openx.net') >= 0) {
+      return true;
+    }
+
+    return false;
+  });
+
   const waitAllResponse = new WaitAllResponse(page);
   //   const mainframe = await page.mainFrame();
   //   const waitchgpage = new WaitFrameNavigated(page, mainframe, async (frame) => {

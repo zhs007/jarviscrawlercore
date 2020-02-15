@@ -994,7 +994,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.DoubanComic.repeatedFields_ = [2,3,7,9];
+proto.jarviscrawlercore.DoubanComic.repeatedFields_ = [2,3,7,9,10,11];
 
 
 
@@ -1034,7 +1034,10 @@ proto.jarviscrawlercore.DoubanComic.toObject = function(includeInstance, msg) {
     tagsList: jspb.Message.getRepeatedField(msg, 7),
     lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 8, 0),
     booksList: jspb.Message.toObjectList(msg.getBooksList(),
-    proto.jarviscrawlercore.DoubanBook.toObject, includeInstance)
+    proto.jarviscrawlercore.DoubanBook.toObject, includeInstance),
+    lstlinkList: jspb.Message.toObjectList(msg.getLstlinkList(),
+    proto.jarviscrawlercore.DoubanSubject.toObject, includeInstance),
+    linkcomicsList: jspb.Message.getRepeatedField(msg, 11)
   };
 
   if (includeInstance) {
@@ -1107,6 +1110,15 @@ proto.jarviscrawlercore.DoubanComic.deserializeBinaryFromReader = function(msg, 
       var value = new proto.jarviscrawlercore.DoubanBook;
       reader.readMessage(value,proto.jarviscrawlercore.DoubanBook.deserializeBinaryFromReader);
       msg.addBooks(value);
+      break;
+    case 10:
+      var value = new proto.jarviscrawlercore.DoubanSubject;
+      reader.readMessage(value,proto.jarviscrawlercore.DoubanSubject.deserializeBinaryFromReader);
+      msg.addLstlink(value);
+      break;
+    case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addLinkcomics(value);
       break;
     default:
       reader.skipField();
@@ -1199,6 +1211,21 @@ proto.jarviscrawlercore.DoubanComic.serializeBinaryToWriter = function(message, 
       9,
       f,
       proto.jarviscrawlercore.DoubanBook.serializeBinaryToWriter
+    );
+  }
+  f = message.getLstlinkList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      10,
+      f,
+      proto.jarviscrawlercore.DoubanSubject.serializeBinaryToWriter
+    );
+  }
+  f = message.getLinkcomicsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      11,
+      f
     );
   }
 };
@@ -1394,6 +1421,66 @@ proto.jarviscrawlercore.DoubanComic.prototype.addBooks = function(opt_value, opt
 
 proto.jarviscrawlercore.DoubanComic.prototype.clearBooksList = function() {
   this.setBooksList([]);
+};
+
+
+/**
+ * repeated DoubanSubject lstLink = 10;
+ * @return {!Array<!proto.jarviscrawlercore.DoubanSubject>}
+ */
+proto.jarviscrawlercore.DoubanComic.prototype.getLstlinkList = function() {
+  return /** @type{!Array<!proto.jarviscrawlercore.DoubanSubject>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DoubanSubject, 10));
+};
+
+
+/** @param {!Array<!proto.jarviscrawlercore.DoubanSubject>} value */
+proto.jarviscrawlercore.DoubanComic.prototype.setLstlinkList = function(value) {
+  jspb.Message.setRepeatedWrapperField(this, 10, value);
+};
+
+
+/**
+ * @param {!proto.jarviscrawlercore.DoubanSubject=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.jarviscrawlercore.DoubanSubject}
+ */
+proto.jarviscrawlercore.DoubanComic.prototype.addLstlink = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 10, opt_value, proto.jarviscrawlercore.DoubanSubject, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanComic.prototype.clearLstlinkList = function() {
+  this.setLstlinkList([]);
+};
+
+
+/**
+ * repeated string linkComics = 11;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.DoubanComic.prototype.getLinkcomicsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 11));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.DoubanComic.prototype.setLinkcomicsList = function(value) {
+  jspb.Message.setField(this, 11, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.DoubanComic.prototype.addLinkcomics = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 11, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.DoubanComic.prototype.clearLinkcomicsList = function() {
+  this.setLinkcomicsList([]);
 };
 
 

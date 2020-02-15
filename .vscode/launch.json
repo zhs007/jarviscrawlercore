@@ -223,7 +223,7 @@
             "request": "launch",
             "name": "manhuadb.book",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["manhuadb", "book", "-h", "false", "-c", "154", "-b", "522_5654", "-p", "2"]
+            "args": ["manhuadb", "book", "-h", "false", "-c", "758", "-b", "778_8494", "-p", "119"]
         },
         {
             "type": "node",

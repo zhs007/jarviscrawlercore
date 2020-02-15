@@ -1,3 +1,5 @@
+// const log = require('./log');
+
 /**
  * disableDownloadImgs - disable download all images
  * @param {object} page - page
@@ -22,8 +24,12 @@ async function disableDownloadOthers(page) {
   await page.setRequestInterception(true);
 
   page.on('request', (req) => {
+    // log.debug('disableDownloadOthers:request', {url: req.url()});
+
     const rt = req.resourceType();
     if (rt === 'image' || rt == 'media' || rt == 'font') {
+      // log.debug('disableDownloadOthers:abort.');
+
       req.abort();
     } else {
       req.continue();

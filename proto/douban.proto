@@ -57,6 +57,8 @@ message DoubanComic {
     repeated string tags = 7;
     int64 lastUpdatedTime = 8;
     repeated DoubanBook books = 9;
+    repeated DoubanSubject lstLink = 10;
+    repeated string linkComics = 11;
 }
 
 // RequestDouban - request douban

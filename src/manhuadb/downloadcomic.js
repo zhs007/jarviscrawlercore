@@ -189,15 +189,17 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
         continue;
       }
 
-      dl.addTask(
-          curret.ret.pages[0].url,
-          (buf, param) => {
-            fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
-          },
-          {rootpath: rootpath, pi: lastpi[i]},
-      );
+      if (isValidURL(curret.ret.pages[0].url)) {
+        dl.addTask(
+            curret.ret.pages[0].url,
+            (buf, param) => {
+              fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
+            },
+            {rootpath: rootpath, pi: lastpi[i]},
+        );
 
-      lst.push(curret.ret.pages[0].url);
+        lst.push(curret.ret.pages[0].url);
+      }
 
       break;
     }

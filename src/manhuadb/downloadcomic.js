@@ -174,6 +174,8 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
         continue;
       }
 
+      log.debug('downloadBook.manhuadbBook ok', curret);
+
       if (!isValidURL(curret.ret.pages[0].url)) {
         log.error('downloadBook.manhuadbBook isValidURL', {
           url: curret.ret.pages[0].url,

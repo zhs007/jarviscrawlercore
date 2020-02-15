@@ -158,6 +158,7 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
       continue;
     }
 
+    let retrytimes = 0;
     while (true) {
       const curret = await manhuadbBook(
           browser,
@@ -174,9 +175,11 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
         continue;
       }
 
-      log.debug('downloadBook.manhuadbBook ok', curret);
+      // log.debug('downloadBook.manhuadbBook ok', curret);
 
-      if (!isValidURL(curret.ret.pages[0].url)) {
+      if (!isValidURL(curret.ret.pages[0].url) && retrytimes < 3) {
+        retrytimes++;
+
         log.error('downloadBook.manhuadbBook isValidURL', {
           url: curret.ret.pages[0].url,
         });

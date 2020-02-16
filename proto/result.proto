@@ -6,6 +6,7 @@ import "tmall.proto";
 import "taobao.proto";
 import "manhuadb.proto";
 import "douban.proto";
+import "jrj.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -666,87 +667,6 @@ message ReplyTechInAsia {
         TechInAsiaJob job = 101;
         TechInAsiaJobList jobs = 102;
         TechInAsiaJobTagList tags = 103;
-    }    
-}
-
-// JRJFundSize - jrj fund size
-message JRJFundSize {
-    float size = 1;
-    int64 time = 2;
-}
-
-// JRJFundManager - jrj fund manager
-message JRJFundManager {
-    string name = 1;
-    int64 startTime = 2;
-    int64 endTime = 3;
-    int64 birthYear = 4;
-    bool sex = 5;
-    string education = 6;
-    string country = 7;
-    string resume = 8;
-}
-
-message JRJFundDayValue {
-    string date = 1;
-    int32 value = 2;
-    int32 totalValue = 3;
-}
-
-// JRJFundValue - jrj fund value
-message JRJFundValue {
-    string code = 1;
-    repeated float value = 2 [deprecated = true];
-    repeated float totalValue = 3 [deprecated = true];
-    repeated int32 iValue = 4 [deprecated = true];
-    repeated int32 iTotalValue = 5 [deprecated = true];
-    repeated string date = 6 [deprecated = true];
-    repeated JRJFundDayValue values = 7;
-}
-
-// JRJFund - jrj fund
-message JRJFund {
-    string code = 1;
-    string name = 2;
-    repeated string tags = 3;
-    int64 createTime = 4;
-    repeated JRJFundSize size = 5;
-    string company = 6;
-    repeated JRJFundManager managers = 7;
-}
-
-// JRJFunds - jrj funds
-message JRJFunds {
-    repeated string codes = 1;
-}
-
-// JRJMode - jrj mode
-enum JRJMode {
-    // JRJM_FUNDS - funds
-    JRJM_FUNDS = 0;
-    // JRJM_FUND - fund
-    JRJM_FUND = 1;
-    // JRJM_FUNDVALUE - fund value
-    JRJM_FUNDVALUE = 2;
-    // JRJM_FUNDMANAGER - fund manager
-    JRJM_FUNDMANAGER = 3;
-}
-
-// RequestJRJ - request jrj
-message RequestJRJ {
-    JRJMode mode = 1;
-    string fundcode = 2;
-    string year = 3;
-}
-
-// ReplySteepAndCheap - reply steep&cheap
-message ReplyJRJ {
-    JRJMode mode = 1;
-
-    oneof reply {
-        JRJFunds funds = 100;
-        JRJFund fund = 101;
-        JRJFundValue fundValue = 102;
     }    
 }
 

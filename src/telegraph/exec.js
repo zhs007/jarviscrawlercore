@@ -65,6 +65,8 @@ async function execTelegraph(program, version) {
           }
 
           await browser.close();
+
+          process.exit(0);
         })().catch((err) => {
           log.console('catch a err ', err);
 

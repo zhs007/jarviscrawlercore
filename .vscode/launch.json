@@ -249,6 +249,14 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "telegraph.images",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["telegraph", "images", "-h", "false", "-u", "https://telegra.ph/%E8%B6%85%E6%97%B6%E7%A9%BA%E8%A6%81%E5%A1%9Ethe-first-%E7%AC%AC7%E5%9B%9E-02-04"],
+            "env": {"HTTP_PROXY":"http://127.0.0.1:1087"}
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

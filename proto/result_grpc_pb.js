@@ -11,6 +11,7 @@ var taobao_pb = require('./taobao_pb.js');
 var manhuadb_pb = require('./manhuadb_pb.js');
 var douban_pb = require('./douban_pb.js');
 var jrj_pb = require('./jrj_pb.js');
+var telegraph_pb = require('./telegraph_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {

@@ -13,6 +13,7 @@ async function execTelegraph(program, version) {
       .description('telegraph')
       .option('-u, --url [url]', 'url')
       .option('-d, --dlimgs [dlimgs]', 'download images')
+      .option('-o, --outputpath [outputpath]', 'download path')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-d, --device [device]', 'device')
@@ -37,6 +38,10 @@ async function execTelegraph(program, version) {
           return;
         }
 
+        if (options.dlimgs && !options.outputpath) {
+          options.outputpath = './';
+        }
+
         let timeout = 3 * 60 * 1000;
         if (typeof options.timeout == 'number') {
           timeout = options.timeout;
@@ -49,7 +54,13 @@ async function execTelegraph(program, version) {
           const browser = await startBrowser(headless);
 
           if (mode == 'images') {
-            const ret = await telegraphImages(browser, options.url, timeout);
+            const ret = await telegraphImages(
+                browser,
+                options.url,
+                options.dlimgs,
+                options.outputpath,
+                timeout,
+            );
             log.console(JSON.stringify(ret));
           }
 

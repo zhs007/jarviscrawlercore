@@ -1,16 +1,27 @@
-// const {sleep} = require('../utils');
+const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
+const {DownloadList} = require('../request');
+const path = require('path');
+const fs = require('fs');
 
 /**
  * telegraphImages - telegraph images
  * @param {object} browser - browser
  * @param {string} url - url
+ * @param {boolean} isdownloadimgs - isdownloadimgs
+ * @param {string} outputpath - outputpath
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function telegraphImages(browser, url, timeout) {
+async function telegraphImages(
+    browser,
+    url,
+    isdownloadimgs,
+    outputpath,
+    timeout,
+) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -80,7 +91,7 @@ async function telegraphImages(browser, url, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('manhuadbBook.$$eval select', awaiterr);
+    log.error('telegraphImages.$$eval select', awaiterr);
 
     await page.close();
 
@@ -90,9 +101,40 @@ async function telegraphImages(browser, url, timeout) {
   await page.close();
 
   const ret = {url: baseurl, images: []};
-  for (let i = 0; i < lst.length; ++i) {
-    const ci = {url: lst[i]};
-    ret.images.push(ci);
+
+  if (isdownloadimgs) {
+    const dl = new DownloadList();
+
+    (async () => {
+      await dl.run();
+    })();
+
+    for (let i = 0; i < lst.length; ++i) {
+      const ci = {url: lst[i]};
+      ret.images.push(ci);
+
+      dl.addTask(
+          lst[i],
+          (buf, param) => {
+            fs.writeFileSync(path.join(param.rootpath, param.pi + '.jpg'), buf);
+            ret.images[param.pi].buf = buf;
+          },
+          {rootpath: outputpath, pi: i},
+      );
+    }
+
+    while (true) {
+      if (dl.isFinished()) {
+        break;
+      }
+
+      await sleep(1000);
+    }
+  } else {
+    for (let i = 0; i < lst.length; ++i) {
+      const ci = {url: lst[i]};
+      ret.images.push(ci);
+    }
   }
 
   return {ret: ret};

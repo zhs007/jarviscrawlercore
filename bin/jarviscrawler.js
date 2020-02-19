@@ -28,6 +28,8 @@ const {execAlimama} = require('../src/alimama/exec');
 const {execTmall} = require('../src/tmall/exec');
 const {execTaobao} = require('../src/taobao/exec');
 const {execManhuaDB} = require('../src/manhuadb/exec');
+const {execTelegraph} = require('../src/telegraph/exec');
+const {execOABT} = require('../src/oabt/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -368,5 +370,7 @@ execAlimama(program, VERSION);
 execTmall(program, VERSION);
 execTaobao(program, VERSION);
 execManhuaDB(program, VERSION);
+execTelegraph(program, VERSION);
+execOABT(program, VERSION);
 
 program.parse(process.argv);

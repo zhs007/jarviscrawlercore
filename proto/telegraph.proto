@@ -1,0 +1,41 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// TelegraphMode - telegraph mode
+enum TelegraphMode {
+    // TGPHM_IMAGES - images
+    TGPHM_IMAGES = 0;
+}
+
+// TelegraphArticle - telegraph article
+message TelegraphArticle {
+    string url = 1;
+    string title = 2;
+}
+
+// TelegraphImage - telegraph image
+message TelegraphImage {
+    string url = 1;
+    bytes buf = 2;
+}
+
+// TelegraphImages - telegraph images
+message TelegraphImages {
+    string url = 1;
+    repeated TelegraphImage images = 2;
+}
+
+// RequestTelegraph - request telegraph
+message RequestTelegraph {
+    TelegraphMode mode = 1;
+    string url = 2;
+}
+
+// ReplyTelegraph - reply telegraph
+message ReplyTelegraph {
+    TelegraphMode mode = 1;
+
+    oneof reply {
+        TelegraphImages images = 100;
+    }
+}

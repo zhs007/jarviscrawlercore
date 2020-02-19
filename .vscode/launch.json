@@ -104,7 +104,7 @@
             "request": "launch",
             "name": "jrj.fundvalue",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["jrj", "fundvalue", "-h", "false", "-c", "110011", "-y", "2019"]
+            "args": ["jrj", "fundvalue", "-h", "false", "-c", "110022", "-y", "2019"]
         },
         {
             "type": "node",
@@ -245,6 +245,21 @@
             "name": "douban.book",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["douban", "book", "-h", "false", "-i", "1922024"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "telegraph.images",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["telegraph", "images", "-h", "false", "-u", "https://telegra.ph/%E8%B6%85%E6%97%B6%E7%A9%BA%E8%A6%81%E5%A1%9Ethe-first-%E7%AC%AC7%E5%9B%9E-02-04", "-d", "true"],
+            "env": {"HTTP_PROXY":"http://127.0.0.1:1087"}
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "oabt.page",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["oabt", "page", "-h", "false", "-p", "1"]
         },
         {
             "type": "node",

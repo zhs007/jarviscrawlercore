@@ -69,7 +69,7 @@ async function execJRJ(program, version) {
                 browser,
                 options.code,
                 options.year,
-                timeout
+                timeout,
             );
             log.console(JSON.stringify(ret));
           } else if (mode == 'fundmanager') {

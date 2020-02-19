@@ -1,0 +1,50 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+enum OABTResType {
+    OABTRT_ED2K = 0;
+    OABTRT_MAGNET = 1;
+}
+
+// OABT Resource infomation
+message OABTResInfo {
+    OABTResType type = 1;
+    string url = 2;
+}
+
+// OABT Node
+message OABTNode {
+    // fullname
+    string fullname = 1;
+    // resource id
+    string resid = 2;
+    // category
+    int32 cat = 3;
+    // lst
+    repeated OABTResInfo lst = 4;
+}
+
+// OABTMode - oabt mode
+enum OABTMode {
+    // OABTM_PAGE - page
+    OABTM_PAGE = 0;
+}
+
+message OABTPage {
+    repeated OABTNode lst = 1;
+}
+
+// RequestOABT - request oabt
+message RequestOABT {
+    OABTMode mode = 1;
+    int32 pageIndex = 2;
+}
+
+// ReplyOABT - reply oabt
+message ReplyOABT {
+    OABTMode mode = 1;
+
+    oneof reply {
+        OABTPage page = 100;
+    }
+}

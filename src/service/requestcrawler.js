@@ -13,6 +13,7 @@ const {callTmall} = require('./plugins/tmall');
 const {callTaobao} = require('./plugins/taobao');
 const {callDouban} = require('./plugins/douban');
 const {callManhuadb} = require('./plugins/manhuadb');
+const {callOABT} = require('./plugins/oabt');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -174,6 +175,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getManhuadb();
 
     callManhuadb(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_OABT) {
+    if (!call.request.hasOabt()) {
+      replyError(call, 'no oabt');
+
+      return;
+    }
+
+    const param = call.request.getOabt();
+
+    callOABT(browser, cfg, call, param, call.request);
   } else {
     replyError(call, 'no plugin');
   }

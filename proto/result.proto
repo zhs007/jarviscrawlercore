@@ -8,6 +8,7 @@ import "manhuadb.proto";
 import "douban.proto";
 import "jrj.proto";
 import "telegraph.proto";
+import "oabt.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -166,30 +167,6 @@ message CrunchBaseOrganization {
     repeated CrunchBaseEmployee boardMembers = 401;
 
     repeated CrunchBaseEmployee pastEmployees = 501;
-}
-
-enum BTResFileType {
-    BTRFT_ED2K = 0;
-    BTRFT_MAGNET = 1;
-}
-
-// BT Resource file infomation
-message BTResFileInfo {
-    BTResFileType type = 1;
-    string url = 2;
-}
-
-// BT Resource infomation
-message BTResInfo {
-    // fullname
-    string fullname = 1;
-    // name - name.chs name.eng
-    map<string, string> name = 2;
-    // resource id
-    string resid = 3;
-
-    // lst
-    repeated BTResFileInfo lst = 10;
 }
 
 // RequestTranslate - request translate
@@ -461,6 +438,7 @@ enum CrawlerType {
     CT_MANHUADB = 15;
     CT_DOUBAN = 16;
     CT_TELEGRAPH = 17;
+    CT_OABT = 18;
 }
 
 // RequestTranslate2 - request translate
@@ -816,6 +794,7 @@ message RequestCrawler {
         RequestManhuaDB manhuadb = 115;
         RequestDouban douban = 116;
         RequestTelegraph telegraph = 117;
+        RequestOABT oabt = 118;
     }
 }
 
@@ -841,6 +820,7 @@ message ReplyCrawler {
         ReplyManhuaDB manhuadb = 115;
         ReplyDouban douban = 116;
         ReplyTelegraph telegraph = 117;
+        ReplyOABT oabt = 118;
     }
 }
 

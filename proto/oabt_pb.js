@@ -210,7 +210,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.OABTNode.repeatedFields_ = [10];
+proto.jarviscrawlercore.OABTNode.repeatedFields_ = [4];
 
 
 
@@ -242,8 +242,8 @@ proto.jarviscrawlercore.OABTNode.prototype.toObject = function(opt_includeInstan
 proto.jarviscrawlercore.OABTNode.toObject = function(includeInstance, msg) {
   var f, obj = {
     fullname: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    nameMap: (f = msg.getNameMap()) ? f.toObject(includeInstance, undefined) : [],
-    resid: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    resid: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    cat: jspb.Message.getFieldWithDefault(msg, 3, 0),
     lstList: jspb.Message.toObjectList(msg.getLstList(),
     proto.jarviscrawlercore.OABTResInfo.toObject, includeInstance)
   };
@@ -287,16 +287,14 @@ proto.jarviscrawlercore.OABTNode.deserializeBinaryFromReader = function(msg, rea
       msg.setFullname(value);
       break;
     case 2:
-      var value = msg.getNameMap();
-      reader.readMessage(value, function(message, reader) {
-        jspb.Map.deserializeBinary(message, reader, jspb.BinaryReader.prototype.readString, jspb.BinaryReader.prototype.readString, null, "");
-         });
-      break;
-    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setResid(value);
       break;
-    case 10:
+    case 3:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setCat(value);
+      break;
+    case 4:
       var value = new proto.jarviscrawlercore.OABTResInfo;
       reader.readMessage(value,proto.jarviscrawlercore.OABTResInfo.deserializeBinaryFromReader);
       msg.addLst(value);
@@ -337,13 +335,16 @@ proto.jarviscrawlercore.OABTNode.serializeBinaryToWriter = function(message, wri
       f
     );
   }
-  f = message.getNameMap(true);
-  if (f && f.getLength() > 0) {
-    f.serializeBinary(2, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeString);
-  }
   f = message.getResid();
   if (f.length > 0) {
     writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getCat();
+  if (f !== 0) {
+    writer.writeInt32(
       3,
       f
     );
@@ -351,7 +352,7 @@ proto.jarviscrawlercore.OABTNode.serializeBinaryToWriter = function(message, wri
   f = message.getLstList();
   if (f.length > 0) {
     writer.writeRepeatedMessage(
-      10,
+      4,
       f,
       proto.jarviscrawlercore.OABTResInfo.serializeBinaryToWriter
     );
@@ -375,51 +376,48 @@ proto.jarviscrawlercore.OABTNode.prototype.setFullname = function(value) {
 
 
 /**
- * map<string, string> name = 2;
- * @param {boolean=} opt_noLazyCreate Do not create the map if
- * empty, instead returning `undefined`
- * @return {!jspb.Map<string,string>}
- */
-proto.jarviscrawlercore.OABTNode.prototype.getNameMap = function(opt_noLazyCreate) {
-  return /** @type {!jspb.Map<string,string>} */ (
-      jspb.Message.getMapField(this, 2, opt_noLazyCreate,
-      null));
-};
-
-
-proto.jarviscrawlercore.OABTNode.prototype.clearNameMap = function() {
-  this.getNameMap().clear();
-};
-
-
-/**
- * optional string resid = 3;
+ * optional string resid = 2;
  * @return {string}
  */
 proto.jarviscrawlercore.OABTNode.prototype.getResid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
 proto.jarviscrawlercore.OABTNode.prototype.setResid = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
+  jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * repeated OABTResInfo lst = 10;
+ * optional int32 cat = 3;
+ * @return {number}
+ */
+proto.jarviscrawlercore.OABTNode.prototype.getCat = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.OABTNode.prototype.setCat = function(value) {
+  jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * repeated OABTResInfo lst = 4;
  * @return {!Array<!proto.jarviscrawlercore.OABTResInfo>}
  */
 proto.jarviscrawlercore.OABTNode.prototype.getLstList = function() {
   return /** @type{!Array<!proto.jarviscrawlercore.OABTResInfo>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.OABTResInfo, 10));
+    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.OABTResInfo, 4));
 };
 
 
 /** @param {!Array<!proto.jarviscrawlercore.OABTResInfo>} value */
 proto.jarviscrawlercore.OABTNode.prototype.setLstList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 10, value);
+  jspb.Message.setRepeatedWrapperField(this, 4, value);
 };
 
 
@@ -429,7 +427,7 @@ proto.jarviscrawlercore.OABTNode.prototype.setLstList = function(value) {
  * @return {!proto.jarviscrawlercore.OABTResInfo}
  */
 proto.jarviscrawlercore.OABTNode.prototype.addLst = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 10, opt_value, proto.jarviscrawlercore.OABTResInfo, opt_index);
+  return jspb.Message.addToRepeatedWrapperField(this, 4, opt_value, proto.jarviscrawlercore.OABTResInfo, opt_index);
 };
 
 

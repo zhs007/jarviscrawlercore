@@ -257,6 +257,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "oabt.page",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["oabt", "page", "-h", "false", "-p", "1"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

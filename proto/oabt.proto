@@ -16,13 +16,12 @@ message OABTResInfo {
 message OABTNode {
     // fullname
     string fullname = 1;
-    // name - name.chs name.eng
-    map<string, string> name = 2;
     // resource id
-    string resid = 3;
-
+    string resid = 2;
+    // category
+    int32 cat = 3;
     // lst
-    repeated OABTResInfo lst = 10;
+    repeated OABTResInfo lst = 4;
 }
 
 // OABTMode - oabt mode

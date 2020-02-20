@@ -24,20 +24,18 @@ message Hao6vNode {
     string fullname = 1;
     // resource id
     string resid = 2;
-    // category
-    int32 cat = 3;
     // lst
-    repeated Hao6vResInfo lst = 4;
+    repeated Hao6vResInfo lst = 3;
     // 片名
-    repeated string title = 5;
+    repeated string title = 4;
     // 导演
-    repeated string director = 6;
+    repeated string director = 5;
     // url
-    string url = 7;
+    string url = 6;
     // cover
-    string cover = 8;
+    string cover = 7;
     // 导演
-    string fulldirector = 9;
+    string fulldirector = 8;
 }
 
 // Hao6vMode - hao6v mode

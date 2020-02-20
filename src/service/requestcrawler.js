@@ -14,6 +14,7 @@ const {callTaobao} = require('./plugins/taobao');
 const {callDouban} = require('./plugins/douban');
 const {callManhuadb} = require('./plugins/manhuadb');
 const {callOABT} = require('./plugins/oabt');
+const {callHao6v} = require('./plugins/hao6v');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -185,6 +186,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getOabt();
 
     callOABT(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_HAO6V) {
+    if (!call.request.hasHao6v()) {
+      replyError(call, 'no hao6v');
+
+      return;
+    }
+
+    const param = call.request.getHao6v();
+
+    callHao6v(browser, cfg, call, param, call.request);
   } else {
     replyError(call, 'no plugin');
   }

@@ -8,6 +8,10 @@ const {
 } = require('../douban/index');
 const {newRequestManhuadbAuthor} = require('../manhuadb/index');
 const {newRequestOABTPage} = require('../oabt/index');
+const {
+  newRequestHao6vNewPage,
+  newRequestHao6vResPage,
+} = require('../hao6v/index');
 
 const grpc = require('grpc');
 
@@ -1036,6 +1040,65 @@ function oabtPage(servAddr, pageindex) {
   );
 }
 
+/**
+ * hao6vNewPage
+ * @param {string} servAddr - servAddr
+ */
+function hao6vNewPage(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestHao6vNewPage();
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_HAO6V,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * hao6vResPage
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function hao6vResPage(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestHao6vResPage(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_HAO6V,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1099,7 +1162,10 @@ function oabtPage(servAddr, pageindex) {
 // doubanBook('127.0.0.1:7052', '1922024');
 // manhuadbAuthor('127.0.0.1:7052', '472');
 
-oabtPage('127.0.0.1:7052', 2);
+// oabtPage('127.0.0.1:7052', 2);
+
+// hao6vNewPage('127.0.0.1:7052');
+hao6vResPage('127.0.0.1:7052', 'http://www.hao6v.com/dy/2019-10-26/XiaoQ.html');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1132,3 +1198,5 @@ exports.doubanSearch = doubanSearch;
 exports.doubanBook = doubanBook;
 exports.manhuadbAuthor = manhuadbAuthor;
 exports.oabtPage = oabtPage;
+exports.hao6vResPage = hao6vResPage;
+exports.hao6vNewPage = hao6vNewPage;

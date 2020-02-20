@@ -120,6 +120,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setManhuadb(msg);
   } else if (crawlerType == messages.CrawlerType.CT_OABT) {
     req.setOabt(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_HAO6V) {
+    req.setHao6v(msg);
   }
 
   let isend = false;
@@ -374,6 +376,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_HAO6V) {
+        if (!reply.getHao6v()) {
+          cb('no hao6v reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getHao6v());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -451,6 +467,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_OABT) {
     reply.setOabt(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_HAO6V) {
+    reply.setHao6v(val);
     reply.setCrawlertype(crawlerType);
   }
 }

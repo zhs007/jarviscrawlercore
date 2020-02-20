@@ -1,0 +1,60 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+enum Hao6vResType {
+    H6VRT_UNKNOW = 0;
+    H6VRT_ED2K = 1;
+    H6VRT_MAGNET = 2;
+}
+
+// Hao6v Resource infomation
+message Hao6vResInfo {
+    Hao6vResType type = 1;
+    string url = 2;
+}
+
+// Hao6v Node
+message Hao6vNode {
+    // fullname
+    string fullname = 1;
+    // resource id
+    string resid = 2;
+    // category
+    int32 cat = 3;
+    // lst
+    repeated Hao6vResInfo lst = 4;
+    // 片名
+    string title = 5;
+    // 中文名
+    string cnTitle = 6;
+    // 导演
+    string director = 7;
+    // 导演中文名
+    string cnDirector = 8;
+    // url
+    string url = 9;
+}
+
+// Hao6vMode - hao6v mode
+enum Hao6vMode {
+    // H6VM_NEWPAGE - new page
+    H6VM_NEWPAGE = 0;
+}
+
+message Hao6vNewPage {
+    repeated Hao6vNode lst = 1;
+}
+
+// RequestHao6v - request hao6v
+message RequestHao6v {
+    Hao6vMode mode = 1;
+}
+
+// ReplyHao6v - reply hao6v
+message ReplyHao6v {
+    Hao6vMode mode = 1;
+
+    oneof reply {
+        Hao6vNewPage newpage = 100;
+    }
+}

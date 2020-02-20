@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {hao6vNewPage} = require('./newpage');
+const {hao6vResPage} = require('./respage');
 const log = require('../log');
 
 /**
@@ -11,7 +12,7 @@ async function execHao6v(program, version) {
   program
       .command('hao6v [mode]')
       .description('hao6v')
-      .option('-p, --pageindex [pageindex]', 'page index')
+      .option('-u, --url [url]', 'url')
       .option('-t, --timeout [timeout]', 'time out')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-d, --device [device]', 'device')
@@ -28,13 +29,13 @@ async function execHao6v(program, version) {
 
         log.console('mode - ', mode);
 
-        // if (mode == 'page' && !options.pageindex) {
-        //   log.console(
-        //       'command wrong, please type ' + 'jarviscrawler hao6v --help',
-        //   );
+        if (mode == 'respage' && !options.url) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler hao6v --help',
+          );
 
-        //   return;
-        // }
+          return;
+        }
 
         let timeout = 3 * 60 * 1000;
         if (typeof options.timeout == 'number') {
@@ -49,6 +50,9 @@ async function execHao6v(program, version) {
 
           if (mode == 'newpage') {
             const ret = await hao6vNewPage(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'respage') {
+            const ret = await hao6vResPage(browser, options.url, timeout);
             log.console(JSON.stringify(ret));
           }
 

@@ -5,12 +5,17 @@ enum Hao6vResType {
     H6VRT_UNKNOW = 0;
     H6VRT_ED2K = 1;
     H6VRT_MAGNET = 2;
+    H6VRT_LIVE = 3;
+    H6VRT_BAIGUPAN = 4;
+    H6VRT_XUNLEI = 5;
 }
 
 // Hao6v Resource infomation
 message Hao6vResInfo {
     Hao6vResType type = 1;
     string url = 2;
+    string name = 3;
+    string code = 4;
 }
 
 // Hao6v Node
@@ -28,19 +33,26 @@ message Hao6vNode {
     // 中文名
     string cnTitle = 6;
     // 导演
-    string director = 7;
+    repeated string director = 7;
     // 导演中文名
     string cnDirector = 8;
     // url
     string url = 9;
+    // cover
+    string cover = 10;
+    // 导演
+    string fulldirector = 11;
 }
 
 // Hao6vMode - hao6v mode
 enum Hao6vMode {
     // H6VM_NEWPAGE - new page
     H6VM_NEWPAGE = 0;
+    // H6VM_RESPAGE - res page
+    H6VM_RESPAGE = 1;
 }
 
+// Hao6vNewPage - hao6v new page
 message Hao6vNewPage {
     repeated Hao6vNode lst = 1;
 }
@@ -48,6 +60,7 @@ message Hao6vNewPage {
 // RequestHao6v - request hao6v
 message RequestHao6v {
     Hao6vMode mode = 1;
+    string url = 2;
 }
 
 // ReplyHao6v - reply hao6v
@@ -56,5 +69,6 @@ message ReplyHao6v {
 
     oneof reply {
         Hao6vNewPage newpage = 100;
+        Hao6vNode res = 101;
     }
 }

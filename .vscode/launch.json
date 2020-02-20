@@ -271,6 +271,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "hao6v.respage",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["hao6v", "respage", "-h", "false", "-u", "http://www.hao6v.com/gq/2012-03-18/17668.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

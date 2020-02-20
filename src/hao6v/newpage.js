@@ -3,11 +3,6 @@ const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
 const {parseID} = require('./utils');
-// const {DownloadList} = require('../request');
-// const path = require('path');
-// const fs = require('fs');
-
-// const oabturl = 'http://oabt008.com/';
 
 /**
  * hao6vNewPage - hao6v newpage page

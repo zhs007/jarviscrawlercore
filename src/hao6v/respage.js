@@ -2,7 +2,7 @@
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
-const {parseID} = require('./utils');
+// const {parseID} = require('./utils');
 
 /**
  * hao6vResPage - hao6v respage page
@@ -68,7 +68,7 @@ async function hao6vResPage(browser, url, timeout) {
   const res = await page
       .$$eval('#endText', (eles) => {
         if (eles.length > 0) {
-          const res = {lst: []};
+          const res = {lst: [], title: []};
 
           // table
           const lsttable = eles[0].getElementsByTagName('table');
@@ -186,20 +186,28 @@ async function hao6vResPage(browser, url, timeout) {
                   if (cnodeval.indexOf('◎') >= 0) {
                     pinfotype = 0;
                   }
+
+                  if (cnodeval.indexOf('导演') >= 0) {
+                    const arr = cnodeval.split('导演:');
+                    res.fulldirector = arr[arr.length - 1].trim();
+
+                    break;
+                  }
                 }
+
                 if (pinfotype == 0) {
                   if (cnodeval.indexOf('译　　名') >= 0) {
                     const arr = cnodeval.split('译　　名');
-                    res.cnTitle = arr[arr.length - 1].trim();
-                    console.log(arr);
+                    res.title.push(arr[arr.length - 1].trim());
+                  // console.log(arr);
                   } else if (cnodeval.indexOf('片　　名') >= 0) {
                     const arr = cnodeval.split('片　　名');
-                    res.title = arr[arr.length - 1].trim();
-                    console.log(arr);
+                    res.title.push(arr[arr.length - 1].trim());
+                  // console.log(arr);
                   } else if (cnodeval.indexOf('导　　演') >= 0) {
                     const arr = cnodeval.split('导　　演');
                     res.fulldirector = arr[arr.length - 1].trim();
-                    console.log(arr);
+                    // console.log(arr);
 
                     break;
                   }

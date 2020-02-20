@@ -264,7 +264,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.Hao6vNode.repeatedFields_ = [4,7];
+proto.jarviscrawlercore.Hao6vNode.repeatedFields_ = [4,5,6];
 
 
 
@@ -300,13 +300,11 @@ proto.jarviscrawlercore.Hao6vNode.toObject = function(includeInstance, msg) {
     cat: jspb.Message.getFieldWithDefault(msg, 3, 0),
     lstList: jspb.Message.toObjectList(msg.getLstList(),
     proto.jarviscrawlercore.Hao6vResInfo.toObject, includeInstance),
-    title: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    cntitle: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    directorList: jspb.Message.getRepeatedField(msg, 7),
-    cndirector: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    url: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    cover: jspb.Message.getFieldWithDefault(msg, 10, ""),
-    fulldirector: jspb.Message.getFieldWithDefault(msg, 11, "")
+    titleList: jspb.Message.getRepeatedField(msg, 5),
+    directorList: jspb.Message.getRepeatedField(msg, 6),
+    url: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    cover: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    fulldirector: jspb.Message.getFieldWithDefault(msg, 9, "")
   };
 
   if (includeInstance) {
@@ -362,29 +360,21 @@ proto.jarviscrawlercore.Hao6vNode.deserializeBinaryFromReader = function(msg, re
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTitle(value);
+      msg.addTitle(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCntitle(value);
+      msg.addDirector(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.addDirector(value);
+      msg.setUrl(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCndirector(value);
-      break;
-    case 9:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setUrl(value);
-      break;
-    case 10:
-      var value = /** @type {string} */ (reader.readString());
       msg.setCover(value);
       break;
-    case 11:
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setFulldirector(value);
       break;
@@ -446,52 +436,38 @@ proto.jarviscrawlercore.Hao6vNode.serializeBinaryToWriter = function(message, wr
       proto.jarviscrawlercore.Hao6vResInfo.serializeBinaryToWriter
     );
   }
-  f = message.getTitle();
+  f = message.getTitleList();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeRepeatedString(
       5,
-      f
-    );
-  }
-  f = message.getCntitle();
-  if (f.length > 0) {
-    writer.writeString(
-      6,
       f
     );
   }
   f = message.getDirectorList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      7,
-      f
-    );
-  }
-  f = message.getCndirector();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
+      6,
       f
     );
   }
   f = message.getUrl();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      7,
       f
     );
   }
   f = message.getCover();
   if (f.length > 0) {
     writer.writeString(
-      10,
+      8,
       f
     );
   }
   f = message.getFulldirector();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      9,
       f
     );
   }
@@ -575,47 +551,46 @@ proto.jarviscrawlercore.Hao6vNode.prototype.clearLstList = function() {
 
 
 /**
- * optional string title = 5;
- * @return {string}
+ * repeated string title = 5;
+ * @return {!Array<string>}
  */
-proto.jarviscrawlercore.Hao6vNode.prototype.getTitle = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+proto.jarviscrawlercore.Hao6vNode.prototype.getTitleList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 5));
 };
 
 
-/** @param {string} value */
-proto.jarviscrawlercore.Hao6vNode.prototype.setTitle = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.Hao6vNode.prototype.setTitleList = function(value) {
+  jspb.Message.setField(this, 5, value || []);
 };
 
 
 /**
- * optional string cnTitle = 6;
- * @return {string}
+ * @param {string} value
+ * @param {number=} opt_index
  */
-proto.jarviscrawlercore.Hao6vNode.prototype.getCntitle = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+proto.jarviscrawlercore.Hao6vNode.prototype.addTitle = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 5, value, opt_index);
 };
 
 
-/** @param {string} value */
-proto.jarviscrawlercore.Hao6vNode.prototype.setCntitle = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
+proto.jarviscrawlercore.Hao6vNode.prototype.clearTitleList = function() {
+  this.setTitleList([]);
 };
 
 
 /**
- * repeated string director = 7;
+ * repeated string director = 6;
  * @return {!Array<string>}
  */
 proto.jarviscrawlercore.Hao6vNode.prototype.getDirectorList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 6));
 };
 
 
 /** @param {!Array<string>} value */
 proto.jarviscrawlercore.Hao6vNode.prototype.setDirectorList = function(value) {
-  jspb.Message.setField(this, 7, value || []);
+  jspb.Message.setField(this, 6, value || []);
 };
 
 
@@ -624,7 +599,7 @@ proto.jarviscrawlercore.Hao6vNode.prototype.setDirectorList = function(value) {
  * @param {number=} opt_index
  */
 proto.jarviscrawlercore.Hao6vNode.prototype.addDirector = function(value, opt_index) {
-  jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+  jspb.Message.addToRepeatedField(this, 6, value, opt_index);
 };
 
 
@@ -634,62 +609,47 @@ proto.jarviscrawlercore.Hao6vNode.prototype.clearDirectorList = function() {
 
 
 /**
- * optional string cnDirector = 8;
- * @return {string}
- */
-proto.jarviscrawlercore.Hao6vNode.prototype.getCndirector = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.Hao6vNode.prototype.setCndirector = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional string url = 9;
+ * optional string url = 7;
  * @return {string}
  */
 proto.jarviscrawlercore.Hao6vNode.prototype.getUrl = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
 
 /** @param {string} value */
 proto.jarviscrawlercore.Hao6vNode.prototype.setUrl = function(value) {
-  jspb.Message.setProto3StringField(this, 9, value);
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional string cover = 10;
+ * optional string cover = 8;
  * @return {string}
  */
 proto.jarviscrawlercore.Hao6vNode.prototype.getCover = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
 
 /** @param {string} value */
 proto.jarviscrawlercore.Hao6vNode.prototype.setCover = function(value) {
-  jspb.Message.setProto3StringField(this, 10, value);
+  jspb.Message.setProto3StringField(this, 8, value);
 };
 
 
 /**
- * optional string fulldirector = 11;
+ * optional string fulldirector = 9;
  * @return {string}
  */
 proto.jarviscrawlercore.Hao6vNode.prototype.getFulldirector = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
 
 /** @param {string} value */
 proto.jarviscrawlercore.Hao6vNode.prototype.setFulldirector = function(value) {
-  jspb.Message.setProto3StringField(this, 11, value);
+  jspb.Message.setProto3StringField(this, 9, value);
 };
 
 

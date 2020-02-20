@@ -29,19 +29,15 @@ message Hao6vNode {
     // lst
     repeated Hao6vResInfo lst = 4;
     // 片名
-    string title = 5;
-    // 中文名
-    string cnTitle = 6;
+    repeated string title = 5;
     // 导演
-    repeated string director = 7;
-    // 导演中文名
-    string cnDirector = 8;
+    repeated string director = 6;
     // url
-    string url = 9;
+    string url = 7;
     // cover
-    string cover = 10;
+    string cover = 8;
     // 导演
-    string fulldirector = 11;
+    string fulldirector = 9;
 }
 
 // Hao6vMode - hao6v mode

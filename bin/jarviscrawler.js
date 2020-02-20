@@ -30,6 +30,7 @@ const {execTaobao} = require('../src/taobao/exec');
 const {execManhuaDB} = require('../src/manhuadb/exec');
 const {execTelegraph} = require('../src/telegraph/exec');
 const {execOABT} = require('../src/oabt/exec');
+const {execHao6v} = require('../src/hao6v/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -372,5 +373,6 @@ execTaobao(program, VERSION);
 execManhuaDB(program, VERSION);
 execTelegraph(program, VERSION);
 execOABT(program, VERSION);
+execHao6v(program, VERSION);
 
 program.parse(process.argv);

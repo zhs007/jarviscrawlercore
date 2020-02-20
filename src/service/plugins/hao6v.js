@@ -1,0 +1,68 @@
+const messages = require('../../../proto/result_pb');
+const {
+  hao6vNewPage,
+  hao6vResPage,
+  newReplyHao6v,
+} = require('../../hao6v/index');
+const {replyError, replyMsg, setReplyCrawler} = require('../utils');
+
+/**
+ * callHao6v - hao6v
+ * @param {object} browser - browser
+ * @param {object} cfg - cfg
+ * @param {object} call - call
+ * @param {object} param - RequestDouban
+ * @param {object} request - RequestCrawler
+ */
+function callHao6v(browser, cfg, call, param, request) {
+  let timeout = 3 * 60 * 1000;
+  if (request.getTimeout()) {
+    timeout = request.getTimeout();
+  }
+
+  if (param.getMode() == messages.Hao6vMode.H6VM_NEWPAGE) {
+    hao6vNewPage(browser, timeout)
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyHao6v(messages.Hao6vMode.H6VM_NEWPAGE, ret.ret);
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_HAO6V, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else if (param.getMode() == messages.Hao6vMode.H6VM_RESPAGE) {
+    hao6vResPage(browser, param.getUrl(), timeout)
+        .then((ret) => {
+          if (ret.error) {
+            replyError(call, ret.error, true);
+
+            return;
+          }
+
+          const reply = new messages.ReplyCrawler();
+
+          const val = newReplyHao6v(messages.Hao6vMode.H6VM_RESPAGE, ret.ret);
+
+          setReplyCrawler(reply, messages.CrawlerType.CT_HAO6V, val);
+
+          replyMsg(call, reply, true);
+        })
+        .catch((err) => {
+          replyError(call, err.toString(), true);
+        });
+  } else {
+    replyError(call, 'invalid mode', true);
+  }
+}
+
+exports.callHao6v = callHao6v;

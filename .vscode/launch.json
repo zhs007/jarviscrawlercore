@@ -264,6 +264,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "hao6v.newpage",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["hao6v", "newpage", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "hao6v.respage",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["hao6v", "respage", "-h", "false", "-u", "http://www.hao6v.com/dy/2019-10-26/XiaoQ.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

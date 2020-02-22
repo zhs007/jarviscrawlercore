@@ -292,6 +292,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "kotsumetrotokyo.subways",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["kotsumetrotokyo", "subways", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

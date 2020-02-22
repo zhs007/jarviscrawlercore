@@ -91,7 +91,7 @@ async function tokyometroLine(browser, url, timeout) {
 
   await page.close();
 
-  const ret = {stations: lst};
+  const ret = {lines: [{stations: lst}]};
 
   return {ret: ret};
 }

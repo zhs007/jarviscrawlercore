@@ -99,7 +99,7 @@ async function tokyometroSubwaymap(browser, timeout) {
 
   await page.close();
 
-  const ret = {subways: lst};
+  const ret = {lines: lst};
 
   return {ret: ret};
 }

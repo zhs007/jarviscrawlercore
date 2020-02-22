@@ -33,8 +33,8 @@ var oabt_pb = require('./oabt_pb.js');
 goog.object.extend(proto, oabt_pb);
 var hao6v_pb = require('./hao6v_pb.js');
 goog.object.extend(proto, hao6v_pb);
-var tokyometro_pb = require('./tokyometro_pb.js');
-goog.object.extend(proto, tokyometro_pb);
+var publictransit_pb = require('./publictransit_pb.js');
+goog.object.extend(proto, publictransit_pb);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzePage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeReqInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeScreenshot', null, global);
@@ -15979,7 +15979,7 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   TELEGRAPH: 117,
   OABT: 118,
   HAO6V: 119,
-  TOKYOMETRO: 120
+  PUBLICTRANSIT: 120
 };
 
 /**
@@ -16039,7 +16039,7 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     telegraph: (f = msg.getTelegraph()) && telegraph_pb.RequestTelegraph.toObject(includeInstance, f),
     oabt: (f = msg.getOabt()) && oabt_pb.RequestOABT.toObject(includeInstance, f),
     hao6v: (f = msg.getHao6v()) && hao6v_pb.RequestHao6v.toObject(includeInstance, f),
-    tokyometro: (f = msg.getTokyometro()) && tokyometro_pb.RequestTokyoMetro.toObject(includeInstance, f)
+    publictransit: (f = msg.getPublictransit()) && publictransit_pb.RequestPublicTransit.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -16179,9 +16179,9 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       msg.setHao6v(value);
       break;
     case 120:
-      var value = new tokyometro_pb.RequestTokyoMetro;
-      reader.readMessage(value,tokyometro_pb.RequestTokyoMetro.deserializeBinaryFromReader);
-      msg.setTokyometro(value);
+      var value = new publictransit_pb.RequestPublicTransit;
+      reader.readMessage(value,publictransit_pb.RequestPublicTransit.deserializeBinaryFromReader);
+      msg.setPublictransit(value);
       break;
     default:
       reader.skipField();
@@ -16377,12 +16377,12 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       hao6v_pb.RequestHao6v.serializeBinaryToWriter
     );
   }
-  f = message.getTokyometro();
+  f = message.getPublictransit();
   if (f != null) {
     writer.writeMessage(
       120,
       f,
-      tokyometro_pb.RequestTokyoMetro.serializeBinaryToWriter
+      publictransit_pb.RequestPublicTransit.serializeBinaryToWriter
     );
   }
 };
@@ -16974,23 +16974,23 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasHao6v = function() {
 
 
 /**
- * optional RequestTokyoMetro tokyometro = 120;
- * @return {?proto.jarviscrawlercore.RequestTokyoMetro}
+ * optional RequestPublicTransit publictransit = 120;
+ * @return {?proto.jarviscrawlercore.RequestPublicTransit}
  */
-proto.jarviscrawlercore.RequestCrawler.prototype.getTokyometro = function() {
-  return /** @type{?proto.jarviscrawlercore.RequestTokyoMetro} */ (
-    jspb.Message.getWrapperField(this, tokyometro_pb.RequestTokyoMetro, 120));
+proto.jarviscrawlercore.RequestCrawler.prototype.getPublictransit = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestPublicTransit} */ (
+    jspb.Message.getWrapperField(this, publictransit_pb.RequestPublicTransit, 120));
 };
 
 
-/** @param {?proto.jarviscrawlercore.RequestTokyoMetro|undefined} value */
-proto.jarviscrawlercore.RequestCrawler.prototype.setTokyometro = function(value) {
+/** @param {?proto.jarviscrawlercore.RequestPublicTransit|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setPublictransit = function(value) {
   jspb.Message.setOneofWrapperField(this, 120, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
 };
 
 
-proto.jarviscrawlercore.RequestCrawler.prototype.clearTokyometro = function() {
-  this.setTokyometro(undefined);
+proto.jarviscrawlercore.RequestCrawler.prototype.clearPublictransit = function() {
+  this.setPublictransit(undefined);
 };
 
 
@@ -16998,7 +16998,7 @@ proto.jarviscrawlercore.RequestCrawler.prototype.clearTokyometro = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.jarviscrawlercore.RequestCrawler.prototype.hasTokyometro = function() {
+proto.jarviscrawlercore.RequestCrawler.prototype.hasPublictransit = function() {
   return jspb.Message.getField(this, 120) != null;
 };
 
@@ -17054,7 +17054,7 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   TELEGRAPH: 117,
   OABT: 118,
   HAO6V: 119,
-  TOKYOMETRO: 120
+  PUBLICTRANSIT: 120
 };
 
 /**
@@ -17113,7 +17113,7 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     telegraph: (f = msg.getTelegraph()) && telegraph_pb.ReplyTelegraph.toObject(includeInstance, f),
     oabt: (f = msg.getOabt()) && oabt_pb.ReplyOABT.toObject(includeInstance, f),
     hao6v: (f = msg.getHao6v()) && hao6v_pb.ReplyHao6v.toObject(includeInstance, f),
-    tokyometro: (f = msg.getTokyometro()) && tokyometro_pb.ReplyTokyoMetro.toObject(includeInstance, f)
+    publictransit: (f = msg.getPublictransit()) && publictransit_pb.ReplyPublicTransit.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -17250,9 +17250,9 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       msg.setHao6v(value);
       break;
     case 120:
-      var value = new tokyometro_pb.ReplyTokyoMetro;
-      reader.readMessage(value,tokyometro_pb.ReplyTokyoMetro.deserializeBinaryFromReader);
-      msg.setTokyometro(value);
+      var value = new publictransit_pb.ReplyPublicTransit;
+      reader.readMessage(value,publictransit_pb.ReplyPublicTransit.deserializeBinaryFromReader);
+      msg.setPublictransit(value);
       break;
     default:
       reader.skipField();
@@ -17442,12 +17442,12 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       hao6v_pb.ReplyHao6v.serializeBinaryToWriter
     );
   }
-  f = message.getTokyometro();
+  f = message.getPublictransit();
   if (f != null) {
     writer.writeMessage(
       120,
       f,
-      tokyometro_pb.ReplyTokyoMetro.serializeBinaryToWriter
+      publictransit_pb.ReplyPublicTransit.serializeBinaryToWriter
     );
   }
 };
@@ -18039,23 +18039,23 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.hasHao6v = function() {
 
 
 /**
- * optional ReplyTokyoMetro tokyometro = 120;
- * @return {?proto.jarviscrawlercore.ReplyTokyoMetro}
+ * optional ReplyPublicTransit publictransit = 120;
+ * @return {?proto.jarviscrawlercore.ReplyPublicTransit}
  */
-proto.jarviscrawlercore.ReplyCrawler.prototype.getTokyometro = function() {
-  return /** @type{?proto.jarviscrawlercore.ReplyTokyoMetro} */ (
-    jspb.Message.getWrapperField(this, tokyometro_pb.ReplyTokyoMetro, 120));
+proto.jarviscrawlercore.ReplyCrawler.prototype.getPublictransit = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyPublicTransit} */ (
+    jspb.Message.getWrapperField(this, publictransit_pb.ReplyPublicTransit, 120));
 };
 
 
-/** @param {?proto.jarviscrawlercore.ReplyTokyoMetro|undefined} value */
-proto.jarviscrawlercore.ReplyCrawler.prototype.setTokyometro = function(value) {
+/** @param {?proto.jarviscrawlercore.ReplyPublicTransit|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setPublictransit = function(value) {
   jspb.Message.setOneofWrapperField(this, 120, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
 };
 
 
-proto.jarviscrawlercore.ReplyCrawler.prototype.clearTokyometro = function() {
-  this.setTokyometro(undefined);
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearPublictransit = function() {
+  this.setPublictransit(undefined);
 };
 
 
@@ -18063,7 +18063,7 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearTokyometro = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.jarviscrawlercore.ReplyCrawler.prototype.hasTokyometro = function() {
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasPublictransit = function() {
   return jspb.Message.getField(this, 120) != null;
 };
 
@@ -18517,7 +18517,7 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_TELEGRAPH: 17,
   CT_OABT: 18,
   CT_HAO6V: 19,
-  CT_TOKYOMETRO: 20
+  CT_PUBLICTRANSIT: 20
 };
 
 /**

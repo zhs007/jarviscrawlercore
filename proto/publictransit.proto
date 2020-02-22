@@ -1,0 +1,40 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// PublicTransitLine - PublicTransit line
+message PublicTransitLine {
+    string name = 1;
+    string url = 2;
+    string company = 3;
+    string country = 4;
+    string city = 5;
+    repeated string stations = 6;
+}
+
+// PublicTransitMode - PublicTransit mode
+enum PublicTransitMode {
+    // PTM_TOKYOMETRO_SUBWAYS - subways
+    PTM_TOKYOMETRO_SUBWAYS = 0;
+    // PTM_TOKYOMETRO_LINE - line
+    PTM_TOKYOMETRO_LINE = 1;
+}
+
+// PublicTransitLines - PublicTransit lines
+message PublicTransitLines {
+    repeated PublicTransitLine lines = 1;
+}
+
+// RequestPublicTransit - request PublicTransit
+message RequestPublicTransit {
+    PublicTransitMode mode = 1;
+    string url = 2;
+}
+
+// ReplyPublicTransit - reply PublicTransit
+message ReplyPublicTransit {
+    PublicTransitMode mode = 1;
+
+    oneof reply {
+        PublicTransitLines lines = 100;
+    }
+}

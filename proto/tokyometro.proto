@@ -1,0 +1,38 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// TokyoMetroLine - TokyoMetro line
+message TokyoMetroLine {
+    string name = 1;
+    string url = 2;
+    repeated string stations = 3;
+}
+
+// TokyoMetroMode - TokyoMetro mode
+enum TokyoMetroMode {
+    // TOKYOMM_SUBWAYS - subways
+    TOKYOMM_SUBWAYS = 0;
+    // TOKYOMM_LINE - line
+    TOKYOMM_LINE = 1;
+}
+
+// TokyoMetroSubways - TokyoMetro Subways
+message TokyoMetroSubways {
+    repeated TokyoMetroLine subways = 1;
+}
+
+// RequestTokyoMetro - request TokyoMetro
+message RequestTokyoMetro {
+    TokyoMetroMode mode = 1;
+    string url = 2;
+}
+
+// ReplyTokyoMetro - reply TokyoMetro
+message ReplyTokyoMetro {
+    TokyoMetroMode mode = 1;
+
+    oneof reply {
+        TokyoMetroSubways subways = 100;
+        TokyoMetroLine line = 101;
+    }
+}

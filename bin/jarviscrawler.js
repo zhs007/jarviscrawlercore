@@ -33,6 +33,7 @@ const {execOABT} = require('../src/oabt/exec');
 const {execHao6v} = require('../src/hao6v/exec');
 const {execTokyoMetro} = require('../src/tokyometro/exec');
 const {execKotsuMetroTokyo} = require('../src/kotsumetrotokyo/exec');
+const {execJRailPass} = require('../src/jrailpass/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -378,5 +379,6 @@ execOABT(program, VERSION);
 execHao6v(program, VERSION);
 execTokyoMetro(program, VERSION);
 execKotsuMetroTokyo(program, VERSION);
+execJRailPass(program, VERSION);
 
 program.parse(process.argv);

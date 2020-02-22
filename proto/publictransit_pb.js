@@ -867,7 +867,9 @@ proto.jarviscrawlercore.ReplyPublicTransit.prototype.hasLines = function() {
  */
 proto.jarviscrawlercore.PublicTransitMode = {
   PTM_TOKYOMETRO_SUBWAYS: 0,
-  PTM_TOKYOMETRO_LINE: 1
+  PTM_TOKYOMETRO_LINE: 1,
+  PTM_KOSTUMETROTOKYO_SUBWAYS: 2,
+  PTM_JRAILPASS_SUBWAYS: 3
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

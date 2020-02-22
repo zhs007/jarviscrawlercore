@@ -122,6 +122,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setOabt(msg);
   } else if (crawlerType == messages.CrawlerType.CT_HAO6V) {
     req.setHao6v(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_PUBLICTRANSIT) {
+    req.setPublictransit(msg);
   }
 
   let isend = false;
@@ -390,6 +392,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_PUBLICTRANSIT) {
+        if (!reply.getPublictransit()) {
+          cb('no publictransit reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getPublictransit());
+
+        isend = true;
+
+        return;
       }
     }
   });
@@ -470,6 +486,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_HAO6V) {
     reply.setHao6v(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_PUBLICTRANSIT) {
+    reply.setPublictransit(val);
     reply.setCrawlertype(crawlerType);
   }
 }

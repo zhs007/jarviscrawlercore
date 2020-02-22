@@ -12,6 +12,12 @@ const {
   newRequestHao6vNewPage,
   newRequestHao6vResPage,
 } = require('../hao6v/index');
+const {
+  newRequestPTTokyoMetroSubways,
+  newRequestPTTokyoMetroLine,
+  newRequestPTKotsuMetroTokyoSubways,
+  newRequestPTJRailPassSubways,
+} = require('../publictransit/index');
 
 const grpc = require('grpc');
 
@@ -1099,6 +1105,123 @@ function hao6vResPage(servAddr, url) {
   );
 }
 
+/**
+ * ptTokyoMetroSubways
+ * @param {string} servAddr - servAddr
+ */
+function ptTokyoMetroSubways(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestPTTokyoMetroSubways();
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_PUBLICTRANSIT,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * ptTokyoMetroLine
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function ptTokyoMetroLine(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestPTTokyoMetroLine(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_PUBLICTRANSIT,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * ptKotsuMetroTokyoSubways
+ * @param {string} servAddr - servAddr
+ */
+function ptKotsuMetroTokyoSubways(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestPTKotsuMetroTokyoSubways();
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_PUBLICTRANSIT,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * ptJRailPassSubways
+ * @param {string} servAddr - servAddr
+ */
+function ptJRailPassSubways(servAddr) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestPTJRailPassSubways();
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_PUBLICTRANSIT,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1165,7 +1288,15 @@ function hao6vResPage(servAddr, url) {
 // oabtPage('127.0.0.1:7052', 2);
 
 // hao6vNewPage('127.0.0.1:7052');
-hao6vResPage('127.0.0.1:7052', 'http://www.hao6v.com/dy/2019-10-26/XiaoQ.html');
+// hao6vResPage('127.0.0.1:7052', 'http://www.hao6v.com/dy/2019-10-26/XiaoQ.html');
+
+// ptTokyoMetroSubways('127.0.0.1:7052');
+// ptTokyoMetroLine(
+//     '127.0.0.1:7052',
+//     'https://www.tokyometro.jp/lang_cn/station/line_marunouchi/index.html',
+// );
+// ptKotsuMetroTokyoSubways('127.0.0.1:7052');
+ptJRailPassSubways('127.0.0.1:7052');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1200,3 +1331,7 @@ exports.manhuadbAuthor = manhuadbAuthor;
 exports.oabtPage = oabtPage;
 exports.hao6vResPage = hao6vResPage;
 exports.hao6vNewPage = hao6vNewPage;
+exports.ptTokyoMetroSubways = ptTokyoMetroSubways;
+exports.ptTokyoMetroLine = ptTokyoMetroLine;
+exports.ptKotsuMetroTokyoSubways = ptKotsuMetroTokyoSubways;
+exports.ptJRailPassSubways = ptJRailPassSubways;

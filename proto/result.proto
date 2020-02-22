@@ -10,6 +10,7 @@ import "jrj.proto";
 import "telegraph.proto";
 import "oabt.proto";
 import "hao6v.proto";
+import "publictransit.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -441,6 +442,7 @@ enum CrawlerType {
     CT_TELEGRAPH = 17;
     CT_OABT = 18;
     CT_HAO6V = 19;
+    CT_PUBLICTRANSIT = 20;
 }
 
 // RequestTranslate2 - request translate
@@ -798,6 +800,7 @@ message RequestCrawler {
         RequestTelegraph telegraph = 117;
         RequestOABT oabt = 118;
         RequestHao6v hao6v = 119;
+        RequestPublicTransit publictransit = 120;
     }
 }
 
@@ -825,6 +828,7 @@ message ReplyCrawler {
         ReplyTelegraph telegraph = 117;
         ReplyOABT oabt = 118;
         ReplyHao6v hao6v = 119;
+        ReplyPublicTransit publictransit = 120;
     }
 }
 

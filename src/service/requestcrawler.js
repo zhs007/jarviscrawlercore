@@ -15,6 +15,7 @@ const {callDouban} = require('./plugins/douban');
 const {callManhuadb} = require('./plugins/manhuadb');
 const {callOABT} = require('./plugins/oabt');
 const {callHao6v} = require('./plugins/hao6v');
+const {callPublicTransit} = require('./plugins/publictransit');
 const messages = require('../../proto/result_pb');
 const {replyError} = require('./utils');
 
@@ -196,6 +197,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getHao6v();
 
     callHao6v(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_PUBLICTRANSIT) {
+    if (!call.request.hasPublictransit()) {
+      replyError(call, 'no publictransit');
+
+      return;
+    }
+
+    const param = call.request.getPublictransit();
+
+    callPublicTransit(browser, cfg, call, param, call.request);
   } else {
     replyError(call, 'no plugin');
   }

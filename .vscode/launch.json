@@ -278,6 +278,34 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "tokyometro.subways",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tokyometro", "subways", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tokyometro.line",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tokyometro", "line", "-h", "false", "-u", "https://www.tokyometro.jp/lang_cn/station/line_marunouchi/index.html"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "kotsumetrotokyo.subways",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["kotsumetrotokyo", "subways", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrailpass.subways",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrailpass", "subways", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

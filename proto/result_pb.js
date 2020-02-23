@@ -41,6 +41,10 @@ var techinasia_pb = require('./techinasia_pb.js');
 goog.object.extend(proto, techinasia_pb);
 var geoip_pb = require('./geoip_pb.js');
 goog.object.extend(proto, geoip_pb);
+var dt_pb = require('./dt_pb.js');
+goog.object.extend(proto, dt_pb);
+var article2_pb = require('./article2_pb.js');
+goog.object.extend(proto, article2_pb);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzePage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeReqInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeScreenshot', null, global);
@@ -58,13 +62,6 @@ goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseFundingRound', null, global
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseInvestment', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseInvestor', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.CrunchBaseOrganization', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTBusinessGameReport', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTDataType', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTGPKCheckGameResult', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTGPKGameResult', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTGameResultErr', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTGameResultErrCode', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.DTTodayGameData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ExportArticleResult', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ImageInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.Paragraph', null, global);
@@ -74,13 +71,11 @@ goog.exportSymbol('proto.jarviscrawlercore.ReplyArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyArticles', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyCrawlerStream', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.ReplyDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.ReplyTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticle', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestArticles', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrawler', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestCrunchBaseCompany', null, global);
-goog.exportSymbol('proto.jarviscrawlercore.RequestDTData', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.RequestTranslate2', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.TranslateResult', null, global);
@@ -5729,2323 +5724,6 @@ proto.jarviscrawlercore.ReplyArticles.prototype.hasArticles = function() {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.jarviscrawlercore.DTGameResultErr = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.jarviscrawlercore.DTGameResultErr, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DTGameResultErr.displayName = 'proto.jarviscrawlercore.DTGameResultErr';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DTGameResultErr.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DTGameResultErr} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGameResultErr.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    errcode: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    value0: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    value1: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    strval0: jspb.Message.getFieldWithDefault(msg, 10, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DTGameResultErr}
- */
-proto.jarviscrawlercore.DTGameResultErr.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DTGameResultErr;
-  return proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DTGameResultErr} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DTGameResultErr}
- */
-proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!proto.jarviscrawlercore.DTGameResultErrCode} */ (reader.readEnum());
-      msg.setErrcode(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setValue0(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setValue1(value);
-      break;
-    case 10:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setStrval0(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DTGameResultErr} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getErrcode();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      1,
-      f
-    );
-  }
-  f = message.getValue0();
-  if (f !== 0) {
-    writer.writeInt64(
-      2,
-      f
-    );
-  }
-  f = message.getValue1();
-  if (f !== 0) {
-    writer.writeInt64(
-      3,
-      f
-    );
-  }
-  f = message.getStrval0();
-  if (f.length > 0) {
-    writer.writeString(
-      10,
-      f
-    );
-  }
-};
-
-
-/**
- * optional DTGameResultErrCode errcode = 1;
- * @return {!proto.jarviscrawlercore.DTGameResultErrCode}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.getErrcode = function() {
-  return /** @type {!proto.jarviscrawlercore.DTGameResultErrCode} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/** @param {!proto.jarviscrawlercore.DTGameResultErrCode} value */
-proto.jarviscrawlercore.DTGameResultErr.prototype.setErrcode = function(value) {
-  jspb.Message.setProto3EnumField(this, 1, value);
-};
-
-
-/**
- * optional int64 value0 = 2;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.getValue0 = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGameResultErr.prototype.setValue0 = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional int64 value1 = 3;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.getValue1 = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGameResultErr.prototype.setValue1 = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-/**
- * optional string strval0 = 10;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGameResultErr.prototype.getStrval0 = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGameResultErr.prototype.setStrval0 = function(value) {
-  jspb.Message.setProto3StringField(this, 10, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.RequestDTData = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.jarviscrawlercore.RequestDTData, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.RequestDTData.displayName = 'proto.jarviscrawlercore.RequestDTData';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.RequestDTData.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.RequestDTData} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.RequestDTData.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    mode: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    starttime: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    endtime: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    dtdatatype: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    envname: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    businessid: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    gamecode: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    playername: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    token: jspb.Message.getFieldWithDefault(msg, 100, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.RequestDTData}
- */
-proto.jarviscrawlercore.RequestDTData.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.RequestDTData;
-  return proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.RequestDTData} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.RequestDTData}
- */
-proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setMode(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setStarttime(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setEndtime(value);
-      break;
-    case 4:
-      var value = /** @type {!proto.jarviscrawlercore.DTDataType} */ (reader.readEnum());
-      msg.setDtdatatype(value);
-      break;
-    case 5:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setEnvname(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setBusinessid(value);
-      break;
-    case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGamecode(value);
-      break;
-    case 8:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPlayername(value);
-      break;
-    case 100:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setToken(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.RequestDTData} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getMode();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getStarttime();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getEndtime();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getDtdatatype();
-  if (f !== 0.0) {
-    writer.writeEnum(
-      4,
-      f
-    );
-  }
-  f = message.getEnvname();
-  if (f.length > 0) {
-    writer.writeString(
-      5,
-      f
-    );
-  }
-  f = message.getBusinessid();
-  if (f.length > 0) {
-    writer.writeString(
-      6,
-      f
-    );
-  }
-  f = message.getGamecode();
-  if (f.length > 0) {
-    writer.writeString(
-      7,
-      f
-    );
-  }
-  f = message.getPlayername();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
-      f
-    );
-  }
-  f = message.getToken();
-  if (f.length > 0) {
-    writer.writeString(
-      100,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string mode = 1;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getMode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setMode = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string startTime = 2;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getStarttime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setStarttime = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string endTime = 3;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getEndtime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setEndtime = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional DTDataType dtDataType = 4;
- * @return {!proto.jarviscrawlercore.DTDataType}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getDtdatatype = function() {
-  return /** @type {!proto.jarviscrawlercore.DTDataType} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/** @param {!proto.jarviscrawlercore.DTDataType} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setDtdatatype = function(value) {
-  jspb.Message.setProto3EnumField(this, 4, value);
-};
-
-
-/**
- * optional string envName = 5;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getEnvname = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setEnvname = function(value) {
-  jspb.Message.setProto3StringField(this, 5, value);
-};
-
-
-/**
- * optional string businessid = 6;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getBusinessid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setBusinessid = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
-};
-
-
-/**
- * optional string gameCode = 7;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getGamecode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setGamecode = function(value) {
-  jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-/**
- * optional string playerName = 8;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getPlayername = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setPlayername = function(value) {
-  jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional string token = 100;
- * @return {string}
- */
-proto.jarviscrawlercore.RequestDTData.prototype.getToken = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 100, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.RequestDTData.prototype.setToken = function(value) {
-  jspb.Message.setProto3StringField(this, 100, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.DTBusinessGameReport = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.jarviscrawlercore.DTBusinessGameReport, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DTBusinessGameReport.displayName = 'proto.jarviscrawlercore.DTBusinessGameReport';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DTBusinessGameReport.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DTBusinessGameReport} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTBusinessGameReport.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    businessid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    gamecode: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    totalwin: +jspb.Message.getFieldWithDefault(msg, 3, 0.0),
-    totalbet: +jspb.Message.getFieldWithDefault(msg, 4, 0.0),
-    gamenums: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    currency: jspb.Message.getFieldWithDefault(msg, 6, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DTBusinessGameReport}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DTBusinessGameReport;
-  return proto.jarviscrawlercore.DTBusinessGameReport.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DTBusinessGameReport} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DTBusinessGameReport}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setBusinessid(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGamecode(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setTotalwin(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setTotalbet(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setGamenums(value);
-      break;
-    case 6:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCurrency(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DTBusinessGameReport.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DTBusinessGameReport} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTBusinessGameReport.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getBusinessid();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getGamecode();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getTotalwin();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      3,
-      f
-    );
-  }
-  f = message.getTotalbet();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      4,
-      f
-    );
-  }
-  f = message.getGamenums();
-  if (f !== 0) {
-    writer.writeInt32(
-      5,
-      f
-    );
-  }
-  f = message.getCurrency();
-  if (f.length > 0) {
-    writer.writeString(
-      6,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string businessid = 1;
- * @return {string}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getBusinessid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setBusinessid = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string gamecode = 2;
- * @return {string}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getGamecode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setGamecode = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional float totalWin = 3;
- * @return {number}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getTotalwin = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setTotalwin = function(value) {
-  jspb.Message.setProto3FloatField(this, 3, value);
-};
-
-
-/**
- * optional float totalBet = 4;
- * @return {number}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getTotalbet = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 4, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setTotalbet = function(value) {
-  jspb.Message.setProto3FloatField(this, 4, value);
-};
-
-
-/**
- * optional int32 gameNums = 5;
- * @return {number}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getGamenums = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setGamenums = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
-};
-
-
-/**
- * optional string currency = 6;
- * @return {string}
- */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.getCurrency = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTBusinessGameReport.prototype.setCurrency = function(value) {
-  jspb.Message.setProto3StringField(this, 6, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.DTTodayGameData = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.jarviscrawlercore.DTTodayGameData, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DTTodayGameData.displayName = 'proto.jarviscrawlercore.DTTodayGameData';
-}
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DTTodayGameData.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DTTodayGameData.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DTTodayGameData} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTTodayGameData.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    totalwin: +jspb.Message.getFieldWithDefault(msg, 1, 0.0),
-    totalbet: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
-    gamenums: jspb.Message.getFieldWithDefault(msg, 3, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DTTodayGameData}
- */
-proto.jarviscrawlercore.DTTodayGameData.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DTTodayGameData;
-  return proto.jarviscrawlercore.DTTodayGameData.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DTTodayGameData} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DTTodayGameData}
- */
-proto.jarviscrawlercore.DTTodayGameData.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setTotalwin(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setTotalbet(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setGamenums(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DTTodayGameData.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DTTodayGameData.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DTTodayGameData} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTTodayGameData.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getTotalwin();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      1,
-      f
-    );
-  }
-  f = message.getTotalbet();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      2,
-      f
-    );
-  }
-  f = message.getGamenums();
-  if (f !== 0) {
-    writer.writeInt32(
-      3,
-      f
-    );
-  }
-};
-
-
-/**
- * optional float totalWin = 1;
- * @return {number}
- */
-proto.jarviscrawlercore.DTTodayGameData.prototype.getTotalwin = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 1, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTTodayGameData.prototype.setTotalwin = function(value) {
-  jspb.Message.setProto3FloatField(this, 1, value);
-};
-
-
-/**
- * optional float totalBet = 2;
- * @return {number}
- */
-proto.jarviscrawlercore.DTTodayGameData.prototype.getTotalbet = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTTodayGameData.prototype.setTotalbet = function(value) {
-  jspb.Message.setProto3FloatField(this, 2, value);
-};
-
-
-/**
- * optional int32 gameNums = 3;
- * @return {number}
- */
-proto.jarviscrawlercore.DTTodayGameData.prototype.getGamenums = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTTodayGameData.prototype.setGamenums = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.DTGPKGameResult = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.DTGPKGameResult.repeatedFields_, null);
-};
-goog.inherits(proto.jarviscrawlercore.DTGPKGameResult, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DTGPKGameResult.displayName = 'proto.jarviscrawlercore.DTGPKGameResult';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.jarviscrawlercore.DTGPKGameResult.repeatedFields_ = [100];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DTGPKGameResult.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DTGPKGameResult} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGPKGameResult.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    businessid: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    playername: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    gamecode: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    win: +jspb.Message.getFieldWithDefault(msg, 5, 0.0),
-    bet: +jspb.Message.getFieldWithDefault(msg, 6, 0.0),
-    off: +jspb.Message.getFieldWithDefault(msg, 7, 0.0),
-    lines: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    moneystart: +jspb.Message.getFieldWithDefault(msg, 9, 0.0),
-    moneyend: +jspb.Message.getFieldWithDefault(msg, 10, 0.0),
-    playerip: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    datastate: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    gametime: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    clienttype: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    currency: jspb.Message.getFieldWithDefault(msg, 15, ""),
-    iscomplete: jspb.Message.getFieldWithDefault(msg, 16, false),
-    giftfreeid: jspb.Message.getFieldWithDefault(msg, 17, ""),
-    gamedata: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    gameresult: jspb.Message.getFieldWithDefault(msg, 19, ""),
-    hassubgame: jspb.Message.getFieldWithDefault(msg, 20, false),
-    dtbaseid: jspb.Message.getFieldWithDefault(msg, 21, ""),
-    rootgame: jspb.Message.getFieldWithDefault(msg, 22, false),
-    childrenList: jspb.Message.toObjectList(msg.getChildrenList(),
-    proto.jarviscrawlercore.DTGPKGameResult.toObject, includeInstance),
-    err: (f = msg.getErr()) && proto.jarviscrawlercore.DTGameResultErr.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DTGPKGameResult}
- */
-proto.jarviscrawlercore.DTGPKGameResult.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DTGPKGameResult;
-  return proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DTGPKGameResult} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DTGPKGameResult}
- */
-proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setId(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setBusinessid(value);
-      break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPlayername(value);
-      break;
-    case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGamecode(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setWin(value);
-      break;
-    case 6:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setBet(value);
-      break;
-    case 7:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setOff(value);
-      break;
-    case 8:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setLines(value);
-      break;
-    case 9:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setMoneystart(value);
-      break;
-    case 10:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setMoneyend(value);
-      break;
-    case 11:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPlayerip(value);
-      break;
-    case 12:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDatastate(value);
-      break;
-    case 13:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGametime(value);
-      break;
-    case 14:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setClienttype(value);
-      break;
-    case 15:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setCurrency(value);
-      break;
-    case 16:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setIscomplete(value);
-      break;
-    case 17:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGiftfreeid(value);
-      break;
-    case 18:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGamedata(value);
-      break;
-    case 19:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGameresult(value);
-      break;
-    case 20:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setHassubgame(value);
-      break;
-    case 21:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setDtbaseid(value);
-      break;
-    case 22:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setRootgame(value);
-      break;
-    case 100:
-      var value = new proto.jarviscrawlercore.DTGPKGameResult;
-      reader.readMessage(value,proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader);
-      msg.addChildren(value);
-      break;
-    case 200:
-      var value = new proto.jarviscrawlercore.DTGameResultErr;
-      reader.readMessage(value,proto.jarviscrawlercore.DTGameResultErr.deserializeBinaryFromReader);
-      msg.setErr(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DTGPKGameResult} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getId();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-  f = message.getBusinessid();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getPlayername();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getGamecode();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
-  f = message.getWin();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      5,
-      f
-    );
-  }
-  f = message.getBet();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      6,
-      f
-    );
-  }
-  f = message.getOff();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      7,
-      f
-    );
-  }
-  f = message.getLines();
-  if (f !== 0) {
-    writer.writeInt32(
-      8,
-      f
-    );
-  }
-  f = message.getMoneystart();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      9,
-      f
-    );
-  }
-  f = message.getMoneyend();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      10,
-      f
-    );
-  }
-  f = message.getPlayerip();
-  if (f.length > 0) {
-    writer.writeString(
-      11,
-      f
-    );
-  }
-  f = message.getDatastate();
-  if (f.length > 0) {
-    writer.writeString(
-      12,
-      f
-    );
-  }
-  f = message.getGametime();
-  if (f.length > 0) {
-    writer.writeString(
-      13,
-      f
-    );
-  }
-  f = message.getClienttype();
-  if (f.length > 0) {
-    writer.writeString(
-      14,
-      f
-    );
-  }
-  f = message.getCurrency();
-  if (f.length > 0) {
-    writer.writeString(
-      15,
-      f
-    );
-  }
-  f = message.getIscomplete();
-  if (f) {
-    writer.writeBool(
-      16,
-      f
-    );
-  }
-  f = message.getGiftfreeid();
-  if (f.length > 0) {
-    writer.writeString(
-      17,
-      f
-    );
-  }
-  f = message.getGamedata();
-  if (f.length > 0) {
-    writer.writeString(
-      18,
-      f
-    );
-  }
-  f = message.getGameresult();
-  if (f.length > 0) {
-    writer.writeString(
-      19,
-      f
-    );
-  }
-  f = message.getHassubgame();
-  if (f) {
-    writer.writeBool(
-      20,
-      f
-    );
-  }
-  f = message.getDtbaseid();
-  if (f.length > 0) {
-    writer.writeString(
-      21,
-      f
-    );
-  }
-  f = message.getRootgame();
-  if (f) {
-    writer.writeBool(
-      22,
-      f
-    );
-  }
-  f = message.getChildrenList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      100,
-      f,
-      proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter
-    );
-  }
-  f = message.getErr();
-  if (f != null) {
-    writer.writeMessage(
-      200,
-      f,
-      proto.jarviscrawlercore.DTGameResultErr.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * optional string ID = 1;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setId = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-/**
- * optional string businessID = 2;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getBusinessid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setBusinessid = function(value) {
-  jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional string playerName = 3;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getPlayername = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setPlayername = function(value) {
-  jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string gameCode = 4;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getGamecode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setGamecode = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional float win = 5;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getWin = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 5, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setWin = function(value) {
-  jspb.Message.setProto3FloatField(this, 5, value);
-};
-
-
-/**
- * optional float bet = 6;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getBet = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 6, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setBet = function(value) {
-  jspb.Message.setProto3FloatField(this, 6, value);
-};
-
-
-/**
- * optional float off = 7;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getOff = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 7, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setOff = function(value) {
-  jspb.Message.setProto3FloatField(this, 7, value);
-};
-
-
-/**
- * optional int32 lines = 8;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getLines = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setLines = function(value) {
-  jspb.Message.setProto3IntField(this, 8, value);
-};
-
-
-/**
- * optional float moneyStart = 9;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getMoneystart = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 9, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setMoneystart = function(value) {
-  jspb.Message.setProto3FloatField(this, 9, value);
-};
-
-
-/**
- * optional float moneyEnd = 10;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getMoneyend = function() {
-  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 10, 0.0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setMoneyend = function(value) {
-  jspb.Message.setProto3FloatField(this, 10, value);
-};
-
-
-/**
- * optional string playerIP = 11;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getPlayerip = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setPlayerip = function(value) {
-  jspb.Message.setProto3StringField(this, 11, value);
-};
-
-
-/**
- * optional string dataState = 12;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getDatastate = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setDatastate = function(value) {
-  jspb.Message.setProto3StringField(this, 12, value);
-};
-
-
-/**
- * optional string gameTime = 13;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getGametime = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setGametime = function(value) {
-  jspb.Message.setProto3StringField(this, 13, value);
-};
-
-
-/**
- * optional string clientType = 14;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getClienttype = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setClienttype = function(value) {
-  jspb.Message.setProto3StringField(this, 14, value);
-};
-
-
-/**
- * optional string currency = 15;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getCurrency = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setCurrency = function(value) {
-  jspb.Message.setProto3StringField(this, 15, value);
-};
-
-
-/**
- * optional bool isComplete = 16;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getIscomplete = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 16, false));
-};
-
-
-/** @param {boolean} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setIscomplete = function(value) {
-  jspb.Message.setProto3BooleanField(this, 16, value);
-};
-
-
-/**
- * optional string giftFreeID = 17;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getGiftfreeid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setGiftfreeid = function(value) {
-  jspb.Message.setProto3StringField(this, 17, value);
-};
-
-
-/**
- * optional string gameData = 18;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getGamedata = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setGamedata = function(value) {
-  jspb.Message.setProto3StringField(this, 18, value);
-};
-
-
-/**
- * optional string gameResult = 19;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getGameresult = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setGameresult = function(value) {
-  jspb.Message.setProto3StringField(this, 19, value);
-};
-
-
-/**
- * optional bool hasSubGame = 20;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getHassubgame = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 20, false));
-};
-
-
-/** @param {boolean} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setHassubgame = function(value) {
-  jspb.Message.setProto3BooleanField(this, 20, value);
-};
-
-
-/**
- * optional string dtbaseid = 21;
- * @return {string}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getDtbaseid = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
-};
-
-
-/** @param {string} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setDtbaseid = function(value) {
-  jspb.Message.setProto3StringField(this, 21, value);
-};
-
-
-/**
- * optional bool rootGame = 22;
- * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
- * You should avoid comparisons like {@code val === true/false} in those cases.
- * @return {boolean}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getRootgame = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 22, false));
-};
-
-
-/** @param {boolean} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setRootgame = function(value) {
-  jspb.Message.setProto3BooleanField(this, 22, value);
-};
-
-
-/**
- * repeated DTGPKGameResult children = 100;
- * @return {!Array<!proto.jarviscrawlercore.DTGPKGameResult>}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getChildrenList = function() {
-  return /** @type{!Array<!proto.jarviscrawlercore.DTGPKGameResult>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DTGPKGameResult, 100));
-};
-
-
-/** @param {!Array<!proto.jarviscrawlercore.DTGPKGameResult>} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setChildrenList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 100, value);
-};
-
-
-/**
- * @param {!proto.jarviscrawlercore.DTGPKGameResult=} opt_value
- * @param {number=} opt_index
- * @return {!proto.jarviscrawlercore.DTGPKGameResult}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.addChildren = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 100, opt_value, proto.jarviscrawlercore.DTGPKGameResult, opt_index);
-};
-
-
-proto.jarviscrawlercore.DTGPKGameResult.prototype.clearChildrenList = function() {
-  this.setChildrenList([]);
-};
-
-
-/**
- * optional DTGameResultErr err = 200;
- * @return {?proto.jarviscrawlercore.DTGameResultErr}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.getErr = function() {
-  return /** @type{?proto.jarviscrawlercore.DTGameResultErr} */ (
-    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.DTGameResultErr, 200));
-};
-
-
-/** @param {?proto.jarviscrawlercore.DTGameResultErr|undefined} value */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.setErr = function(value) {
-  jspb.Message.setWrapperField(this, 200, value);
-};
-
-
-proto.jarviscrawlercore.DTGPKGameResult.prototype.clearErr = function() {
-  this.setErr(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.jarviscrawlercore.DTGPKGameResult.prototype.hasErr = function() {
-  return jspb.Message.getField(this, 200) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.DTGPKCheckGameResult.repeatedFields_, null);
-};
-goog.inherits(proto.jarviscrawlercore.DTGPKCheckGameResult, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.DTGPKCheckGameResult.displayName = 'proto.jarviscrawlercore.DTGPKCheckGameResult';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.repeatedFields_ = [1];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.DTGPKCheckGameResult.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.DTGPKCheckGameResult} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    lstList: jspb.Message.toObjectList(msg.getLstList(),
-    proto.jarviscrawlercore.DTGPKGameResult.toObject, includeInstance),
-    errnums: jspb.Message.getFieldWithDefault(msg, 10, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.DTGPKCheckGameResult}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.DTGPKCheckGameResult;
-  return proto.jarviscrawlercore.DTGPKCheckGameResult.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.DTGPKCheckGameResult} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.DTGPKCheckGameResult}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.jarviscrawlercore.DTGPKGameResult;
-      reader.readMessage(value,proto.jarviscrawlercore.DTGPKGameResult.deserializeBinaryFromReader);
-      msg.addLst(value);
-      break;
-    case 10:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setErrnums(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.DTGPKCheckGameResult.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.DTGPKCheckGameResult} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getLstList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      1,
-      f,
-      proto.jarviscrawlercore.DTGPKGameResult.serializeBinaryToWriter
-    );
-  }
-  f = message.getErrnums();
-  if (f !== 0) {
-    writer.writeInt32(
-      10,
-      f
-    );
-  }
-};
-
-
-/**
- * repeated DTGPKGameResult lst = 1;
- * @return {!Array<!proto.jarviscrawlercore.DTGPKGameResult>}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.getLstList = function() {
-  return /** @type{!Array<!proto.jarviscrawlercore.DTGPKGameResult>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DTGPKGameResult, 1));
-};
-
-
-/** @param {!Array<!proto.jarviscrawlercore.DTGPKGameResult>} value */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.setLstList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
-};
-
-
-/**
- * @param {!proto.jarviscrawlercore.DTGPKGameResult=} opt_value
- * @param {number=} opt_index
- * @return {!proto.jarviscrawlercore.DTGPKGameResult}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.addLst = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.jarviscrawlercore.DTGPKGameResult, opt_index);
-};
-
-
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.clearLstList = function() {
-  this.setLstList([]);
-};
-
-
-/**
- * optional int32 errNums = 10;
- * @return {number}
- */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.getErrnums = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
-};
-
-
-/** @param {number} value */
-proto.jarviscrawlercore.DTGPKCheckGameResult.prototype.setErrnums = function(value) {
-  jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.jarviscrawlercore.ReplyDTData = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, proto.jarviscrawlercore.ReplyDTData.repeatedFields_, null);
-};
-goog.inherits(proto.jarviscrawlercore.ReplyDTData, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  proto.jarviscrawlercore.ReplyDTData.displayName = 'proto.jarviscrawlercore.ReplyDTData';
-}
-/**
- * List of repeated fields within this message type.
- * @private {!Array<number>}
- * @const
- */
-proto.jarviscrawlercore.ReplyDTData.repeatedFields_ = [1];
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto suitable for use in Soy templates.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     com.google.apps.jspb.JsClassTemplate.JS_RESERVED_WORDS.
- * @param {boolean=} opt_includeInstance Whether to include the JSPB instance
- *     for transitional soy proto support: http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.toObject = function(opt_includeInstance) {
-  return proto.jarviscrawlercore.ReplyDTData.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Whether to include the JSPB
- *     instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.jarviscrawlercore.ReplyDTData} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.ReplyDTData.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    gamereportsList: jspb.Message.toObjectList(msg.getGamereportsList(),
-    proto.jarviscrawlercore.DTBusinessGameReport.toObject, includeInstance),
-    todaygamedata: (f = msg.getTodaygamedata()) && proto.jarviscrawlercore.DTTodayGameData.toObject(includeInstance, f),
-    checkgameresultgpk: (f = msg.getCheckgameresultgpk()) && proto.jarviscrawlercore.DTGPKCheckGameResult.toObject(includeInstance, f)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.jarviscrawlercore.ReplyDTData}
- */
-proto.jarviscrawlercore.ReplyDTData.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.jarviscrawlercore.ReplyDTData;
-  return proto.jarviscrawlercore.ReplyDTData.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.jarviscrawlercore.ReplyDTData} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.jarviscrawlercore.ReplyDTData}
- */
-proto.jarviscrawlercore.ReplyDTData.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = new proto.jarviscrawlercore.DTBusinessGameReport;
-      reader.readMessage(value,proto.jarviscrawlercore.DTBusinessGameReport.deserializeBinaryFromReader);
-      msg.addGamereports(value);
-      break;
-    case 2:
-      var value = new proto.jarviscrawlercore.DTTodayGameData;
-      reader.readMessage(value,proto.jarviscrawlercore.DTTodayGameData.deserializeBinaryFromReader);
-      msg.setTodaygamedata(value);
-      break;
-    case 3:
-      var value = new proto.jarviscrawlercore.DTGPKCheckGameResult;
-      reader.readMessage(value,proto.jarviscrawlercore.DTGPKCheckGameResult.deserializeBinaryFromReader);
-      msg.setCheckgameresultgpk(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.jarviscrawlercore.ReplyDTData.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.jarviscrawlercore.ReplyDTData} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.jarviscrawlercore.ReplyDTData.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getGamereportsList();
-  if (f.length > 0) {
-    writer.writeRepeatedMessage(
-      1,
-      f,
-      proto.jarviscrawlercore.DTBusinessGameReport.serializeBinaryToWriter
-    );
-  }
-  f = message.getTodaygamedata();
-  if (f != null) {
-    writer.writeMessage(
-      2,
-      f,
-      proto.jarviscrawlercore.DTTodayGameData.serializeBinaryToWriter
-    );
-  }
-  f = message.getCheckgameresultgpk();
-  if (f != null) {
-    writer.writeMessage(
-      3,
-      f,
-      proto.jarviscrawlercore.DTGPKCheckGameResult.serializeBinaryToWriter
-    );
-  }
-};
-
-
-/**
- * repeated DTBusinessGameReport gameReports = 1;
- * @return {!Array<!proto.jarviscrawlercore.DTBusinessGameReport>}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.getGamereportsList = function() {
-  return /** @type{!Array<!proto.jarviscrawlercore.DTBusinessGameReport>} */ (
-    jspb.Message.getRepeatedWrapperField(this, proto.jarviscrawlercore.DTBusinessGameReport, 1));
-};
-
-
-/** @param {!Array<!proto.jarviscrawlercore.DTBusinessGameReport>} value */
-proto.jarviscrawlercore.ReplyDTData.prototype.setGamereportsList = function(value) {
-  jspb.Message.setRepeatedWrapperField(this, 1, value);
-};
-
-
-/**
- * @param {!proto.jarviscrawlercore.DTBusinessGameReport=} opt_value
- * @param {number=} opt_index
- * @return {!proto.jarviscrawlercore.DTBusinessGameReport}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.addGamereports = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 1, opt_value, proto.jarviscrawlercore.DTBusinessGameReport, opt_index);
-};
-
-
-proto.jarviscrawlercore.ReplyDTData.prototype.clearGamereportsList = function() {
-  this.setGamereportsList([]);
-};
-
-
-/**
- * optional DTTodayGameData todayGameData = 2;
- * @return {?proto.jarviscrawlercore.DTTodayGameData}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.getTodaygamedata = function() {
-  return /** @type{?proto.jarviscrawlercore.DTTodayGameData} */ (
-    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.DTTodayGameData, 2));
-};
-
-
-/** @param {?proto.jarviscrawlercore.DTTodayGameData|undefined} value */
-proto.jarviscrawlercore.ReplyDTData.prototype.setTodaygamedata = function(value) {
-  jspb.Message.setWrapperField(this, 2, value);
-};
-
-
-proto.jarviscrawlercore.ReplyDTData.prototype.clearTodaygamedata = function() {
-  this.setTodaygamedata(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.hasTodaygamedata = function() {
-  return jspb.Message.getField(this, 2) != null;
-};
-
-
-/**
- * optional DTGPKCheckGameResult checkGameResultGPK = 3;
- * @return {?proto.jarviscrawlercore.DTGPKCheckGameResult}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.getCheckgameresultgpk = function() {
-  return /** @type{?proto.jarviscrawlercore.DTGPKCheckGameResult} */ (
-    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.DTGPKCheckGameResult, 3));
-};
-
-
-/** @param {?proto.jarviscrawlercore.DTGPKCheckGameResult|undefined} value */
-proto.jarviscrawlercore.ReplyDTData.prototype.setCheckgameresultgpk = function(value) {
-  jspb.Message.setWrapperField(this, 3, value);
-};
-
-
-proto.jarviscrawlercore.ReplyDTData.prototype.clearCheckgameresultgpk = function() {
-  this.setCheckgameresultgpk(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.jarviscrawlercore.ReplyDTData.prototype.hasCheckgameresultgpk = function() {
-  return jspb.Message.getField(this, 3) != null;
-};
-
-
-
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
 proto.jarviscrawlercore.RequestCrunchBaseCompany = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -10168,7 +7846,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110,111,112,113,115,116,117,118,119,120]];
+proto.jarviscrawlercore.RequestCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110,111,112,113,115,116,117,118,119,120,121]];
 
 /**
  * @enum {number}
@@ -10193,7 +7871,8 @@ proto.jarviscrawlercore.RequestCrawler.CrawlerparamCase = {
   TELEGRAPH: 117,
   OABT: 118,
   HAO6V: 119,
-  PUBLICTRANSIT: 120
+  PUBLICTRANSIT: 120,
+  ARTICLE2: 121
 };
 
 /**
@@ -10237,7 +7916,7 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     timeout: jspb.Message.getFieldWithDefault(msg, 3, 0),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.RequestCrunchBaseCompany.toObject(includeInstance, f),
     translate2: (f = msg.getTranslate2()) && proto.jarviscrawlercore.RequestTranslate2.toObject(includeInstance, f),
-    dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.RequestDTData.toObject(includeInstance, f),
+    dtdata: (f = msg.getDtdata()) && dt_pb.RequestDTData.toObject(includeInstance, f),
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.AnalyzePage.toObject(includeInstance, f),
     geoip: (f = msg.getGeoip()) && geoip_pb.RequestGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && techinasia_pb.RequestTechInAsia.toObject(includeInstance, f),
@@ -10253,7 +7932,8 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     telegraph: (f = msg.getTelegraph()) && telegraph_pb.RequestTelegraph.toObject(includeInstance, f),
     oabt: (f = msg.getOabt()) && oabt_pb.RequestOABT.toObject(includeInstance, f),
     hao6v: (f = msg.getHao6v()) && hao6v_pb.RequestHao6v.toObject(includeInstance, f),
-    publictransit: (f = msg.getPublictransit()) && publictransit_pb.RequestPublicTransit.toObject(includeInstance, f)
+    publictransit: (f = msg.getPublictransit()) && publictransit_pb.RequestPublicTransit.toObject(includeInstance, f),
+    article2: (f = msg.getArticle2()) && article2_pb.RequestArticle2.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -10313,8 +7993,8 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       msg.setTranslate2(value);
       break;
     case 102:
-      var value = new proto.jarviscrawlercore.RequestDTData;
-      reader.readMessage(value,proto.jarviscrawlercore.RequestDTData.deserializeBinaryFromReader);
+      var value = new dt_pb.RequestDTData;
+      reader.readMessage(value,dt_pb.RequestDTData.deserializeBinaryFromReader);
       msg.setDtdata(value);
       break;
     case 103:
@@ -10397,6 +8077,11 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       reader.readMessage(value,publictransit_pb.RequestPublicTransit.deserializeBinaryFromReader);
       msg.setPublictransit(value);
       break;
+    case 121:
+      var value = new article2_pb.RequestArticle2;
+      reader.readMessage(value,article2_pb.RequestArticle2.deserializeBinaryFromReader);
+      msg.setArticle2(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -10468,7 +8153,7 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
     writer.writeMessage(
       102,
       f,
-      proto.jarviscrawlercore.RequestDTData.serializeBinaryToWriter
+      dt_pb.RequestDTData.serializeBinaryToWriter
     );
   }
   f = message.getAnalyzepage();
@@ -10599,6 +8284,14 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
       publictransit_pb.RequestPublicTransit.serializeBinaryToWriter
     );
   }
+  f = message.getArticle2();
+  if (f != null) {
+    writer.writeMessage(
+      121,
+      f,
+      article2_pb.RequestArticle2.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -10713,7 +8406,7 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasTranslate2 = function() {
  */
 proto.jarviscrawlercore.RequestCrawler.prototype.getDtdata = function() {
   return /** @type{?proto.jarviscrawlercore.RequestDTData} */ (
-    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.RequestDTData, 102));
+    jspb.Message.getWrapperField(this, dt_pb.RequestDTData, 102));
 };
 
 
@@ -11217,6 +8910,36 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasPublictransit = function() {
 };
 
 
+/**
+ * optional RequestArticle2 article2 = 121;
+ * @return {?proto.jarviscrawlercore.RequestArticle2}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.getArticle2 = function() {
+  return /** @type{?proto.jarviscrawlercore.RequestArticle2} */ (
+    jspb.Message.getWrapperField(this, article2_pb.RequestArticle2, 121));
+};
+
+
+/** @param {?proto.jarviscrawlercore.RequestArticle2|undefined} value */
+proto.jarviscrawlercore.RequestCrawler.prototype.setArticle2 = function(value) {
+  jspb.Message.setOneofWrapperField(this, 121, proto.jarviscrawlercore.RequestCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.RequestCrawler.prototype.clearArticle2 = function() {
+  this.setArticle2(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.RequestCrawler.prototype.hasArticle2 = function() {
+  return jspb.Message.getField(this, 121) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -11243,7 +8966,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110,111,112,113,115,116,117,118,119,120]];
+proto.jarviscrawlercore.ReplyCrawler.oneofGroups_ = [[100,101,102,103,105,106,107,108,109,110,111,112,113,115,116,117,118,119,120,121]];
 
 /**
  * @enum {number}
@@ -11268,7 +8991,8 @@ proto.jarviscrawlercore.ReplyCrawler.CrawlerresultCase = {
   TELEGRAPH: 117,
   OABT: 118,
   HAO6V: 119,
-  PUBLICTRANSIT: 120
+  PUBLICTRANSIT: 120,
+  ARTICLE2: 121
 };
 
 /**
@@ -11311,7 +9035,7 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     statistics: (f = msg.getStatistics()) && proto.jarviscrawlercore.CrawlerStatistics.toObject(includeInstance, f),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f),
-    dtdata: (f = msg.getDtdata()) && proto.jarviscrawlercore.ReplyDTData.toObject(includeInstance, f),
+    dtdata: (f = msg.getDtdata()) && dt_pb.ReplyDTData.toObject(includeInstance, f),
     analyzepage: (f = msg.getAnalyzepage()) && proto.jarviscrawlercore.ReplyAnalyzePage.toObject(includeInstance, f),
     geoip: (f = msg.getGeoip()) && geoip_pb.ReplyGeoIP.toObject(includeInstance, f),
     techinasia: (f = msg.getTechinasia()) && techinasia_pb.ReplyTechInAsia.toObject(includeInstance, f),
@@ -11327,7 +9051,8 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     telegraph: (f = msg.getTelegraph()) && telegraph_pb.ReplyTelegraph.toObject(includeInstance, f),
     oabt: (f = msg.getOabt()) && oabt_pb.ReplyOABT.toObject(includeInstance, f),
     hao6v: (f = msg.getHao6v()) && hao6v_pb.ReplyHao6v.toObject(includeInstance, f),
-    publictransit: (f = msg.getPublictransit()) && publictransit_pb.ReplyPublicTransit.toObject(includeInstance, f)
+    publictransit: (f = msg.getPublictransit()) && publictransit_pb.ReplyPublicTransit.toObject(includeInstance, f),
+    article2: (f = msg.getArticle2()) && article2_pb.ReplyArticle2.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -11384,8 +9109,8 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       msg.setTranslateresult(value);
       break;
     case 102:
-      var value = new proto.jarviscrawlercore.ReplyDTData;
-      reader.readMessage(value,proto.jarviscrawlercore.ReplyDTData.deserializeBinaryFromReader);
+      var value = new dt_pb.ReplyDTData;
+      reader.readMessage(value,dt_pb.ReplyDTData.deserializeBinaryFromReader);
       msg.setDtdata(value);
       break;
     case 103:
@@ -11468,6 +9193,11 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       reader.readMessage(value,publictransit_pb.ReplyPublicTransit.deserializeBinaryFromReader);
       msg.setPublictransit(value);
       break;
+    case 121:
+      var value = new article2_pb.ReplyArticle2;
+      reader.readMessage(value,article2_pb.ReplyArticle2.deserializeBinaryFromReader);
+      msg.setArticle2(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -11533,7 +9263,7 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
     writer.writeMessage(
       102,
       f,
-      proto.jarviscrawlercore.ReplyDTData.serializeBinaryToWriter
+      dt_pb.ReplyDTData.serializeBinaryToWriter
     );
   }
   f = message.getAnalyzepage();
@@ -11664,6 +9394,14 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       publictransit_pb.ReplyPublicTransit.serializeBinaryToWriter
     );
   }
+  f = message.getArticle2();
+  if (f != null) {
+    writer.writeMessage(
+      121,
+      f,
+      article2_pb.ReplyArticle2.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -11778,7 +9516,7 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.hasTranslateresult = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.getDtdata = function() {
   return /** @type{?proto.jarviscrawlercore.ReplyDTData} */ (
-    jspb.Message.getWrapperField(this, proto.jarviscrawlercore.ReplyDTData, 102));
+    jspb.Message.getWrapperField(this, dt_pb.ReplyDTData, 102));
 };
 
 
@@ -12282,6 +10020,36 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.hasPublictransit = function() {
 };
 
 
+/**
+ * optional ReplyArticle2 article2 = 121;
+ * @return {?proto.jarviscrawlercore.ReplyArticle2}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getArticle2 = function() {
+  return /** @type{?proto.jarviscrawlercore.ReplyArticle2} */ (
+    jspb.Message.getWrapperField(this, article2_pb.ReplyArticle2, 121));
+};
+
+
+/** @param {?proto.jarviscrawlercore.ReplyArticle2|undefined} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setArticle2 = function(value) {
+  jspb.Message.setOneofWrapperField(this, 121, proto.jarviscrawlercore.ReplyCrawler.oneofGroups_[0], value);
+};
+
+
+proto.jarviscrawlercore.ReplyCrawler.prototype.clearArticle2 = function() {
+  this.setArticle2(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.hasArticle2 = function() {
+  return jspb.Message.getField(this, 121) != null;
+};
+
+
 
 /**
  * Generated by JsPbCodeGenerator.
@@ -12669,49 +10437,6 @@ proto.jarviscrawlercore.ParagraphType = {
 /**
  * @enum {number}
  */
-proto.jarviscrawlercore.DTDataType = {
-  DT_DT_BUSINESSGAMEREPORT: 0,
-  DT_DT_TODAYGAMEDATA: 1,
-  DT_DT_GPKCHECKGAMERESULT: 2
-};
-
-/**
- * @enum {number}
- */
-proto.jarviscrawlercore.DTGameResultErrCode = {
-  DTGRE_NOERR: 0,
-  DTGRE_GAMECODE: 1,
-  DTGRE_LINES: 2,
-  DTGRE_MONEYOFF: 3,
-  DTGRE_WINBETOFF: 4,
-  DTGRE_GAMEDATA: 5,
-  DTGRE_GAMERESULT_BET: 6,
-  DTGRE_GAMERESULT_WIN: 7,
-  DTGRE_GAMERESULT_SUM_WIN: 8,
-  DTGRE_ISCOMPLETE: 9,
-  DTGRE_GAMESTATE: 10,
-  DTGRE_GAMERESULT: 11,
-  DTGRE_GAMERESULT_LINES: 12,
-  DTGRE_GAMERESULT_TIMES: 13,
-  DTGRE_NOCHILDREN: 15,
-  DTGRE_CHILDREN_ERROR: 16,
-  DTGRE_SUBGAME_NOTCOMPLETE: 17,
-  DTGRE_DTBASEID_ERROR: 18,
-  DTGRE_NODTBASEID: 19,
-  DTGRE_DTBASEID_NOBASEID: 20,
-  DTGRE_DTBASEID_BASEID_ERROR: 21,
-  DTGRE_DTBASEID_FREE: 22,
-  DTGRE_DTBASEID_RESPIN: 23,
-  DTGRE_INVALID_FGNUMS: 24,
-  DTGRE_ICON404: 25,
-  DTGRE_SUBGAME_REPEATED_COMPLETE: 26,
-  DTGRE_SUBGAME_INVALID_JP: 27,
-  DTGRE_INVALID_JPWIN: 28
-};
-
-/**
- * @enum {number}
- */
 proto.jarviscrawlercore.CrawlerType = {
   CT_TRANSLATE2: 0,
   CT_CB_COMPANY: 1,
@@ -12731,7 +10456,8 @@ proto.jarviscrawlercore.CrawlerType = {
   CT_TELEGRAPH: 17,
   CT_OABT: 18,
   CT_HAO6V: 19,
-  CT_PUBLICTRANSIT: 20
+  CT_PUBLICTRANSIT: 20,
+  CT_ARTICLE2: 21
 };
 
 /**

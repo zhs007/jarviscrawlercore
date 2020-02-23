@@ -1,0 +1,51 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// Article2Mode - article2 mode
+enum Article2Mode {
+    // A2M_SMZDM_ARTICLES - smzdm articles
+    A2M_SMZDM_ARTICLES = 0;
+    // A2M_SMZDM_ARTICLE - smzdm article
+    A2M_SMZDM_ARTICLE = 1;
+}
+
+// ParagraphNode2 - paragraph node2
+message ParagraphNode2 {
+    int32 level = 1;
+    string img = 2;
+    string imgurl = 3;
+    string text = 4;
+}
+
+// Article2 - article2
+message Article2 {
+    string title = 1;
+    repeated string author = 2;
+    string writeTime = 3;
+    string summary = 4;
+    string url = 5;
+    repeated ParagraphNode2 nodes = 6;
+    string website = 7;
+}
+
+// ArticleList2 - article list2
+message ArticleList2 {
+    repeated Article2 articles = 1;
+    string website = 2;
+}
+
+// RequestArticle2 - request article2
+message RequestArticle2 {
+    Article2Mode mode = 1;
+    string url = 2;
+}
+
+// ReplyArticle2 - reply article2
+message ReplyArticle2 {
+    Article2Mode mode = 1;
+
+    oneof reply {
+        ArticleList2 articles = 100;
+        Article2 article = 101;
+    }
+}

@@ -1,0 +1,85 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// TechInAsiaCompany - TechInAsia Company
+message TechInAsiaCompany {
+    string name = 1;
+    string avatar = 2;
+    repeated string location = 3;
+    repeated string categories = 4;
+    int32 employees = 5;
+    string introduction = 6;
+    repeated string links = 7;
+    string companyCode = 8;
+}
+
+// TechInAsiaJob - TechInAsia Job
+message TechInAsiaJob {
+    string companyName = 1;
+    string title = 2;
+    repeated string location = 3;
+    int32 minSalary = 4;
+    int32 maxSalary = 5;
+    string currency = 6;
+    int64 createTime = 7;
+    int64 updateTime = 8;
+    string jobFunction = 9;
+    string jobType = 10;
+    string experience = 11;
+    int32 vacancies = 12;
+    string description = 13;
+    repeated string requiredSkills = 14;
+    string culture = 15;
+    string companyCode = 16;
+    string jobCode = 17;
+    repeated string subType = 18;
+}
+
+// TechInAsiaJobTag - TechInAsia Job tag
+message TechInAsiaJobTag {
+    string tag = 1;
+    repeated string subTags = 2;
+}
+
+// TechInAsiaJobTagList - TechInAsia Job tag list
+message TechInAsiaJobTagList {
+    repeated TechInAsiaJobTag tags = 1;
+}
+
+// TechInAsiaJobList - TechInAsia JobList
+message TechInAsiaJobList {
+    repeated TechInAsiaJob jobs = 1;
+}
+
+enum TechInAsiaMode {
+    // TIAM_COMPANY - company
+    TIAM_COMPANY = 0;
+    // TIAM_JOB - job
+    TIAM_JOB = 1;
+    // TIAM_JOBLIST - job list
+    TIAM_JOBLIST = 2;
+    // TIAM_JOBTAG - job tag
+    TIAM_JOBTAG = 3;
+}
+
+// RequestTechInAsia - request techinasia
+message RequestTechInAsia {
+    TechInAsiaMode mode = 1;
+    string companyCode = 2;
+    string jobCode = 3;
+    int32 jobNums = 4;
+    string jobTag = 5;
+    string jobSubTag = 6;
+}
+
+// ReplyTechInAsia - reply techinasia
+message ReplyTechInAsia {
+    TechInAsiaMode mode = 1;
+
+    oneof reply {
+        TechInAsiaCompany company = 100;
+        TechInAsiaJob job = 101;
+        TechInAsiaJobList jobs = 102;
+        TechInAsiaJobTagList tags = 103;
+    }    
+}

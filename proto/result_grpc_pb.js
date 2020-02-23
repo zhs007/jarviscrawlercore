@@ -15,6 +15,9 @@ var telegraph_pb = require('./telegraph_pb.js');
 var oabt_pb = require('./oabt_pb.js');
 var hao6v_pb = require('./hao6v_pb.js');
 var publictransit_pb = require('./publictransit_pb.js');
+var jd_pb = require('./jd_pb.js');
+var techinasia_pb = require('./techinasia_pb.js');
+var geoip_pb = require('./geoip_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {

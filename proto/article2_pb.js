@@ -263,7 +263,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.Article2.repeatedFields_ = [2,6];
+proto.jarviscrawlercore.Article2.repeatedFields_ = [2,6,8];
 
 
 
@@ -301,7 +301,8 @@ proto.jarviscrawlercore.Article2.toObject = function(includeInstance, msg) {
     url: jspb.Message.getFieldWithDefault(msg, 5, ""),
     nodesList: jspb.Message.toObjectList(msg.getNodesList(),
     proto.jarviscrawlercore.ParagraphNode2.toObject, includeInstance),
-    website: jspb.Message.getFieldWithDefault(msg, 7, "")
+    website: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    headimgsList: jspb.Message.getRepeatedField(msg, 8)
   };
 
   if (includeInstance) {
@@ -366,6 +367,10 @@ proto.jarviscrawlercore.Article2.deserializeBinaryFromReader = function(msg, rea
     case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setWebsite(value);
+      break;
+    case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addHeadimgs(value);
       break;
     default:
       reader.skipField();
@@ -443,6 +448,13 @@ proto.jarviscrawlercore.Article2.serializeBinaryToWriter = function(message, wri
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getHeadimgsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      8,
       f
     );
   }
@@ -581,6 +593,35 @@ proto.jarviscrawlercore.Article2.prototype.getWebsite = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.Article2.prototype.setWebsite = function(value) {
   jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated string headimgs = 8;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.Article2.prototype.getHeadimgsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.Article2.prototype.setHeadimgsList = function(value) {
+  jspb.Message.setField(this, 8, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.Article2.prototype.addHeadimgs = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 8, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.Article2.prototype.clearHeadimgsList = function() {
+  this.setHeadimgsList([]);
 };
 
 

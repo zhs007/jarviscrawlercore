@@ -4,12 +4,12 @@ const log = require('../log');
 const {disableDownloadOthersEx} = require('../page.utils');
 
 /**
- * com36krNews - 36kr news
+ * com36krNewsFlashes - 36kr newsflashes
  * @param {object} browser - browser
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function com36krNews(browser, timeout) {
+async function com36krNewsFlashes(browser, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -35,14 +35,14 @@ async function com36krNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('com36krNews.setViewport', awaiterr);
+    log.error('com36krNewsFlashes.setViewport', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
-  const baseurl = 'https://36kr.com/information/web_news';
+  const baseurl = 'https://36kr.com/newsflashes';
 
   await page
       .goto(baseurl, {
@@ -53,7 +53,7 @@ async function com36krNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('com36krNews.goto', awaiterr);
+    log.error('com36krNewsFlashes.goto', awaiterr);
 
     await page.close();
 
@@ -62,9 +62,9 @@ async function com36krNews(browser, timeout) {
 
   const isdone = await waitAllResponse.waitDone(timeout);
   if (!isdone) {
-    const err = new Error('com36krNews.waitDone timeout');
+    const err = new Error('com36krNewsFlashes.waitDone timeout');
 
-    log.error('com36krNews.waitDone', err);
+    log.error('com36krNewsFlashes.waitDone', err);
 
     await page.close();
 
@@ -72,43 +72,31 @@ async function com36krNews(browser, timeout) {
   }
 
   const lst = await page
-      .$$eval('.kr-flow-article-item', (eles) => {
+      .$$eval('.newsflash-item', (eles) => {
         const lst = [];
         for (let i = 0; i < eles.length; ++i) {
-          const curnode = {headimgs: [], tags: []};
-          const lsttag = eles[i].getElementsByClassName('article-item-channel');
-          if (lsttag.length > 0) {
-            if (lsttag[0].innerText != '推荐' && lsttag[0].innerText != '其他') {
-              curnode.tags.push(lsttag[0].innerText);
-            }
-          }
+          const curnode = {};
 
-          const lsttag2 = eles[i].getElementsByClassName('kr-flow-bar-motif');
-          if (lsttag2.length > 0) {
-            const lsttag2a = lsttag2[0].getElementsByTagName('a');
-            if (lsttag2a.length > 0) {
-              if (lsttag2a[0].innerText != '其他') {
-                curnode.tags.push(lsttag2a[0].innerText);
-              }
-            }
-          }
-
-          const lsttitle = eles[i].getElementsByClassName('article-item-title');
+          const lsttitle = eles[i].getElementsByClassName('item-title');
           if (lsttitle.length > 0) {
             curnode.title = lsttitle[0].innerText;
             curnode.url = lsttitle[0].href;
           }
 
-          const lstimg = eles[i].getElementsByTagName('img');
-          if (lstimg.length > 0) {
-            curnode.headimgs.push(lstimg[0].src);
-          }
-
-          const lstinfo = eles[i].getElementsByClassName(
-              'article-item-description',
-          );
+          const lstinfo = eles[i].getElementsByClassName('item-desc');
           if (lstinfo.length > 0) {
-            curnode.summary = lstinfo[0].innerText;
+            const cn = lstinfo[0];
+            for (let j = 0; j < cn.childNodes.length; ++j) {
+              if (cn.childNodes[j].nodeName == '#text') {
+                curnode.summary = cn.childNodes[j].nodeValue;
+                break;
+              }
+            }
+
+            const lsta = cn.getElementsByTagName('a');
+            if (lsta.length > 0) {
+              curnode.srclink = lsta[0].href;
+            }
           }
 
           lst.push(curnode);
@@ -120,7 +108,7 @@ async function com36krNews(browser, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('com36krNews.$$eval .kr-flow-article-item', awaiterr);
+    log.error('com36krNewsFlashes.$$eval .newsflash-item', awaiterr);
 
     await page.close();
 
@@ -134,4 +122,4 @@ async function com36krNews(browser, timeout) {
   return {ret: ret};
 }
 
-exports.com36krNews = com36krNews;
+exports.com36krNewsFlashes = com36krNewsFlashes;

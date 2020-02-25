@@ -28,6 +28,7 @@ message Article2 {
     string website = 7;
     repeated string headimgs = 8;
     repeated string tags = 9;
+    string srclink = 10;
 }
 
 // ArticleList2 - article list2

@@ -320,6 +320,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "36kr.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["36kr", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

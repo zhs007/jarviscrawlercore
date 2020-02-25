@@ -303,7 +303,8 @@ proto.jarviscrawlercore.Article2.toObject = function(includeInstance, msg) {
     proto.jarviscrawlercore.ParagraphNode2.toObject, includeInstance),
     website: jspb.Message.getFieldWithDefault(msg, 7, ""),
     headimgsList: jspb.Message.getRepeatedField(msg, 8),
-    tagsList: jspb.Message.getRepeatedField(msg, 9)
+    tagsList: jspb.Message.getRepeatedField(msg, 9),
+    srclink: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -376,6 +377,10 @@ proto.jarviscrawlercore.Article2.deserializeBinaryFromReader = function(msg, rea
     case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
+      break;
+    case 10:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setSrclink(value);
       break;
     default:
       reader.skipField();
@@ -467,6 +472,13 @@ proto.jarviscrawlercore.Article2.serializeBinaryToWriter = function(message, wri
   if (f.length > 0) {
     writer.writeRepeatedString(
       9,
+      f
+    );
+  }
+  f = message.getSrclink();
+  if (f.length > 0) {
+    writer.writeString(
+      10,
       f
     );
   }
@@ -663,6 +675,21 @@ proto.jarviscrawlercore.Article2.prototype.addTags = function(value, opt_index) 
 
 proto.jarviscrawlercore.Article2.prototype.clearTagsList = function() {
   this.setTagsList([]);
+};
+
+
+/**
+ * optional string srclink = 10;
+ * @return {string}
+ */
+proto.jarviscrawlercore.Article2.prototype.getSrclink = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 10, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.Article2.prototype.setSrclink = function(value) {
+  jspb.Message.setProto3StringField(this, 10, value);
 };
 
 

@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {com36krNews} = require('./news');
+const {com36krNewsFlashes} = require('./newsflashes');
 const log = require('../log');
 
 /**
@@ -49,6 +50,9 @@ async function exec36kr(program, version) {
 
           if (mode == 'news') {
             const ret = await com36krNews(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'newsflashes') {
+            const ret = await com36krNewsFlashes(browser, timeout);
             log.console(JSON.stringify(ret));
           }
 

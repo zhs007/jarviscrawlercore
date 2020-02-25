@@ -35,6 +35,7 @@ const {execTokyoMetro} = require('../src/tokyometro/exec');
 const {execKotsuMetroTokyo} = require('../src/kotsumetrotokyo/exec');
 const {execJRailPass} = require('../src/jrailpass/exec');
 const {execSmzdm} = require('../src/smzdm/exec');
+const {exec36kr} = require('../src/36kr/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -382,5 +383,6 @@ execTokyoMetro(program, VERSION);
 execKotsuMetroTokyo(program, VERSION);
 execJRailPass(program, VERSION);
 execSmzdm(program, VERSION);
+exec36kr(program, VERSION);
 
 program.parse(process.argv);

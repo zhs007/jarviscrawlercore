@@ -27,6 +27,7 @@ message Article2 {
     repeated ParagraphNode2 nodes = 6;
     string website = 7;
     repeated string headimgs = 8;
+    repeated string tags = 9;
 }
 
 // ArticleList2 - article list2

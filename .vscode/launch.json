@@ -313,6 +313,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "36kr.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["36kr", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

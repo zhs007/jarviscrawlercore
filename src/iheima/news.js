@@ -4,12 +4,12 @@ const log = require('../log');
 const {disableDownloadOthersEx} = require('../page.utils');
 
 /**
- * tmtpostNews - tmtpost news
+ * iheimaNews - iheima news
  * @param {object} browser - browser
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function tmtpostNews(browser, timeout) {
+async function iheimaNews(browser, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -35,14 +35,14 @@ async function tmtpostNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('tmtpostNews.setViewport', awaiterr);
+    log.error('iheimaNews.setViewport', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
-  const baseurl = 'https://www.tmtpost.com/';
+  const baseurl = 'http://www.iheima.com/';
 
   await page
       .goto(baseurl, {
@@ -53,7 +53,7 @@ async function tmtpostNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('tmtpostNews.goto', awaiterr);
+    log.error('iheimaNews.goto', awaiterr);
 
     await page.close();
 
@@ -62,9 +62,9 @@ async function tmtpostNews(browser, timeout) {
 
   const isdone = await waitAllResponse.waitDone(timeout);
   if (!isdone) {
-    const err = new Error('tmtpostNews.waitDone timeout');
+    const err = new Error('iheimaNews.waitDone timeout');
 
-    log.error('tmtpostNews.waitDone', err);
+    log.error('iheimaNews.waitDone', err);
 
     await page.close();
 
@@ -72,19 +72,19 @@ async function tmtpostNews(browser, timeout) {
   }
 
   const lst = await page
-      .$$eval('.post_part.clear', (eles) => {
+      .$$eval('.item-wrap.clearfix', (eles) => {
         const lst = [];
         for (let i = 0; i < eles.length; ++i) {
           const curnode = {headimgs: [], tags: []};
-          const lsttag = eles[i].getElementsByClassName('tag');
-          if (lsttag.length > 0) {
-            const lsttaga = lsttag[0].getElementsByTagName('a');
-            if (lsttaga.length > 0) {
-              curnode.tags.push(lsttaga[0].innerText);
-            }
-          }
+          // const lsttag = eles[i].getElementsByClassName('tag');
+          // if (lsttag.length > 0) {
+          //   const lsttaga = lsttag[0].getElementsByTagName('a');
+          //   if (lsttaga.length > 0) {
+          //     curnode.tags.push(lsttaga[0].innerText);
+          //   }
+          // }
 
-          const lsttitle = eles[i].getElementsByTagName('h3');
+          const lsttitle = eles[i].getElementsByClassName('title');
           if (lsttitle.length > 0) {
             curnode.title = lsttitle[0].innerText;
             // curnode.url = lsttitle[0].href;
@@ -97,9 +97,7 @@ async function tmtpostNews(browser, timeout) {
 
           const lstimg = eles[i].getElementsByTagName('img');
           if (lstimg.length > 0) {
-            if (lstimg[0].dataset && lstimg[0].dataset.original) {
-              curnode.headimgs.push(lstimg[0].dataset.original);
-            }
+            curnode.headimgs.push(lstimg[0].src);
           }
 
           const lstinfo = eles[i].getElementsByClassName('summary');
@@ -116,7 +114,7 @@ async function tmtpostNews(browser, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tmtpostNews.$$eval .post_part.clear', awaiterr);
+    log.error('iheimaNews.$$eval .post_part.clear', awaiterr);
 
     await page.close();
 
@@ -130,4 +128,4 @@ async function tmtpostNews(browser, timeout) {
   return {ret: ret};
 }
 
-exports.tmtpostNews = tmtpostNews;
+exports.iheimaNews = iheimaNews;

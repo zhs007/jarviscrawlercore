@@ -327,6 +327,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "tmtpost.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmtpost", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

@@ -92,7 +92,7 @@ async function tmtpostNews(browser, timeout) {
 
           const lsta = eles[i].getElementsByTagName('a');
           if (lsta.length > 0) {
-            curnode.url = lsttitle[0].href;
+            curnode.url = lsta[0].href;
           }
 
           const lstimg = eles[i].getElementsByTagName('img');

@@ -341,6 +341,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "lieyunwang.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["lieyunwang", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

@@ -38,6 +38,7 @@ const {execSmzdm} = require('../src/smzdm/exec');
 const {exec36kr} = require('../src/36kr/exec');
 const {execTmtpost} = require('../src/tmtpost/exec');
 const {execIheima} = require('../src/iheima/exec');
+const {execLieyunwang} = require('../src/lieyunwang/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -388,5 +389,6 @@ execSmzdm(program, VERSION);
 exec36kr(program, VERSION);
 execTmtpost(program, VERSION);
 execIheima(program, VERSION);
+execLieyunwang(program, VERSION);
 
 program.parse(process.argv);

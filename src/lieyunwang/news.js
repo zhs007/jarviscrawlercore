@@ -4,12 +4,12 @@ const log = require('../log');
 const {disableDownloadOthersEx} = require('../page.utils');
 
 /**
- * iheimaNews - iheima news
+ * lieyunwangNews - lieyunwang news
  * @param {object} browser - browser
  * @param {number} timeout - timeout in microseconds
  * @return {object} ret - {error, ret}
  */
-async function iheimaNews(browser, timeout) {
+async function lieyunwangNews(browser, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
@@ -35,14 +35,14 @@ async function iheimaNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('iheimaNews.setViewport', awaiterr);
+    log.error('lieyunwangNews.setViewport', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
-  const baseurl = 'http://www.iheima.com/';
+  const baseurl = 'https://www.lieyunwang.com/archives';
 
   await page
       .goto(baseurl, {
@@ -53,7 +53,7 @@ async function iheimaNews(browser, timeout) {
       });
 
   if (awaiterr) {
-    log.error('iheimaNews.goto', awaiterr);
+    log.error('lieyunwangNews.goto', awaiterr);
 
     await page.close();
 
@@ -62,9 +62,9 @@ async function iheimaNews(browser, timeout) {
 
   const isdone = await waitAllResponse.waitDone(timeout);
   if (!isdone) {
-    const err = new Error('iheimaNews.waitDone timeout');
+    const err = new Error('lieyunwangNews.waitDone timeout');
 
-    log.error('iheimaNews.waitDone', err);
+    log.error('lieyunwangNews.waitDone', err);
 
     await page.close();
 
@@ -72,7 +72,8 @@ async function iheimaNews(browser, timeout) {
   }
 
   const lst = await page
-      .$$eval('.item-wrap.clearfix', (eles) => {
+      .$$eval('.article-bar.clearfix', (eles) => {
+        console.log(eles);
         const lst = [];
         for (let i = 0; i < eles.length; ++i) {
           const curnode = {headimgs: [], tags: []};
@@ -84,10 +85,10 @@ async function iheimaNews(browser, timeout) {
           //   }
           // }
 
-          const lsttitle = eles[i].getElementsByClassName('title');
+          const lsttitle = eles[i].getElementsByTagName('h2');
           if (lsttitle.length > 0) {
             curnode.title = lsttitle[0].innerText;
-            // curnode.url = lsttitle[0].href;
+          // curnode.url = lsttitle[0].href;
           }
 
           const lsta = eles[i].getElementsByTagName('a');
@@ -97,10 +98,12 @@ async function iheimaNews(browser, timeout) {
 
           const lstimg = eles[i].getElementsByTagName('img');
           if (lstimg.length > 0) {
-            curnode.headimgs.push(lstimg[0].src);
+            if (lstimg[0].dataset && lstimg[0].dataset.src) {
+              curnode.headimgs.push(lstimg[0].dataset.src);
+            }
           }
 
-          const lstinfo = eles[i].getElementsByClassName('summary');
+          const lstinfo = eles[i].getElementsByClassName('article-digest mt10');
           if (lstinfo.length > 0) {
             curnode.summary = lstinfo[0].innerText;
           }
@@ -114,7 +117,7 @@ async function iheimaNews(browser, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('iheimaNews.$$eval .post_part.clear', awaiterr);
+    log.error('lieyunwangNews.$$eval .post_part.clear', awaiterr);
 
     await page.close();
 
@@ -128,4 +131,4 @@ async function iheimaNews(browser, timeout) {
   return {ret: ret};
 }
 
-exports.iheimaNews = iheimaNews;
+exports.lieyunwangNews = lieyunwangNews;

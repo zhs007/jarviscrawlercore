@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {lieyunwangNews} = require('./news');
+const {lieyunwangNewsFlashes} = require('./newsflashes');
 const log = require('../log');
 
 /**
@@ -49,6 +50,9 @@ async function execLieyunwang(program, version) {
 
           if (mode == 'news') {
             const ret = await lieyunwangNews(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'newsflashes') {
+            const ret = await lieyunwangNewsFlashes(browser, timeout);
             log.console(JSON.stringify(ret));
           }
 

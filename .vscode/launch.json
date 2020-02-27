@@ -355,6 +355,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "lieyunwang.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["lieyunwang", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

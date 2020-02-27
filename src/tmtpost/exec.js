@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {tmtpostNews} = require('./news');
+const {tmtpostNewsFlashes} = require('./newsflashes');
 const log = require('../log');
 
 /**
@@ -49,6 +50,9 @@ async function execTmtpost(program, version) {
 
           if (mode == 'news') {
             const ret = await tmtpostNews(browser, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'newsflashes') {
+            const ret = await tmtpostNewsFlashes(browser, timeout);
             log.console(JSON.stringify(ret));
           }
 

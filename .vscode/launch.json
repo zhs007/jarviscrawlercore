@@ -334,6 +334,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "tmtpost.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmtpost", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "iheima.news",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["iheima", "news", "-h", "false"]

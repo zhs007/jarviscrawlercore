@@ -39,6 +39,7 @@ const {exec36kr} = require('../src/36kr/exec');
 const {execTmtpost} = require('../src/tmtpost/exec');
 const {execIheima} = require('../src/iheima/exec');
 const {execLieyunwang} = require('../src/lieyunwang/exec');
+const {execBaijingapp} = require('../src/baijingapp/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -390,5 +391,6 @@ exec36kr(program, VERSION);
 execTmtpost(program, VERSION);
 execIheima(program, VERSION);
 execLieyunwang(program, VERSION);
+execBaijingapp(program, VERSION);
 
 program.parse(process.argv);

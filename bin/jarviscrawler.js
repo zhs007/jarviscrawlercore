@@ -40,6 +40,7 @@ const {execTmtpost} = require('../src/tmtpost/exec');
 const {execIheima} = require('../src/iheima/exec');
 const {execLieyunwang} = require('../src/lieyunwang/exec');
 const {execBaijingapp} = require('../src/baijingapp/exec');
+const {execGeekpark} = require('../src/geekpark/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -392,5 +393,6 @@ execTmtpost(program, VERSION);
 execIheima(program, VERSION);
 execLieyunwang(program, VERSION);
 execBaijingapp(program, VERSION);
+execGeekpark(program, VERSION);
 
 program.parse(process.argv);

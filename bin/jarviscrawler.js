@@ -34,6 +34,13 @@ const {execHao6v} = require('../src/hao6v/exec');
 const {execTokyoMetro} = require('../src/tokyometro/exec');
 const {execKotsuMetroTokyo} = require('../src/kotsumetrotokyo/exec');
 const {execJRailPass} = require('../src/jrailpass/exec');
+const {execSmzdm} = require('../src/smzdm/exec');
+const {exec36kr} = require('../src/36kr/exec');
+const {execTmtpost} = require('../src/tmtpost/exec');
+const {execIheima} = require('../src/iheima/exec');
+const {execLieyunwang} = require('../src/lieyunwang/exec');
+const {execBaijingapp} = require('../src/baijingapp/exec');
+const {execGeekpark} = require('../src/geekpark/exec');
 const fs = require('fs');
 const log = require('../src/log');
 
@@ -380,5 +387,12 @@ execHao6v(program, VERSION);
 execTokyoMetro(program, VERSION);
 execKotsuMetroTokyo(program, VERSION);
 execJRailPass(program, VERSION);
+execSmzdm(program, VERSION);
+exec36kr(program, VERSION);
+execTmtpost(program, VERSION);
+execIheima(program, VERSION);
+execLieyunwang(program, VERSION);
+execBaijingapp(program, VERSION);
+execGeekpark(program, VERSION);
 
 program.parse(process.argv);

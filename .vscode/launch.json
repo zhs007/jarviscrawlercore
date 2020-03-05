@@ -306,6 +306,76 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "smzdm.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["smzdm", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "36kr.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["36kr", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "36kr.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["36kr", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tmtpost.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmtpost", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "tmtpost.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tmtpost", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "iheima.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["iheima", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "lieyunwang.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["lieyunwang", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "lieyunwang.newsflashes",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["lieyunwang", "newsflashes", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "baijingapp.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["baijingapp", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "geekpark.news",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["geekpark", "news", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

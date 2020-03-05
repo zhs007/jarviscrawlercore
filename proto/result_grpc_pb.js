@@ -15,6 +15,11 @@ var telegraph_pb = require('./telegraph_pb.js');
 var oabt_pb = require('./oabt_pb.js');
 var hao6v_pb = require('./hao6v_pb.js');
 var publictransit_pb = require('./publictransit_pb.js');
+var jd_pb = require('./jd_pb.js');
+var techinasia_pb = require('./techinasia_pb.js');
+var geoip_pb = require('./geoip_pb.js');
+var dt_pb = require('./dt_pb.js');
+var article2_pb = require('./article2_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {
@@ -50,14 +55,14 @@ function deserialize_jarviscrawlercore_ReplyCrawlerStream(buffer_arg) {
 }
 
 function serialize_jarviscrawlercore_ReplyDTData(arg) {
-  if (!(arg instanceof result_pb.ReplyDTData)) {
+  if (!(arg instanceof dt_pb.ReplyDTData)) {
     throw new Error('Expected argument of type jarviscrawlercore.ReplyDTData');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_jarviscrawlercore_ReplyDTData(buffer_arg) {
-  return result_pb.ReplyDTData.deserializeBinary(new Uint8Array(buffer_arg));
+  return dt_pb.ReplyDTData.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_jarviscrawlercore_ReplyTranslate(arg) {
@@ -105,14 +110,14 @@ function deserialize_jarviscrawlercore_RequestCrawler(buffer_arg) {
 }
 
 function serialize_jarviscrawlercore_RequestDTData(arg) {
-  if (!(arg instanceof result_pb.RequestDTData)) {
+  if (!(arg instanceof dt_pb.RequestDTData)) {
     throw new Error('Expected argument of type jarviscrawlercore.RequestDTData');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_jarviscrawlercore_RequestDTData(buffer_arg) {
-  return result_pb.RequestDTData.deserializeBinary(new Uint8Array(buffer_arg));
+  return dt_pb.RequestDTData.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_jarviscrawlercore_RequestTranslate(arg) {
@@ -170,8 +175,8 @@ getDTData: {
     path: '/jarviscrawlercore.JarvisCrawlerService/getDTData',
     requestStream: false,
     responseStream: false,
-    requestType: result_pb.RequestDTData,
-    responseType: result_pb.ReplyDTData,
+    requestType: dt_pb.RequestDTData,
+    responseType: dt_pb.ReplyDTData,
     requestSerialize: serialize_jarviscrawlercore_RequestDTData,
     requestDeserialize: deserialize_jarviscrawlercore_RequestDTData,
     responseSerialize: serialize_jarviscrawlercore_ReplyDTData,

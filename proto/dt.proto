@@ -1,0 +1,177 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// DTDataType -
+enum DTDataType {
+    DT_DT_BUSINESSGAMEREPORT = 0;
+    DT_DT_TODAYGAMEDATA = 1;
+    DT_DT_GPKCHECKGAMERESULT = 2;
+}
+
+// DTGameResultErrCode -
+enum DTGameResultErrCode {
+    // no error
+    DTGRE_NOERR = 0;
+    // id.gamecode != gamecode
+    DTGRE_GAMECODE = 1;
+    // invalid lines
+    DTGRE_LINES = 2;
+    // moneyEnd != moneyStart + off
+    DTGRE_MONEYOFF = 3;
+    // off != win - bet
+    DTGRE_WINBETOFF = 4;
+    // invalid gamedata
+    DTGRE_GAMEDATA = 5;
+    // invalid gameresult bet
+    DTGRE_GAMERESULT_BET = 6;
+    // invalid gameresult win
+    DTGRE_GAMERESULT_WIN = 7;
+    // invalid gameresult sumwin
+    DTGRE_GAMERESULT_SUM_WIN = 8;
+    // invalid iscomplete
+    DTGRE_ISCOMPLETE = 9;
+    // invalid gamestate
+    DTGRE_GAMESTATE = 10;    
+    // invalid gameresult
+    DTGRE_GAMERESULT = 11;
+    // invalid gameresult lines
+    DTGRE_GAMERESULT_LINES = 12;
+    // invalid gameresult times
+    DTGRE_GAMERESULT_TIMES = 13;
+    // no children
+    DTGRE_NOCHILDREN = 15;
+    // no children error
+    DTGRE_CHILDREN_ERROR = 16;
+    // sub game not complete
+    DTGRE_SUBGAME_NOTCOMPLETE = 17;
+    // dtbaseid error
+    DTGRE_DTBASEID_ERROR = 18;
+    // no dtbaseid
+    DTGRE_NODTBASEID = 19;
+    // no dtbaseid baseid
+    DTGRE_DTBASEID_NOBASEID = 20;
+    // dtbaseid baseid error
+    DTGRE_DTBASEID_BASEID_ERROR = 21;        
+    // can not find dtbaseid free
+    DTGRE_DTBASEID_FREE = 22;
+    // can not find dtbaseid respin
+    DTGRE_DTBASEID_RESPIN = 23;
+    // invalid fgnums
+    DTGRE_INVALID_FGNUMS = 24;
+    // icon404
+    DTGRE_ICON404 = 25;
+    // sub game repeated complete
+    DTGRE_SUBGAME_REPEATED_COMPLETE = 26;
+    // sub game invalid jp
+    DTGRE_SUBGAME_INVALID_JP = 27;
+    // invalid jp win
+    DTGRE_INVALID_JPWIN = 28;    
+}
+
+// DTGameResultErr - 
+message DTGameResultErr {
+    // errcode
+    DTGameResultErrCode errcode = 1;
+    // value0
+    int64 value0 = 2;
+    // value1
+    int64 value1 = 3;
+    // strval0
+    string strval0 = 10;
+}
+
+// RequestDTData - request DT Data
+message RequestDTData {
+    // mode
+    string mode = 1 [deprecated = true];
+    // startTime
+    string startTime = 2;
+    // endTime
+    string endTime = 3;
+    // dtDataType
+    DTDataType dtDataType = 4;
+    // environment name
+    string envName = 5;
+    // business id
+    string businessid = 6;
+    // game code
+    string gameCode = 7;
+    // player name
+    string playerName = 8;
+
+    // token - You need to have a valid token in order to get back correctly
+    string token = 100;    
+}
+
+// DTBusinessGameReport - 
+message DTBusinessGameReport {
+    // businessid
+    string businessid = 1;
+    // gamecode
+    string gamecode = 2;
+    // totalWin
+    float totalWin = 3;
+    // totalBet
+    float totalBet = 4;
+    // gameNums
+    int32 gameNums = 5;
+    // currency
+    string currency = 6;
+}
+
+// DTTodayGameData - 
+message DTTodayGameData {
+    // totalWin
+    float totalWin = 1;
+    // totalBet
+    float totalBet = 2;
+    // gameNums
+    int32 gameNums = 3;
+}
+
+// DTGPKGameResult -
+message DTGPKGameResult {
+    string ID = 1;
+    string businessID = 2;
+    string playerName = 3;
+    string gameCode = 4;
+    float win = 5;
+    float bet = 6;
+    float off = 7;
+    int32 lines = 8;
+    float moneyStart = 9;
+    float moneyEnd = 10;
+    string playerIP = 11;
+    string dataState = 12;
+    string gameTime = 13;
+    string clientType = 14;
+    string currency = 15;
+    bool isComplete = 16;
+    string giftFreeID = 17;
+    string gameData = 18;
+    string gameResult = 19;
+    bool hasSubGame = 20;
+    string dtbaseid = 21;
+    bool rootGame = 22;
+
+    repeated DTGPKGameResult children = 100;
+
+    DTGameResultErr err = 200;
+}
+
+// DTGPKCheckGameResult - 
+message DTGPKCheckGameResult {
+    repeated DTGPKGameResult lst = 1;
+
+    int32 errNums = 10;
+}
+
+// ReplyDTData - reply DT Data
+message ReplyDTData {
+    // gameReport
+    repeated DTBusinessGameReport gameReports = 1;
+    // todayGameData
+    DTTodayGameData todayGameData = 2;
+    // checkGameResultGPK
+    DTGPKCheckGameResult checkGameResultGPK = 3;
+}

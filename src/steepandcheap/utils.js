@@ -88,4 +88,16 @@ async function closeDialog(page) {
   return undefined;
 }
 
+/**
+ * isValidProductURL - isValidProductURL
+ * @param {string} url - url
+ * @return {boolean} isValid - is valid product url
+ */
+function isValidProductURL(url) {
+  const purl = new URL(url);
+  const skid = purl.searchParams.get('skid');
+  return typeof skid == 'string' && skid != '';
+}
+
 exports.closeDialog = closeDialog;
+exports.isValidProductURL = isValidProductURL;

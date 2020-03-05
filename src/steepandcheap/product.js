@@ -1,5 +1,5 @@
 const {sleep} = require('../utils');
-const {closeDialog} = require('./utils');
+const {isValidProductURL, closeDialog} = require('./utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {DEFAULT_REVIEWS_NUMS} = require('./basedef');
@@ -393,6 +393,10 @@ async function steepandcheapProduct(browser, url, timeout) {
       }
     }
   });
+
+  if (!isValidProductURL(baseurl)) {
+    noretry = true;
+  }
 
   // await page.setRequestInterception(true);
   // page.on('request', async (req) => {

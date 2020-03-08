@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const {manhuadbDownloadComic} = require('../src/manhuadb/downloadcomic');
-const {manhuaguiDownloadComic} = require('../src/manhuagui/downloadcomic');
+const {downloadComic} = require('../src/downloadcomic');
 const log = require('../src/log');
 
 program
@@ -41,17 +40,7 @@ program
       }
 
       (async () => {
-        if (source == 'manhuadb') {
-          await manhuadbDownloadComic(isdebug, comicid, bookid, roottype, output);
-        } else if (source == 'manhuagui') {
-          await manhuaguiDownloadComic(
-              isdebug,
-              comicid,
-              bookid,
-              roottype,
-              output,
-          );
-        }
+        await downloadComic(isdebug, comicid, bookid, roottype, output, source);
 
         process.exit(-1);
       })().catch((err) => {

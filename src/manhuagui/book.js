@@ -1,0 +1,150 @@
+// const {sleep} = require('../utils');
+const {WaitAllResponse} = require('../waitallresponse');
+const log = require('../log');
+const {disableDownload} = require('../page.utils');
+// const {closeDialog, procSKU} = require('./utils');
+// const {waitForLocalFunction, waitForFunction} = require('../waitutils');
+// const {getJSONStr} = require('../string.utils');
+
+/**
+ * manhuaguiBook - manhuagui book
+ * @param {object} browser - browser
+ * @param {string} comicid - comicid
+ * @param {string} bookid - bookid
+ * @param {string} pageindex - pageindex
+ * @param {number} timeout - timeout in microseconds
+ * @return {object} ret - {error, ret}
+ */
+async function manhuaguiBook(browser, comicid, bookid, pageindex, timeout) {
+  let awaiterr = undefined;
+  const page = await browser.newPage();
+
+  if (pageindex <= 0) {
+    pageindex = 1;
+  }
+
+  await disableDownload(page, (req) => {
+    const rt = req.resourceType();
+    if (rt == 'media' || rt == 'font') {
+      return true;
+    } else if (rt === 'image') {
+      if (req.url().indexOf('https://i.hamreus.com/') != 0) {
+        return true;
+      }
+    }
+
+    return false;
+  });
+  // await page.setRequestInterception(true);
+  const waitAllResponse = new WaitAllResponse(page);
+
+  await page
+      .setViewport({
+        width: 1280,
+        height: 600,
+        deviceScaleFactor: 1,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('manhuaguiBook.setViewport', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  let baseurl;
+  if (pageindex == 1) {
+    baseurl =
+      'https://www.manhuagui.com/comic/' + comicid + '/' + bookid + '.html';
+  } else {
+    baseurl =
+      'https://www.manhuagui.com/comic/' +
+      comicid +
+      '/' +
+      bookid +
+      '.html#p=' +
+      pageindex;
+  }
+
+  await page
+      .goto(baseurl, {
+        timeout: timeout,
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('manhuaguiBook.goto', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const isdone = await waitAllResponse.waitDone(timeout);
+  if (!isdone) {
+    const err = new Error('manhuaguiBook.waitDone timeout');
+
+    log.error('manhuaguiBook.goto', err);
+
+    await page.close();
+
+    return {error: err.toString()};
+  }
+
+  const ret = {};
+
+  ret.pageNums = await page
+      .$$eval('#pageSelect', (eles) => {
+        if (eles.length > 0) {
+          return eles[0].length;
+        }
+
+        return 0;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuaguiBook.$$eval #pageSelect', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const imgurl = await page
+      .$$eval('#imgPreLoad', (eles) => {
+        if (eles.length > 0) {
+          const lstimg = eles[0].getElementsByTagName('img');
+          if (lstimg.length > 0) {
+            return lstimg[0].src;
+          }
+        }
+
+        return '';
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('manhuaguiBook.$$eval select', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  ret.pages = [{url: imgurl, pageIndex: pageindex}];
+
+  await page.close();
+
+  return {ret: ret};
+}
+
+exports.manhuaguiBook = manhuaguiBook;

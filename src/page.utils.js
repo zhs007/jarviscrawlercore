@@ -59,6 +59,24 @@ async function disableDownloadOthersEx(page, funcIsCancel) {
   });
 }
 
+/**
+ * disableDownload - disable download with func
+ * @param {object} page - page
+ * @param {function} funcIsCancel - bool isCancel(req)
+ */
+async function disableDownload(page, funcIsCancel) {
+  await page.setRequestInterception(true);
+
+  page.on('request', (req) => {
+    if (funcIsCancel(req)) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
+}
+
 exports.disableDownloadImgs = disableDownloadImgs;
 exports.disableDownloadOthers = disableDownloadOthers;
 exports.disableDownloadOthersEx = disableDownloadOthersEx;
+exports.disableDownload = disableDownload;

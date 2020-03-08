@@ -242,6 +242,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "manhuagui.book",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["manhuagui", "book", "-h", "false", "-c", "1769", "-b", "15446", "-p", "1"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "douban.search",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]

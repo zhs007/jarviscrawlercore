@@ -1,5 +1,6 @@
 const {startBrowser} = require('../browser');
 const {manhuaguiManhua} = require('./manhua');
+const {manhuaguiBook} = require('./book');
 const log = require('../log');
 
 /**
@@ -44,13 +45,7 @@ async function execManhuagui(program, version) {
         !options.page
         ) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler manhuadb --help',
-          );
-
-          return;
-        } else if (mode == 'author' && !options.author) {
-          log.console(
-              'command wrong, please type ' + 'jarviscrawler manhuadb --help',
+              'command wrong, please type ' + 'jarviscrawler manhuagui --help',
           );
 
           return;
@@ -69,6 +64,15 @@ async function execManhuagui(program, version) {
 
           if (mode == 'manhua') {
             const ret = await manhuaguiManhua(browser, options.comic, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'book') {
+            const ret = await manhuaguiBook(
+                browser,
+                options.comic,
+                options.book,
+                options.page,
+                timeout,
+            );
             log.console(JSON.stringify(ret));
           }
 

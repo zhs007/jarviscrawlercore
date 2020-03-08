@@ -10,6 +10,7 @@ const {
   manhuaguiDownloadComic,
 } = require('./src/manhuagui/index');
 const log = require('./src/log');
+const {downloadComic} = require('./src/downloadcomic');
 
 exports.startBrowser = startBrowser;
 
@@ -22,3 +23,5 @@ exports.manhuaguiBook = manhuaguiBook;
 exports.manhuaguiDownloadComic = manhuaguiDownloadComic;
 
 exports.log = log;
+
+exports.downloadComic = downloadComic;

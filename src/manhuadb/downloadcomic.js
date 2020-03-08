@@ -9,18 +9,25 @@ const fs = require('fs');
 const path = require('path');
 
 /**
- * downloadComic - download comic
+ * manhuadbDownloadComic - download comic
  * @param {boolean} isdebug - is debug mode
  * @param {string} comicid - comicid
+ * @param {string} bookid - bookid
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @return {error} err - error
  */
-async function downloadComic(isdebug, comicid, roottype, rootpath) {
+async function manhuadbDownloadComic(
+    isdebug,
+    comicid,
+    bookid,
+    roottype,
+    rootpath,
+) {
   try {
     fs.mkdirSync(rootpath);
   } catch (err) {
-    log.error('downloadComic mkdirSync error ', err);
+    log.error('manhuadbDownloadComic mkdirSync error ', err);
   }
 
   const browser = await startBrowser(!isdebug);
@@ -31,7 +38,7 @@ async function downloadComic(isdebug, comicid, roottype, rootpath) {
   while (true) {
     manhuaret = await manhuadbManhua(browser, comicid, timeout);
     if (manhuaret.error) {
-      log.error('downloadComic error ', manhuaret.error);
+      log.error('manhuadbDownloadComic error ', manhuaret.error);
 
       await sleep(30 * 1000);
     } else {
@@ -44,11 +51,17 @@ async function downloadComic(isdebug, comicid, roottype, rootpath) {
   })();
 
   for (let i = 0; i < manhuaret.ret.books.length; ++i) {
-    if (roottype >= 0 && roottype != manhuaret.ret.books[i].rootType) {
-      continue;
+    if (!bookid) {
+      if (roottype >= 0 && roottype != manhuaret.ret.books[i].rootType) {
+        continue;
+      }
     }
 
     const curret = parseBookURL(manhuaret.ret.books[i].url);
+    if (bookid && bookid != curret.bookid) {
+      continue;
+    }
+
     const curbookret = await downloadBook(
         browser,
         curret.comicid,
@@ -58,7 +71,7 @@ async function downloadComic(isdebug, comicid, roottype, rootpath) {
         dl,
     );
     if (curbookret) {
-      log.error('downloadBook error ', curbookret);
+      log.error('manhuadbDownloadComic error ', curbookret);
     }
   }
 
@@ -208,4 +221,4 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
   return undefined;
 }
 
-exports.downloadComic = downloadComic;
+exports.manhuadbDownloadComic = manhuadbDownloadComic;

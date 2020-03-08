@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const {downloadComic} = require('../src/manhuadb/downloadcomic');
+const {manhuadbDownloadComic} = require('../src/manhuadb/downloadcomic');
+const {manhuaguiDownloadComic} = require('../src/manhuagui/downloadcomic');
 const log = require('../src/log');
 
 program
@@ -10,6 +11,8 @@ program
     .option('-o, --output [filename]', 'export output file')
     .option('-t, --type [type]', 'export type')
     .option('-d, --debug [isdebug]', 'debug mode')
+    .option('-s, --source [source]', 'source')
+    .option('-b, --bookid [bookid]', 'bookid')
     .action(function(comicid, options) {
       const isdebug = options.debug === 'true';
       log.console('debug - ', isdebug);
@@ -27,8 +30,28 @@ program
         }
       }
 
+      let bookid = '';
+      if (options.bookid) {
+        bookid = options.bookid;
+      }
+
+      let source = 'manhuadb';
+      if (options.source) {
+        source = options.source;
+      }
+
       (async () => {
-        await downloadComic(isdebug, comicid, roottype, output);
+        if (source == 'manhuadb') {
+          await manhuadbDownloadComic(isdebug, comicid, bookid, roottype, output);
+        } else if (source == 'manhuagui') {
+          await manhuaguiDownloadComic(
+              isdebug,
+              comicid,
+              bookid,
+              roottype,
+              output,
+          );
+        }
 
         process.exit(-1);
       })().catch((err) => {

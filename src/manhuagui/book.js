@@ -52,19 +52,19 @@ async function manhuaguiBook(browser, comicid, bookid, pageindex, timeout) {
       return;
     }
 
-    log.info('manhuaguiBook.response ' + pageindex + ' url is ' + url);
+    // log.info('manhuaguiBook.response ' + pageindex + ' url is ' + url);
 
     res.buffer().then((buf) => {
       mapimgbuf[url] = buf;
 
-      log.info(
-          'manhuaguiBook.response end ' +
-          pageindex +
-          ' url is ' +
-          url +
-          ' len is ' +
-          mapimgbuf[url].length,
-      );
+      // log.info(
+      //     'manhuaguiBook.response end ' +
+      //     pageindex +
+      //     ' url is ' +
+      //     url +
+      //     ' len is ' +
+      //     mapimgbuf[url].length,
+      // );
     });
     // mapimgbuf[url] = await res.buffer();
 

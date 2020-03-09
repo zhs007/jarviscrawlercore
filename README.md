@@ -1,9 +1,19 @@
 # jarviscrawlercore
 
-Jarvis的数据爬取模块。  
-有命令行和grpc服务2种方式。  
+JarvisCrawlerCore 是一套分布式 爬虫服务框架 / 操作页面的机器人 。  
+它可以用于构建一套数据爬取集群，也可以用于Web项目的自动化测试，或用于其它机器人操作web项目的子服务。  
+本项目用于多个机器人项目，包括群内自动翻译机器人、新闻推送频道、动漫影视资源推送频道、后台数据监控系统、页面分析、行业数据抓取等。
 
-建议使用docker部署，多节点并行获取数据，需要Charles支持。
+前期测试使用命令行，后期主要维护grpc服务模式。  
+
+建议使用docker部署，多节点并行获取数据，目前仅有golang的一个客户端（jccclient）可以提供基本的任务分派。  
+
+如果需要多节点的统一运维，可以使用Jarvis。
+
+机器配置要求，建议使用linux，能装docker。  
+内存2g及以上（1g内存也可以用，不要一次请求太多任务，chrome内存占用较严重，需要及时重启清理内存）。
+
+### 安装
 
 下面的命令可以直接使用DockerHub官方源部署。  
 
@@ -23,7 +33,7 @@ clientToken:
   - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3
 ```
 
-其中，clientToken，是用来校验权限的，可以配置多个，响应请求是会校验token。  
+其中，clientToken，是用来校验权限的，可以配置多个，每次响应请求都会需要校验token，一个token可以提供给多个客户端使用。  
 
 ### node.js Client 开发
 
@@ -44,6 +54,9 @@ npm i jarviscrawlercore --save
 ##### v0.5
 
 - 重构新闻功能
+- 漫画下载
+- 图片打包
+- 支持更多的网站
 
 ##### v0.3
 

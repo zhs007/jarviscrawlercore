@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.5.80",
+  "version": "0.5.81",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -41,7 +41,7 @@
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-prettier": "^3.1.2",
-    "jest": "^25.1.0",
-    "prettier": "^1.19.1"
+    "jest": "^25.2.0",
+    "prettier": "^2.0.2"
   }
 }

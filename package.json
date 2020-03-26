@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.5.79",
+  "version": "0.5.80",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -27,14 +27,14 @@
     "adm-zip": "^0.4.14",
     "axios": "^0.19.2",
     "chrome-launcher": "^0.13.0",
-    "commander": "^4.1.1",
+    "commander": "^5.0.0",
     "google-protobuf": "^3.11.4",
     "grpc": "^1.24.2",
-    "jimp": "^0.9.5",
+    "jimp": "^0.9.6",
     "moment": "^2.24.0",
     "puppeteer": "^2.1.1",
     "request": "^2.88.2",
-    "sharp": "^0.25.1",
+    "sharp": "^0.25.2",
     "yaml-js": "^0.2.3"
   },
   "devDependencies": {

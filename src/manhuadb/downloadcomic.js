@@ -15,6 +15,7 @@ const path = require('path');
  * @param {string} bookid - bookid
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
+ * @param {int} timeout - timeout, default is 30000 (30s)
  * @return {error} err - error
  */
 async function manhuadbDownloadComic(
@@ -23,6 +24,7 @@ async function manhuadbDownloadComic(
     bookid,
     roottype,
     rootpath,
+    timeout,
 ) {
   try {
     fs.mkdirSync(rootpath);
@@ -30,8 +32,12 @@ async function manhuadbDownloadComic(
     log.error('manhuadbDownloadComic mkdirSync error ', err);
   }
 
+  if (!timeout || timeout < 0) {
+    timeout = 30 * 1000;
+  }
+
   const browser = await startBrowser(!isdebug);
-  const timeout = 30 * 1000;
+  // const timeout = 30 * 1000;
   const dl = new DownloadList();
   let manhuaret;
 

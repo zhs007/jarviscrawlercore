@@ -9,11 +9,27 @@ const {manhuagui} = require('./manhuagui/index');
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @param {string} source - source
+ * @param {int} timeout - timeout, default is 30000 (30s)
  * @return {error} err - error
  */
-function downloadComic(isdebug, comicid, bookid, roottype, rootpath, source) {
+function downloadComic(
+    isdebug,
+    comicid,
+    bookid,
+    roottype,
+    rootpath,
+    source,
+    timeout,
+) {
   if (source == 'manhuadb') {
-    return manhuadb.downloadComic(isdebug, comicid, bookid, roottype, rootpath);
+    return manhuadb.downloadComic(
+        isdebug,
+        comicid,
+        bookid,
+        roottype,
+        rootpath,
+        timeout,
+    );
   } else if (source == 'manhuagui') {
     return manhuagui.downloadComic(
         isdebug,
@@ -21,6 +37,7 @@ function downloadComic(isdebug, comicid, bookid, roottype, rootpath, source) {
         bookid,
         roottype,
         rootpath,
+        timeout,
     );
   }
 

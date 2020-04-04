@@ -249,6 +249,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "tvbsmh.manhua",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnnny"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "douban.search",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]

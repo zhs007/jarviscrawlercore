@@ -28,7 +28,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
     if (rt == 'media' || rt == 'font') {
       return true;
     } else if (rt === 'image') {
-      if (req.url().indexOf('https://i.hamreus.com/') != 0) {
+      if (req.url().indexOf('https://img.tvbsmh.com') != 0) {
         return true;
       }
     } else {
@@ -48,7 +48,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
   const mapimgbuf = {};
   page.on('response', (res) => {
     const url = res.url();
-    if (url.indexOf('https://i.hamreus.com/') != 0) {
+    if (url.indexOf('https://img.tvbsmh.com') != 0) {
       return;
     }
 
@@ -98,21 +98,21 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  // const baseurl =
-  //   'https://www.manhuagui.com/comic/' + comicid + '/' + bookid + '.html';
-  let baseurl = '';
-  if (pageindex == 1) {
-    baseurl =
-      'https://www.manhuagui.com/comic/' + comicid + '/' + bookid + '.html';
-  } else {
-    baseurl =
-      'https://www.manhuagui.com/comic/' +
-      comicid +
-      '/' +
-      bookid +
-      '.html#p=' +
-      pageindex;
-  }
+  const baseurl =
+    'https://www.tvbsmh.com/series-' + comicid + '-' + bookid + '-' + pageindex;
+  // let baseurl = '';
+  // if (pageindex == 1) {
+  //   baseurl =
+  //     'https://www.manhuagui.com/comic/' + comicid + '/' + bookid + '.html';
+  // } else {
+  //   baseurl =
+  //     'https://www.manhuagui.com/comic/' +
+  //     comicid +
+  //     '/' +
+  //     bookid +
+  //     '.html#p=' +
+  //     pageindex;
+  // }
 
   await page
       .goto(baseurl, {
@@ -144,9 +144,12 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
   const ret = {};
 
   ret.pageNums = await page
-      .$$eval('#pageSelect', (eles) => {
+      .$$eval('div.num', (eles) => {
         if (eles.length > 0) {
-          return eles[0].length;
+          const lsta = eles[0].getElementsByTagName('a');
+          if (lsta.length > 0) {
+            return parseInt(lsta[lsta.length - 1].innerText);
+          }
         }
 
         return 0;
@@ -155,7 +158,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tvbsmhBook.$$eval #pageSelect', awaiterr);
+    log.error('tvbsmhBook.$$eval div.num', awaiterr);
 
     await page.close();
 
@@ -190,13 +193,12 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
   // }
 
   const imgurl = await page
-      .$$eval('img#mangaFile', (eles) => {
+      .$$eval('.ptview', (eles) => {
         if (eles.length > 0) {
-          return eles[0].src;
-        // const lstimg = eles[0].getElementsByTagName('img');
-        // if (lstimg.length > 0) {
-        //   return lstimg[0].src;
-        // }
+          const lstimg = eles[0].getElementsByTagName('img');
+          if (lstimg.length > 0) {
+            return lstimg[0].src;
+          }
         }
 
         return '';
@@ -205,7 +207,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tvbsmhBook.$$eval select', awaiterr);
+    log.error('tvbsmhBook.$$eval .ptview', awaiterr);
 
     await page.close();
 

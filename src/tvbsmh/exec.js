@@ -66,7 +66,7 @@ async function execTvbsmh(program, version) {
             const ret = await tvbsmhManhua(browser, options.comic, timeout);
             log.console(JSON.stringify(ret));
           } else if (mode == 'book') {
-            const ret = await manhuaguiBook(
+            const ret = await tvbsmhBook(
                 browser,
                 options.comic,
                 options.book,

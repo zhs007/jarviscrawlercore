@@ -1,5 +1,6 @@
 const {manhuadb} = require('./manhuadb/index');
 const {manhuagui} = require('./manhuagui/index');
+const {tvbsmh} = require('./tvbsmh/index');
 
 /**
  * downloadComic - download comic
@@ -39,6 +40,15 @@ function downloadComic(
         rootpath,
         timeout,
     );
+  } else if (source == 'tvbsmh') {
+    return tvbsmh.downloadComic(
+        isdebug,
+        comicid,
+        bookid,
+        roottype,
+        rootpath,
+        timeout,
+    );
   }
 
   return new Error('downloadComic source ' + source + ' is error!');
@@ -54,6 +64,8 @@ function parseComicBookURL(bookurl) {
     return manhuadb.parseBookURL(bookurl);
   } else if (bookurl.indexOf('manhuagui.com') >= 0) {
     return manhuagui.parseBookURL(bookurl);
+  } else if (bookurl.indexOf('tvbsmh.com') >= 0) {
+    return tvbsmh.parseBookURL(bookurl);
   }
 
   return new Error('parseComicBookURL ' + bookurl + ' is error!');

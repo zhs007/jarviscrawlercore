@@ -256,6 +256,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "tvbsmh.book",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["tvbsmh", "book", "-h", "false", "-c", "nnnny", "-b", "496797", "-p", "37"]
+        },        
+        {
+            "type": "node",
+            "request": "launch",
             "name": "douban.search",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["douban", "search", "-h", "false", "-t", "book", "-s", "剑风传奇"]
@@ -414,6 +421,13 @@
             "name": "downloadcomic.manhuagui",
             "program": "${workspaceFolder}/bin/downloadcomic.js",
             "args": ["downloadcomic", "991", "-o", "./comic/991", "-t", "0", "-s", "manhuagui", "-b", "8644"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "downloadcomic.tvbsmh",
+            "program": "${workspaceFolder}/bin/downloadcomic.js",
+            "args": ["downloadcomic", "nnnny", "-o", "./comic/nnnny", "-t", "0", "-s", "tvbsmh", "-b", "496797"]
         },
         {
             "type": "node",

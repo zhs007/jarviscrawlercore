@@ -28,7 +28,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
     if (rt == 'media' || rt == 'font') {
       return true;
     } else if (rt === 'image') {
-      if (req.url().indexOf('https://img.tvbsmh.com') != 0) {
+      if (req.url().indexOf('https://img.tvbsmh.com/img/') != 0) {
         return true;
       }
     } else {
@@ -48,7 +48,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
   const mapimgbuf = {};
   page.on('response', (res) => {
     const url = res.url();
-    if (url.indexOf('https://img.tvbsmh.com') != 0) {
+    if (url.indexOf('https://img.tvbsmh.com/img/') != 0) {
       return;
     }
 

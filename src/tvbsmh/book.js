@@ -1,4 +1,5 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
+const {waitForLocalFunction} = require('../waitutils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownload} = require('../page.utils');
@@ -214,9 +215,17 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  while (!mapimgbuf[imgurl]) {
-    await sleep(1000);
-  }
+  await waitForLocalFunction(
+      page,
+      () => {
+        return mapimgbuf[imgurl] != undefined;
+      },
+      1000,
+      timeout,
+  );
+  // while (!mapimgbuf[imgurl]) {
+  //   await sleep(1000);
+  // }
 
   ret.pages = [
     {url: imgurl, pageIndex: pageindex, imgbuf: mapimgbuf[imgurl]},

@@ -1,9 +1,9 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownloadOthers} = require('../page.utils');
 // const {closeDialog, procSKU} = require('./utils');
-// const {waitForLocalFunction, waitForFunction} = require('../waitutils');
+const {waitForLocalFunction} = require('../waitutils');
 // const {getJSONStr} = require('../string.utils');
 
 /**
@@ -165,18 +165,35 @@ async function tvbsmhManhua(browser, comicid, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  while (lstmsg.length == 0) {
-    await sleep(1000);
-  }
+  // while (lstmsg.length == 0) {
+  //   await sleep(1000);
+  // }
+
+  await waitForLocalFunction(
+      page,
+      () => {
+        return lstmsg.length > 0;
+      },
+      1000,
+      timeout,
+  );
 
   const lsta = await page.$$('.light.chapter_type');
   if (lsta.length > 1) {
     for (let i = 1; i < lsta.length; ++i) {
       await lsta[i].click();
 
-      while (lstmsg.length < i + 1) {
-        await sleep(1000);
-      }
+      await waitForLocalFunction(
+          page,
+          () => {
+            return lstmsg.length >= i + 1;
+          },
+          1000,
+          timeout,
+      );
+      // while (lstmsg.length < i + 1) {
+      //   await sleep(1000);
+      // }
     }
   }
 

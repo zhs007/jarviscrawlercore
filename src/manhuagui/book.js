@@ -1,9 +1,9 @@
-const {sleep} = require('../utils');
+// const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
 const {disableDownload} = require('../page.utils');
 // const {closeDialog, procSKU} = require('./utils');
-// const {waitForLocalFunction, waitForFunction} = require('../waitutils');
+const {waitForLocalFunction} = require('../waitutils');
 // const {getJSONStr} = require('../string.utils');
 
 /**
@@ -212,9 +212,17 @@ async function manhuaguiBook(browser, comicid, bookid, pageindex, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  while (!mapimgbuf[imgurl]) {
-    await sleep(1000);
-  }
+  await waitForLocalFunction(
+      page,
+      () => {
+        return mapimgbuf[imgurl] != undefined;
+      },
+      1000,
+      timeout,
+  );
+  // while (!mapimgbuf[imgurl]) {
+  //   await sleep(1000);
+  // }
 
   ret.pages = [
     {url: imgurl, pageIndex: pageindex, imgbuf: mapimgbuf[imgurl]},

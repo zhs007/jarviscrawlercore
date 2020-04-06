@@ -60,7 +60,7 @@ async function waitForLocalFunction(page, func, offtime, timeout) {
     ct += offtime;
   }
 
-  return new Error('waitForFunction ' + selector + ' timeout');
+  return new Error('waitForFunction timeout');
 }
 
 exports.waitForFunction = waitForFunction;

@@ -335,6 +335,8 @@ async function techinasiaJobTag(browser, maintag, timeout) {
       return {error: gfcret.error};
     }
 
+    await page.close();
+
     return {ret: gfcret.ret};
     // const lstclickable = await lstcontainer[2].$$('.clickable');
     // const ret = {tags: []};
@@ -383,6 +385,8 @@ async function techinasiaJobTag(browser, maintag, timeout) {
 
         return {error: gfcret.error};
       }
+
+      await page.close();
 
       return {ret: gfcret.ret};
     }

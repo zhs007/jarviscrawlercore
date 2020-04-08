@@ -41,6 +41,38 @@ async function techinasiaJob(browser, jobid, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  await page.waitForSelector('h1').catch((err) => {
+    awaiterr = err;
+  });
+
+  if (awaiterr) {
+    log.error('techinasiaJob.waitForSelector h1', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  const title = await page.$$eval('h1', (eles) => {
+    if (eles.length > 0) {
+      return eles[0].innerText;
+    }
+
+    return '';
+  });
+
+  if (title == 'Job not found') {
+    awaiterr = new Error(
+        'noretry:404 ' + 'https://www.techinasia.com/jobs/' + jobid,
+    );
+
+    log.error('techinasiaJob.$$eval h1', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   await page.waitForSelector('header.page-header').catch((err) => {
     awaiterr = err;
   });

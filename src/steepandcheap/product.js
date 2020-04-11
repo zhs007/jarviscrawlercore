@@ -516,22 +516,25 @@ async function steepandcheapProduct(browser, url, timeout) {
   }
 
   ret.price = await page
-      .$$eval('.product-pricing__inactive.js-product-pricing__inactive', (eles) => {
-        if (eles.length > 0) {
-          const pricearr = eles[0].innerText.split('$', -1);
-          if (pricearr.length != 2) {
-            console.log('invalid price ' + eles[0].innerText);
-          } else {
-            try {
-              return parseFloat(pricearr[1].split(',').join(''));
-            } catch (err) {
-              console.log('invalid price ' + eles[0].innerText);
+      .$$eval(
+          '.product-pricing__inactive.js-product-pricing__inactive',
+          (eles) => {
+            if (eles.length > 0) {
+              const pricearr = eles[0].innerText.split('$', -1);
+              if (pricearr.length != 2) {
+                console.log('invalid price ' + eles[0].innerText);
+              } else {
+                try {
+                  return parseFloat(pricearr[1].split(',').join(''));
+                } catch (err) {
+                  console.log('invalid price ' + eles[0].innerText);
+                }
+              }
             }
-          }
-        }
 
-        return undefined;
-      })
+            return undefined;
+          },
+      )
       .catch((err) => {
         awaiterr = err;
       });
@@ -728,7 +731,7 @@ async function steepandcheapProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  const reviewCount = await page
+  let reviewCount = await page
       .$$eval('.review-count', (eles) => {
         if (eles.length > 0) {
           try {
@@ -752,14 +755,16 @@ async function steepandcheapProduct(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  ret.reviews = reviewCount;
+  reviewCount = 0;
   if (reviewCount > 0) {
     awaiterr = await getAllReviews(page, waitAllResponse, reviewCount, timeout);
     if (awaiterr) {
       log.error('steepandcheapProduct.getAllReviews ', awaiterr);
 
-      await page.close();
+      // await page.close();
 
-      return {error: awaiterr.toString()};
+      // return {error: awaiterr.toString()};
     }
 
     await page

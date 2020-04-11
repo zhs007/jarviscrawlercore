@@ -83,7 +83,7 @@
             "request": "launch",
             "name": "steepandsheap.product",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["steepandcheap", "product", "-h", "false", "-u", "adidas-outdoor-terrex-cc-boat-sleek-parley-water-shoe-womens?skid=ADA0097-BLAWH-S6"]
+            "args": ["steepandcheap", "product", "-h", "false", "-u", "arc-teryx-beta-sv-jacket-womens?skid=ARC00IW-DIM-XS"]
         },
         {
             "type": "node",

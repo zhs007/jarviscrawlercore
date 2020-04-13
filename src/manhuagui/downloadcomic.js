@@ -12,7 +12,7 @@ const path = require('path');
  * manhuaguiDownloadComic - download comic
  * @param {boolean} isdebug - is debug mode
  * @param {string} comicid - comicid
- * @param {string} bookid - bookid
+ * @param {string | array} bookid - bookid
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @param {int} timeout - timeout, default is 30000 (30s)
@@ -64,8 +64,14 @@ async function manhuaguiDownloadComic(
     }
 
     const curret = parseBookURL(manhuaret.ret.books[i].url);
-    if (bookid && bookid != curret.bookid) {
-      continue;
+    if (bookid) {
+      if (Array.isArray(bookid)) {
+        if (bookid.indexOf(curret.bookid) < 0) {
+          continue;
+        }
+      } else if (bookid != curret.bookid) {
+        continue;
+      }
     }
 
     const curbookret = await downloadBook(

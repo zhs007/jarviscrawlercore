@@ -165,6 +165,21 @@ async function tvbsmhManhua(browser, comicid, timeout) {
     return {error: awaiterr.toString()};
   }
 
+  const lstcontinueread = await page.$$('.light.continue_read').catch((err) => {
+    awaiterr = err;
+  });
+  if (awaiterr) {
+    log.error('tvbsmhManhua.$$ .light.continue_read', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (lstcontinueread.length > 0) {
+    lstcontinueread[0].click();
+  }
+
   // while (lstmsg.length == 0) {
   //   await sleep(1000);
   // }

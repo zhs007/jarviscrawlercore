@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const messages = require('../proto/result_pb');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
@@ -30,10 +31,7 @@ function saveZipMessage(filename, msg) {
  * @return {string} md5 - md5 string
  */
 function hashMD5(buf) {
-  return crypto
-      .createHash('md5')
-      .update(buf)
-      .digest('hex');
+  return crypto.createHash('md5').update(buf).digest('hex');
 }
 
 /**
@@ -1438,6 +1436,23 @@ async function closeAllPagesEx(browser, nums) {
   return awaiterr;
 }
 
+/**
+ * printInfo - print infomation
+ * @param {string} projname - project's name
+ */
+function printInfo(projname) {
+  const proj = JSON.parse(
+      fs.readFileSync(path.join(__dirname, '../package.json')),
+  );
+
+  console.log(projname + ' (jarviscrawlercore) v' + proj.version + '.');
+  console.log(
+      'The project\'s url is https://github.com/zhs007/jarviscrawlercore .',
+  );
+  console.log('Author is  Zerro Zhao (zerrozhao@gmail.com).');
+  console.log('');
+}
+
 exports.saveMessage = saveMessage;
 exports.saveZipMessage = saveZipMessage;
 exports.hashMD5 = hashMD5;
@@ -1478,3 +1493,4 @@ exports.clearLocalStorage = clearLocalStorage;
 exports.clearIndexedDB = clearIndexedDB;
 exports.closeAllPages = closeAllPages;
 exports.closeAllPagesEx = closeAllPagesEx;
+exports.printInfo = printInfo;

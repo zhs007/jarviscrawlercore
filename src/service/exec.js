@@ -1,5 +1,6 @@
 const {startService} = require('./service');
 const log = require('../log');
+const {printInfo} = require('../utils');
 
 /**
  * serviceexec
@@ -11,11 +12,12 @@ async function serviceexec(program, version) {
       .command('startservice [cfgfile]')
       .description('start a grpc service')
       .action(function(cfgfile, options) {
-        log.console('version is ', version);
+        printInfo('jarviscrawlerserv');
+        // log.console('version is ', version);
 
         if (!cfgfile) {
           log.console(
-              'command wrong, please type ' + 'jarviscrawler startservice --help'
+              'command wrong, please type ' + 'jarviscrawler startservice --help',
           );
 
           return;
@@ -28,9 +30,9 @@ async function serviceexec(program, version) {
         })().catch((err) => {
           log.console('catch a err ', err);
 
-          // if (headless) {
-          //   process.exit(-1);
-          // }
+        // if (headless) {
+        //   process.exit(-1);
+        // }
         });
       });
 }

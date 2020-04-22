@@ -177,7 +177,27 @@ async function tvbsmhManhua(browser, comicid, timeout) {
   }
 
   if (lstcontinueread.length > 0) {
-    lstcontinueread[0].click();
+    const canclickread = await page
+        .$$eval('.usertips.is_adult', (eles) => {
+          if (eles.length > 0) {
+            if (eles[0].style.display == 'none') {
+              return false;
+            }
+          }
+
+          return true;
+        })
+        .catch((err) => {
+          awaiterr = err;
+        });
+    if (awaiterr) {
+      log.error('tvbsmhManhua.$$eval .usertips.is_adult', awaiterr);
+    }
+
+    if (canclickread) {
+      await lstcontinueread[0].hover();
+      await lstcontinueread[0].click();
+    }
   }
 
   // while (lstmsg.length == 0) {
@@ -196,6 +216,7 @@ async function tvbsmhManhua(browser, comicid, timeout) {
   const lsta = await page.$$('.light.chapter_type');
   if (lsta.length > 1) {
     for (let i = 1; i < lsta.length; ++i) {
+      await lsta[i].hover();
       await lsta[i].click();
 
       await waitForLocalFunction(

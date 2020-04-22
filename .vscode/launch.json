@@ -251,7 +251,7 @@
             "request": "launch",
             "name": "tvbsmh.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nrkko"]
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnnno"]
         },
         {
             "type": "node",

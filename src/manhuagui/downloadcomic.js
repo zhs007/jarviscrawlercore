@@ -5,6 +5,7 @@ const {parseBookURL, isValidURL} = require('./utils');
 const log = require('../log');
 const {DownloadList} = require('../request');
 const {sleep} = require('../utils');
+const {getImageFileInfo} = require('../imgutils');
 const fs = require('fs');
 const path = require('path');
 
@@ -113,7 +114,7 @@ function checkBook(rootpath, pagenums) {
   const lst = [];
   for (let i = 1; i <= pagenums; ++i) {
     const fn = path.join(rootpath, i + '.webp');
-    if (!fs.existsSync(fn)) {
+    if (!fs.existsSync(fn) || !getImageFileInfo(fn)) {
       lst.push(i);
     }
   }

@@ -110,11 +110,16 @@ async function manhuadbDownloadComic(
  * @param {int} pagenums - pagenums
  * @return {array} lstpageindex - list for pageindex
  */
-function checkBook(rootpath, pagenums) {
+async function checkBook(rootpath, pagenums) {
   const lst = [];
   for (let i = 1; i <= pagenums; ++i) {
     const fn = path.join(rootpath, i + '.jpg');
-    if (!fs.existsSync(fn) || !getImageFileInfo(fn)) {
+    if (!fs.existsSync(fn)) {
+      lst.push(i);
+    }
+
+    const ifi = await getImageFileInfo(fn);
+    if (!ifi) {
       lst.push(i);
     }
   }
@@ -152,7 +157,7 @@ async function downloadBook(browser, comicid, bookid, rootpath, timeout, dl) {
       continue;
     }
 
-    lastpi = checkBook(rootpath, ret.ret.pageNums);
+    lastpi = await checkBook(rootpath, ret.ret.pageNums);
 
     if (lastpi[0] == 1) {
       if (!isValidURL(ret.ret.pages[0].url)) {

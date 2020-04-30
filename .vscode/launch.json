@@ -258,7 +258,7 @@
             "request": "launch",
             "name": "tvbsmh.book",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "book", "-h", "false", "-c", "nnnny", "-b", "496797", "-p", "37"]
+            "args": ["tvbsmh", "book", "-h", "false", "-c", "nosoa", "-b", "356328", "-p", "7"]
         },        
         {
             "type": "node",

@@ -16,6 +16,8 @@ JarvisCrawlerCore 是一套分布式 爬虫服务框架 / 页面编程机器人 
 
 ### 安装
 
+[这里](https://github.com/zhs007/dockerscripts/tree/master/jarviscrawlerserv) 是一个可以直接用于部署的脚本项目。
+
 下面的命令可以直接使用DockerHub源部署。  
 
 ``` sh
@@ -45,6 +47,8 @@ clientToken:
 ``` sh
 npm i jarviscrawlercore --save
 ```
+
+这里还有一个直接用 ``jarviscrawlercore`` 项目来打包漫画的项目，[这里](https://github.com/zhs007/getcomic) 。  
 
 ### Golang Client 开发
 

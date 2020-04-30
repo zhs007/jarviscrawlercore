@@ -7,16 +7,16 @@ JarvisCrawlerCore 是一套分布式 爬虫服务框架 / 页面编程机器人 
 
 我们仅在前期测试使用命令行，主要维护grpc服务模式。  
 
-建议用docker部署，多节点并行获取数据，目前仅有golang的一个客户端（jccclient）可以提供基本的任务分派。  
+建议用docker部署，多节点并行获取数据，目前仅有golang客户端（jccclient）可以提供基本的任务分派。  
 
 如果需要多节点的统一运维，可以使用Jarvis。
 
 机器配置要求，建议使用linux，能装docker。  
-内存2g及以上（1g内存也可以用，不要一次请求太多任务，chrome内存占用较严重，需要及时重启清理内存）。
+内存2g及以上（1g内存也可以用，不要一次请求太多任务，chrome内存占用较严重，每隔一段时间重启服务会有好处，我们也有个翻译服务数月不重启的）。
 
 ### 安装
 
-下面的命令可以直接使用DockerHub官方源部署。  
+下面的命令可以直接使用DockerHub源部署。  
 
 ``` sh
 docker push zerrozhao/jarviscrawlercore:latest
@@ -34,7 +34,7 @@ clientToken:
   - wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3
 ```
 
-其中，clientToken，是用来校验权限的，可以配置多个，每次响应请求都会需要校验token，一个token可以提供给多个客户端使用。  
+其中，clientToken，是用来校验权限的，可以配置多个，每次响应请求都会校验token，一个token可以提供给多个客户端使用。  
 
 ### node.js Client 开发
 

@@ -7,6 +7,7 @@ const {tvbsmh} = require('./tvbsmh/index');
  * @param {boolean} isdebug - is debug mode
  * @param {string} comicid - comicid
  * @param {string} bookid - bookid
+ * @param {array} excludebookid - excludebookid
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @param {string} source - source
@@ -17,6 +18,7 @@ function downloadComic(
     isdebug,
     comicid,
     bookid,
+    excludebookid,
     roottype,
     rootpath,
     source,
@@ -27,6 +29,7 @@ function downloadComic(
         isdebug,
         comicid,
         bookid,
+        excludebookid,
         roottype,
         rootpath,
         timeout,
@@ -36,6 +39,7 @@ function downloadComic(
         isdebug,
         comicid,
         bookid,
+        excludebookid,
         roottype,
         rootpath,
         timeout,
@@ -45,6 +49,7 @@ function downloadComic(
         isdebug,
         comicid,
         bookid,
+        excludebookid,
         roottype,
         rootpath,
         timeout,

@@ -14,6 +14,7 @@ const path = require('path');
  * @param {boolean} isdebug - is debug mode
  * @param {string} comicid - comicid
  * @param {string | array} bookid - bookid
+ * @param {array} excludebookid - excludebookid
  * @param {int} roottype - roottype, -1,0,1...
  * @param {string} rootpath - rootpath
  * @param {int} timeout - timeout, default is 30000 (30s)
@@ -23,6 +24,7 @@ async function manhuadbDownloadComic(
     isdebug,
     comicid,
     bookid,
+    excludebookid,
     roottype,
     rootpath,
     timeout,
@@ -58,6 +60,10 @@ async function manhuadbDownloadComic(
   })();
 
   for (let i = 0; i < manhuaret.ret.books.length; ++i) {
+    if (excludebookid.indexOf(curret.bookid) >= 0) {
+      continue;
+    }
+
     if (!bookid) {
       if (roottype >= 0 && roottype != manhuaret.ret.books[i].rootType) {
         continue;

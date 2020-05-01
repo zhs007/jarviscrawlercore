@@ -60,10 +60,6 @@ async function tvbsmhDownloadComic(
   })();
 
   for (let i = 0; i < manhuaret.ret.books.length; ++i) {
-    if (excludebookid.indexOf(curret.bookid) >= 0) {
-      continue;
-    }
-
     if (!bookid) {
       if (roottype >= 0 && roottype != manhuaret.ret.books[i].rootType) {
         continue;
@@ -71,6 +67,10 @@ async function tvbsmhDownloadComic(
     }
 
     const curret = parseBookURL(manhuaret.ret.books[i].url);
+    if (excludebookid.indexOf(curret.bookid) >= 0) {
+      continue;
+    }
+
     if (bookid) {
       if (Array.isArray(bookid)) {
         if (bookid.indexOf(curret.bookid) < 0) {

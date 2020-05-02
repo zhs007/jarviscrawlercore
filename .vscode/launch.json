@@ -404,6 +404,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "6vdy.movies",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["6vdy", "movies", "-u", "https://www.6vdy.org/", "-h", "false"]
+        },        
+        {
+            "type": "node",
+            "request": "launch",
             "name": "startbrowser",
             "program": "${workspaceFolder}/bin/startbrowser.js",
             "args": []

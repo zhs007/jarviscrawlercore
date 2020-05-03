@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const log = require('../log');
 const {p6vdyMovies} = require('./movies');
+const {p6vdyMovie} = require('./movie');
 
 /**
  * exec6vdy
@@ -34,6 +35,12 @@ async function exec6vdy(program, version) {
           );
 
           return;
+        } else if (mode == 'movie' && !options.url) {
+          log.console(
+              'command wrong, please type ' + 'jarviscrawler 6vdy --help',
+          );
+
+          return;
         }
 
         let timeout = 3 * 60 * 1000;
@@ -49,6 +56,9 @@ async function exec6vdy(program, version) {
 
           if (mode == 'movies') {
             const ret = await p6vdyMovies(browser, options.url, timeout);
+            log.console(JSON.stringify(ret));
+          } else if (mode == 'movie') {
+            const ret = await p6vdyMovie(browser, options.url, timeout);
             log.console(JSON.stringify(ret));
           }
 

@@ -1,0 +1,55 @@
+syntax = "proto3";
+package jarviscrawlercore;
+
+// Hao6v Resource infomation
+message p6vdyResInfo {
+    // fullname
+    string fullname = 1;
+    // resource id
+    string resid = 2;    
+    // 片名
+    repeated string title = 3;
+    // 导演
+    repeated string director = 4;
+    // url
+    string url = 5;
+    // cover
+    string cover = 6;
+    // 导演
+    string fulldirector = 7;
+    // 类型
+    string category = 8;
+    // 季
+    int32 season = 9;
+    // 集
+    int32 episode = 10;
+}
+
+// P6vdyMode - 6vdy mode
+enum P6vdyMode {
+    // P6VDY_MOVIES - 视频列表
+    P6VDY_MOVIES = 0;
+    // P6VDY_MOVIE - 视频页面
+    P6VDY_MOVIE = 1;
+}
+
+// P6vdyMovies - movies
+message P6vdyMovies {
+    repeated p6vdyResInfo lst = 1;
+}
+
+// Request6vdy - request 6vdy
+message Request6vdy {
+    P6vdyMode mode = 1;
+    string url = 2;
+}
+
+// Reply6vdy - reply 6vdy
+message Reply6vdy {
+    P6vdyMode mode = 1;
+
+    oneof reply {
+        P6vdyMovies movies = 100;
+        p6vdyResInfo movie = 101;
+    }
+}

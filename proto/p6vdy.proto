@@ -2,7 +2,7 @@ syntax = "proto3";
 package jarviscrawlercore;
 
 // Hao6v Resource infomation
-message p6vdyResInfo {
+message P6vdyResInfo {
     // fullname
     string fullname = 1;
     // resource id
@@ -35,7 +35,7 @@ enum P6vdyMode {
 
 // P6vdyMovies - movies
 message P6vdyMovies {
-    repeated p6vdyResInfo lst = 1;
+    repeated P6vdyResInfo lst = 1;
 }
 
 // Request6vdy - request 6vdy
@@ -50,6 +50,6 @@ message Reply6vdy {
 
     oneof reply {
         P6vdyMovies movies = 100;
-        p6vdyResInfo movie = 101;
+        P6vdyResInfo movie = 101;
     }
 }

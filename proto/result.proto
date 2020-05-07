@@ -16,7 +16,7 @@ import "techinasia.proto";
 import "geoip.proto";
 import "dt.proto";
 import "article2.proto";
-import "6vdy.proto";
+import "p6vdy.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type

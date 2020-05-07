@@ -45,8 +45,8 @@ var dt_pb = require('./dt_pb.js');
 goog.object.extend(proto, dt_pb);
 var article2_pb = require('./article2_pb.js');
 goog.object.extend(proto, article2_pb);
-var 6vdy_pb = require('./6vdy_pb.js');
-goog.object.extend(proto, 6vdy_pb);
+var p6vdy_pb = require('./p6vdy_pb.js');
+goog.object.extend(proto, p6vdy_pb);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzePage', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeReqInfo', null, global);
 goog.exportSymbol('proto.jarviscrawlercore.AnalyzeScreenshot', null, global);
@@ -7937,7 +7937,7 @@ proto.jarviscrawlercore.RequestCrawler.toObject = function(includeInstance, msg)
     hao6v: (f = msg.getHao6v()) && hao6v_pb.RequestHao6v.toObject(includeInstance, f),
     publictransit: (f = msg.getPublictransit()) && publictransit_pb.RequestPublicTransit.toObject(includeInstance, f),
     article2: (f = msg.getArticle2()) && article2_pb.RequestArticle2.toObject(includeInstance, f),
-    p6vdy: (f = msg.getP6vdy()) && 6vdy_pb.Request6vdy.toObject(includeInstance, f)
+    p6vdy: (f = msg.getP6vdy()) && p6vdy_pb.Request6vdy.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -8087,8 +8087,8 @@ proto.jarviscrawlercore.RequestCrawler.deserializeBinaryFromReader = function(ms
       msg.setArticle2(value);
       break;
     case 122:
-      var value = new 6vdy_pb.Request6vdy;
-      reader.readMessage(value,6vdy_pb.Request6vdy.deserializeBinaryFromReader);
+      var value = new p6vdy_pb.Request6vdy;
+      reader.readMessage(value,p6vdy_pb.Request6vdy.deserializeBinaryFromReader);
       msg.setP6vdy(value);
       break;
     default:
@@ -8306,7 +8306,7 @@ proto.jarviscrawlercore.RequestCrawler.serializeBinaryToWriter = function(messag
     writer.writeMessage(
       122,
       f,
-      6vdy_pb.Request6vdy.serializeBinaryToWriter
+      p6vdy_pb.Request6vdy.serializeBinaryToWriter
     );
   }
 };
@@ -8963,7 +8963,7 @@ proto.jarviscrawlercore.RequestCrawler.prototype.hasArticle2 = function() {
  */
 proto.jarviscrawlercore.RequestCrawler.prototype.getP6vdy = function() {
   return /** @type{?proto.jarviscrawlercore.Request6vdy} */ (
-    jspb.Message.getWrapperField(this, 6vdy_pb.Request6vdy, 122));
+    jspb.Message.getWrapperField(this, p6vdy_pb.Request6vdy, 122));
 };
 
 
@@ -9101,7 +9101,7 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
     hao6v: (f = msg.getHao6v()) && hao6v_pb.ReplyHao6v.toObject(includeInstance, f),
     publictransit: (f = msg.getPublictransit()) && publictransit_pb.ReplyPublicTransit.toObject(includeInstance, f),
     article2: (f = msg.getArticle2()) && article2_pb.ReplyArticle2.toObject(includeInstance, f),
-    p6vdy: (f = msg.getP6vdy()) && 6vdy_pb.Reply6vdy.toObject(includeInstance, f)
+    p6vdy: (f = msg.getP6vdy()) && p6vdy_pb.Reply6vdy.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -9248,8 +9248,8 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       msg.setArticle2(value);
       break;
     case 122:
-      var value = new 6vdy_pb.Reply6vdy;
-      reader.readMessage(value,6vdy_pb.Reply6vdy.deserializeBinaryFromReader);
+      var value = new p6vdy_pb.Reply6vdy;
+      reader.readMessage(value,p6vdy_pb.Reply6vdy.deserializeBinaryFromReader);
       msg.setP6vdy(value);
       break;
     default:
@@ -9461,7 +9461,7 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
     writer.writeMessage(
       122,
       f,
-      6vdy_pb.Reply6vdy.serializeBinaryToWriter
+      p6vdy_pb.Reply6vdy.serializeBinaryToWriter
     );
   }
 };
@@ -10118,7 +10118,7 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.hasArticle2 = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.getP6vdy = function() {
   return /** @type{?proto.jarviscrawlercore.Reply6vdy} */ (
-    jspb.Message.getWrapperField(this, 6vdy_pb.Reply6vdy, 122));
+    jspb.Message.getWrapperField(this, p6vdy_pb.Reply6vdy, 122));
 };
 
 

@@ -38,14 +38,14 @@ message P6vdyMovies {
     repeated P6vdyResInfo lst = 1;
 }
 
-// Request6vdy - request 6vdy
-message Request6vdy {
+// RequestP6vdy - request 6vdy
+message RequestP6vdy {
     P6vdyMode mode = 1;
     string url = 2;
 }
 
-// Reply6vdy - reply 6vdy
-message Reply6vdy {
+// ReplyP6vdy - reply 6vdy
+message ReplyP6vdy {
     P6vdyMode mode = 1;
 
     oneof reply {

@@ -69,13 +69,13 @@ function newP6vdyMovies(obj) {
 }
 
 /**
- * new Reply6vdy with object
+ * new ReplyP6vdy with object
  * @param {number} mode - messages.P6vdyMode
- * @param {object} obj - Reply6vdy
- * @return {messages.Reply6vdy} result - Reply6vdy
+ * @param {object} obj - ReplyP6vdy
+ * @return {messages.ReplyP6vdy} result - ReplyP6vdy
  */
-function newReply6vdy(mode, obj) {
-  const result = new messages.Reply6vdy();
+function newReplyP6vdy(mode, obj) {
+  const result = new messages.ReplyP6vdy();
 
   result.setMode(mode);
 
@@ -89,12 +89,12 @@ function newReply6vdy(mode, obj) {
 }
 
 /**
- * new Request6vdy for newpage
+ * new RequestP6vdy for newpage
  * @param {string} url - url
- * @return {messages.Request6vdy} result - Request6vdy
+ * @return {messages.RequestP6vdy} result - RequestP6vdy
  */
-function newRequest6vdyMovies(url) {
-  const result = new messages.Request6vdy();
+function newRequestP6vdyMovies(url) {
+  const result = new messages.RequestP6vdy();
 
   result.setMode(messages.P6vdyMode.P6VDY_MOVIES);
   result.setUrl(url);
@@ -103,12 +103,12 @@ function newRequest6vdyMovies(url) {
 }
 
 /**
- * new Request6vdy for respage
+ * new RequestP6vdy for respage
  * @param {string} url - url
- * @return {messages.Request6vdy} result - Request6vdy
+ * @return {messages.RequestP6vdy} result - RequestP6vdy
  */
-function newRequest6vdyMovie(url) {
-  const result = new messages.Request6vdy();
+function newRequestP6vdyMovie(url) {
+  const result = new messages.RequestP6vdy();
 
   result.setMode(messages.P6vdyMode.P6VDY_MOVIE);
   result.setUrl(url);
@@ -116,7 +116,7 @@ function newRequest6vdyMovie(url) {
   return result;
 }
 
-exports.newReply6vdy = newReply6vdy;
+exports.newReplyP6vdy = newReplyP6vdy;
 
-exports.newRequest6vdyMovies = newRequest6vdyMovies;
-exports.newRequest6vdyMovie = newRequest6vdyMovie;
+exports.newRequestP6vdyMovies = newRequestP6vdyMovies;
+exports.newRequestP6vdyMovie = newRequestP6vdyMovie;

@@ -18,7 +18,10 @@ const {
   newRequestPTKotsuMetroTokyoSubways,
   newRequestPTJRailPassSubways,
 } = require('../publictransit/index');
-const {newRequest6vdyMovies, newRequest6vdyMovie} = require('../6vdy/index');
+const {
+  newRequestP6vdyMovies,
+  newRequestP6vdyMovie,
+} = require('../6vdy/index');
 
 const grpc = require('grpc');
 
@@ -1234,7 +1237,7 @@ function p6vdyMovies(servAddr, url) {
       grpc.credentials.createInsecure(),
   );
 
-  const request = newRequest6vdyMovies(url);
+  const request = newRequestP6vdyMovies(url);
 
   requestCrawler(
       client,
@@ -1264,7 +1267,7 @@ function p6vdyMovie(servAddr, url) {
       grpc.credentials.createInsecure(),
   );
 
-  const request = newRequest6vdyMovie(url);
+  const request = newRequestP6vdyMovie(url);
 
   requestCrawler(
       client,
@@ -1358,12 +1361,12 @@ function p6vdyMovie(servAddr, url) {
 // );
 // ptKotsuMetroTokyoSubways('127.0.0.1:7052');
 // ptJRailPassSubways('127.0.0.1:7052');
-// p6vdyMovie(
-//     '127.0.0.1:7052',
-//     'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
-// );
+p6vdyMovie(
+    '127.0.0.1:7052',
+    'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
+);
 
-p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
+// p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;

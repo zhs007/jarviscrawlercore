@@ -1,5 +1,5 @@
 const messages = require('../../../proto/result_pb');
-const {p6vdyMovie, p6vdyMovies, newReply6vdy} = require('../../6vdy/index');
+const {p6vdyMovie, p6vdyMovies, newReplyP6vdy} = require('../../6vdy/index');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 
 /**
@@ -27,7 +27,7 @@ function call6vdy(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReply6vdy(messages.P6vdyMode.P6VDY_MOVIES, ret.ret);
+          const val = newReplyP6vdy(messages.P6vdyMode.P6VDY_MOVIES, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_6VDY, val);
 
@@ -47,7 +47,7 @@ function call6vdy(browser, cfg, call, param, request) {
 
           const reply = new messages.ReplyCrawler();
 
-          const val = newReply6vdy(messages.P6vdyMode.P6VDY_MOVIE, ret.ret);
+          const val = newReplyP6vdy(messages.P6vdyMode.P6VDY_MOVIE, ret.ret);
 
           setReplyCrawler(reply, messages.CrawlerType.CT_6VDY, val);
 

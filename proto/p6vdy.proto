@@ -1,8 +1,16 @@
 syntax = "proto3";
 package jarviscrawlercore;
 
-// Hao6v Resource infomation
+// 6vdy Resource infomation
 message P6vdyResInfo {
+    // name
+    string name = 1;
+    // url
+    string url = 2;    
+}
+
+// 6vdy Movie
+message P6vdyMovie {
     // fullname
     string fullname = 1;
     // resource id
@@ -23,6 +31,8 @@ message P6vdyResInfo {
     int32 season = 9;
     // 集
     int32 episode = 10;
+    // 视频列表
+    repeated P6vdyResInfo lst = 11;
 }
 
 // P6vdyMode - 6vdy mode
@@ -35,7 +45,7 @@ enum P6vdyMode {
 
 // P6vdyMovies - movies
 message P6vdyMovies {
-    repeated P6vdyResInfo lst = 1;
+    repeated P6vdyMovie lst = 1;
 }
 
 // RequestP6vdy - request 6vdy
@@ -50,6 +60,6 @@ message ReplyP6vdy {
 
     oneof reply {
         P6vdyMovies movies = 100;
-        P6vdyResInfo movie = 101;
+        P6vdyMovie movie = 101;
     }
 }

@@ -8,6 +8,25 @@ const messages = require('../../proto/result_pb');
 function newP6vdyResInfo(obj) {
   const result = new messages.P6vdyResInfo();
 
+  if (obj.name) {
+    result.setName(obj.name);
+  }
+
+  if (obj.url) {
+    result.setUrl(obj.url);
+  }
+
+  return result;
+}
+
+/**
+ * new P6vdyMovie with object
+ * @param {object} obj - P6vdyMovie
+ * @return {messages.P6vdyMovie} result - P6vdyMovie
+ */
+function newP6vdyMovie(obj) {
+  const result = new messages.P6vdyMovie();
+
   if (obj.fullname) {
     result.setFullname(obj.fullname);
   }
@@ -48,6 +67,12 @@ function newP6vdyResInfo(obj) {
     result.setEpisode(obj.episode);
   }
 
+  if (Array.isArray(obj.lst) && obj.lst.length > 0) {
+    for (let i = 0; i < obj.lst.length; ++i) {
+      result.addLst(newP6vdyResInfo(obj.lst[i], i));
+    }
+  }
+
   return result;
 }
 
@@ -82,7 +107,7 @@ function newReplyP6vdy(mode, obj) {
   if (mode == messages.P6vdyMode.P6VDY_MOVIES) {
     result.setMovies(newP6vdyMovies(obj));
   } else if (mode == messages.P6vdyMode.P6VDY_MOVIE) {
-    result.setMovie(newP6vdyResInfo(obj));
+    result.setMovie(newP6vdyMovie(obj));
   }
 
   return result;

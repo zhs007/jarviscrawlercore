@@ -73,7 +73,7 @@ async function p6vdyMovie(browser, urlPage, timeout) {
             const lsta = eles[i].getElementsByTagName('a');
             if (
               lsta.length > 0 &&
-            lsta[0].href.indexOf('https://www.6vdy.org/e/DownSys/play/?') == 0
+            lsta[0].href.indexOf('/e/DownSys/play/?') > 0
             ) {
               for (let j = 0; j < lsta.length; ++j) {
                 const curnode = {

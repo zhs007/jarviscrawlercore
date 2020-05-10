@@ -33,6 +33,8 @@ message P6vdyMovie {
     int32 episode = 10;
     // 视频列表
     repeated P6vdyResInfo lst = 11;
+    // 最后更新时间
+    int32 lastUpdTime = 12;
 }
 
 // P6vdyMode - 6vdy mode

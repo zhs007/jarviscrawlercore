@@ -251,7 +251,8 @@ proto.jarviscrawlercore.P6vdyMovie.toObject = function(includeInstance, msg) {
     season: jspb.Message.getFieldWithDefault(msg, 9, 0),
     episode: jspb.Message.getFieldWithDefault(msg, 10, 0),
     lstList: jspb.Message.toObjectList(msg.getLstList(),
-    proto.jarviscrawlercore.P6vdyResInfo.toObject, includeInstance)
+    proto.jarviscrawlercore.P6vdyResInfo.toObject, includeInstance),
+    lastupdtime: jspb.Message.getFieldWithDefault(msg, 12, 0)
   };
 
   if (includeInstance) {
@@ -332,6 +333,10 @@ proto.jarviscrawlercore.P6vdyMovie.deserializeBinaryFromReader = function(msg, r
       var value = new proto.jarviscrawlercore.P6vdyResInfo;
       reader.readMessage(value,proto.jarviscrawlercore.P6vdyResInfo.deserializeBinaryFromReader);
       msg.addLst(value);
+      break;
+    case 12:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setLastupdtime(value);
       break;
     default:
       reader.skipField();
@@ -438,6 +443,13 @@ proto.jarviscrawlercore.P6vdyMovie.serializeBinaryToWriter = function(message, w
       11,
       f,
       proto.jarviscrawlercore.P6vdyResInfo.serializeBinaryToWriter
+    );
+  }
+  f = message.getLastupdtime();
+  if (f !== 0) {
+    writer.writeInt32(
+      12,
+      f
     );
   }
 };
@@ -649,6 +661,21 @@ proto.jarviscrawlercore.P6vdyMovie.prototype.addLst = function(opt_value, opt_in
 
 proto.jarviscrawlercore.P6vdyMovie.prototype.clearLstList = function() {
   this.setLstList([]);
+};
+
+
+/**
+ * optional int32 lastUpdTime = 12;
+ * @return {number}
+ */
+proto.jarviscrawlercore.P6vdyMovie.prototype.getLastupdtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.P6vdyMovie.prototype.setLastupdtime = function(value) {
+  jspb.Message.setProto3IntField(this, 12, value);
 };
 
 

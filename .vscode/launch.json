@@ -251,7 +251,9 @@
             "request": "launch",
             "name": "tvbsmh.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnnno"]
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnyzs"],
+            "runtimeExecutable": "~/.nvm/versions/node/v12.16.3/bin/node"
+ 
         },
         {
             "type": "node",
@@ -401,6 +403,20 @@
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["geekpark", "news", "-h", "false"]
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "6vdy.movies",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["6vdy", "movies", "-u", "https://www.6vdy.org/", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "6vdy.movie",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["6vdy", "movie", "-u", "https://www.6vdy.org/dianshiju/oumeiju/13261.html", "-h", "false"]
+        },        
         {
             "type": "node",
             "request": "launch",

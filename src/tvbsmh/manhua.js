@@ -29,7 +29,7 @@ async function tvbsmhManhua(browser, comicid, timeout) {
   //   }
   // });
 
-  const lstmsg = [];
+  let lstmsg = [];
 
   page.on('response', async (res) => {
     const url = res.url();
@@ -213,23 +213,47 @@ async function tvbsmhManhua(browser, comicid, timeout) {
       timeout,
   );
 
-  const lsta = await page.$$('.light.chapter_type');
-  if (lsta.length > 1) {
-    for (let i = 1; i < lsta.length; ++i) {
-      await lsta[i].hover();
-      await lsta[i].click();
+  if (lstmsg[0].msg.length == 0) {
+    lstmsg = [];
 
-      await waitForLocalFunction(
-          page,
-          () => {
-            return lstmsg.length >= i + 1;
-          },
-          1000,
-          timeout,
-      );
-      // while (lstmsg.length < i + 1) {
-      //   await sleep(1000);
-      // }
+    const lsta = await page.$$('.light.chapter_type');
+    if (lsta.length >= 1) {
+      for (let i = 0; i < lsta.length; ++i) {
+        await lsta[i].hover();
+        await lsta[i].click();
+
+        await waitForLocalFunction(
+            page,
+            () => {
+              return lstmsg.length >= i + 1;
+            },
+            1000,
+            timeout,
+        );
+        // while (lstmsg.length < i + 1) {
+        //   await sleep(1000);
+        // }
+      }
+    }
+  } else {
+    const lsta = await page.$$('.light.chapter_type');
+    if (lsta.length > 1) {
+      for (let i = 1; i < lsta.length; ++i) {
+        await lsta[i].hover();
+        await lsta[i].click();
+
+        await waitForLocalFunction(
+            page,
+            () => {
+              return lstmsg.length >= i + 1;
+            },
+            1000,
+            timeout,
+        );
+        // while (lstmsg.length < i + 1) {
+        //   await sleep(1000);
+        // }
+      }
     }
   }
 

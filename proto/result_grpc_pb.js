@@ -20,6 +20,7 @@ var techinasia_pb = require('./techinasia_pb.js');
 var geoip_pb = require('./geoip_pb.js');
 var dt_pb = require('./dt_pb.js');
 var article2_pb = require('./article2_pb.js');
+var p6vdy_pb = require('./p6vdy_pb.js');
 
 function serialize_jarviscrawlercore_ReplyArticle(arg) {
   if (!(arg instanceof result_pb.ReplyArticle)) {

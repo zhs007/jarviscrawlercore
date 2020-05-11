@@ -18,6 +18,10 @@ const {
   newRequestPTKotsuMetroTokyoSubways,
   newRequestPTJRailPassSubways,
 } = require('../publictransit/index');
+const {
+  newRequestP6vdyMovies,
+  newRequestP6vdyMovie,
+} = require('../6vdy/index');
 
 const grpc = require('grpc');
 
@@ -1222,6 +1226,66 @@ function ptJRailPassSubways(servAddr) {
   );
 }
 
+/**
+ * p6vdyMovies
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function p6vdyMovies(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestP6vdyMovies(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_6VDY,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * p6vdyMovie
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function p6vdyMovie(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestP6vdyMovie(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_6VDY,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1296,7 +1360,13 @@ function ptJRailPassSubways(servAddr) {
 //     'https://www.tokyometro.jp/lang_cn/station/line_marunouchi/index.html',
 // );
 // ptKotsuMetroTokyoSubways('127.0.0.1:7052');
-ptJRailPassSubways('127.0.0.1:7052');
+// ptJRailPassSubways('127.0.0.1:7052');
+p6vdyMovie(
+    '127.0.0.1:7052',
+    'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
+);
+
+// p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1335,3 +1405,5 @@ exports.ptTokyoMetroSubways = ptTokyoMetroSubways;
 exports.ptTokyoMetroLine = ptTokyoMetroLine;
 exports.ptKotsuMetroTokyoSubways = ptKotsuMetroTokyoSubways;
 exports.ptJRailPassSubways = ptJRailPassSubways;
+exports.p6vdyMovie = p6vdyMovie;
+exports.p6vdyMovies = p6vdyMovies;

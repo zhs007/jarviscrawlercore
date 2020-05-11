@@ -16,6 +16,7 @@ import "techinasia.proto";
 import "geoip.proto";
 import "dt.proto";
 import "article2.proto";
+import "p6vdy.proto";
 package jarviscrawlercore;
 
 // ParagraphType - paragraph type
@@ -274,6 +275,7 @@ enum CrawlerType {
     CT_HAO6V = 19;
     CT_PUBLICTRANSIT = 20;
     CT_ARTICLE2 = 21;
+    CT_6VDY = 22;
 }
 
 // RequestTranslate2 - request translate
@@ -416,6 +418,7 @@ message RequestCrawler {
         RequestHao6v hao6v = 119;
         RequestPublicTransit publictransit = 120;
         RequestArticle2 article2 = 121;
+        RequestP6vdy p6vdy = 122;
     }
 }
 
@@ -445,6 +448,7 @@ message ReplyCrawler {
         ReplyHao6v hao6v = 119;
         ReplyPublicTransit publictransit = 120;
         ReplyArticle2 article2 = 121;
+        ReplyP6vdy p6vdy = 122;
     }
 }
 

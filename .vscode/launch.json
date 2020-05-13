@@ -251,7 +251,9 @@
             "request": "launch",
             "name": "tvbsmh.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnnno"]
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnyzs"],
+            "runtimeExecutable": "~/.nvm/versions/node/v12.16.3/bin/node"
+ 
         },
         {
             "type": "node",
@@ -441,7 +443,8 @@
             "request": "launch",
             "name": "downloadcomic.tvbsmh",
             "program": "${workspaceFolder}/bin/downloadcomic.js",
-            "args": ["downloadcomic", "nnnny", "-o", "./comic/nnnny", "-t", "0", "-s", "tvbsmh", "-b", "496797"]
+            "args": ["downloadcomic", "nnyzs", "-o", "./comic/nnyzs", "-t", "1", "-s", "tvbsmh"],
+            "runtimeExecutable": "~/.nvm/versions/node/v12.16.3/bin/node"
         },
         {
             "type": "node",

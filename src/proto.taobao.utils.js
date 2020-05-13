@@ -1,4 +1,4 @@
-const messages = require('../proto/result_pb');
+const messages = require('../pbjs/result_pb');
 
 /**
  * new TaobaoSKUInfo with object

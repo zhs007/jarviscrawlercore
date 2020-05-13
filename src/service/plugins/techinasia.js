@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {techinasiaCompany} = require('../../techinasia/company');
 const {techinasiaJob} = require('../../techinasia/job');
 const {techinasiaJobs} = require('../../techinasia/jobs');

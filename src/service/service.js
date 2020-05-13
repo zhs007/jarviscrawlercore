@@ -1,4 +1,4 @@
-const services = require('../../proto/result_grpc_pb');
+const services = require('../../pbjs/result_grpc_pb');
 const {loadConfig, checkConfig, isValidToken} = require('./cfg');
 const {attachBrowser, startBrowser} = require('../browser');
 const {callTranslate} = require('./translate');

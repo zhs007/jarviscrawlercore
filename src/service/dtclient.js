@@ -1,5 +1,5 @@
-const messages = require('../../proto/result_pb');
-const services = require('../../proto/result_grpc_pb');
+const messages = require('../../pbjs/result_pb');
+const services = require('../../pbjs/result_grpc_pb');
 const log = require('../log');
 
 const grpc = require('grpc');
@@ -17,7 +17,7 @@ const TOKEN = 'wzDkh9h2fhfUVuS9jZ8uVbhV3vC5AWX3';
 function startGetDTData(servAddr, envName, dtDataType, startTime, endTime) {
   const client = new services.JarvisCrawlerServiceClient(
       servAddr,
-      grpc.credentials.createInsecure()
+      grpc.credentials.createInsecure(),
   );
 
   const request = new messages.RequestDTData();
@@ -45,5 +45,5 @@ startGetDTData(
     'dtserv2',
     messages.DTDataType.DT_DT_BUSINESSGAMEREPORT,
     '2019-04-17',
-    '2019-04-17'
+    '2019-04-17',
 );

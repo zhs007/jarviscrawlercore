@@ -18,6 +18,7 @@ import "dt.proto";
 import "article2.proto";
 import "p6vdy.proto";
 package jarviscrawlercore;
+option go_package = "github/zhs007/jccclient";
 
 // ParagraphType - paragraph type
 enum ParagraphType {

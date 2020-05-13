@@ -1,5 +1,5 @@
-const messages = require('../../proto/result_pb');
-const services = require('../../proto/result_grpc_pb');
+const messages = require('../../pbjs/result_pb');
+const services = require('../../pbjs/result_grpc_pb');
 const {requestCrawler} = require('./utils');
 const log = require('../log');
 const {

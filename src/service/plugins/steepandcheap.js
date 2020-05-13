@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 // const {steepandcheapProducts} = require('../../steepandcheap/products');
 const {steepandcheapProducts2} = require('../../steepandcheap/products2');
 const {steepandcheapProduct} = require('../../steepandcheap/product');

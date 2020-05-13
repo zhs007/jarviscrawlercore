@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {alimamaKeepalive} = require('../../alimama/keepalive');
 const {alimamaSearch} = require('../../alimama/search');
 const {alimamaGetTop} = require('../../alimama/gettop');

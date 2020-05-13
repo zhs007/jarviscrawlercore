@@ -1,4 +1,4 @@
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const {exportArticle} = require('../exportarticle/exportarticle');
 const {hashMD5} = require('../utils');
 const log = require('../log');
@@ -20,7 +20,7 @@ function callExportArticle(browser, call) {
       '',
       60,
       call.request.getAttachjquery(),
-      false
+      false,
   )
       .then(({result, err}) => {
         if (err) {

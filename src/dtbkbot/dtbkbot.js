@@ -14,7 +14,7 @@ const {
 } = require('./gpkcheckgameresult');
 const {attachJQuery, attachJarvisCrawlerCore} = require('../utils');
 const {WaitRightFrame} = require('./utils');
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const log = require('../log');
 
 /**
@@ -41,7 +41,7 @@ async function dtbkbot(
     gamecode,
     playername,
     starttime,
-    endtime
+    endtime,
 ) {
   let ret = undefined;
 
@@ -169,7 +169,7 @@ async function dtbkbot(
             const yxjl = getElementChildWithTagAndText(
                 lstmenuson[i],
                 'A',
-                '游戏记录'
+                '游戏记录',
             );
             if (yxjl) {
               yxjl.className = 'yxjl';
@@ -179,7 +179,7 @@ async function dtbkbot(
             const gpkyxjl = getElementChildWithTagAndText(
                 lstmenuson[i],
                 'A',
-                'GPK游戏记录'
+                'GPK游戏记录',
             );
             if (gpkyxjl) {
               gpkyxjl.className = 'gpkyxjl';
@@ -188,7 +188,7 @@ async function dtbkbot(
             const yxbb = getElementChildWithTagAndText(
                 lstmenuson[i],
                 'A',
-                '游戏报表'
+                '游戏报表',
             );
             if (yxbb) {
               yxbb.className = 'yxbb';
@@ -208,7 +208,7 @@ async function dtbkbot(
           leftFrame,
           rightFrame,
           starttime,
-          endtime
+          endtime,
       );
     } else if (dtDataType == messages.DTDataType.DT_DT_GPKCHECKGAMERESULT) {
       ret = await checkGPKGameResult(
@@ -220,7 +220,7 @@ async function dtbkbot(
           gamecode,
           playername,
           starttime,
-          endtime
+          endtime,
       );
     }
   }

@@ -1,8 +1,8 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {searchInCrunchBase} = require('../../crunchbase/service');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 const {newCrunchBaseOrganization} = require('../../utils');
-const log = require('../../log');
+// const log = require('../../log');
 
 /**
  * search in crunchbase

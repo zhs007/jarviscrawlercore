@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {mountainstealsProduct} = require('../../mountainsteals/product');
 const {mountainstealsSale} = require('../../mountainsteals/sale');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');

@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {jdProduct} = require('../../jd/product');
 const {jdActive} = require('../../jd/active');
 const {jdActivePage} = require('../../jd/activepage');

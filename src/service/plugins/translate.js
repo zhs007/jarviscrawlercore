@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {translateInGoogle} = require('../../googletranslate/service');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 
@@ -27,7 +27,7 @@ function callTranslate(browser, cfg, call, param) {
       browser,
       param.getText(),
       param.getSrclang(),
-      param.getDestlang()
+      param.getDestlang(),
   )
       .then((ret) => {
         if (ret.error) {

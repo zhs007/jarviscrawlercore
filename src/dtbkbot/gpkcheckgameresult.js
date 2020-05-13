@@ -6,7 +6,7 @@ const {
 } = require('../utils');
 // const {formatDTNumber} = require('./utils');
 const {mgrDTGame} = require('./games/allgames');
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const log = require('../log');
 
 let lsticon404 = [];
@@ -77,7 +77,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
       async () => {
         console.log('It\'s done. ' + url);
       },
-      3 * 60 * 1000
+      3 * 60 * 1000,
   );
 
   if (!isdone) {
@@ -126,20 +126,20 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
                   const dtbaseid = ele.children[2].innerText;
 
                   const win = Math.round(
-                      parseFloat(ele.children[3].innerText) * 100
+                      parseFloat(ele.children[3].innerText) * 100,
                   );
                   const bet = Math.round(
-                      parseFloat(ele.children[4].innerText) * 100
+                      parseFloat(ele.children[4].innerText) * 100,
                   );
                   const off = Math.round(
-                      parseFloat(ele.children[5].innerText) * 100
+                      parseFloat(ele.children[5].innerText) * 100,
                   );
                   const lines = parseInt(ele.children[6].innerText);
                   const moneystart = Math.round(
-                      parseFloat(ele.children[7].innerText) * 100
+                      parseFloat(ele.children[7].innerText) * 100,
                   );
                   const moneyend = Math.round(
-                      parseFloat(ele.children[8].innerText) * 100
+                      parseFloat(ele.children[8].innerText) * 100,
                   );
 
                   const playerip = ele.children[9].innerText;
@@ -190,7 +190,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
 
                   if (ids.length == 2 && ids[0] != gamecode) {
                     curgr.err = newDTGameResultErr(
-                        messages.DTGameResultErrCode.DTGRE_GAMECODE
+                        messages.DTGameResultErrCode.DTGRE_GAMECODE,
                     );
                   }
 
@@ -202,7 +202,7 @@ async function getSubGame(page, rightFrame, waitRightFrame, gamecode, gameid) {
 
               return arr;
             },
-            gamecode
+            gamecode,
         )
         .catch((err) => {
           return {error: 'getSubGame:subgameframe ' + err};
@@ -244,7 +244,7 @@ async function checkGPKGameResult(
     gamecode,
     playername,
     starttime,
-    endtime
+    endtime,
 ) {
   lsticon404 = [];
 
@@ -273,7 +273,7 @@ async function checkGPKGameResult(
       // 点击二级菜单
         await leftFrame.click('.gpkyxjl');
       },
-      3 * 60 * 1000
+      3 * 60 * 1000,
   );
 
   if (!isdone1) {
@@ -287,7 +287,7 @@ async function checkGPKGameResult(
       (ele, businessid) => {
         ele.value = businessid;
       },
-      businessid
+      businessid,
   );
 
   await rightFrame.$eval(
@@ -295,7 +295,7 @@ async function checkGPKGameResult(
       (ele, gamecode) => {
         ele.value = gamecode;
       },
-      gamecode
+      gamecode,
   );
 
   await rightFrame.$eval(
@@ -303,7 +303,7 @@ async function checkGPKGameResult(
       (ele, playername) => {
         ele.value = playername;
       },
-      playername
+      playername,
   );
 
   await rightFrame.$eval(
@@ -311,7 +311,7 @@ async function checkGPKGameResult(
       (ele, starttime) => {
         ele.value = starttime;
       },
-      starttime
+      starttime,
   );
 
   await rightFrame.$eval(
@@ -319,7 +319,7 @@ async function checkGPKGameResult(
       (ele, endtime) => {
         ele.value = endtime;
       },
-      endtime
+      endtime,
   );
 
   await rightFrame.$eval('#size.select3', (ele) => {
@@ -331,7 +331,7 @@ async function checkGPKGameResult(
       async () => {
         await rightFrame.click('.scbtn.cx');
       },
-      3 * 60 * 1000
+      3 * 60 * 1000,
   );
 
   if (!isdone2) {
@@ -374,10 +374,10 @@ async function checkGPKGameResult(
         const off = Math.round(parseFloat(ele.children[7].innerText) * 100);
         const lines = parseInt(ele.children[8].innerText);
         const moneystart = Math.round(
-            parseFloat(ele.children[9].innerText) * 100
+            parseFloat(ele.children[9].innerText) * 100,
         );
         const moneyend = Math.round(
-            parseFloat(ele.children[10].innerText) * 100
+            parseFloat(ele.children[10].innerText) * 100,
         );
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
@@ -431,7 +431,7 @@ async function checkGPKGameResult(
 
         if (ids.length == 2 && ids[0] != gamecode) {
           curgr.err = newDTGameResultErr(
-              messages.DTGameResultErrCode.DTGRE_GAMECODE
+              messages.DTGameResultErrCode.DTGRE_GAMECODE,
           );
         }
 
@@ -454,10 +454,10 @@ async function checkGPKGameResult(
         const off = Math.round(parseFloat(ele.children[7].innerText) * 100);
         const lines = parseInt(ele.children[8].innerText);
         const moneystart = Math.round(
-            parseFloat(ele.children[9].innerText) * 100
+            parseFloat(ele.children[9].innerText) * 100,
         );
         const moneyend = Math.round(
-            parseFloat(ele.children[10].innerText) * 100
+            parseFloat(ele.children[10].innerText) * 100,
         );
         const playerip = ele.children[11].innerText;
         const datastate = ele.children[12].innerText;
@@ -511,7 +511,7 @@ async function checkGPKGameResult(
 
         if (ids.length == 2 && ids[0] != gamecode) {
           curgr.err = newDTGameResultErr(
-              messages.DTGameResultErrCode.DTGRE_GAMECODE
+              messages.DTGameResultErrCode.DTGRE_GAMECODE,
           );
         }
 
@@ -531,7 +531,7 @@ async function checkGPKGameResult(
           rightFrame,
           waitRightFrame,
           lst[i].gamecode,
-          lst[i].id
+          lst[i].id,
       );
 
       if (cursubgames.ret) {
@@ -557,7 +557,7 @@ async function checkGPKGameResult(
           ' ' +
           lst[i].err.getValue0() +
           ' ' +
-          lst[i].err.getValue1()
+          lst[i].err.getValue1(),
       );
     }
   }
@@ -570,7 +570,7 @@ async function checkGPKGameResult(
           messages.DTGameResultErrCode.DTGRE_ICON404,
           undefined,
           undefined,
-          lsticon404[i]
+          lsticon404[i],
       ),
     });
 
@@ -578,7 +578,7 @@ async function checkGPKGameResult(
         'I got a error! ' +
         messages.DTGameResultErrCode.DTGRE_ICON404 +
         ' ' +
-        lsticon404[i]
+        lsticon404[i],
     );
   }
 

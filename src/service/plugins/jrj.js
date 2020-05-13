@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {jrjFunds} = require('../../jrj/funds');
 const {jrjFund} = require('../../jrj/fund');
 const {jrjFundManager} = require('../../jrj/fundmanager');

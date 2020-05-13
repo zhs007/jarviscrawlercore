@@ -1,5 +1,5 @@
 const {sleep, hashMD5} = require('../utils');
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const {getImageInfo} = require('../imgutils');
 const {IPMgr} = require('../ipmgr');
 const log = require('../log');

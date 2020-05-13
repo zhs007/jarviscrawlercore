@@ -86,7 +86,7 @@ function newP6vdyMovies(obj) {
 
   if (Array.isArray(obj.lst) && obj.lst.length > 0) {
     for (let i = 0; i < obj.lst.length; ++i) {
-      result.addLst(newP6vdyResInfo(obj.lst[i], i));
+      result.addLst(newP6vdyMovie(obj.lst[i]), i);
     }
   }
 

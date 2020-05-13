@@ -75,13 +75,14 @@ async function p6vdyMovies(browser, urlPage, timeout) {
 
             const lsta = lstli[i].getElementsByClassName('zoom');
             if (lsta.length > 0) {
+              curnode.fullname = lsta[0].title;
               curnode.title = lsta[0].title;
               curnode.url = lsta[0].href;
             }
 
             const lstimg = lstli[i].getElementsByTagName('img');
             if (lstimg.length > 0) {
-              curnode.img = lstimg[0].src;
+              curnode.cover = lstimg[0].src;
             }
 
             lst.push(curnode);

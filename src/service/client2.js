@@ -1361,12 +1361,12 @@ function p6vdyMovie(servAddr, url) {
 // );
 // ptKotsuMetroTokyoSubways('127.0.0.1:7052');
 // ptJRailPassSubways('127.0.0.1:7052');
-p6vdyMovie(
-    '127.0.0.1:7052',
-    'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
-);
+// p6vdyMovie(
+//     '127.0.0.1:7052',
+//     'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
+// );
 
-// p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
+p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;

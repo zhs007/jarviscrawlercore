@@ -1,6 +1,6 @@
 syntax = "proto3";
 package jarviscrawlercore;
-option go_package = "github.com/zhs007/jccclient";
+option go_package = "github.com/zhs007/jccclient/pb";
 
 // DoubanMode - douban mode
 enum DoubanMode {

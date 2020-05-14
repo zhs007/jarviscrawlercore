@@ -1,6 +1,6 @@
 syntax = "proto3";
 package jarviscrawlercore;
-option go_package = "github/zhs007/jccclient";
+option go_package = "github.com/zhs007/jccclient";
 
 enum Hao6vResType {
     H6VRT_UNKNOW = 0;

@@ -1,7 +1,7 @@
 syntax = "proto3";
 import "searchparam2.proto";
 package jarviscrawlercore;
-option go_package = "github/zhs007/jccclient";
+option go_package = "github.com/zhs007/jccclient";
 
 // AlimamaMode - alimama mode
 enum AlimamaMode {

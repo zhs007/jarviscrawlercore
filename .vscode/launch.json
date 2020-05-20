@@ -251,7 +251,7 @@
             "request": "launch",
             "name": "tvbsmh.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnyzs"],
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nscba"],
             "runtimeExecutable": "~/.nvm/versions/node/v12.16.3/bin/node"
  
         },

@@ -254,7 +254,8 @@ proto.jarviscrawlercore.P6vdyMovie.toObject = function(includeInstance, msg) {
     proto.jarviscrawlercore.P6vdyResInfo.toObject, includeInstance),
     lastupdtime: jspb.Message.getFieldWithDefault(msg, 12, 0),
     lastupdtime64: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    videonamesList: jspb.Message.getRepeatedField(msg, 15)
+    videonamesList: jspb.Message.getRepeatedField(msg, 15),
+    part: jspb.Message.getFieldWithDefault(msg, 16, 0)
   };
 
   if (includeInstance) {
@@ -347,6 +348,10 @@ proto.jarviscrawlercore.P6vdyMovie.deserializeBinaryFromReader = function(msg, r
     case 15:
       var value = /** @type {string} */ (reader.readString());
       msg.addVideonames(value);
+      break;
+    case 16:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setPart(value);
       break;
     default:
       reader.skipField();
@@ -473,6 +478,13 @@ proto.jarviscrawlercore.P6vdyMovie.serializeBinaryToWriter = function(message, w
   if (f.length > 0) {
     writer.writeRepeatedString(
       15,
+      f
+    );
+  }
+  f = message.getPart();
+  if (f !== 0) {
+    writer.writeInt32(
+      16,
       f
     );
   }
@@ -744,6 +756,21 @@ proto.jarviscrawlercore.P6vdyMovie.prototype.addVideonames = function(value, opt
 
 proto.jarviscrawlercore.P6vdyMovie.prototype.clearVideonamesList = function() {
   this.setVideonamesList([]);
+};
+
+
+/**
+ * optional int32 part = 16;
+ * @return {number}
+ */
+proto.jarviscrawlercore.P6vdyMovie.prototype.getPart = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.P6vdyMovie.prototype.setPart = function(value) {
+  jspb.Message.setProto3IntField(this, 16, value);
 };
 
 

@@ -40,6 +40,8 @@ message P6vdyMovie {
     int64 lastUpdTime64 = 13;
     // video names里剩余部分
     repeated string videoNames = 15;
+    // 电影第几部
+    int32 part = 16;
 }
 
 // P6vdyMode - 6vdy mode

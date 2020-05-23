@@ -1,4 +1,4 @@
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const {dtbkbot} = require('../dtbkbot/dtbkbot');
 const {newDTBusinessGameReport} = require('../utils');
 
@@ -20,7 +20,7 @@ function callGetDTData(browser, cfgfile, call, callback) {
       call.request.getGamecode(),
       call.request.getPlayername(),
       call.request.getStarttime(),
-      call.request.getEndtime()
+      call.request.getEndtime(),
   )
       .then((ret) => {
         if (ret == undefined || !ret.ret) {

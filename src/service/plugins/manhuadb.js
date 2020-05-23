@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {manhuadbAuthor, newReplyManhuadb} = require('../../manhuadb/index');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 

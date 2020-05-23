@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {analyzePage} = require('../../analysis/page');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 const {newReplyAnalyzePage} = require('../../utils');
@@ -23,7 +23,7 @@ function callAnalyzePage(browser, cfg, call, param) {
         logs: param.getNeedlogs(),
         timeout: param.getTimeout(),
         screenshotsDelay: param.getDelay(),
-      }
+      },
   )
       .then((ret) => {
         if (ret.error) {

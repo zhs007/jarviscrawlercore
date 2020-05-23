@@ -17,7 +17,7 @@ const {callOABT} = require('./plugins/oabt');
 const {callHao6v} = require('./plugins/hao6v');
 const {call6vdy} = require('./plugins/6vdy');
 const {callPublicTransit} = require('./plugins/publictransit');
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const {replyError} = require('./utils');
 
 /**

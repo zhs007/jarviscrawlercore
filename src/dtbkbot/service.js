@@ -1,5 +1,5 @@
 const {dtbkbot} = require('./dtbkbot');
-const messages = require('../../proto/result_pb');
+const messages = require('../../pbjs/result_pb');
 const {newDTBusinessGameReport} = require('../utils');
 
 /**
@@ -24,7 +24,7 @@ async function getDTData(
     gamecode,
     playername,
     starttime,
-    endtime
+    endtime,
 ) {
   let errstr;
   const ret = await dtbkbot(
@@ -37,7 +37,7 @@ async function getDTData(
       gamecode,
       playername,
       starttime,
-      endtime
+      endtime,
   ).catch((err) => {
     errstr = 'dtbkbot ' + err.toString();
   });

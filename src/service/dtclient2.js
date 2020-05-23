@@ -1,5 +1,5 @@
-const messages = require('../../proto/result_pb');
-const services = require('../../proto/result_grpc_pb');
+const messages = require('../../pbjs/result_pb');
+const services = require('../../pbjs/result_grpc_pb');
 const {requestCrawler} = require('./utils');
 const {printDTGPKCheckGameResult} = require('../utils');
 const grpc = require('grpc');
@@ -26,11 +26,11 @@ function startGetDTData(
     gamecode,
     playername,
     startTime,
-    endTime
+    endTime,
 ) {
   const client = new services.JarvisCrawlerServiceClient(
       servAddr,
-      grpc.credentials.createInsecure()
+      grpc.credentials.createInsecure(),
   );
 
   const request = new messages.RequestDTData();
@@ -61,7 +61,7 @@ function startGetDTData(
             printDTGPKCheckGameResult(reply.getCheckgameresultgpk());
           }
         }
-      }
+      },
   );
 }
 
@@ -84,5 +84,5 @@ startGetDTData(
     'hiphopman',
     '',
     '2019-08-01 00:00:00',
-    '2019-08-03 00:00:00'
+    '2019-08-03 00:00:00',
 );

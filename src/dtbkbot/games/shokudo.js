@@ -1,6 +1,6 @@
 const {mgrDTGame} = require('./mgr');
 const {isArrayNumberNM, isMyRespin} = require('../utils');
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {newDTGameResultErr} = require('../../utils');
 const log = require('../../log');
 
@@ -20,7 +20,7 @@ function checkGameResult(gameresult) {
     return newDTGameResultErr(
         messages.DTGameResultErrCode.DTGRE_LINES,
         gameresult.lines,
-        LINES
+        LINES,
     );
   }
 
@@ -40,7 +40,7 @@ function checkGameResult(gameresult) {
       const gr = JSON.parse(gameresult.gameresult);
       if (!gr) {
         return newDTGameResultErr(
-            messages.DTGameResultErrCode.DTGRE_GAMERESULT
+            messages.DTGameResultErrCode.DTGRE_GAMERESULT,
         );
       }
 
@@ -48,7 +48,7 @@ function checkGameResult(gameresult) {
         return newDTGameResultErr(
             messages.DTGameResultErrCode.DTGRE_GAMERESULT_LINES,
             gr.lines,
-            LINES
+            LINES,
         );
       }
 
@@ -56,7 +56,7 @@ function checkGameResult(gameresult) {
         return newDTGameResultErr(
             messages.DTGameResultErrCode.DTGRE_GAMERESULT_TIMES,
             gr.times,
-            TIMES
+            TIMES,
         );
       }
 
@@ -65,7 +65,7 @@ function checkGameResult(gameresult) {
           return newDTGameResultErr(
               messages.DTGameResultErrCode.DTGRE_GAMERESULT_BET,
               gr.bet * LINES * TIMES,
-              gameresult.bet
+              gameresult.bet,
           );
         }
       }
@@ -74,7 +74,7 @@ function checkGameResult(gameresult) {
         return newDTGameResultErr(
             messages.DTGameResultErrCode.DTGRE_GAMERESULT_WIN,
             gr.realwin,
-            gameresult.win
+            gameresult.win,
         );
       }
 
@@ -87,7 +87,7 @@ function checkGameResult(gameresult) {
         return newDTGameResultErr(
             messages.DTGameResultErrCode.DTGRE_GAMERESULT_SUM_WIN,
             totalwin,
-            gr.totalwin
+            gr.totalwin,
         );
       }
     } catch (err) {

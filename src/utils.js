@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const messages = require('../proto/result_pb');
+const messages = require('../pbjs/result_pb');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
 const log = require('./log');

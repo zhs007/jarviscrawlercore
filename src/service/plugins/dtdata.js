@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {getDTData} = require('../../dtbkbot/service');
 const {replyError, replyMsg, setReplyCrawler} = require('../utils');
 
@@ -25,7 +25,7 @@ function callGetDTData(browser, cfg, call, param) {
       param.getGamecode(),
       param.getPlayername(),
       param.getStarttime(),
-      param.getEndtime()
+      param.getEndtime(),
   )
       .then((ret) => {
         if (ret.error) {

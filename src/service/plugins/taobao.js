@@ -1,4 +1,4 @@
-const messages = require('../../../proto/result_pb');
+const messages = require('../../../pbjs/result_pb');
 const {taobaoItem} = require('../../taobao/item');
 const {taobaoItemMobile} = require('../../taobao/itemmobile');
 const {taobaoSearch} = require('../../taobao/search');

@@ -37,6 +37,15 @@ async function p6vdyMovie(browser, urlPage, timeout) {
   }
 
   const baseurl = urlPage;
+  let noretry = false;
+
+  page.on('response', (res)=>{
+    if (res.url() == baseurl) {
+      if (res.status() >= 400 && res.status() < 500) {
+        noretry = true;
+      }
+    }
+  });
 
   await page
       .goto(baseurl, {
@@ -100,6 +109,18 @@ async function p6vdyMovie(browser, urlPage, timeout) {
       });
   if (awaiterr) {
     log.error('p6vdyMovie.$$eval .widget.box.row', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
+  if (noretry) {
+    awaiterr = new Error(
+        'noretry:404 ' + baseurl,
+    );
+
+    log.error('p6vdyMovie noretry ', awaiterr);
 
     await page.close();
 

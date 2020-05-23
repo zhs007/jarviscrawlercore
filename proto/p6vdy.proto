@@ -1,5 +1,6 @@
 syntax = "proto3";
 package jarviscrawlercore;
+option go_package = "github.com/zhs007/jccclient/pb";
 
 // 6vdy Resource infomation
 message P6vdyResInfo {
@@ -34,7 +35,13 @@ message P6vdyMovie {
     // 视频列表
     repeated P6vdyResInfo lst = 11;
     // 最后更新时间
-    int32 lastUpdTime = 12;
+    int32 lastUpdTime = 12 [deprecated = true];
+    // 最后更新时间
+    int64 lastUpdTime64 = 13;
+    // video names里剩余部分
+    repeated string videoNames = 15;
+    // 电影第几部
+    int32 part = 16;
 }
 
 // P6vdyMode - 6vdy mode

@@ -39,7 +39,7 @@ async function p6vdyMovie(browser, urlPage, timeout) {
   const baseurl = urlPage;
   let noretry = false;
 
-  page.on('response', (res)=>{
+  page.on('response', (res) => {
     if (res.url() == baseurl) {
       if (res.status() >= 400 && res.status() < 500) {
         noretry = true;
@@ -74,10 +74,15 @@ async function p6vdyMovie(browser, urlPage, timeout) {
     return {error: err.toString()};
   }
 
-  const lst = await page
+  const ret = await page
       .$$eval('.widget.box.row', (eles) => {
+        const ret = {lst: []};
+        const title = document.title;
+        const arrtitle = title.split('-6v');
+        ret.fullname = arrtitle[0];
+
         if (eles.length > 0) {
-          const lst = [];
+        // const lst = [];
           for (let i = 0; i < eles.length; ++i) {
             const lsta = eles[i].getElementsByTagName('a');
             if (
@@ -90,19 +95,19 @@ async function p6vdyMovie(browser, urlPage, timeout) {
                   url: lsta[0].href,
                 };
 
-                lst.push(curnode);
+                ret.lst.push(curnode);
               }
 
-              if (lst.length > 0) {
+              if (ret.lst.length > 0) {
                 break;
               }
             }
           }
 
-          return lst;
+          return ret;
         }
 
-        return [];
+        return ret;
       })
       .catch((err) => {
         awaiterr = err;
@@ -116,9 +121,7 @@ async function p6vdyMovie(browser, urlPage, timeout) {
   }
 
   if (noretry) {
-    awaiterr = new Error(
-        'noretry:404 ' + baseurl,
-    );
+    awaiterr = new Error('noretry:404 ' + baseurl);
 
     log.error('p6vdyMovie noretry ', awaiterr);
 
@@ -129,7 +132,7 @@ async function p6vdyMovie(browser, urlPage, timeout) {
 
   await page.close();
 
-  const ret = {lst: lst};
+  // const ret = {lst: lst};
 
   // for (let i = 0; i < lst.length; ++i) {
   //   const ci = {

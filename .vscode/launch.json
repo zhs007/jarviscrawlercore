@@ -415,7 +415,7 @@
             "request": "launch",
             "name": "6vdy.movie",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["6vdy", "movie", "-u", "https://www.66s.cc/dongzuopian/5443.html", "-h", "false"]
+            "args": ["6vdy", "movie", "-u", "https://www.ai66.cc/dianshiju/oumeiju/13373.html", "-h", "false"]
         },        
         {
             "type": "node",

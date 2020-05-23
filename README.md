@@ -1,4 +1,4 @@
-# jarviscrawlercore
+# Jarvis Crawler Core
 
 JarvisCrawlerCore 是一套分布式 爬虫服务框架 / 页面编程机器人 。  
 
@@ -55,6 +55,14 @@ npm i jarviscrawlercore --save
 使用 ``jccclient`` 即可。
 
 ### 更新说明
+
+##### v0.6
+
+- 调整``protos``结构
+- 配合``Charles``线上部署
+- 逐步开放API服务
+- 配合``jccclient``实现更高效的抓取工作
+- 支持更多的网站
 
 ##### v0.5
 

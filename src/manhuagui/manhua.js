@@ -147,7 +147,7 @@ async function manhuaguiManhua(browser, comicid, timeout) {
   }
 
   ret.books = await page
-      .$$eval('#chapter-list-0', (eles) => {
+      .$$eval('.chapter-list', (eles) => {
         if (eles.length > 0) {
           const lst = [];
           for (let i = 0; i < eles.length; ++i) {

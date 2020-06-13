@@ -237,7 +237,7 @@
             "request": "launch",
             "name": "manhuagui.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["manhuagui", "manhua", "-h", "false", "-c", "1769"]
+            "args": ["manhuagui", "manhua", "-h", "false", "-c", "7580"]
         },
         {
             "type": "node",

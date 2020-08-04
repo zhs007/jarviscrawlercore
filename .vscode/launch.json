@@ -76,7 +76,7 @@
             "request": "launch",
             "name": "steepandsheap.products2",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["steepandcheap", "products2", "-h", "false", "-u", "new-arrivals", "-p", "1"]
+            "args": ["steepandcheap", "products2", "-h", "false", "-u", "rc/marmot-on-sale", "-p", "3"]
         },
         {
             "type": "node",
@@ -251,7 +251,7 @@
             "request": "launch",
             "name": "tvbsmh.manhua",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nscba"],
+            "args": ["tvbsmh", "manhua", "-h", "false", "-c", "nnnky"],
             "runtimeExecutable": "~/.nvm/versions/node/v12.16.3/bin/node"
  
         },

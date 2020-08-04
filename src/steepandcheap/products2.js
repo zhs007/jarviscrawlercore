@@ -3,6 +3,7 @@ const {closeDialog} = require('./utils');
 const {sleep} = require('../utils');
 const log = require('../log');
 const {WaitAllResponse} = require('../waitallresponse');
+const {disableDownloadOthers} = require('../page.utils');
 
 /**
  * parseURL - parse URL
@@ -133,7 +134,13 @@ async function nextPage(page, baseurl, firsturl, timeout) {
 
   if (np.length > 0) {
     await np[0].hover();
-    await np[0].click();
+    await sleep(1000);
+    await np[0].click({delay: 300}).catch((err) => {
+      awaiterr = err;
+    });
+    if (awaiterr) {
+      return awaiterr;
+    }
 
     waitchgpage.resetex();
     const isok = await waitchgpage.waitDone(timeout);
@@ -212,6 +219,8 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
   let awaiterr = undefined;
   const page = await browser.newPage();
 
+  await disableDownloadOthers(page);
+
   await page
       .setViewport({
         width: 1280,
@@ -268,6 +277,8 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     };
   }
 
+  // await sleep(3 * 1000);
+
   let maxpageret = await getMaxPages(page, timeout);
   if (maxpageret.error) {
     log.error('steepandcheapProducts2.getMaxPages ', maxpageret.error);
@@ -275,7 +286,8 @@ async function steepandcheapProducts2(browser, url, pageid, timeout) {
     await page.close();
 
     return {
-      error: 'steepandcheapProducts2.getMaxPages ' + maxpageret.error.toString(),
+      error:
+        'steepandcheapProducts2.getMaxPages ' + maxpageret.error.toString(),
     };
   }
 

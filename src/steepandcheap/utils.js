@@ -1,6 +1,53 @@
 const {isElementVisible} = require('../eleutils');
 
 /**
+ * closeEMailSignUpWrap - close email-signup-modal-wrap
+ * @param {object} page - page
+ * @return {error} err - error
+ */
+async function closeEMailSignUpWrap(page) {
+  let awaiterr;
+
+  const lstdialog = await page.$$('.email-signup-modal-wrap').catch((err) => {
+    awaiterr = err;
+  });
+
+  if (awaiterr) {
+    return awaiterr;
+  }
+
+  if (lstdialog.length > 0) {
+    const isVisible = await isElementVisible(page, lstdialog[0]);
+
+    if (!isVisible) {
+      return undefined;
+    }
+
+    const btns = await lstdialog[0].$$('button').catch((err) => {
+      awaiterr = err;
+    });
+
+    if (awaiterr) {
+      return awaiterr;
+    }
+
+    if (btns.length > 0) {
+      await btns[0].click().catch((err) => {
+        awaiterr = err;
+      });
+
+      if (awaiterr) {
+        return awaiterr;
+      }
+    }
+  } else {
+    return await closeEMailSignUpModal(page);
+  }
+
+  return undefined;
+}
+
+/**
  * closeEMailSignUpModal - close email-signup-modal
  * @param {object} page - page
  * @return {error} err - error
@@ -42,6 +89,8 @@ async function closeEMailSignUpModal(page) {
         return awaiterr;
       }
     }
+  } else {
+    return await closeEMailSignUpWrap(page);
   }
 
   return undefined;
@@ -82,7 +131,7 @@ async function closeDialog(page) {
       }
     }
   } else {
-    return await closeEMailSignUpModal(page);
+    return await closeEMailSignUpWrap(page);
   }
 
   return undefined;

@@ -13,11 +13,11 @@ async function btexec(program, version) {
       .description('bt')
       .option('-h, --headless [isheadless]', 'headless mode')
       .option('-d, --debug [isdebug]', 'debug mode')
-      .option('-n, --name [name]', 'website name')
+      .option('-web, --web [web]', 'website')
       .action(function(cfgfile, options) {
         log.console('version is ', version);
 
-        if (!cfgfile || !options.name) {
+        if (!cfgfile || !options.web) {
           log.console('command wrong, please type ' + 'jarviscrawler bt --help');
 
           return;
@@ -34,7 +34,7 @@ async function btexec(program, version) {
         (async () => {
           const browser = await startBrowser(headless);
 
-          await bt(browser, cfgfile, true, options.name);
+          await bt(browser, cfgfile, true, options.web);
 
           if (!debugmode) {
             await browser.close();

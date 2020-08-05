@@ -427,6 +427,7 @@ message RequestCrawler {
 message ReplyCrawler {
     CrawlerType crawlerType = 1;
     CrawlerStatistics statistics = 2;
+    string version = 3;
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;

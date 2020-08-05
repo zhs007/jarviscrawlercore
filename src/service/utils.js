@@ -1,5 +1,9 @@
 const messages = require('../../pbjs/result_pb');
 const log = require('../log');
+const fs = require('fs');
+
+const package = JSON.parse(fs.readFileSync('./package.json'));
+const VERSION = package.version;
 
 const MAX_BUFF_LEN = 4 * 1024 * 1024;
 const MAX_BLOCK_LEN = 4 * 1024 * 1024 - 1024 * 10;
@@ -32,6 +36,7 @@ function replyError(call, error, isend) {
  */
 function replyMsg(call, msg, isend) {
   // console.log('replyMsg');
+  msg.setVersion(VERSION);
 
   const reply = new messages.ReplyCrawlerStream();
 

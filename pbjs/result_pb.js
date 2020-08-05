@@ -10222,6 +10222,7 @@ proto.jarviscrawlercore.ReplyCrawlerStream.toObject = function(includeInstance, 
     hashdata: jspb.Message.getFieldWithDefault(msg, 4, ""),
     totalhashdata: jspb.Message.getFieldWithDefault(msg, 5, ""),
     data: msg.getData_asB64(),
+    version: jspb.Message.getFieldWithDefault(msg, 7, ""),
     error: jspb.Message.getFieldWithDefault(msg, 100, ""),
     replycrawler: (f = msg.getReplycrawler()) && proto.jarviscrawlercore.ReplyCrawler.toObject(includeInstance, f)
   };
@@ -10283,6 +10284,10 @@ proto.jarviscrawlercore.ReplyCrawlerStream.deserializeBinaryFromReader = functio
     case 6:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setData(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVersion(value);
       break;
     case 100:
       var value = /** @type {string} */ (reader.readString());
@@ -10361,6 +10366,13 @@ proto.jarviscrawlercore.ReplyCrawlerStream.serializeBinaryToWriter = function(me
   if (f.length > 0) {
     writer.writeBytes(
       6,
+      f
+    );
+  }
+  f = message.getVersion();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
       f
     );
   }
@@ -10493,6 +10505,21 @@ proto.jarviscrawlercore.ReplyCrawlerStream.prototype.getData_asU8 = function() {
 /** @param {!(string|Uint8Array)} value */
 proto.jarviscrawlercore.ReplyCrawlerStream.prototype.setData = function(value) {
   jspb.Message.setProto3BytesField(this, 6, value);
+};
+
+
+/**
+ * optional string version = 7;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.getVersion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyCrawlerStream.prototype.setVersion = function(value) {
+  jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

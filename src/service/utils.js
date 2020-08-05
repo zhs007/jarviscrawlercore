@@ -19,6 +19,7 @@ function replyError(call, error, isend) {
 
   const reply = new messages.ReplyCrawlerStream();
 
+  reply.setVersion(VERSION);
   reply.setError(error);
 
   call.write(reply);
@@ -36,10 +37,11 @@ function replyError(call, error, isend) {
  */
 function replyMsg(call, msg, isend) {
   // console.log('replyMsg');
-  msg.setVersion(VERSION);
+  // msg.setVersion(VERSION);
 
   const reply = new messages.ReplyCrawlerStream();
 
+  reply.setVersion(VERSION);
   reply.setReplycrawler(msg);
 
   const buf = reply.serializeBinary();

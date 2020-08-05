@@ -427,7 +427,7 @@ message RequestCrawler {
 message ReplyCrawler {
     CrawlerType crawlerType = 1;
     CrawlerStatistics statistics = 2;
-    string version = 3;
+    string version = 3 [deprecated = true];
 
     oneof crawlerResult {
         CrunchBaseOrganization cbCompany = 100;
@@ -470,6 +470,8 @@ message ReplyCrawlerStream {
     string totalHashData = 5;
     // data
     bytes data = 6;
+
+    string version = 7;
 
     string error = 100;
 

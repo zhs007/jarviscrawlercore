@@ -9081,6 +9081,7 @@ proto.jarviscrawlercore.ReplyCrawler.toObject = function(includeInstance, msg) {
   var f, obj = {
     crawlertype: jspb.Message.getFieldWithDefault(msg, 1, 0),
     statistics: (f = msg.getStatistics()) && proto.jarviscrawlercore.CrawlerStatistics.toObject(includeInstance, f),
+    version: jspb.Message.getFieldWithDefault(msg, 3, ""),
     cbcompany: (f = msg.getCbcompany()) && proto.jarviscrawlercore.CrunchBaseOrganization.toObject(includeInstance, f),
     translateresult: (f = msg.getTranslateresult()) && proto.jarviscrawlercore.TranslateResult.toObject(includeInstance, f),
     dtdata: (f = msg.getDtdata()) && dt_pb.ReplyDTData.toObject(includeInstance, f),
@@ -9146,6 +9147,10 @@ proto.jarviscrawlercore.ReplyCrawler.deserializeBinaryFromReader = function(msg,
       var value = new proto.jarviscrawlercore.CrawlerStatistics;
       reader.readMessage(value,proto.jarviscrawlercore.CrawlerStatistics.deserializeBinaryFromReader);
       msg.setStatistics(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setVersion(value);
       break;
     case 100:
       var value = new proto.jarviscrawlercore.CrunchBaseOrganization;
@@ -9294,6 +9299,13 @@ proto.jarviscrawlercore.ReplyCrawler.serializeBinaryToWriter = function(message,
       2,
       f,
       proto.jarviscrawlercore.CrawlerStatistics.serializeBinaryToWriter
+    );
+  }
+  f = message.getVersion();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
     );
   }
   f = message.getCbcompany();
@@ -9509,6 +9521,21 @@ proto.jarviscrawlercore.ReplyCrawler.prototype.clearStatistics = function() {
  */
 proto.jarviscrawlercore.ReplyCrawler.prototype.hasStatistics = function() {
   return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional string version = 3;
+ * @return {string}
+ */
+proto.jarviscrawlercore.ReplyCrawler.prototype.getVersion = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.ReplyCrawler.prototype.setVersion = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 

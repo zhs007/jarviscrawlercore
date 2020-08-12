@@ -12,6 +12,7 @@ message TechInAsiaCompany {
     string introduction = 6;
     repeated string links = 7;
     string companyCode = 8;
+    int64 lastUpdatedTime = 9;
 }
 
 // TechInAsiaJob - TechInAsia Job
@@ -34,6 +35,7 @@ message TechInAsiaJob {
     string companyCode = 16;
     string jobCode = 17;
     repeated string subType = 18;
+    int64 lastUpdatedTime = 19;
 }
 
 // TechInAsiaJobTag - TechInAsia Job tag

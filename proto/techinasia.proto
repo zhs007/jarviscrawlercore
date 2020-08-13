@@ -36,6 +36,7 @@ message TechInAsiaJob {
     string jobCode = 17;
     repeated string subType = 18;
     int64 lastUpdatedTime = 19;
+    repeated string tags = 20;
 }
 
 // TechInAsiaJobTag - TechInAsia Job tag

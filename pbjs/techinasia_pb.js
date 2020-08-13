@@ -449,7 +449,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TechInAsiaJob.repeatedFields_ = [3,14,18];
+proto.jarviscrawlercore.TechInAsiaJob.repeatedFields_ = [3,14,18,20];
 
 
 
@@ -498,7 +498,8 @@ proto.jarviscrawlercore.TechInAsiaJob.toObject = function(includeInstance, msg) 
     companycode: jspb.Message.getFieldWithDefault(msg, 16, ""),
     jobcode: jspb.Message.getFieldWithDefault(msg, 17, ""),
     subtypeList: jspb.Message.getRepeatedField(msg, 18),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 19, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 19, 0),
+    tagsList: jspb.Message.getRepeatedField(msg, 20)
   };
 
   if (includeInstance) {
@@ -610,6 +611,10 @@ proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader = function(msg
     case 19:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
+      break;
+    case 20:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTags(value);
       break;
     default:
       reader.skipField();
@@ -770,6 +775,13 @@ proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter = function(message
   if (f !== 0) {
     writer.writeInt64(
       19,
+      f
+    );
+  }
+  f = message.getTagsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      20,
       f
     );
   }
@@ -1100,6 +1112,35 @@ proto.jarviscrawlercore.TechInAsiaJob.prototype.getLastupdatedtime = function() 
 /** @param {number} value */
 proto.jarviscrawlercore.TechInAsiaJob.prototype.setLastupdatedtime = function(value) {
   jspb.Message.setProto3IntField(this, 19, value);
+};
+
+
+/**
+ * repeated string tags = 20;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getTagsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 20));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setTagsList = function(value) {
+  jspb.Message.setField(this, 20, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.addTags = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 20, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJob.prototype.clearTagsList = function() {
+  this.setTagsList([]);
 };
 
 

@@ -37,6 +37,7 @@ message TechInAsiaJob {
     repeated string subType = 18;
     int64 lastUpdatedTime = 19;
     repeated string tags = 20;
+    string err = 21;
 }
 
 // TechInAsiaJobTag - TechInAsia Job tag
@@ -53,6 +54,7 @@ message TechInAsiaJobTagList {
 // TechInAsiaJobList - TechInAsia JobList
 message TechInAsiaJobList {
     repeated TechInAsiaJob jobs = 1;
+    repeated string tags = 2;
 }
 
 enum TechInAsiaMode {

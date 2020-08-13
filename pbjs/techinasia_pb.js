@@ -499,7 +499,8 @@ proto.jarviscrawlercore.TechInAsiaJob.toObject = function(includeInstance, msg) 
     jobcode: jspb.Message.getFieldWithDefault(msg, 17, ""),
     subtypeList: jspb.Message.getRepeatedField(msg, 18),
     lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 19, 0),
-    tagsList: jspb.Message.getRepeatedField(msg, 20)
+    tagsList: jspb.Message.getRepeatedField(msg, 20),
+    err: jspb.Message.getFieldWithDefault(msg, 21, "")
   };
 
   if (includeInstance) {
@@ -615,6 +616,10 @@ proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader = function(msg
     case 20:
       var value = /** @type {string} */ (reader.readString());
       msg.addTags(value);
+      break;
+    case 21:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setErr(value);
       break;
     default:
       reader.skipField();
@@ -782,6 +787,13 @@ proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter = function(message
   if (f.length > 0) {
     writer.writeRepeatedString(
       20,
+      f
+    );
+  }
+  f = message.getErr();
+  if (f.length > 0) {
+    writer.writeString(
+      21,
       f
     );
   }
@@ -1141,6 +1153,21 @@ proto.jarviscrawlercore.TechInAsiaJob.prototype.addTags = function(value, opt_in
 
 proto.jarviscrawlercore.TechInAsiaJob.prototype.clearTagsList = function() {
   this.setTagsList([]);
+};
+
+
+/**
+ * optional string err = 21;
+ * @return {string}
+ */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.getErr = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.TechInAsiaJob.prototype.setErr = function(value) {
+  jspb.Message.setProto3StringField(this, 21, value);
 };
 
 
@@ -1525,7 +1552,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.jarviscrawlercore.TechInAsiaJobList.repeatedFields_ = [1];
+proto.jarviscrawlercore.TechInAsiaJobList.repeatedFields_ = [1,2];
 
 
 
@@ -1557,7 +1584,8 @@ proto.jarviscrawlercore.TechInAsiaJobList.prototype.toObject = function(opt_incl
 proto.jarviscrawlercore.TechInAsiaJobList.toObject = function(includeInstance, msg) {
   var f, obj = {
     jobsList: jspb.Message.toObjectList(msg.getJobsList(),
-    proto.jarviscrawlercore.TechInAsiaJob.toObject, includeInstance)
+    proto.jarviscrawlercore.TechInAsiaJob.toObject, includeInstance),
+    tagsList: jspb.Message.getRepeatedField(msg, 2)
   };
 
   if (includeInstance) {
@@ -1599,6 +1627,10 @@ proto.jarviscrawlercore.TechInAsiaJobList.deserializeBinaryFromReader = function
       reader.readMessage(value,proto.jarviscrawlercore.TechInAsiaJob.deserializeBinaryFromReader);
       msg.addJobs(value);
       break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addTags(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -1636,6 +1668,13 @@ proto.jarviscrawlercore.TechInAsiaJobList.serializeBinaryToWriter = function(mes
       proto.jarviscrawlercore.TechInAsiaJob.serializeBinaryToWriter
     );
   }
+  f = message.getTagsList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      2,
+      f
+    );
+  }
 };
 
 
@@ -1667,6 +1706,35 @@ proto.jarviscrawlercore.TechInAsiaJobList.prototype.addJobs = function(opt_value
 
 proto.jarviscrawlercore.TechInAsiaJobList.prototype.clearJobsList = function() {
   this.setJobsList([]);
+};
+
+
+/**
+ * repeated string tags = 2;
+ * @return {!Array<string>}
+ */
+proto.jarviscrawlercore.TechInAsiaJobList.prototype.getTagsList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+};
+
+
+/** @param {!Array<string>} value */
+proto.jarviscrawlercore.TechInAsiaJobList.prototype.setTagsList = function(value) {
+  jspb.Message.setField(this, 2, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ */
+proto.jarviscrawlercore.TechInAsiaJobList.prototype.addTags = function(value, opt_index) {
+  jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+};
+
+
+proto.jarviscrawlercore.TechInAsiaJobList.prototype.clearTagsList = function() {
+  this.setTagsList([]);
 };
 
 

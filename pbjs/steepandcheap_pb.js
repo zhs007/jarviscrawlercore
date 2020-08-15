@@ -3124,7 +3124,10 @@ proto.jarviscrawlercore.SteepAndCheapProducts.toObject = function(includeInstanc
     maxpage: jspb.Message.getFieldWithDefault(msg, 1, 0),
     productsList: jspb.Message.toObjectList(msg.getProductsList(),
     proto.jarviscrawlercore.SteepAndCheapProduct.toObject, includeInstance),
-    name: jspb.Message.getFieldWithDefault(msg, 3, "")
+    name: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    createtime: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    url: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -3174,6 +3177,18 @@ proto.jarviscrawlercore.SteepAndCheapProducts.deserializeBinaryFromReader = func
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
+    case 4:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setLastupdatedtime(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setCreatetime(value);
+      break;
+    case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUrl(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -3222,6 +3237,27 @@ proto.jarviscrawlercore.SteepAndCheapProducts.serializeBinaryToWriter = function
   if (f.length > 0) {
     writer.writeString(
       3,
+      f
+    );
+  }
+  f = message.getLastupdatedtime();
+  if (f !== 0) {
+    writer.writeInt64(
+      4,
+      f
+    );
+  }
+  f = message.getCreatetime();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
+      f
+    );
+  }
+  f = message.getUrl();
+  if (f.length > 0) {
+    writer.writeString(
+      6,
       f
     );
   }
@@ -3286,6 +3322,51 @@ proto.jarviscrawlercore.SteepAndCheapProducts.prototype.getName = function() {
 /** @param {string} value */
 proto.jarviscrawlercore.SteepAndCheapProducts.prototype.setName = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int64 lastUpdatedTime = 4;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.getLastupdatedtime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.setLastupdatedtime = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional int64 createTime = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.getCreatetime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.setCreatetime = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional string url = 6;
+ * @return {string}
+ */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.getUrl = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.SteepAndCheapProducts.prototype.setUrl = function(value) {
+  jspb.Message.setProto3StringField(this, 6, value);
 };
 
 

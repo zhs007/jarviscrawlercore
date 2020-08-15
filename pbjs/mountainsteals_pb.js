@@ -75,7 +75,8 @@ proto.jarviscrawlercore.MountainStealsSale.toObject = function(includeInstance, 
     productsList: jspb.Message.getRepeatedField(msg, 1),
     saleurl: jspb.Message.getFieldWithDefault(msg, 2, ""),
     code: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    lastupdatedtime: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    createtime: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -127,6 +128,10 @@ proto.jarviscrawlercore.MountainStealsSale.deserializeBinaryFromReader = functio
     case 4:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setLastupdatedtime(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setCreatetime(value);
       break;
     default:
       reader.skipField();
@@ -182,6 +187,13 @@ proto.jarviscrawlercore.MountainStealsSale.serializeBinaryToWriter = function(me
   if (f !== 0) {
     writer.writeInt64(
       4,
+      f
+    );
+  }
+  f = message.getCreatetime();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
       f
     );
   }
@@ -259,6 +271,21 @@ proto.jarviscrawlercore.MountainStealsSale.prototype.getLastupdatedtime = functi
 /** @param {number} value */
 proto.jarviscrawlercore.MountainStealsSale.prototype.setLastupdatedtime = function(value) {
   jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional int64 createTime = 5;
+ * @return {number}
+ */
+proto.jarviscrawlercore.MountainStealsSale.prototype.getCreatetime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.jarviscrawlercore.MountainStealsSale.prototype.setCreatetime = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 

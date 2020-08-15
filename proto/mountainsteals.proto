@@ -16,6 +16,7 @@ message MountainStealsSale {
     string saleurl = 2;
     string code = 3;
     int64 lastUpdatedTime = 4;
+    int64 createTime = 5;
 }
 
 // MountainStealsColorSize - mountain steals color size

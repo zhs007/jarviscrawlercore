@@ -250,20 +250,11 @@ async function attachJQuery(page) {
   });
 
   if (jquery !== 'function') {
-    // await page.waitForFunction(() => {
-    //   document.head != null;
-    // });
-
-    // let isok = true;
-
-    // do {
     await page
         .addScriptTag({path: './browser/jquery3.3.1.min.js'})
         .catch((err) => {
           log.error('attachJQuery:addScriptTag', err);
-        // isok = false;
         });
-    // } while (!isok);
 
     await page.waitForFunction('typeof $ === "function"').catch((err) => {
       log.error('attachJQuery:waitForFunction', err);

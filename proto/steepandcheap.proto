@@ -106,6 +106,9 @@ message SteepAndCheapProducts {
     int32 maxPage = 1;
     repeated SteepAndCheapProduct products = 2;
     string name = 3;
+    int64 lastUpdatedTime = 4;
+    int64 createTime = 5;
+    string url = 6;
 }
 
 // SteepAndCheapMode - steep&cheap mode

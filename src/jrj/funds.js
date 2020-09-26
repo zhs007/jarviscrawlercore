@@ -95,12 +95,11 @@ async function jrjFunds(browser, timeout) {
         console.log(eles);
 
         if (eles.length > 0) {
-          eles = eles[0].getElementsByClassName('ln1');
-
           const ret = [];
 
-          for (let i = 0; i < eles.length; ++i) {
-            const lsta = eles[i].getElementsByTagName('a');
+          const lsttd = eles[0].getElementsByTagName('td');
+          for (let i = 0; i < lsttd.length; ++i) {
+            const lsta = lsttd[i].getElementsByTagName('a');
             for (let j = 0; j < lsta.length; ++j) {
               ret.push(lsta[j].innerText);
             }
@@ -108,6 +107,21 @@ async function jrjFunds(browser, timeout) {
 
           return ret;
         }
+
+        // if (eles.length > 0) {
+        //   eles = eles[0].getElementsByClassName('ln1');
+
+        //   const ret = [];
+
+        //   for (let i = 0; i < eles.length; ++i) {
+        //     const lsta = eles[i].getElementsByTagName('a');
+        //     for (let j = 0; j < lsta.length; ++j) {
+        //       ret.push(lsta[j].innerText);
+        //     }
+        //   }
+
+        //   return ret;
+        // }
 
         return [];
       })

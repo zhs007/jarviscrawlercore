@@ -116,6 +116,27 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "jrj.fund.fb",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fund", "-h", "false", "-c", "502055"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.fundvalue.fb",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fundvalue", "-h", "false", "-c", "502055", "-y", "2019"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "jrj.fundmanager.fb",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["jrj", "fundmanager", "-h", "false", "-c", "502055"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "mountainsteals.sale",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["mountainsteals", "sale", "-h", "false", "-u", "promo/MSLASTCHANCE"]

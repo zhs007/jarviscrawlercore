@@ -231,9 +231,50 @@ async function jrjFund(browser, code, timeout) {
     ret.company = ret2.company;
   }
 
+  const ret5 = await page
+      .$$eval('#con_2', (eles) => {
+        console.log(eles);
+
+        if (eles.length > 0) {
+          const ret5 = {size: 0};
+
+          const lsthui = eles[0].getElementsByClassName('hui');
+          for (let i = 0; i < lsthui.length; ++i) {
+            if (lsthui[i].innerText.indexOf('规模') >= 0) {
+              const lsttl = eles[0].getElementsByClassName('tl');
+              if (lsttl.length >= i) {
+                ret5.size = parseFloat(lsttl[i].innerText);
+              }
+
+              break;
+            }
+          }
+
+          return ret5;
+        }
+
+        return undefined;
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+
+  if (awaiterr) {
+    log.error('jrjFund.$$eval #con_2', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
+
   ret.code = code;
   ret.name = getName(ret1.fullname);
   ret.tags = ret1.tags;
+
+  if (ret5) {
+    ret5.time = Math.floor(Date.now() / 1000);
+    ret.size = [ret5];
+  }
 
   await page.close();
 

@@ -1,4 +1,5 @@
 const log = require('../log');
+const {jrjJJGK} = require('./jjgk');
 
 /**
  * getName - get name
@@ -277,6 +278,23 @@ async function jrjFund(browser, code, timeout) {
   }
 
   await page.close();
+
+  if (ret2 == undefined && !ret.company) {
+    const ret6 = await jrjJJGK(browser, code, timeout);
+    if (ret6 && ret6.ret) {
+      if (ret6.ret.company) {
+        ret.company = ret6.ret.company;
+      }
+
+      if (ret6.ret.createTime) {
+        ret.createTime = ret6.ret.createTime;
+      }
+
+      if (ret6.ret.size) {
+        ret.size = ret6.ret.size;
+      }
+    }
+  }
 
   return {ret: ret};
 }

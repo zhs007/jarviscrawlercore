@@ -1,6 +1,6 @@
+# zerro 
+# zerrozhao@gmail.com
 FROM node:lts-slim
-
-MAINTAINER zerro "zerrozhao@gmail.com"
 
 RUN apt-get update -y \
     && apt-get install -y --no-install-recommends --no-install-suggests \

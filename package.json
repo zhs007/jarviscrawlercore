@@ -1,6 +1,6 @@
 {
   "name": "jarviscrawlercore",
-  "version": "0.6.30",
+  "version": "0.6.31",
   "description": "jarvis crawler core",
   "main": "index.js",
   "scripts": {
@@ -28,9 +28,9 @@
     "axios": "^0.21.0",
     "chrome-launcher": "^0.13.4",
     "commander": "^6.2.0",
+    "dayjs": "^1.9.4",
     "google-protobuf": "^3.13.0",
     "grpc": "^1.24.3",
-    "moment": "^2.29.1",
     "puppeteer": "^5.4.0",
     "request": "^2.88.2",
     "sharp": "^0.26.2",

@@ -1,6 +1,7 @@
 const {DownloadRequest} = require('../downloadrequest');
 const vm = require('vm');
-const moment = require('moment');
+// const moment = require('moment');
+const dayjs = require('dayjs');
 const log = require('../log');
 
 /**
@@ -110,7 +111,7 @@ async function jrjFundValue(browser, code, date, timeout) {
 
           const cd = netValue[i].enddate;
 
-          const ct = moment(cd, 'YYYY-MM-DD');
+          const ct = dayjs(cd, 'YYYY-MM-DD');
 
           ret.values.push({
             date: ct.format('YYYYMMDD'),

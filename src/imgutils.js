@@ -1,21 +1,21 @@
-const Jimp = require('jimp');
+// const Jimp = require('jimp');
 const sharp = require('sharp');
 
-/**
- * jimpGetImageInfo - get image infomation
- * @param {buffer} buf - image data
- * @return {object} obj - {w, h}
- */
-async function jimpGetImageInfo(buf) {
-  try {
-    const img = await Jimp.read(buf);
-    if (img) {
-      return {w: img.bitmap.width, h: img.bitmap.height};
-    }
-  } catch (err) {}
+// /**
+//  * jimpGetImageInfo - get image infomation
+//  * @param {buffer} buf - image data
+//  * @return {object} obj - {w, h}
+//  */
+// async function jimpGetImageInfo(buf) {
+//   try {
+//     const img = await Jimp.read(buf);
+//     if (img) {
+//       return {w: img.bitmap.width, h: img.bitmap.height};
+//     }
+//   } catch (err) {}
 
-  return undefined;
-}
+//   return undefined;
+// }
 
 /**
  * sharpGetImageInfo - get image infomation
@@ -27,7 +27,7 @@ async function sharpGetImageInfo(buf) {
     const img = await sharp(buf);
     if (img) {
       const metadata = await img.metadata();
-      return {w: metadata.width, h: metadata.height};
+      return { w: metadata.width, h: metadata.height };
     }
   } catch (err) {}
 
@@ -53,7 +53,7 @@ async function sharpGetImageFileInfo(fn) {
     const img = await sharp(fn);
     if (img) {
       const metadata = await img.metadata();
-      return {w: metadata.width, h: metadata.height};
+      return { w: metadata.width, h: metadata.height };
     }
   } catch (err) {}
 
@@ -70,7 +70,7 @@ async function getImageFileInfo(fn) {
 }
 
 exports.getImageInfo = getImageInfo;
-exports.jimpGetImageInfo = jimpGetImageInfo;
+// exports.jimpGetImageInfo = jimpGetImageInfo;
 exports.sharpGetImageInfo = sharpGetImageInfo;
 exports.getImageFileInfo = getImageFileInfo;
 exports.sharpGetImageFileInfo = sharpGetImageFileInfo;

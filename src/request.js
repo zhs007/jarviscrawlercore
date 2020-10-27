@@ -1,5 +1,6 @@
-const request = require('request');
-const {sleep} = require('./utils');
+// const request = require('request');
+const axios = require('axios');
+const { sleep } = require('./utils');
 const log = require('./log');
 
 /**
@@ -9,48 +10,56 @@ const log = require('./log');
  * @return {Promise<object>} ret - {error, buf}
  */
 function download(url, timeout) {
-  return new Promise((resolve, reject) => {
-    let buf = undefined;
-    let err = undefined;
-    request
-        .get(url, {timeout: timeout}, (error, response, body) => {
-          if (!buf) {
-            resolve({error: error});
+  return new Promise(async (resolve, reject) => {
+    try {
+      let response = axios.get(url, {
+        timeout: timeout,
+        responseType: 'arraybuffer',
+      });
 
-            return;
-          }
+      resolve({ buf: response.data });
+    } catch (err) {
+      resolve({ error: err });
+    }
+    // request
+    //   .get(url, { timeout: timeout }, (error, response, body) => {
+    //     if (!buf) {
+    //       resolve({ error: error });
 
-          if (response && response.statusCode != 200) {
-            resolve({
-              error: new Error(response.statusCode),
-            });
+    //       return;
+    //     }
 
-            return;
-          }
+    //     if (response && response.statusCode != 200) {
+    //       resolve({
+    //         error: new Error(response.statusCode),
+    //       });
 
-          err = error;
-        })
-        .on('data', (data) => {
-          if (buf) {
-            buf = Buffer.concat([buf, data]);
-          } else {
-            buf = data;
-          }
-        })
-        .on('end', () => {
-          if (err) {
-            resolve({error: err});
+    //       return;
+    //     }
 
-            return;
-          }
+    //     err = error;
+    //   })
+    //   .on('data', (data) => {
+    //     if (buf) {
+    //       buf = Buffer.concat([buf, data]);
+    //     } else {
+    //       buf = data;
+    //     }
+    //   })
+    //   .on('end', () => {
+    //     if (err) {
+    //       resolve({ error: err });
 
-          resolve({buf: buf});
-        })
-        .on('error', (err1) => {
-          resolve({error: err1});
+    //       return;
+    //     }
 
-          return;
-        });
+    //     resolve({ buf: buf });
+    //   })
+    //   .on('error', (err1) => {
+    //     resolve({ error: err1 });
+
+    //     return;
+    //   });
   });
 }
 
@@ -73,7 +82,7 @@ class DownloadList {
    * @param {object} param - param
    */
   addTask(url, onfunc, param) {
-    this.lst.push({url: url, onfunc: onfunc, param: param});
+    this.lst.push({ url: url, onfunc: onfunc, param: param });
   }
 
   /**

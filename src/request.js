@@ -12,7 +12,7 @@ const log = require('./log');
 function download(url, timeout) {
   return new Promise(async (resolve, reject) => {
     try {
-      let response = axios.get(url, {
+      let response = await axios.get(url, {
         timeout: timeout,
         responseType: 'arraybuffer',
       });

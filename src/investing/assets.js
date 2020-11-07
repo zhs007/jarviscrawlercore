@@ -36,7 +36,8 @@ async function investingAssets(browser, url, timeout) {
     return {error: awaiterr.toString()};
   }
 
-  const baseurl = 'https://cn.investing.com/' + url;
+  // const baseurl = 'https://cn.investing.com/' + url;
+  const baseurl = url;
 
   await page
       .goto(baseurl, {

@@ -443,8 +443,15 @@
             "request": "launch",
             "name": "investing.assets",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
-            "args": ["investing", "assets", "-u", "indices/china-indices?&majorIndices=on&primarySectors=on&additionalIndices=on&otherIndices=on", "-h", "false"]
-        },                
+            "args": ["investing", "assets", "-u", "https://cn.investing.com/indices/china-indices?&majorIndices=on&primarySectors=on&additionalIndices=on&otherIndices=on", "-h", "false"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "investing.hd",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["investing", "hd", "-u", "https://cn.investing.com/indices/shanghai-composite", "-h", "false"]
+        },        
         {
             "type": "node",
             "request": "launch",

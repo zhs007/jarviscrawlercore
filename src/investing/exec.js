@@ -1,6 +1,7 @@
 const {startBrowser} = require('../browser');
 const log = require('../log');
 const {investingAssets} = require('./assets');
+const {investingHD} = require('./historicaldata');
 
 /**
  * execInvesting
@@ -34,7 +35,7 @@ async function execInvesting(program, version) {
           );
 
           return;
-        } else if (mode == 'asset' && !options.url) {
+        } else if (mode == 'hd' && !options.url) {
           log.console(
               'command wrong, please type ' + 'jarviscrawler investing --help',
           );
@@ -56,9 +57,15 @@ async function execInvesting(program, version) {
           if (mode == 'assets') {
             const ret = await investingAssets(browser, options.url, timeout);
             log.console(JSON.stringify(ret));
-          } else if (mode == 'movie') {
-            // const ret = await p6vdyMovie(browser, options.url, timeout);
-            // log.console(JSON.stringify(ret));
+          } else if (mode == 'hd') {
+            const ret = await investingHD(
+                browser,
+                options.url,
+                '2020/01/01',
+                '2020/11/01',
+                timeout,
+            );
+            log.console(JSON.stringify(ret));
           }
 
           await browser.close();

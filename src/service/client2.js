@@ -22,6 +22,10 @@ const {
   newRequestP6vdyMovies,
   newRequestP6vdyMovie,
 } = require('../6vdy/index');
+const {
+  newRequestInvestingAssets,
+  newRequestInvestingHD,
+} = require('../investing/index');
 
 const grpc = require('grpc');
 
@@ -1286,6 +1290,68 @@ function p6vdyMovie(servAddr, url) {
   );
 }
 
+/**
+ * investingAssets
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ */
+function investingAssets(servAddr, url) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestInvestingAssets(url);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_INVESTING,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
+/**
+ * investingHD
+ * @param {string} servAddr - servAddr
+ * @param {string} url - url
+ * @param {string} sd - startdata
+ * @param {string} ed - enddata
+ */
+function investingHD(servAddr, url, sd, ed) {
+  const client = new services.JarvisCrawlerServiceClient(
+      servAddr,
+      grpc.credentials.createInsecure(),
+  );
+
+  const request = newRequestInvestingHD(url, sd, ed);
+
+  requestCrawler(
+      client,
+      TOKEN,
+      messages.CrawlerType.CT_INVESTING,
+      request,
+      (err, reply) => {
+        if (err) {
+          log.error('err:', err);
+        }
+
+        if (reply) {
+          log.debug('reply:', JSON.stringify(reply.toObject()));
+        }
+      },
+  );
+}
+
 // startTranslate2(
 //     '127.0.0.1:7051',
 //     'en',
@@ -1366,7 +1432,14 @@ function p6vdyMovie(servAddr, url) {
 //     'https://www.6vdy.org/dianshiju/oumeiju/13261.html',
 // );
 
-p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
+// p6vdyMovies('127.0.0.1:7052', 'https://www.6vdy.org');
+// investingAssets('127.0.0.1:7052', 'https://cn.investing.com/indices/china-indices?&majorIndices=on&primarySectors=on&additionalIndices=on&otherIndices=on');
+investingHD(
+    '127.0.0.1:7052',
+    'https://cn.investing.com/indices/shanghai-composite',
+    '2020/01/01',
+    '2020/11/01',
+);
 
 exports.startTranslate2 = startTranslate2;
 exports.getCrunchBaseCompany = getCrunchBaseCompany;
@@ -1407,3 +1480,5 @@ exports.ptKotsuMetroTokyoSubways = ptKotsuMetroTokyoSubways;
 exports.ptJRailPassSubways = ptJRailPassSubways;
 exports.p6vdyMovie = p6vdyMovie;
 exports.p6vdyMovies = p6vdyMovies;
+exports.investingAssets = investingAssets;
+exports.investingHD = investingHD;

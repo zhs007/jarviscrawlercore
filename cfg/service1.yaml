@@ -1,5 +1,5 @@
 servAddr: 0.0.0.0:7052
-headless: true
+headless: false
 
 # dtconfig: ./cfg/dtcfg.yaml
 

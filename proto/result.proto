@@ -17,6 +17,7 @@ import "geoip.proto";
 import "dt.proto";
 import "article2.proto";
 import "p6vdy.proto";
+import "investing.proto";
 package jarviscrawlercore;
 option go_package = "github.com/zhs007/jccclient/pb";
 
@@ -277,6 +278,7 @@ enum CrawlerType {
     CT_PUBLICTRANSIT = 20;
     CT_ARTICLE2 = 21;
     CT_6VDY = 22;
+    CT_INVESTING = 23;
 }
 
 // RequestTranslate2 - request translate
@@ -420,6 +422,7 @@ message RequestCrawler {
         RequestPublicTransit publictransit = 120;
         RequestArticle2 article2 = 121;
         RequestP6vdy p6vdy = 122;
+        RequestInvesting investing = 123;
     }
 }
 
@@ -451,6 +454,7 @@ message ReplyCrawler {
         ReplyPublicTransit publictransit = 120;
         ReplyArticle2 article2 = 121;
         ReplyP6vdy p6vdy = 122;
+        ReplyInvesting investing = 123;
     }
 }
 

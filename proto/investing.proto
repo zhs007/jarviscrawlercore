@@ -1,0 +1,52 @@
+syntax = "proto3";
+package jarviscrawlercore;
+option go_package = "github.com/zhs007/jccclient/pb";
+
+// InvestingMode - investing mode
+enum InvestingMode {
+    // INVESTINGMODE_ASSETS - get assets
+    INVESTINGMODE_ASSETS = 0;
+    // INVESTINGMODE_ASSET - get asset
+    INVESTINGMODE_ASSET = 1;
+    // INVESTINGMODE_HD - get asset historical data
+    INVESTINGMODE_HD = 2;    
+}
+
+message InvestingHistoricalData {
+    int64 ts = 1;
+    int64 open = 2;
+    int64 close = 3;
+    int64 high = 4;
+    int64 low = 5;
+    int64 volume = 6;
+}
+
+// InvestingAsset - investing asset
+message InvestingAsset {
+    string name = 1;
+    string url = 2;
+    repeated InvestingHistoricalData data = 3;
+}
+
+// InvestingAssets - investing assets
+message InvestingAssets {
+    repeated InvestingAsset assets = 1;
+}
+
+// RequestInvesting - request investing
+message RequestInvesting {
+    InvestingMode mode = 1;
+    string url = 2;
+    string startData = 3;
+    string endData = 4;
+}
+
+// ReplyInvesting - reply investing
+message ReplyInvesting {
+    InvestingMode mode = 1;
+
+    oneof reply {
+        InvestingAsset asset = 100;
+        InvestingAssets assets = 101;
+    }
+}

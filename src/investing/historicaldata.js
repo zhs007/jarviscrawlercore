@@ -6,6 +6,33 @@ const {clearInput} = require('../eleutils');
 // const {parseID} = require('./utils');
 
 /**
+ * parsePrice - parse price
+ * @param {string} strPrice - price
+ * @return {number} price - price
+ */
+function parsePrice(strPrice) {
+  return parseFloat(strPrice.replace(',', ''));
+}
+
+/**
+ * parseVolume - parse volume
+ * @param {string} strVolume - volume
+ * @return {number} volume - volume
+ */
+function parseVolume(strVolume) {
+  const bv = parseFloat(strVolume.replace(',', ''));
+  if (strVolume.indexOf('M') >= 0) {
+    return Math.floor(bv * 1000000);
+  }
+
+  if (strVolume.indexOf('B') >= 0) {
+    return Math.floor(bv * 1000000000);
+  }
+
+  return Math.floor(bv);
+}
+
+/**
  * investingHD - investing get historical data
  * @param {object} browser - browser
  * @param {string} url - url
@@ -234,51 +261,72 @@ async function investingHD(browser, url, st, et, timeout) {
     return {error: err.toString()};
   }
 
-  //   const lst = await page
-  //       .$$eval('td.elp.plusIconTd', (eles) => {
-  //         if (eles.length > 0) {
-  //           const lst = [];
-  //           for (let i = 0; i < eles.length; ++i) {
-  //             const lsta = eles[i].getElementsByTagName('a');
-  //             if (lsta.length > 0) {
-  //               lst.push({
-  //                 name: lsta[0].innerText,
-  //                 url: lsta[0].href,
-  //               });
-  //             }
-  //           }
+  const lst = await page
+      .$$eval('#curr_table', (eles) => {
+        const getElementAttributes = (ele, key) => {
+          const attrs = ele.attributes;
+          for (let i = 0; i < attrs.length; ++i) {
+            if (attrs[i].name == key) {
+              return attrs[i].value;
+            }
+          }
 
-  //           return lst;
-  //         }
+          return undefined;
+        };
 
-  //         return [];
-  //       })
-  //       .catch((err) => {
-  //         awaiterr = err;
-  //       });
-  //   if (awaiterr) {
-  //     log.error('investingAssets.$$eval td.elp.plusIconTd', awaiterr);
+        if (eles.length > 0) {
+          const lst = [];
+          const lsttr = eles[0].getElementsByTagName('tr');
+          for (let i = 0; i < lsttr.length; ++i) {
+            const lsttd = lsttr[i].getElementsByTagName('td');
+            if (lsttd.length == 7) {
+              lst.push({
+                ts: getElementAttributes(lsttd[0], 'data-real-value'),
+                close: getElementAttributes(lsttd[1], 'data-real-value'),
+                open: getElementAttributes(lsttd[2], 'data-real-value'),
+                high: getElementAttributes(lsttd[3], 'data-real-value'),
+                low: getElementAttributes(lsttd[4], 'data-real-value'),
+                volume: getElementAttributes(lsttd[5], 'data-real-value'),
+              });
+            }
+          }
 
-  //     await page.close();
+          return lst;
+        }
 
-  //     return {error: awaiterr.toString()};
-  //   }
+        return [];
+      })
+      .catch((err) => {
+        awaiterr = err;
+      });
+  if (awaiterr) {
+    log.error('investingAssets.$$eval #curr_table', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
 
   await page.close();
 
   const ret = {lst: []};
 
-  //   for (let i = 0; i < lst.length; ++i) {
-  //     const ci = {
-  //       name: lst[i].name,
-  //       url: lst[i].url,
-  //       // resid: parseID(lst[i].url),
-  //     };
+  for (let i = 0; i < lst.length; ++i) {
+    const ci = {
+      ts: parseInt(lst[i].ts),
+      close: parsePrice(lst[i].close),
+      open: parsePrice(lst[i].open),
+      high: parsePrice(lst[i].high),
+      low: parsePrice(lst[i].low),
+      volume: parseVolume(lst[i].volume),
+    };
 
-  //     ret.lst.push(ci);
-  //   }
+    ret.lst.push(ci);
+  }
 
   return {ret: ret};
 }
 
+exports.parsePrice = parsePrice;
+exports.parseVolume = parseVolume;
 exports.investingHD = investingHD;

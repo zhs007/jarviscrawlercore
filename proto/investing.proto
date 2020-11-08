@@ -8,6 +8,8 @@ enum InvestingMode {
     INVESTINGMODE_ASSETS = 0;
     // INVESTINGMODE_ASSET - get asset
     INVESTINGMODE_ASSET = 1;
+    // INVESTINGMODE_HD - get asset historical data
+    INVESTINGMODE_HD = 2;    
 }
 
 message InvestingHistoricalData {
@@ -35,8 +37,8 @@ message InvestingAssets {
 message RequestInvesting {
     InvestingMode mode = 1;
     string url = 2;
-    int64 startTs = 3;
-    int64 endTs = 4;
+    string startData = 3;
+    string endData = 4;
 }
 
 // ReplyInvesting - reply investing

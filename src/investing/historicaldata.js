@@ -1,7 +1,7 @@
 const {sleep} = require('../utils');
 const {WaitAllResponse} = require('../waitallresponse');
 const log = require('../log');
-const {disableDownloadOthers} = require('../page.utils');
+// const {disableDownloadOthers} = require('../page.utils');
 const {clearInput} = require('../eleutils');
 // const {parseID} = require('./utils');
 
@@ -309,19 +309,19 @@ async function investingHD(browser, url, st, et, timeout) {
 
   await page.close();
 
-  const ret = {lst: []};
+  const ret = {data: []};
 
   for (let i = 0; i < lst.length; ++i) {
     const ci = {
       ts: parseInt(lst[i].ts),
-      close: parsePrice(lst[i].close),
-      open: parsePrice(lst[i].open),
-      high: parsePrice(lst[i].high),
-      low: parsePrice(lst[i].low),
+      close: Math.floor(parsePrice(lst[i].close) * 10000),
+      open: Math.floor(parsePrice(lst[i].open) * 10000),
+      high: Math.floor(parsePrice(lst[i].high) * 10000),
+      low: Math.floor(parsePrice(lst[i].low) * 10000),
       volume: parseVolume(lst[i].volume),
     };
 
-    ret.lst.push(ci);
+    ret.data.push(ci);
   }
 
   return {ret: ret};

@@ -733,8 +733,8 @@ proto.jarviscrawlercore.RequestInvesting.toObject = function(includeInstance, ms
   var f, obj = {
     mode: jspb.Message.getFieldWithDefault(msg, 1, 0),
     url: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    startts: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    endts: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    startdata: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    enddata: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -780,12 +780,12 @@ proto.jarviscrawlercore.RequestInvesting.deserializeBinaryFromReader = function(
       msg.setUrl(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setStartts(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setStartdata(value);
       break;
     case 4:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setEndts(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setEnddata(value);
       break;
     default:
       reader.skipField();
@@ -830,16 +830,16 @@ proto.jarviscrawlercore.RequestInvesting.serializeBinaryToWriter = function(mess
       f
     );
   }
-  f = message.getStartts();
-  if (f !== 0) {
-    writer.writeInt64(
+  f = message.getStartdata();
+  if (f.length > 0) {
+    writer.writeString(
       3,
       f
     );
   }
-  f = message.getEndts();
-  if (f !== 0) {
-    writer.writeInt64(
+  f = message.getEnddata();
+  if (f.length > 0) {
+    writer.writeString(
       4,
       f
     );
@@ -878,32 +878,32 @@ proto.jarviscrawlercore.RequestInvesting.prototype.setUrl = function(value) {
 
 
 /**
- * optional int64 startTs = 3;
- * @return {number}
+ * optional string startData = 3;
+ * @return {string}
  */
-proto.jarviscrawlercore.RequestInvesting.prototype.getStartts = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+proto.jarviscrawlercore.RequestInvesting.prototype.getStartdata = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
-/** @param {number} value */
-proto.jarviscrawlercore.RequestInvesting.prototype.setStartts = function(value) {
-  jspb.Message.setProto3IntField(this, 3, value);
+/** @param {string} value */
+proto.jarviscrawlercore.RequestInvesting.prototype.setStartdata = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional int64 endTs = 4;
- * @return {number}
+ * optional string endData = 4;
+ * @return {string}
  */
-proto.jarviscrawlercore.RequestInvesting.prototype.getEndts = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+proto.jarviscrawlercore.RequestInvesting.prototype.getEnddata = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
-/** @param {number} value */
-proto.jarviscrawlercore.RequestInvesting.prototype.setEndts = function(value) {
-  jspb.Message.setProto3IntField(this, 4, value);
+/** @param {string} value */
+proto.jarviscrawlercore.RequestInvesting.prototype.setEnddata = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1168,7 +1168,8 @@ proto.jarviscrawlercore.ReplyInvesting.prototype.hasAssets = function() {
  */
 proto.jarviscrawlercore.InvestingMode = {
   INVESTINGMODE_ASSETS: 0,
-  INVESTINGMODE_ASSET: 1
+  INVESTINGMODE_ASSET: 1,
+  INVESTINGMODE_HD: 2
 };
 
 goog.object.extend(exports, proto.jarviscrawlercore);

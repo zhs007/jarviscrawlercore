@@ -133,6 +133,8 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
     req.setPublictransit(msg);
   } else if (crawlerType == messages.CrawlerType.CT_6VDY) {
     req.setP6vdy(msg);
+  } else if (crawlerType == messages.CrawlerType.CT_INVESTING) {
+    req.setInvesting(msg);
   }
 
   let isend = false;
@@ -415,6 +417,20 @@ function requestCrawler(client, token, crawlerType, msg, cb) {
         isend = true;
 
         return;
+      } else if (crawlerType == messages.CrawlerType.CT_INVESTING) {
+        if (!reply.getInvesting()) {
+          cb('no investing reply');
+
+          isend = true;
+
+          return;
+        }
+
+        cb(undefined, reply.getInvesting());
+
+        isend = true;
+
+        return;
       } else if (crawlerType == messages.CrawlerType.CT_PUBLICTRANSIT) {
         if (!reply.getPublictransit()) {
           cb('no publictransit reply');
@@ -512,6 +528,9 @@ function setReplyCrawler(reply, crawlerType, val) {
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_6VDY) {
     reply.setP6vdy(val);
+    reply.setCrawlertype(crawlerType);
+  } else if (crawlerType == messages.CrawlerType.CT_INVESTING) {
+    reply.setInvesting(val);
     reply.setCrawlertype(crawlerType);
   } else if (crawlerType == messages.CrawlerType.CT_PUBLICTRANSIT) {
     reply.setPublictransit(val);

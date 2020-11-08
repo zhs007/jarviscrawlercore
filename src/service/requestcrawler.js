@@ -16,6 +16,7 @@ const {callManhuadb} = require('./plugins/manhuadb');
 const {callOABT} = require('./plugins/oabt');
 const {callHao6v} = require('./plugins/hao6v');
 const {call6vdy} = require('./plugins/6vdy');
+const {callInvesting} = require('./plugins/investing');
 const {callPublicTransit} = require('./plugins/publictransit');
 const messages = require('../../pbjs/result_pb');
 const {replyError} = require('./utils');
@@ -208,6 +209,16 @@ function callRequestCrawler(browser, cfg, call) {
     const param = call.request.getP6vdy();
 
     call6vdy(browser, cfg, call, param, call.request);
+  } else if (crawlertype == messages.CrawlerType.CT_INVESTING) {
+    if (!call.request.hasInvesting()) {
+      replyError(call, 'no investing');
+
+      return;
+    }
+
+    const param = call.request.getInvesting();
+
+    callInvesting(browser, cfg, call, param, call.request);
   } else if (crawlertype == messages.CrawlerType.CT_PUBLICTRANSIT) {
     if (!call.request.hasPublictransit()) {
       replyError(call, 'no publictransit');

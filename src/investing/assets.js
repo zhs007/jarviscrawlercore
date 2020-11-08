@@ -98,7 +98,7 @@ async function investingAssets(browser, url, timeout) {
 
   await page.close();
 
-  const ret = {lst: []};
+  const ret = {assets: []};
 
   for (let i = 0; i < lst.length; ++i) {
     const ci = {
@@ -107,7 +107,7 @@ async function investingAssets(browser, url, timeout) {
       // resid: parseID(lst[i].url),
     };
 
-    ret.lst.push(ci);
+    ret.assets.push(ci);
   }
 
   return {ret: ret};

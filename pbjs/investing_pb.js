@@ -351,7 +351,8 @@ proto.jarviscrawlercore.InvestingAsset.toObject = function(includeInstance, msg)
     name: jspb.Message.getFieldWithDefault(msg, 1, ""),
     url: jspb.Message.getFieldWithDefault(msg, 2, ""),
     dataList: jspb.Message.toObjectList(msg.getDataList(),
-    proto.jarviscrawlercore.InvestingHistoricalData.toObject, includeInstance)
+    proto.jarviscrawlercore.InvestingHistoricalData.toObject, includeInstance),
+    namecode: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -400,6 +401,10 @@ proto.jarviscrawlercore.InvestingAsset.deserializeBinaryFromReader = function(ms
       var value = new proto.jarviscrawlercore.InvestingHistoricalData;
       reader.readMessage(value,proto.jarviscrawlercore.InvestingHistoricalData.deserializeBinaryFromReader);
       msg.addData(value);
+      break;
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setNamecode(value);
       break;
     default:
       reader.skipField();
@@ -450,6 +455,13 @@ proto.jarviscrawlercore.InvestingAsset.serializeBinaryToWriter = function(messag
       3,
       f,
       proto.jarviscrawlercore.InvestingHistoricalData.serializeBinaryToWriter
+    );
+  }
+  f = message.getNamecode();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
     );
   }
 };
@@ -513,6 +525,21 @@ proto.jarviscrawlercore.InvestingAsset.prototype.addData = function(opt_value, o
 
 proto.jarviscrawlercore.InvestingAsset.prototype.clearDataList = function() {
   this.setDataList([]);
+};
+
+
+/**
+ * optional string nameCode = 4;
+ * @return {string}
+ */
+proto.jarviscrawlercore.InvestingAsset.prototype.getNamecode = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/** @param {string} value */
+proto.jarviscrawlercore.InvestingAsset.prototype.setNamecode = function(value) {
+  jspb.Message.setProto3StringField(this, 4, value);
 };
 
 

@@ -1,4 +1,5 @@
-const {attachJQuery} = require('../utils');
+// const {attachJQuery} = require('../utils');
+const { sleep } = require('../utils');
 const log = require('../log');
 
 /**
@@ -7,55 +8,115 @@ const log = require('../log');
  * @param {string} srctext - source text
  * @param {string} srclang - source language
  * @param {string} destlang - destination language
- * @param {bool} headless - headless modes
+ * @param {number} timeout - timeout in microseconds
  */
-async function googletranslate(browser, srctext, srclang, destlang) {
+async function googletranslate(browser, srctext, srclang, destlang, timeout) {
+  let awaiterr = undefined;
+
   const page = await browser.newPage();
   await page
-      .goto(
-          'https://translate.google.cn/#view=home&op=translate&sl=' +
+    .goto(
+      'https://translate.google.cn/?sl=' +
         srclang +
         '&tl=' +
         destlang +
-        '&text='
-      )
-      .catch((err) => {
-        log.error('googletranslate.goto', err);
-      });
+        '&op=translate'
+    )
+    .catch((err) => {
+      awaiterr = err;
+    });
 
-  // await page.addScriptTag({path: './browser/jquery3.3.1.min.js'});
-  await attachJQuery(page);
-  await page.waitForSelector('.tlid-input.input').catch((err) => {
-    log.error('googletranslate.waitForSelector', err);
-  });
-  await page.type('.tlid-input.input', srctext).catch((err) => {
-    log.error('googletranslate.type', err);
+  if (awaiterr) {
+    log.error('googletranslate.goto', awaiterr);
+
+    await page.close();
+
+    return awaiterr.toString();
+  }
+
+  await page.waitForSelector('textarea').catch((err) => {
+    awaiterr = err;
   });
 
-  await page
-      .waitForFunction(
-          '$(\'.tlid-translation.translation\').length > 0 && $(\'.tlid-translation.translation\')[0].innerText != \'\''
-      )
-      .catch((err) => {
-        log.error('googletranslate.waitForFunction', err);
-      });
-  //   await page.waitForSelector('.tlid-results-container.results-container');
-  const desttext = await page
-      .evaluate(() => {
-        const ret = $('.tlid-translation.translation');
-        if (ret && ret.length > 0) {
-          return ret[0].innerText;
+  if (awaiterr) {
+    log.error('googletranslate.waitForSelector', awaiterr);
+
+    await page.close();
+
+    return awaiterr.toString();
+  }
+
+  await page.type('textarea', srctext).catch((err) => {
+    awaiterr = err;
+  });
+
+  if (awaiterr) {
+    log.error('googletranslate.type', awaiterr);
+
+    await page.close();
+
+    return awaiterr.toString();
+  }
+
+  let curtime = 0;
+  let dstText = '';
+  while (curtime < timeout) {
+    const curText = await page
+      .$$eval('c-wiz', (eles) => {
+        if (eles.length > 0) {
+          for (let i = 0; i < eles.length; ++i) {
+            if (eles[i].classList.length == 2) {
+              const lstSpan = eles[i].getElementsByTagName('span');
+              for (let j = 0; j < lstSpan.length; ++j) {
+                const attrs = lstSpan[j].attributes;
+                let hasitem = 0;
+                for (let k = 0; k < attrs.length; ++k) {
+                  if (attrs[k].name == 'data-language-for-alternatives') {
+                    hasitem++;
+                  } else if (
+                    attrs[k].name == 'data-language-to-translate-into'
+                  ) {
+                    hasitem++;
+                  }
+                }
+
+                if (hasitem == 2) {
+                  if (lstSpan[j].innerText.length > 0) {
+                    return lstSpan[j].innerText;
+                  }
+                }
+              }
+            }
+          }
         }
 
         return '';
       })
       .catch((err) => {
-        log.error('googletranslate.evaluate', err);
+        awaiterr = err;
       });
+    if (awaiterr) {
+      log.error('googletranslate.$$eval c-wiz', awaiterr);
+
+      await page.close();
+
+      return awaiterr.toString();
+    }
+
+    if (curText.length > 0) {
+      dstText = curText;
+
+      break;
+    }
+
+    await sleep(1000);
+
+    curtime += 1000;
+  }
 
   await page.close();
 
-  return desttext;
+  return dstText;
 }
 
 exports.googletranslate = googletranslate;

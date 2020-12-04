@@ -18,6 +18,13 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "googletranslate",
+            "program": "${workspaceFolder}/bin/jarviscrawler.js",
+            "args": ["googletranslate", "-h", "false", "你好"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "analyze",
             "program": "${workspaceFolder}/bin/jarviscrawler.js",
             "args": ["analyze", "page", "-u", "https://ada.heyalgo.io/qBuheOnCEJrhGWVaF52EU8oQ6pozDVI1qAeWSTuAcA8.html", "-d", "10"]

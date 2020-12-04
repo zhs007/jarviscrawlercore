@@ -1,4 +1,4 @@
-const {googletranslate} = require('./googletranslate');
+const { googletranslate } = require('./googletranslate');
 
 /**
  * translateInGoogle
@@ -10,18 +10,22 @@ const {googletranslate} = require('./googletranslate');
  */
 async function translateInGoogle(browser, srctext, srclang, destlang) {
   let errstr = undefined;
-
-  const text = await googletranslate(browser, srctext, srclang, destlang).catch(
-      (err) => {
-        errstr = err.toString();
-      }
-  );
+  let timeout = 3 * 60 * 1000;
+  const text = await googletranslate(
+    browser,
+    srctext,
+    srclang,
+    destlang,
+    timeout
+  ).catch((err) => {
+    errstr = err.toString();
+  });
 
   if (errstr) {
-    return {error: errstr};
+    return { error: errstr };
   }
 
-  return {text: text};
+  return { text: text };
 }
 
 exports.translateInGoogle = translateInGoogle;

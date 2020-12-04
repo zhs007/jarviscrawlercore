@@ -26,6 +26,7 @@ message InvestingAsset {
     string name = 1;
     string url = 2;
     repeated InvestingHistoricalData data = 3;
+    string nameCode = 4;
 }
 
 // InvestingAssets - investing assets

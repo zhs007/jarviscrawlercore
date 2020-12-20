@@ -1,6 +1,6 @@
 'use strict';
 
-const {parseBookURL, isValidURL} = require('./utils');
+const {parseBookURL, isValidURL, fixComicName} = require('./utils');
 
 test('manhuadb.utils.parseBookURL', () => {
   const ret = parseBookURL('https://www.manhuadb.com/manhua/154/522_5654.html');
@@ -18,4 +18,8 @@ test('manhuadb.utils.isValidURL', () => {
   expect(isValidURL('http:')).toBe(false);
   expect(isValidURL('http://')).toBe(false);
   expect(isValidURL('http://123')).toBe(true);
+});
+
+test('manhuadb.fixComicName', () => {
+  expect(fixComicName('12/3')).toBe('123');
 });

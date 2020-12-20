@@ -28,5 +28,15 @@ function isValidURL(url) {
   return false;
 }
 
+/**
+ * fixComicName - fix comic name
+ * @param {string} name - name
+ * @return {string} name - name
+ */
+function fixComicName(name) {
+  return name.replace(/\//g, '');
+}
+
 exports.parseBookURL = parseBookURL;
 exports.isValidURL = isValidURL;
+exports.fixComicName = fixComicName;

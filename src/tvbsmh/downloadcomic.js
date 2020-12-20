@@ -1,7 +1,7 @@
 const {startBrowser} = require('../browser');
 const {tvbsmhManhua} = require('./manhua');
 const {tvbsmhBook} = require('./book');
-const {parseBookURL, isValidURL} = require('./utils');
+const {parseBookURL, isValidURL, fixComicName} = require('./utils');
 const log = require('../log');
 const {DownloadList} = require('../request');
 const {sleep} = require('../utils');
@@ -80,6 +80,8 @@ async function tvbsmhDownloadComic(
         continue;
       }
     }
+
+    manhuaret.ret.books[i].name = fixComicName(manhuaret.ret.books[i].name);
 
     const curbookret = await downloadBook(
         browser,

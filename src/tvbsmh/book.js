@@ -92,7 +92,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
       });
 
   if (awaiterr) {
-    log.error('tvbsmhBook.setViewport', awaiterr);
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').setViewport', awaiterr);
 
     await page.close();
 
@@ -124,7 +124,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
       });
 
   if (awaiterr) {
-    log.error('tvbsmhBook.goto', awaiterr);
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').goto', awaiterr);
 
     await page.close();
 
@@ -135,7 +135,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
   if (!isdone) {
     const err = new Error('tvbsmhBook.waitDone timeout');
 
-    log.error('tvbsmhBook.goto', err);
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').goto', err);
 
     await page.close();
 
@@ -159,7 +159,7 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tvbsmhBook.$$eval div.num', awaiterr);
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').$$eval div.num', awaiterr);
 
     await page.close();
 
@@ -208,14 +208,14 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
         awaiterr = err;
       });
   if (awaiterr) {
-    log.error('tvbsmhBook.$$eval .ptview', awaiterr);
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').$$eval .ptview', awaiterr);
 
     await page.close();
 
     return {error: awaiterr.toString()};
   }
 
-  await waitForLocalFunction(
+  awaiterr = await waitForLocalFunction(
       page,
       () => {
         return mapimgbuf[imgurl] != undefined;
@@ -223,6 +223,13 @@ async function tvbsmhBook(browser, comicid, bookid, pageindex, timeout) {
       1000,
       timeout,
   );
+  if (awaiterr) {
+    log.error('tvbsmhBook(' + comicid + ', ' + bookid + ', ' + pageindex + ', ' + timeout + ').waitForLocalFunction', awaiterr);
+
+    await page.close();
+
+    return {error: awaiterr.toString()};
+  }
   // while (!mapimgbuf[imgurl]) {
   //   await sleep(1000);
   // }

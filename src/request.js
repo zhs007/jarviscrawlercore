@@ -1,6 +1,6 @@
 // const request = require('request');
 const axios = require('axios');
-const { sleep } = require('./utils');
+const {sleep} = require('./utils');
 const log = require('./log');
 
 /**
@@ -12,14 +12,14 @@ const log = require('./log');
 function download(url, timeout) {
   return new Promise(async (resolve, reject) => {
     try {
-      let response = await axios.get(url, {
+      const response = await axios.get(url, {
         timeout: timeout,
         responseType: 'arraybuffer',
       });
 
-      resolve({ buf: response.data });
+      resolve({buf: response.data});
     } catch (err) {
-      resolve({ error: err });
+      resolve({error: err});
     }
     // request
     //   .get(url, { timeout: timeout }, (error, response, body) => {
@@ -82,7 +82,7 @@ class DownloadList {
    * @param {object} param - param
    */
   addTask(url, onfunc, param) {
-    this.lst.push({ url: url, onfunc: onfunc, param: param });
+    this.lst.push({url: url, onfunc: onfunc, param: param});
   }
 
   /**
@@ -95,6 +95,14 @@ class DownloadList {
           const curtask = this.lst[0];
           const ret = await download(curtask.url, this.timeout);
           if (ret.error) {
+            if (ret.error.response) {
+              if (ret.error.response.status == 404) {
+                log.error('DownloadList.download ' + curtask.url, ret.error);
+
+                continue;
+              }
+            }
+
             log.error('DownloadList.download ' + curtask.url, ret.error);
 
             this.lst.push(curtask);

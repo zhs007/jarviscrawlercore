@@ -14,6 +14,14 @@ JarvisCrawlerCore 是一套分布式 爬虫服务框架 / 页面编程机器人 
 机器配置要求，建议使用linux，能装docker。  
 内存2g及以上（1g内存也可以用，不要一次请求太多任务，chrome内存占用较严重，每隔一段时间重启服务会有好处，我们也有个翻译服务数月不重启的）。
 
+### M1 Mac下安装注意事项
+
+暂时需要用下面的指令安装。
+
+```
+npm install --target_arch=x64
+```
+
 ### 安装
 
 [这里](https://github.com/zhs007/dockerscripts/tree/master/jarviscrawlerserv) 是一个可以直接用于部署的脚本项目。
@@ -55,6 +63,10 @@ npm i jarviscrawlercore --save
 使用 ``jccclient`` 即可。
 
 ### 更新说明
+
+##### v0.7
+
+- 依赖大幅更新
 
 ##### v0.6
 

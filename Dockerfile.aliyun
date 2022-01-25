@@ -1,6 +1,6 @@
 FROM node:lts-slim
 
-MAINTAINER zerro "zerrozhao@gmail.com"
+# MAINTAINER zerro "zerrozhao@gmail.com"
 
 RUN echo "deb http://mirrors.aliyun.com/debian stretch main contrib non-free" > /etc/apt/sources.list && \
     echo "deb-src http://mirrors.aliyun.com/debian stretch main contrib non-free" >> /etc/apt/sources.list  && \
